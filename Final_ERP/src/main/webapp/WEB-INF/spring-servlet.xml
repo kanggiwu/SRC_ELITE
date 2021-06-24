@@ -5,12 +5,41 @@
 	<bean id="default-handler-mapping" 
 	class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
 
-		
+	<!--컨트롤러의 빈을 정의하여 메소드 리졸버와 로직 클래스를 객체주입 -->	
 	<bean id="main-controller" class="com.srcelite.finalerp.web.mvc.MainController">
-		<property name="methodNameResolver" ref="main-resolver"/>
+		<property name="methodNameResolver" ref="erp-resolver"/>
 		<property name="mainLogic" ref="main-logic"/>
 	</bean>
+	<bean id="notice-controller" class="com.srcelite.finalerp.web.mvc.NoticeController">
+		<property name="methodNameResolver" ref="erp-resolver"/>
+		<property name="noticeLogic" ref="notice-logic"/>
+	</bean>
+	<bean id="schedule-controller" class="com.srcelite.finalerp.web.mvc.ScheduleController">
+		<property name="methodNameResolver" ref="erp-resolver"/>
+		<property name="scheduleLogic" ref="schedule-logic"/>
+	</bean>
+	<bean id="account-user-controller" class="com.srcelite.finalerp.web.mvc.AccountUserController">
+		<property name="methodNameResolver" ref="erp-resolver"/>
+		<property name="accountUserLogic" ref="account-user-logic"/>
+	</bean>
+	<bean id="account-manager-controller" class="com.srcelite.finalerp.web.mvc.AccountManagerController">
+		<property name="methodNameResolver" ref="erp-resolver"/>
+		<property name="accountManagerLogic" ref="account-manager-logic"/>
+	</bean>
+	<bean id="human-resource-controller" class="com.srcelite.finalerp.web.mvc.HumanResourceController">
+		<property name="methodNameResolver" ref="erp-resolver"/>
+		<property name="humanResourceLogic" ref="human-resource-logic"/>
+	</bean>
+	<bean id="approval-controller" class="com.srcelite.finalerp.web.mvc.ApprovalController">
+		<property name="methodNameResolver" ref="erp-resolver"/>
+		<property name="approvalLogic" ref="approval-logic"/>
+	</bean>
+	<bean id="project-history-controller" class="com.srcelite.finalerp.web.mvc.ProjectHistoryController">
+		<property name="methodNameResolver" ref="erp-resolver"/>
+		<property name="projectHistoryLogic" ref="project-history-logic"/>
+	</bean>
 	
+
 	<!--url과 컨트롤러 이름 매핑, 컨트롤러 같은 경우 위에서 객체 이름을 정해주었다. -->
 	<bean id="url-mapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="mappings">
@@ -18,16 +47,112 @@
 				<prop key="/main/login.src1">main-controller</prop>
 				<prop key="/main/logout.src1">main-controller</prop>
 				<prop key="/main/startWork.src1">main-controller</prop>
+
+				<prop key="/notice/getMainNoticeList.src1">notice-controller</prop>
+				<prop key="/notice/getAllNoticeList.src1">notice-controller</prop>
+				<prop key="/notice/getDetailNotice.src1">notice-controller</prop>
+				<prop key="/notice/insertNotice.src1">notice-controller</prop>
+				<prop key="/notice/updateNotice.src1">notice-controller</prop>
+				<prop key="/notice/deleteNotice.src1">notice-controller</prop>
+
+				<prop key="/schedule/getStartWorktime.src1">schedule-controller</prop>
+				<prop key="/schedule/getCalendarSchedule.src1">schedule-controller</prop>
+				<prop key="/schedule/getDetailSchedule.src1">schedule-controller</prop>
+				<prop key="/schedule/insertSchedule.src1">schedule-controller</prop>
+				<prop key="/schedule/updateSchedule.src1">schedule-controller</prop>
+				<prop key="/schedule/deleteSchedule.src1">schedule-controller</prop>
+
+				<prop key="/user_account/getMonthSalary.src1">account-user-controller</prop>
+				<prop key="/user_account/getYearSalary.src1">account-user-controller</prop>
+				<prop key="/user_account/getReirementPay.src1">account-user-controller</prop>
+
+				<prop key="/manager_account/updateAccountInfo.src1">account-manager-controller</prop>
+				<prop key="/manager_account/insertMonthSalary.src1">account-manager-controller</prop>
+				<prop key="/manager_account/getProfitList.src1">account-manager-controller</prop>
+				<prop key="/manager_account/updateProfit.src1">account-manager-controller</prop>
+				<prop key="/manager_account/insertProfit.src1">account-manager-controller</prop>
+				<prop key="/manager_account/getExpenseList.src1">account-manager-controller</prop>
+				<prop key="/manager_account/updateExpense.src1">account-manager-controller</prop>
+				<prop key="/manager_account/insertExpense.src1">account-manager-controller</prop>
+				<prop key="/manager_account/getBalanceLIst.src1">account-manager-controller</prop>
+
+				<prop key="/human_resource/getBalanceLIst.src1">human-resource-controller</prop>
+				<prop key="/human_resource/updateOrganizationChart.src1">human-resource-controller</prop>
+				<prop key="/human_resource/getEmployeeList.src1">human-resource-controller</prop>
+				<prop key="/human_resource/getDetailEmployee.src1">human-resource-controller</prop>
+				<prop key="/human_resource/insertEmployee.src1">human-resource-controller</prop>
+				<prop key="/human_resource/updateEmployee.src1">human-resource-controller</prop>
+
+				<prop key="/approval/getApprovalForm.src1">approval-controller</prop>
+				<prop key="/approval/submitApproval.src1">approval-controller</prop>
+				<prop key="/approval/getSendApproval.src1">approval-controller</prop>
+				<prop key="/approval/getDetailSendApproval.src1">approval-controller</prop>
+				<prop key="/approval/getReceiveApproval.src1">approval-controller</prop>
+				<prop key="/approval/getDetailReceiveApproval.src1">approval-controller</prop>
+				<prop key="/approval/getNumUnsignedApproval.src1">approval-controller</prop>
+				<prop key="/approval/getLineApproval.src1">approval-controller</prop>
+
+				<prop key="/approval/getProjectHistoryList.src1">project-history-controller</prop>
+				<prop key="/approval/getDetailProjectHistory.src1">project-history-controller</prop>
+				<prop key="/approval/insertProjectHistory.src1">project-history-controller</prop>
 			</props>
 		</property>
 	</bean>
-	<bean id="board-resolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+	<bean id="erp-resolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
 		<property name="mappings">
 			<props>
 				<prop key="/main/login.src1">login</prop>
 				<prop key="/main/logout.src1">logout</prop>
 				<prop key="/main/startWork.src1">startWork</prop>
-			</props>
+
+				<prop key="/notice/getMainNoticeList.src1">getMainNoticeList</prop>
+				<prop key="/notice/getAllNoticeList.src1">getAllNoticeList</prop>
+				<prop key="/notice/getDetailNotice.src1">getDetailNotice</prop>
+				<prop key="/notice/insertNotice.src1">insertNotice</prop>
+				<prop key="/notice/updateNotice.src1">updateNotice</prop>
+				<prop key="/notice/deleteNotice.src1">deleteNotice</prop>
+
+				<prop key="/schedule/getStartWorktime.src1">getStartWorktime</prop>
+				<prop key="/schedule/getCalendarSchedule.src1">getCalendarSchedule</prop>
+				<prop key="/schedule/getDetailSchedule.src1">getDetailSchedule</prop>
+				<prop key="/schedule/insertSchedule.src1">insertSchedule</prop>
+				<prop key="/schedule/updateSchedule.src1">updateSchedule</prop>
+				<prop key="/schedule/deleteSchedule.src1">deleteSchedule</prop>
+
+				<prop key="/user_account/getMonthSalary.src1">getMonthSalary</prop>
+				<prop key="/user_account/getYearSalary.src1">getYearSalary</prop>
+				<prop key="/user_account/getReirementPay.src1">getReirementPay</prop>
+
+				<prop key="/manager_account/updateAccountInfo.src1">updateAccountInfo</prop>
+				<prop key="/manager_account/insertMonthSalary.src1">insertMonthSalary</prop>
+				<prop key="/manager_account/getProfitList.src1">getProfitList</prop>
+				<prop key="/manager_account/updateProfit.src1">updateProfit</prop>
+				<prop key="/manager_account/insertProfit.src1">insertProfit</prop>
+				<prop key="/manager_account/getExpenseList.src1">getExpenseList</prop>
+				<prop key="/manager_account/updateExpense.src1">updateExpense</prop>
+				<prop key="/manager_account/insertExpense.src1">insertExpense</prop>
+				<prop key="/manager_account/getBalanceLIst.src1">getBalanceLIst</prop>
+
+				<prop key="/human_resource/getBalanceLIst.src1">getBalanceLIst</prop>
+				<prop key="/human_resource/updateOrganizationChart.src1">updateOrganizationChart</prop>
+				<prop key="/human_resource/getEmployeeList.src1">getEmployeeList</prop>
+				<prop key="/human_resource/getDetailEmployee.src1">getDetailEmployee</prop>
+				<prop key="/human_resource/insertEmployee.src1">insertEmployee</prop>
+				<prop key="/human_resource/updateEmployee.src1">updateEmployee</prop>
+
+				<prop key="/approval/getApprovalForm.src1">getApprovalForm</prop>
+				<prop key="/approval/submitApproval.src1">submitApproval</prop>
+				<prop key="/approval/getSendApproval.src1">getSendApproval</prop>
+				<prop key="/approval/getDetailSendApproval.src1">getDetailSendApproval</prop>
+				<prop key="/approval/getReceiveApproval.src1">getReceiveApproval</prop>
+				<prop key="/approval/getDetailReceiveApproval.src1">getDetailReceiveApproval</prop>
+				<prop key="/approval/getNumUnsignedApproval.src1">getNumUnsignedApproval</prop>
+				<prop key="/approval/getLineApproval.src1">getLineApproval</prop>
+
+				<prop key="/project_history/getProjectHistoryList.src1">getProjectHistoryList</prop>
+				<prop key="/project_history/getDetailProjectHistory.src1">getDetailProjectHistory</prop>
+				<prop key="/project_history/insertProjectHistory.src1">insertProjectHistory</prop>
+			</prop>
 		</property>
 	</bean>
 	
