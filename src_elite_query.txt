@@ -3,8 +3,8 @@
 /***********************공통 사항***********************/
 
 /* PAGE 8 */ 
-/* login 시 DB에서 아이디에 해당하는 비번을 불러와서 사용자가 입력한 비번과 일치하면 로그인*/
-/*--------getPassword*/
+    /* login 시 DB에서 아이디에 해당하는 비번을 불러와서 사용자가 입력한 비번과 일치하면 로그인*/
+    /* getPassword*/
 SELECT emp_pw
   FROM emp
 WHERE emp_no = "#입력된 직원번호";
@@ -12,25 +12,26 @@ WHERE emp_no = "#입력된 직원번호";
 
 /* PAGE 9 */
 
-/* 사원의 이름, 직위, 부서명 가져오기*/
-/* getEMPInfoHead*/
+    /* 사원의 이름, 직위, 부서명 가져오기*/
+    /* getWhoIAm*/
 SELECT e.emp_name|| " - " || r.rank_name || " - " ||  d.dept_name /* 상단 정보 가져오기 */
 FROM emp e, dept d, rank r
 WHERE n.emp_no = e.emp_no AND e.dept_no = d.deptno AND e.emp_no = "#현재 접속중인 사원의 사원번호";
 
-
-/*insertAttendanceTime */
+    /* 출근 시간 등록 */
+    /*insertAttendanceTime */
 INSERT INTO attendance (attendance_code, emp_no, attendance_start_work) VALUES( "#시퀀스 사용예정",  "#현재 접속중인 사원의 사원번호", SYSDATE); /* 출근 버튼을 누를 경우*/
 
-/*최신의 공지 3건 불러오기 */
-/*getMainNoticeList*/
+    /*최신의 공지 3건 불러오기 */
+    /*getMainNoticeList*/
 SELECT notice_title, notice_date
   FROM notice
 WHERE ROWNUM <= 3
 ORDER BY notice_date DESC;
 
 /* PAGE10 */
-/* getMenuName */
+    /* 메뉴 이름 불러오기 */
+    /* getMenuName */
 SELECT menu_name 
     FROM Menu;
     
@@ -40,9 +41,8 @@ SELECT menu_name
 /***********************공지*******************************/
 
 /* PAGE14 */
-/* */
-
-
+    /* 공지 리스트 가져오기 */
+    /* getNoticeList */
 SELECT DECODE(n.notice_type, '부서', d.dept_name, '공통') as notice_type, n.notice_title, d.dept_name, n.emp_name, n.notice_date
   FROM      notice n, emp e, dept d
 WHERE n.emp_no = e.emp_no AND e.dept_no = d.deptno
@@ -50,15 +50,21 @@ WHERE n.emp_no = e.emp_no AND e.dept_no = d.deptno
 ORDER BY notice_date DESC;
 
 /* PAGE15 */
+    /* 공지 상세정보 가져오기 */
+    /* getDetailNotice */
 SELECT n.notice_title, d.dept_name||' '||e.emp_name, n.notice_date, n.notice_content
   FROM notice n, emp e, dept d
 WHERE n.emp_no = e.emp_no AND e.dept_no = d.deptno AND n.notice_no = #{선택된 공지번호};
 
 /* PAGE17 */
+    /* 신규 공지 등록 */
+    /* insertNotice */
 INSERT INTO notice (notice_no, notice_type, notice_title, emp_no, notice_content, notice_date)
                   VALUES ( #{시퀀스},    #{공지분류입력},     #{공지제목입력}  ,#{작성 사원},               #{공지 내용},  SYSDATE);
 
 /* PAGE19 */
+    /* 공지 수정 */
+    /* updateNotice */
 UPDATE notice
 SET
 notice_type = #{입력받은 값} ,           /*검토필요: 화면에는 나와있지 않지만 공지의 분류를 변경가능하게 할것인가?*/
@@ -68,17 +74,23 @@ notice_date = "#수정한 시각?"        /*수정할때 시간을 수정한 시간으로 수정할 것
 WHERE notice_no = "#현재 공지상세로 들어올때 받은 공지 번호";
 
 /* PAGE23 */
+    /* 공지 삭제 */
+    /* deleteNotice */
 DELETE notice
 WHERE notice_no =  "#현재 공지상세로 들어올때 받은 공지 번호";
 
 /***********************마이 페이지**********************/
 
 /* PAGE26 */
+    /* 사원 상세 정보 가져오기 */
+    /* getDetailEmp */
 SELECT e.emp_name, TRUNC(MONTHS_BETWEEN(SYSDATE, m_lunch_date)/12)||'년차', d.dept_name, r.rank_name, e.emp_hiredate, emp_status, e.emp_pw, e.emp_tel, e.emp_email
   FROM emp e, dept d, rank r
 WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no AND emp_no = "#현재 접속 사원의 사원번호";
 
 /* PAGE28   지금버전에서는 프로시저를 사용하지 않으므로 자바단에서 패스워드와 패스워드확인이 일치하는 지 확인후 일차히면 비밀번호를 업데이트*/
+    /* 비밀번호 변경 */
+    /* updatePassword */
 UPDATE emp
 SET
 emp_pw = "#입력받은 변경할 패스워드"
@@ -87,11 +99,13 @@ WHERE emp_no = "#현재 접속중인 사원의 사원번호";
 /***********************일정********************************/
 
 /* PAGE31 */
+    /* getAttendanceThisMonth */
 SELECT attendance_code, emp_no, attendance_start_work
   FROM attendance
 WHERE emp_no = "#현재 접속중인 사원의 사원번호"
     AND attendance_start_work BETWEEN TRUNC(SYSDATE+1)-TO_CHAR(SYSDATE,'DD') AND TRUNC(LAST_DAY(SYSDATE))+0.99999421; /*처음 들어왔을 때의 달의 일정*/
 
+    /* getAttendanceWhatYouWant ????????????*/
 SELECT attendance_code, emp_no, attendance_start_work
   FROM attendance
 WHERE emp_no = "#현재 접속중인 사원의 사원번호"
@@ -99,29 +113,35 @@ WHERE emp_no = "#현재 접속중인 사원의 사원번호"
 
 /* PAGE32 */
     /*공통 일정 조회 */
+    /* getCommonScheduleList */
 SELECT schedule_code, emp_no, schedule_type, schedule_title, schedule_startdate, schedule_enddate, schedule_content
   FROM schedule
 WHERE schedule_type = '공통';
 
     /*부서 일정 조회 */
+    /* getDeptScheduleList */
 SELECT s.schedule_code, s.emp_no, s.schedule_type, s.schedule_title, 
                 s.schedule_startdate, s.schedule_enddate, s.schedule_content d.dept_name
   FROM schedule s, emp e, dept d
 WHERE s.emp_no = e.emp_no AND e.dept_no = d.dept_no AND schedule_type = '부서';
 
     /*사원 일정 조회 */
+    /* getEmpScheduleList */
 SELECT schedule_code, emp_no, schedule_type, schedule_title, 
                 schedule_startdate, schedule_enddate, schedule_content
   FROM schedule
 WHERE emp_no = emp_no AND emp_no = "#접속중인 사원의 사원번호" AND schedule_type = '사원';
 
 /* PAGE33 */
+    /* insertSchedule */
 INSERT INTO schedule (schedule_code, emp_no, schedule_type, schedule_title, schedule_startdate, schedule_enddate, schedule_content)
                         VALUES ("#시퀀스 추가예정", "#현재 접속중인 사원번호", "#콤보박스로 선택된 일정분류", "#스케쥴 제목", "#시작일", "#종료일", "#일정 내용");
 
 /* PAGE34 */
+    /* getScheduleWriter */
 SELECT emp_no FROM schedule WHERE schedule_code = "선택한 일정의 일정번호"; /*일정의 작성자가 맞는지 확인하기 위해 일정작성시 저장된 사원번호 불러오기 */
 
+    /* updateSchedule */
 UPDATE schedule
 SET 
     emp_no = "#현재 접속중인 수정자",
@@ -133,6 +153,7 @@ SET
 WHERE  schedule_code = "#선택한 일정번호";
 
 /* PAGE35 */
+    /* deleteSchedule */
 DELETE schedule WHERE schedule_code = "#선택한 일정의 일정번호";
 
 
@@ -146,19 +167,28 @@ DELETE schedule WHERE schedule_code = "#선택한 일정의 일정번호";
 /***************************인사*******************************/
 
 /* PAGE56 */
+    /* 사원 리스트 출력 */
+    /* getEmpList */
 SELECT e.emp_no, e.emp_name, d.dept_name, r.rank_name, e.emp_status
   FROM emp e, dept d, rank r
 WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no  /* 이 페이지에 사원 조건 검색이 추가 될 경우 where절 수정 필요*/
 ORDER BY emp_no ASC;
 
+
 /* PAGE57 */
+    /* 사원 정보 등록 */
+    /* insertEmpInfo */
 INSERT INTO emp (emp_no, emp_name, emp_pw, emp_status, dept_no, rank_no, emp_job, emp_hiredate, emp_retiredate, emp_email, emp_tel, emp_auth, emp_picture_path)
                 VALUES("시퀀스", "사원이름", "사원전화번호 뒤4자리?", "재직", "콤보박스에서 매핑된 부서번호", "콤보박스에서 매핑된 직위번호", "고용일", NULL, "이메일", "전화번호", "일단 최소권한?", "파일첨부에서 받아온 경로");
 
 /* PAGE59 */
+    /* 자격증 정보 등록 */
+    /* insertLIcenceInfo */
 INSERT INTO licence_emp (emp_no, licence_no) VALUES( "현재 수정중인 사원정보의 사원번호", "화면에서 선택된 자격증번호");
 
 /* PAGE 63 */
+    /* 사원 정보 수정 */
+    /* updateEmpInfo */
 UPDATE emp
 SET
     emp_name = "수정된이름"
@@ -180,31 +210,36 @@ WHERE emp_no = "해당 상세페이지의 사원번호";
 
 /**************************프로젝트 관리***************************/
 
-
 /* PAGE 70 */
     /*프로젝트 리스트 조회 */
+    /* getProjectList */
 SELECT p.project_name, p.project_startline || ' ~ ' || p.project_deadline, e.emp_name, p.project_type 
 FROM project p, project_emp pe, emp e
 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no;
 
     /*프로젝트 상세 조회 */
+    /* getDetailProject */
 SELECT p.project_name, p.project_client, e.emp_name, p.project_tech, p.project_startline, p.project_deadline, p.project_profit, p.project_type, p.project_content
 FROM project p, project_emp pe, emp e
 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = "{#선택한 프로젝트 번호}";
 
     /*프로젝트 인원 리스트 조회 */
+    /* getProjectMemberList */
 SELECT e.emp_name
    FROM emp e, project_emp pe, project p
 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = "{#선택한 프로젝트 번호}";
 
 
 /* PAGE 71 */
-SELECT p.project_name, p.project_client, e.emp_name, p.project_tech, p.project_startline, p.project_deadline, p.project_profit, p.project_type, p.project_content
-FROM project p, project_emp pe, emp e
-WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = "{#선택한 프로젝트 번호}";
-
+    /*프로젝트 이력추가              ---- 프로젝트 이력추가에서 인원선택 */
+    /* insertProjectInfo */
 INSERT INTO project (project_no, project_name, project_profit, project_client, project_startline, project_deadline, project_type, project_content, project_register, project_tech)
-                       VALUES( "#시퀀스", "#프로젝트명", "#프로젝트수익", "#발주사", "#시작일", "#마감일", "#프로젝트분류", "개발내용", "적용기술",
+                       VALUES( "#시퀀스", "#프로젝트명", "#프로젝트수익", "#발주사", "#시작일", "#마감일", "#프로젝트분류", "개발내용", "적용기술");
+                       
+    /* page56의  사원선택 쿼리문으로 사원을 선택하여 자바 로직단에서 Map리스트를 만들고 Map리스트를 입력값으로 하여 Project_Emp 테이블에 insert한다. */ 
+    /* insertProjectMember */
+INSERT INTO project_emp ( project_no, emp_no, project_manager) VALUES(#{project_no, #{emp_no}, #{project_manager});
+
 
 
 
