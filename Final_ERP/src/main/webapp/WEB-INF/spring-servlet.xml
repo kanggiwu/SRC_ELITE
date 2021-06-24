@@ -152,7 +152,7 @@
 				<prop key="/project_history/getProjectHistoryList.src1">getProjectHistoryList</prop>
 				<prop key="/project_history/getDetailProjectHistory.src1">getDetailProjectHistory</prop>
 				<prop key="/project_history/insertProjectHistory.src1">insertProjectHistory</prop>
-			</prop>
+			</props>
 		</property>
 	</bean>
 	
