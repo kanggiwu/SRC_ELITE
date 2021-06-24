@@ -24,6 +24,6 @@ public class MainController extends MultiActionController{
 	public void logout(HttpServletRequest request, HttpServletResponse response) {}
 	
 	// 출근
-	public void startWork(HttpServletRequest request, HttpServletResponse response) {}
+	public void insertAttendanceTime(HttpServletRequest request, HttpServletResponse response) {}
 	
 }
