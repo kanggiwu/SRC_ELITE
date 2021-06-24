@@ -2,33 +2,47 @@
 
 /***********************공통 사항***********************/
 
-/* PAGE 8 */
-SELECT emp_no, emp_pw
+/* PAGE 8 */ 
+/* login 시 DB에서 아이디에 해당하는 비번을 불러와서 사용자가 입력한 비번과 일치하면 로그인*/
+/*--------getPassword*/
+SELECT emp_pw
   FROM emp
 WHERE emp_no = "#입력된 직원번호";
 
 
 /* PAGE 9 */
+
+/* 사원의 이름, 직위, 부서명 가져오기*/
+/* getEMPInfoHead*/
 SELECT e.emp_name|| " - " || r.rank_name || " - " ||  d.dept_name /* 상단 정보 가져오기 */
 FROM emp e, dept d, rank r
 WHERE n.emp_no = e.emp_no AND e.dept_no = d.deptno AND e.emp_no = "#현재 접속중인 사원의 사원번호";
 
+
+/*insertAttendanceTime */
 INSERT INTO attendance (attendance_code, emp_no, attendance_start_work) VALUES( "#시퀀스 사용예정",  "#현재 접속중인 사원의 사원번호", SYSDATE); /* 출근 버튼을 누를 경우*/
 
-SELECT notice_title, notice_date /*최신의 공지 3건 불러오기 */
+/*최신의 공지 3건 불러오기 */
+/*getMainNoticeList*/
+SELECT notice_title, notice_date
   FROM notice
 WHERE ROWNUM <= 3
 ORDER BY notice_date DESC;
 
 /* PAGE10 */
+/* getMenuName */
+SELECT menu_name 
+    FROM Menu;
+    
 
 /* PAGE11 */
 
 /***********************공지*******************************/
 
 /* PAGE14 */
-SELECT DECODE(n.notice_type, '부서', d.dept_name, '공통'), n.notice_title, d.dept_name||' '||n.emp_name, n.notice_date
-  FROM notice n, emp e, dept d
+
+SELECT DECODE(n.notice_type, '부서', d.dept_name, '공통') as notice_type, n.notice_title, d.dept_name, n.emp_name, n.notice_date
+  FROM      notice n, emp e, dept d
 WHERE n.emp_no = e.emp_no AND e.dept_no = d.deptno
           /*AND ROWNUM > "시작지점" AND ROWNUM < "끝나는 지점" ----- 리스트하단 번호를 누를 때마다 목록을 바꿔주기위한 부분,일단 대강 생각, 더 좋은 아이디어 있을듯, 보완 필요 */
 ORDER BY notice_date DESC;
@@ -36,16 +50,16 @@ ORDER BY notice_date DESC;
 /* PAGE15 */
 SELECT n.notice_title, d.dept_name||' '||e.emp_name, n.notice_date, n.notice_content
   FROM notice n, emp e, dept d
-WHERE n.emp_no = e.emp_no AND e.dept_no = d.deptno AND n.notice_no = "#선택된 공지번호";
+WHERE n.emp_no = e.emp_no AND e.dept_no = d.deptno AND n.notice_no = #{선택된 공지번호};
 
 /* PAGE17 */
 INSERT INTO notice (notice_no, notice_type, notice_title, emp_no, notice_content, notice_date)
-                  VALUES (         "#시퀀스",    "#공지분류입력",     "#공지제목입력"  ,"#작성 사원",               "#공지 내용",  SYSDATE);
+                  VALUES ( #{시퀀스},    #{공지분류입력},     #{공지제목입력}  ,#{작성 사원},               #{공지 내용},  SYSDATE);
 
 /* PAGE19 */
 UPDATE notice
 SET
-notice_type = "#입력받은 값" ,           /*검토필요: 화면에는 나와있지 않지만 공지의 분류를 변경가능하게 할것인가?*/
+notice_type = #{입력받은 값} ,           /*검토필요: 화면에는 나와있지 않지만 공지의 분류를 변경가능하게 할것인가?*/
 notice_title = "#입력받은 제목",
 notice_content = "#입력받은 공지내용",
 notice_date = "#수정한 시각?"        /*수정할때 시간을 수정한 시간으로 수정할 것인가?*/
@@ -89,7 +103,7 @@ WHERE schedule_type = '공통';
 
     /*부서 일정 조회 */
 SELECT s.schedule_code, s.emp_no, s.schedule_type, s.schedule_title, 
-                s.schedule_startdate, s.schedule_enddate, s.schedule_content, d.dept_name
+                s.schedule_startdate, s.schedule_enddate, s.schedule_content d.dept_name
   FROM schedule s, emp e, dept d
 WHERE s.emp_no = e.emp_no AND e.dept_no = d.dept_no AND schedule_type = '부서';
 
@@ -162,33 +176,7 @@ WHERE emp_no = "해당 상세페이지의 사원번호";
 
 
 
-
-/**************************프로젝트********************************/
-
-/* PAGE 70 */
-    /*프로젝트 리스트 조회 */
-SELECT p.project_name, p.project_startline || ' ~ ' || p.project_deadline, e.emp_name, p.project_type 
-FROM project p, project_emp pe, emp e
-WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no;
-
-    /*프로젝트 상세 조회 */
-SELECT p.project_name, p.project_client, e.emp_name, p.project_tech, p.project_startline, p.project_deadline, p.project_profit, p.project_type, p.project_content
-FROM project p, project_emp pe, emp e
-WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = "{#선택한 프로젝트 번호}";
-
-    /*프로젝트 인원 리스트 조회 */
-SELECT e.emp_name
-   FROM emp e, project_emp pe, project p
-WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = "{#선택한 프로젝트 번호}";
-
-
-/* PAGE 71 */
-SELECT p.project_name, p.project_client, e.emp_name, p.project_tech, p.project_startline, p.project_deadline, p.project_profit, p.project_type, p.project_content
-FROM project p, project_emp pe, emp e
-WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = "{#선택한 프로젝트 번호}";
-
-INSERT INTO project (project_no, project_name, project_profit, project_client, project_startline, project_deadline, project_type, project_content, project_register, project_tech)
-                       VALUES( "#시퀀스", "#프로젝트명", "#프로젝트수익", "#발주사", "#시작일", "#마감일", "#프로젝트분류", "개발내용", "적용기술",
+/**************************프로젝트 관리***************************/
 
 
 
