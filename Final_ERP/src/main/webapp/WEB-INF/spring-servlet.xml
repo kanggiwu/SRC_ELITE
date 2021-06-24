@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="default-handler-mapping" 
+	class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+
+		
+	<bean id="main-controller" class="com.srcelite.finalerp.web.mvc.MainController">
+		<property name="methodNameResolver" ref="main-resolver"/>
+		<property name="mainLogic" ref="main-logic"/>
+	</bean>
+	
+	<!--url과 컨트롤러 이름 매핑, 컨트롤러 같은 경우 위에서 객체 이름을 정해주었다. -->
+	<bean id="url-mapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/main/login.src1">main-controller</prop>
+				<prop key="/main/logout.src1">main-controller</prop>
+				<prop key="/main/startWork.src1">main-controller</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="board-resolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+		<property name="mappings">
+			<props>
+				<prop key="/main/login.src1">login</prop>
+				<prop key="/main/logout.src1">logout</prop>
+				<prop key="/main/startWork.src1">startWork</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+</beans>
