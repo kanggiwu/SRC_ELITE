@@ -119,26 +119,26 @@
 				<prop key="/schedule/updateSchedule.src1">updateSchedule</prop>
 				<prop key="/schedule/deleteSchedule.src1">deleteSchedule</prop>
 
-				<prop key="/user_account/getMonthSalary.src1">getMonthSalary</prop>
-				<prop key="/user_account/getYearSalary.src1">getYearSalary</prop>
-				<prop key="/user_account/getReirementPay.src1">getReirementPay</prop>
+				<prop key="/userAccount/getMonthSalary.src1">getMonthSalary</prop>
+				<prop key="/userAccount/getYearSalary.src1">getYearSalary</prop>
+				<prop key="/userAccount/getReirementPay.src1">getReirementPay</prop>
 
-				<prop key="/manager_account/updateAccountInfo.src1">updateAccountInfo</prop>
-				<prop key="/manager_account/insertMonthSalary.src1">insertMonthSalary</prop>
-				<prop key="/manager_account/getProfitList.src1">getProfitList</prop>
-				<prop key="/manager_account/updateProfit.src1">updateProfit</prop>
-				<prop key="/manager_account/insertProfit.src1">insertProfit</prop>
-				<prop key="/manager_account/getExpenseList.src1">getExpenseList</prop>
-				<prop key="/manager_account/updateExpense.src1">updateExpense</prop>
-				<prop key="/manager_account/insertExpense.src1">insertExpense</prop>
-				<prop key="/manager_account/getBalanceLIst.src1">getBalanceLIst</prop>
+				<prop key="/managerAccount/updateAccountInfo.src1">updateAccountInfo</prop>
+				<prop key="/managerAccount/insertMonthSalary.src1">insertMonthSalary</prop>
+				<prop key="/managerAccount/getProfitList.src1">getProfitList</prop>
+				<prop key="/managerAccount/updateProfit.src1">updateProfit</prop>
+				<prop key="/managerAccount/insertProfit.src1">insertProfit</prop>
+				<prop key="/managerAccount/getExpenseList.src1">getExpenseList</prop>
+				<prop key="/managerAccount/updateExpense.src1">updateExpense</prop>
+				<prop key="/managerAccount/insertExpense.src1">insertExpense</prop>
+				<prop key="/managerAccount/getBalanceLIst.src1">getBalanceLIst</prop>
 
-				<prop key="/human_resource/getBalanceLIst.src1">getBalanceLIst</prop>
-				<prop key="/human_resource/updateOrganizationChart.src1">updateOrganizationChart</prop>
-				<prop key="/human_resource/getEmployeeList.src1">getEmployeeList</prop>
-				<prop key="/human_resource/getDetailEmployee.src1">getDetailEmployee</prop>
-				<prop key="/human_resource/insertEmployee.src1">insertEmployee</prop>
-				<prop key="/human_resource/updateEmployee.src1">updateEmployee</prop>
+				<prop key="/humanResource/getBalanceLIst.src1">getBalanceLIst</prop>
+				<prop key="/humanResource/updateOrganizationChart.src1">updateOrganizationChart</prop>
+				<prop key="/humanResource/getEmployeeList.src1">getEmployeeList</prop>
+				<prop key="/humanResource/getDetailEmployee.src1">getDetailEmployee</prop>
+				<prop key="/humanResource/insertEmployee.src1">insertEmployee</prop>
+				<prop key="/humanResource/updateEmployee.src1">updateEmployee</prop>
 
 				<prop key="/approval/getApprovalForm.src1">getApprovalForm</prop>
 				<prop key="/approval/submitApproval.src1">submitApproval</prop>
@@ -149,9 +149,9 @@
 				<prop key="/approval/getNumUnsignedApproval.src1">getNumUnsignedApproval</prop>
 				<prop key="/approval/getLineApproval.src1">getLineApproval</prop>
 
-				<prop key="/project_history/getProjectHistoryList.src1">getProjectHistoryList</prop>
-				<prop key="/project_history/getDetailProjectHistory.src1">getDetailProjectHistory</prop>
-				<prop key="/project_history/insertProjectHistory.src1">insertProjectHistory</prop>
+				<prop key="/projectHistory/getProjectHistoryList.src1">getProjectHistoryList</prop>
+				<prop key="/projectHistory/getDetailProjectHistory.src1">getDetailProjectHistory</prop>
+				<prop key="/projectHistory/insertProjectHistory.src1">insertProjectHistory</prop>
 			</props>
 		</property>
 	</bean>

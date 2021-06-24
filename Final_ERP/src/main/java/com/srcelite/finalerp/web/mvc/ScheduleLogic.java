@@ -10,8 +10,7 @@ public class ScheduleLogic {
 		this.scheduleDao = scheduleDao;
 	}
 	
-	//출근시간 받아오기
-	public List<Map<String,Object>> getStartWorktime(Map<String,Object> pmap)     {return null;}
+	
 	//일정 조회(월)
 	public List<Map<String,Object>> getCalendarSchedule(Map<String,Object> pamp)   {return null;}
 	//일정 상세조회

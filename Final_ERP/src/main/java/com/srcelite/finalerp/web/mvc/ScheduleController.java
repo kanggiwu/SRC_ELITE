@@ -12,8 +12,7 @@ public class ScheduleController extends MultiActionController {
 	public void setScheduleLogic(ScheduleLogic scheduleLogic) {
 		this.scheduleLogic = scheduleLogic;
 	}
-	//출근시간 받아오기
-	public ModelAndView getStartWorktime(HttpServletRequest request, HttpServletResponse response)     {return null;}
+	
 	//일정 조회(월)
 	public ModelAndView getCalendarSchedule(HttpServletRequest request, HttpServletResponse response)  {return null;}
 	//일정 상세조회
