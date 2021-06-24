@@ -40,6 +40,8 @@ SELECT menu_name
 /***********************공지*******************************/
 
 /* PAGE14 */
+/* */
+
 
 SELECT DECODE(n.notice_type, '부서', d.dept_name, '공통') as notice_type, n.notice_title, d.dept_name, n.emp_name, n.notice_date
   FROM      notice n, emp e, dept d
@@ -179,6 +181,30 @@ WHERE emp_no = "해당 상세페이지의 사원번호";
 /**************************프로젝트 관리***************************/
 
 
+/* PAGE 70 */
+    /*프로젝트 리스트 조회 */
+SELECT p.project_name, p.project_startline || ' ~ ' || p.project_deadline, e.emp_name, p.project_type 
+FROM project p, project_emp pe, emp e
+WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no;
+
+    /*프로젝트 상세 조회 */
+SELECT p.project_name, p.project_client, e.emp_name, p.project_tech, p.project_startline, p.project_deadline, p.project_profit, p.project_type, p.project_content
+FROM project p, project_emp pe, emp e
+WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = "{#선택한 프로젝트 번호}";
+
+    /*프로젝트 인원 리스트 조회 */
+SELECT e.emp_name
+   FROM emp e, project_emp pe, project p
+WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = "{#선택한 프로젝트 번호}";
+
+
+/* PAGE 71 */
+SELECT p.project_name, p.project_client, e.emp_name, p.project_tech, p.project_startline, p.project_deadline, p.project_profit, p.project_type, p.project_content
+FROM project p, project_emp pe, emp e
+WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = "{#선택한 프로젝트 번호}";
+
+INSERT INTO project (project_no, project_name, project_profit, project_client, project_startline, project_deadline, project_type, project_content, project_register, project_tech)
+                       VALUES( "#시퀀스", "#프로젝트명", "#프로젝트수익", "#발주사", "#시작일", "#마감일", "#프로젝트분류", "개발내용", "적용기술",
 
 
 
