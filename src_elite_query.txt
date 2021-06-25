@@ -168,11 +168,121 @@ DELETE schedule WHERE schedule_code = "#선택한 일정의 일정번호";
 
 /* PAGE56 */
     /* 사원 리스트 출력 */
-    /* getEmpList */
+    /* getEmployeeList */
 SELECT e.emp_no, e.emp_name, d.dept_name, r.rank_name, e.emp_status
   FROM emp e, dept d, rank r
 WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no  /* 이 페이지에 사원 조건 검색이 추가 될 경우 where절 수정 필요*/
 ORDER BY emp_no ASC;
+
+CREATE OR REPLACE PROCEDURE proc_emp_list (pdname    VARCHAR2
+                                           ,prname   rank.rank_name%TYPE
+                                           ,pename     emp.emp_name%TYPE
+                                           ,e_cursor OUT sys_refcursor)
+IS 
+
+BEGIN
+  IF (pdname!='전체') THEN/* 부서를 선택한 경우 */
+         IF(prname!='전체') THEN /* 직위를 선택한 경우 */
+                              IF(pename!='') THEN /* 사원명을 검색한 경우 */
+                                OPEN e_cursor FOR 
+                                SELECT e.emp_no
+                                         ,e.emp_name
+                                         ,d.dept_name
+                                         ,r.rank_name
+                                         ,e.emp_status
+                                     FROM emp E, dept d, RANK r
+                                     WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no AND d.dept_name =pdname AND r.rank_name = prname  AND e.emp_name = pename
+                                     ORDER BY emp_no ASC;  
+                                     
+                              ELSE /* 사원을 검색하지 않은 경우 */
+                                OPEN e_cursor FOR 
+                                      SELECT e.emp_no
+                                             ,e.emp_name
+                                             ,d.dept_name
+                                             ,r.rank_name
+                                             ,e.emp_status
+                                     FROM emp E, dept d, RANK r
+                                     WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no AND d.dept_name =pdname AND r.rank_name = prname
+                                     ORDER BY emp_no ASC;
+                              END IF;
+         ELSE /* 직위를 선택하지 않은 경우*/
+                              IF(pename!='') THEN /* 사원명을 검색한 경우 */
+                                OPEN e_cursor FOR 
+                                SELECT e.emp_no
+                                         ,e.emp_name
+                                         ,d.dept_name
+                                         ,r.rank_name
+                                         ,e.emp_status
+                                     FROM emp E, dept d, RANK r
+                                     WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no AND d.dept_name =pdname AND e.emp_name = pename
+                                     ORDER BY emp_no ASC;  
+                                     
+                              ELSE /* 사원을 검색하지 않은 경우 */
+                                OPEN e_cursor FOR 
+                                      SELECT e.emp_no
+                                             ,e.emp_name
+                                             ,d.dept_name
+                                             ,r.rank_name
+                                             ,e.emp_status
+                                     FROM emp E, dept d, RANK r
+                                     WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no AND d.dept_name =pdname
+                                     ORDER BY emp_no ASC;
+                              END IF;
+         END IF;
+  ELSE/* 부서를 선택하지 않은 경우 */
+         IF(prname!='전체') THEN /* 직위를 선택한 경우 */
+                              IF(pename!='') THEN /* 사원명을 검색한 경우 */
+                                OPEN e_cursor FOR 
+                                SELECT e.emp_no
+                                         ,e.emp_name
+                                         ,d.dept_name
+                                         ,r.rank_name
+                                         ,e.emp_status
+                                     FROM emp E, dept d, RANK r
+                                     WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no AND r.rank_name = prname  AND e.emp_name = pename
+                                     ORDER BY emp_no ASC;  
+                                     
+                              ELSE /* 사원을 검색하지 않은 경우 */
+                                OPEN e_cursor FOR 
+                                      SELECT e.emp_no
+                                             ,e.emp_name
+                                             ,d.dept_name
+                                             ,r.rank_name
+                                             ,e.emp_status
+                                     FROM emp E, dept d, RANK r
+                                     WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no AND r.rank_name = prname
+                                     ORDER BY emp_no ASC;
+                              END IF;
+         ELSE /* 직위를 선택하지 않은 경우*/
+                              IF(pename!='') THEN /* 사원명을 검색한 경우 */
+                                OPEN e_cursor FOR 
+                                SELECT e.emp_no
+                                         ,e.emp_name
+                                         ,d.dept_name
+                                         ,r.rank_name
+                                         ,e.emp_status
+                                     FROM emp E, dept d, RANK r
+                                     WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no AND e.emp_name = pename
+                                     ORDER BY emp_no ASC;  
+                                     
+                              ELSE /* 아무것도 선택하지 않고 검색한 경우 */
+                                OPEN e_cursor FOR 
+                                      SELECT e.emp_no
+                                             ,e.emp_name
+                                             ,d.dept_name
+                                             ,r.rank_name
+                                             ,e.emp_status
+                                     FROM emp E, dept d, RANK r
+                                     WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no
+                                     ORDER BY emp_no ASC;
+                              END IF;
+         END IF;
+  END IF;
+     EXCEPTION
+     WHEN OTHERS THEN
+     DBMS_OUTPUT.PUT_LINE('SQL ERROR MESSAGE: '|| SQLERRM);
+    close e_cursor;
+END;
 
 
 /* PAGE57 */
