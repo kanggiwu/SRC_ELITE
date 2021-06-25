@@ -23,10 +23,6 @@
 		
 	</bean>
 
-	<bean id="account-user-logic" class="com.srcelite.finalerp.web.mvc.AccountUserLogic">
-		
-	</bean>
-
 	<bean id="human-resource-logic" class="com.srcelite.finalerp.web.mvc.HumanResourceLogic">
 		
 	</bean>
