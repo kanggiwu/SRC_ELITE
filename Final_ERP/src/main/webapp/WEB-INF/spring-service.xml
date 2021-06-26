@@ -4,34 +4,41 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<bean id="main-logic" class="com.srcelite.finalerp.web.mvc.MainLogic">
-		
+		<property name="mainDao" ref="main-dao"></property>
 	</bean>
 
 	<bean id="notice-logic" class="com.srcelite.finalerp.web.mvc.NoticeLogic" >
+		<property name="noticeDao" ref="notice-dao"></property>
 		
 	</bean>
 
 	<bean id="schedule-logic" class="com.srcelite.finalerp.web.mvc.ScheduleLogic">
+		<property name="scheduleDao" ref="schedule-dao"></property>
 		
 	</bean>	
 
 	<bean id="account-user-logic" class="com.srcelite.finalerp.web.mvc.AccountUserLogic">
+		<property name="accountUserDao" ref="account-user-dao"></property>
 
 	</bean>
 
 	<bean id="account-manager-logic" class="com.srcelite.finalerp.web.mvc.AccountManagerLogic">
+		<property name="accountManagerDao" ref="account-manager-dao"></property>
 		
 	</bean>
 
 	<bean id="human-resource-logic" class="com.srcelite.finalerp.web.mvc.HumanResourceLogic">
+		<property name="humanResourceDao" ref="human-resource-dao"></property>
 		
 	</bean>
 
 	<bean id="approval-logic" class="com.srcelite.finalerp.web.mvc.ApprovalLogic">
+		<property name="approvalDao" ref="approval-dao"></property>
 		
 	</bean>
 
 	<bean id="project-history-logic" class="com.srcelite.finalerp.web.mvc.ProjectHistoryLogic">
+		<property name="projectHistoryDao" ref="project-history-dao"></property>
 		
 	</bean>
 </beans>
