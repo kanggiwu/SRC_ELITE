@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.mybatis.mapper.ProjectHistoryMapper">
+	<resultMap id = "rm_project" type="map"></resultMap>
+	<!-- 프로젝트 리스트 조회 -->
+	<select id="getProjectHistoryList" resultType="map">
+		SELECT p.project_name, p.project_startline || ' ~ ' || p.project_deadline, e.emp_name, p.project_type 
+		  FROM project p, project_emp pe, emp e
+		 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no
+	</select>
+
+	<!-- 프로젝트 상세 조회 -->
+	<select id="getDetailProject" parameterType="int" resultType="map">
+		SELECT p.project_name, p.project_client, e.emp_name, p.project_tech, p.project_startline, p.project_deadline, p.project_profit, p.project_type, p.project_content
+		  FROM project p, project_emp pe, emp e
+		 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = #{project_no}
+	</select>
+	
+	<!-- 프로젝트 인원 리스트 조회 -->
+	<select id="getProjectParticipation" parameterType="int" resultType="map">
+		SELECT e.emp_name
+  		  FROM emp e, project_emp pe, project p
+		 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = #{project_no}
+	</select>
+	
+
+<!-- ///////////////////////////////////프로젝트 이력추가 페이지 ///////////////////////////////////////////// -->
+	
+	<!-- 프로젝트 상세 업데이트 및 인력 추가 -->
+	<!-- 인력추가시 사원번호는 integer배열로 받아야 합니다 -->
+	<select id="updateProjectInfo" parameterType="map" statementType="CALLABLE" resultMap = "map">
+		{call 
+				prc_array_test(
+							#{project_no,mode=IN,jdbcType=NUMERIC} 
+                             ,#{project_profit,mode=IN,jdbcType=NUMERIC}
+                             ,#{project_client,mode=IN,jdbcType=VARCHAR}
+                             ,#{project_type,mode=IN,jdbcType=VARCHAR}
+                             ,#{project_content,mode=IN,jdbcType=VARCHAR}
+                             ,#{project_tech,mode=IN,jdbcType=VARCHAR}
+                             ,#{emp_no,mode=IN,jdbcType=NUMERIC}
+                             ,#{arr_peno,mode=IN,jdbcType=ARRAY}
+                             )
+		}
+	</select> 
+
+	<!-- 프로젝트 이력추가 -->
+	<insert id="insertProjectInfo" parameterType="map">
+		INSERT INTO project (project_no, project_name, project_profit, project_client, project_startline, project_deadline, project_type, project_content, project_register, project_tech)
+                       VALUES(#{seq_project}, #{project_name}, #{project_profit}, #{project_client}, #{project_startline}, #{project_deadline}, #{project_type}, #{project_content}, #{project_register},#{project_tech})
+	</insert>
+	
+	<!-- 프로젝트 참여 사원 등록 -->
+	<insert id="insertProjectMember" parameterType="map">
+		INSERT INTO project_emp ( project_no, emp_no, project_manager) VALUES(#{project_no}, #{emp_no}, #{project_manager})
+	</insert>
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////// -->	
+	
+</mapper>

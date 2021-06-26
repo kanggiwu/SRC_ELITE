@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.mybatis.mapper.NoticeMapper">
+
+	<!-- 공지 리스트 가져오기 -->  
+	<select id="getNoticeList" parameterType="int" resultType="map"> 
+	SELECT notice_no, notice_type, notice_title, notice_content, notice_date
+  	  FROM      notice
+  	 WHERE notice_type = #{notice_type} <!-- 화면에서 체크박스가 체크될때마다 각각 다른 조건의 리스트를 불러와야한다. ////////////미해결////////// -->
+  	 ORDER BY notice_date DESC
+	</select>
+	
+	<!-- 공지 리스트 검색 -->  
+	<select id="getSearchNoticeList" parameterType="int" resultType="map"> 
+	SELECT notice_no, notice_type, notice_title, notice_content, notice_date
+  	  FROM      notice
+  	 WHERE notice_type = #{notice_type}
+  	 <if test='#{} != null'>
+  	 	AND notice_title LIKE '%'||#{}||'%'
+  	 </if>
+  	 ORDER BY notice_date DESC
+	</select>
+	
+	
+	<!-- 신규 공지 등록 -->
+	<insert id="insertNotice" parameterType="map">
+		INSERT INTO notice (notico_no, notice_type, notice_title, notice_content, notice_date)
+                 VALUES (#{seq_notice}, #{notice_type}, #{notice_title}, #{notice_content}, SYSDATE)
+	</insert>
+	
+	<!-- 공지 수정 -->
+	<update id="updateNotice" parameterType="map">
+		UPDATE notice
+		 SET
+			notice_type = #{notice_type},
+			notice_title = #{notice_title},
+			notice_content = #{notice_content},
+			notice_date = SYSDATE
+		WHERE notice_no = #{notice_no}
+	</update>
+	
+	<!-- 공지 삭제 -->		
+	<delete id="deleteNotice" parameterType="int">
+		DELETE notice WHERE notice_no = #{notice_no};
+	</delete>
+
+</mapper>
