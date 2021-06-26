@@ -13,7 +13,7 @@
 	</select>
 	
 	<!-- 공지 리스트 검색 -->  
-	<select id="getNoticeList" parameterType="int" resultType="map"> 
+	<select id="getSearchNoticeList" parameterType="int" resultType="map"> 
 	SELECT notice_no, notice_type, notice_title, notice_content, notice_date
   	  FROM      notice
   	 WHERE notice_type = #{notice_type}

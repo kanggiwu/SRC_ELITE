@@ -30,19 +30,20 @@
 	
 	<!-- 프로젝트 상세 업데이트 및 인력 추가 -->
 	<!-- 인력추가시 사원번호는 integer배열로 받아야 합니다 -->
-	<select id="updateProjectInfo" parameterType="map" statementType="CALLABLE">
-		{call prc_array_test(#{project_no} 
-                             ,#{project_profit}
-                             ,#{project_client}
-                             ,#{project_type}
-                             ,#{project_content}
-                             ,#{project_tech}
-                             ,#{emp_no}
-                             ,#{eno_table})
+	<select id="updateProjectInfo" parameterType="map" statementType="CALLABLE" resultMap = "map">
+		{call 
+				prc_array_test(
+							#{project_no,mode=IN,jdbcType=NUMERIC} 
+                             ,#{project_profit,mode=IN,jdbcType=NUMERIC}
+                             ,#{project_client,mode=IN,jdbcType=VARCHAR}
+                             ,#{project_type,mode=IN,jdbcType=VARCHAR}
+                             ,#{project_content,mode=IN,jdbcType=VARCHAR}
+                             ,#{project_tech,mode=IN,jdbcType=VARCHAR}
+                             ,#{emp_no,mode=IN,jdbcType=NUMERIC}
+                             ,#{arr_peno,mode=IN,jdbcType=ARRAY}
+                             )
 		}
-	
-	
-	</select>
+	</select> 
 
 	<!-- 프로젝트 이력추가 -->
 	<insert id="insertProjectInfo" parameterType="map">
@@ -52,7 +53,7 @@
 	
 	<!-- 프로젝트 참여 사원 등록 -->
 	<insert id="insertProjectMember" parameterType="map">
-		INSERT INTO project_emp ( project_no, emp_no, project_manager) VALUES(#{project_no, #{emp_no}, #{project_manager})
+		INSERT INTO project_emp ( project_no, emp_no, project_manager) VALUES(#{project_no}, #{emp_no}, #{project_manager})
 	</insert>
 
 <!-- /////////////////////////////////////////////////////////////////////////////////////////////////// -->	
