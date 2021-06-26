@@ -8,14 +8,26 @@
 	<select id="getNoticeList" parameterType="int" resultType="map"> 
 	SELECT notice_no, notice_type, notice_title, notice_content, notice_date
   	  FROM      notice
-  	 WHERE notice_type IN (#{어찌하나}) <!-- 화면에서 체크박스가 체크될때마다 각각 다른 조건의 리스트를 불러와야한다. ////////////미해결////////// -->
+  	 WHERE notice_type = #{notice_type}
   	 ORDER BY notice_date DESC
 	</select>
+	
+	<!-- 공지 리스트 검색 -->  
+	<select id="getNoticeList" parameterType="int" resultType="map"> 
+	SELECT notice_no, notice_type, notice_title, notice_content, notice_date
+  	  FROM      notice
+  	 WHERE notice_type = #{notice_type}
+  	 <if test='#{} != null'>
+  	 	AND notice_title LIKE '%'||#{}||'%'
+  	 </if>
+  	 ORDER BY notice_date DESC
+	</select>
+	
 	
 	<!-- 신규 공지 등록 -->
 	<insert id="insertNotice" parameterType="map">
 		INSERT INTO notice (notico_no, notice_type, notice_title, notice_content, notice_date)
-                 VALUES (#{시퀀스 설정 필요}, #{notice_type}, #{notice_title}, #{notice_content}, SYSDATE)  <!-- ////////////미해결////////////-->
+                 VALUES (#{seq_notice}, #{notice_type}, #{notice_title}, #{notice_content}, SYSDATE)
 	</insert>
 	
 	<!-- 공지 수정 -->

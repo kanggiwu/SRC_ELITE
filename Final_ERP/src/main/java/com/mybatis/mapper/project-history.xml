@@ -31,7 +31,7 @@
 	<!-- 프로젝트 이력추가 -->
 	<insert id="insertProjectInfo" parameterType="map">
 		INSERT INTO project (project_no, project_name, project_profit, project_client, project_startline, project_deadline, project_type, project_content, project_register, project_tech)
-                       VALUES(#{시퀀스 설정 필요}, #{project_name}, #{project_profit}, #{project_client}, #{project_startline}, #{project_deadline}, #{project_type}, #{project_content}, #{project_register},#{project_tech})
+                       VALUES(#{seq_project}, #{project_name}, #{project_profit}, #{project_client}, #{project_startline}, #{project_deadline}, #{project_type}, #{project_content}, #{project_register},#{project_tech})
 	</insert>
 	
 	<!-- 프로젝트 참여 사원 등록 -->

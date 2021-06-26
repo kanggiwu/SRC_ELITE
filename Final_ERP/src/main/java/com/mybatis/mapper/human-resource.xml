@@ -20,14 +20,12 @@
           #{pename, mode=IN,  jdbcType=VARCHAR},
           #{e_cursor, mode=OUT,  jdbcType=CURSOR}
        	)}
-	</select>     
-	
-	<!-- 사원 조건 검색 넣을것인가? -->
-	
+	</select>    
+		
 	<!-- 사원 정보 등록 -->
 	<insert id="insertEmpInfo" parameterType="map">
 		INSERT INTO emp (emp_no, emp_name, emp_pw, emp_status, dept_no, rank_no, emp_job, emp_hiredate, emp_retiredate, emp_email, emp_tel, emp_auth, emp_picture_path)
-            VALUES(#{시퀀스 추가 필요}, #{emp_name}, #{emp_pw}, #{emp_status}, #{dept_no}, #{rank_no}, #{emp_job}, #{emp_hiredate}, #{emp_retiredate}, #{emp_email}, #{emp_tel}, #{emp_auth}. #{emp_picture_path})
+            VALUES(#{seq_emp}, #{emp_name}, #{emp_pw}, #{emp_status}, #{dept_no}, #{rank_no}, #{emp_job}, #{emp_hiredate}, #{emp_retiredate}, #{emp_email}, #{emp_tel}, #{emp_auth}. #{emp_picture_path})
 	</insert>
 
 	<!-- 자격증 소유자 등록 -->
