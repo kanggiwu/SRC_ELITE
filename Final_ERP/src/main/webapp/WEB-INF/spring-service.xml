@@ -16,7 +16,7 @@
 	</bean>	
 
 	<bean id="account-user-logic" class="com.srcelite.finalerp.web.mvc.AccountUserLogic">
-
+		<!-- <property name="accountUserDao" ref="com.srcelite.finalerp.web.mvc.AccountUserDao"/> -->
 	</bean>
 
 	<bean id="account-manager-logic" class="com.srcelite.finalerp.web.mvc.AccountManagerLogic">
