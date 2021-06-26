@@ -62,26 +62,26 @@
 				<prop key="/schedule/updateSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/deleteSchedule.src1">schedule-controller</prop>
 
-				<prop key="/userAccount/getMonthSalary.src1">account-user-controller</prop>
-				<prop key="/userAccount/getYearSalary.src1">account-user-controller</prop>
-				<prop key="/userAccount/getReirementPay.src1">account-user-controller</prop>
+				<prop key="/user_account/getMonthSalary.src1">account-user-controller</prop>
+				<prop key="/user_account/getYearSalary.src1">account-user-controller</prop>
+				<prop key="/user_account/getReirementPay.src1">account-user-controller</prop>
 
-				<prop key="/managerAccount/updateAccountInfo.src1">account-manager-controller</prop>
-				<prop key="/managerAccount/insertMonthSalary.src1">account-manager-controller</prop>
-				<prop key="/managerAccount/getProfitList.src1">account-manager-controller</prop>
-				<prop key="/managerAccount/updateProfit.src1">account-manager-controller</prop>
-				<prop key="/managerAccount/insertProfit.src1">account-manager-controller</prop>
-				<prop key="/managerAccount/getExpenseList.src1">account-manager-controller</prop>
-				<prop key="/managerAccount/updateExpense.src1">account-manager-controller</prop>
-				<prop key="/managerAccount/insertExpense.src1">account-manager-controller</prop>
-				<prop key="/managerAccount/getBalanceLIst.src1">account-manager-controller</prop>
+				<prop key="/manager_account/updateAccountInfo.src1">account-manager-controller</prop>
+				<prop key="/manager_account/insertMonthSalary.src1">account-manager-controller</prop>
+				<prop key="/manager_account/getProfitList.src1">account-manager-controller</prop>
+				<prop key="/manager_account/updateProfit.src1">account-manager-controller</prop>
+				<prop key="/manager_account/insertProfit.src1">account-manager-controller</prop>
+				<prop key="/manager_account/getExpenseList.src1">account-manager-controller</prop>
+				<prop key="/manager_account/updateExpense.src1">account-manager-controller</prop>
+				<prop key="/manager_account/insertExpense.src1">account-manager-controller</prop>
+				<prop key="/manager_account/getBalanceLIst.src1">account-manager-controller</prop>
 
-				<prop key="/humanResource/getBalanceLIst.src1">human-resource-controller</prop>
-				<prop key="/humanResource/updateOrganizationChart.src1">human-resource-controller</prop>
-				<prop key="/humanResource/getEmployeeList.src1">human-resource-controller</prop>
-				<prop key="/humanResource/getDetailEmployee.src1">human-resource-controller</prop>
-				<prop key="/humanResource/insertEmployee.src1">human-resource-controller</prop>
-				<prop key="/humanResource/updateEmployee.src1">human-resource-controller</prop>
+				<prop key="/human_resource/getBalanceLIst.src1">human-resource-controller</prop>
+				<prop key="/human_resource/updateOrganizationChart.src1">human-resource-controller</prop>
+				<prop key="/human_resource/getEmployeeList.src1">human-resource-controller</prop>
+				<prop key="/human_resource/getDetailEmployee.src1">human-resource-controller</prop>
+				<prop key="/human_resource/insertEmployee.src1">human-resource-controller</prop>
+				<prop key="/human_resource/updateEmployee.src1">human-resource-controller</prop>
 
 				<prop key="/approval/getApprovalForm.src1">approval-controller</prop>
 				<prop key="/approval/submitApproval.src1">approval-controller</prop>
