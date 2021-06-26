@@ -7,7 +7,7 @@
 	<!-- 사원 리스트 출력 -->
 	<select id="getEmpList" resultType="map">
 		SELECT e.emp_no, e.emp_name, d.dept_name, r.rank_name, e.emp_status
- 		  FROM emp e, dept d, rank r
+ 		  FROM EMP e, DEPT d, rank r
 		 WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no
 		 ORDER BY emp_no ASC
 	</select>
@@ -15,10 +15,10 @@
 	<!-- 사원리스트를 부서명, 직위명, 사원이름으로 조건검색하여 프로시저 출력 -->
 	<select id="getEmpListProc" statementType="CALLABLE" parameterType="map"  resultType="map">
 		{call PROC_EMP_LIST(        
-          #{pdname , mode=IN,  jdbcType=VARCHAR},
-          #{prname, mode=IN,  jdbcType=VARCHAR},
-          #{pename, mode=IN,  jdbcType=VARCHAR},
-          #{e_cursor, mode=OUT,  jdbcType=CURSOR}
+          #{dept_name},
+          #{rank_name},
+          #{emp_name},
+          #{e_cursor}
        	)}
 	</select>    
 		
@@ -35,7 +35,7 @@
 
 	<!-- 사원 정보 수정 -->
 	<update id="updateEmpInfo" parameterType="map">
-		UPDATE emp
+		UPDATE EMP
 		SET
     		emp_name = #{emp_name}
     		,emp_status = #{emp_status}
