@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
-<mapper namespace="com.mybatis.mapper.">
+<mapper namespace="com.mybatis.mapper.ScheduleMapper">
 	
 	<!-- 처음 화면에 들어왔을 때의 현재 월의 일정 가져오기 -->
 	<select id="getAttendanceThisMonth" parameterType="int" resultType="map">
