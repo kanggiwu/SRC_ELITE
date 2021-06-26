@@ -19,7 +19,7 @@
 
 	<!-- 출근 시간 등록 -->
 	<insert id="insertAttendanceTime" parameterType="map">
-		INSERT INTO attendance (attendance_code, emp_no, attendance_start_work) VALUES(#{시퀀스 설정필요}, #{emp_no}, SYSDATE)	<!-- ////////////미해결////////////-->
+		INSERT INTO attendance (attendance_code, emp_no, attendance_start_work) VALUES(#{seq_attendance}, #{emp_no}, SYSDATE)	<!-- ////////////미해결////////////-->
 	</insert>
 	
 	<!-- 최신 공지 3건 불러오기 -->
