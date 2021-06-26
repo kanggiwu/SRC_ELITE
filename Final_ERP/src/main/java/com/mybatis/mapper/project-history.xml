@@ -5,7 +5,7 @@
 <mapper namespace="com.mybatis.mapper.ProjectHistoryMapper">
 	<resultMap id = "rm_project" type="map"></resultMap>
 	<!-- 프로젝트 리스트 조회 -->
-	<select id="getBmGroup" resultType="map">
+	<select id="getProjectHistoryList" resultType="map">
 		SELECT p.project_name, p.project_startline || ' ~ ' || p.project_deadline, e.emp_name, p.project_type 
 		  FROM project p, project_emp pe, emp e
 		 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no
@@ -19,7 +19,7 @@
 	</select>
 	
 	<!-- 프로젝트 인원 리스트 조회 -->
-	<select id="getBmGroup" parameterType="int" resultType="map">
+	<select id="getProjectParticipation" parameterType="int" resultType="map">
 		SELECT e.emp_name
   		  FROM emp e, project_emp pe, project p
 		 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = #{project_no}
@@ -47,7 +47,7 @@
 	<!-- 프로젝트 이력추가 -->
 	<insert id="insertProjectInfo" parameterType="map">
 		INSERT INTO project (project_no, project_name, project_profit, project_client, project_startline, project_deadline, project_type, project_content, project_register, project_tech)
-                       VALUES(#{시퀀스 설정 필요}, #{project_name}, #{project_profit}, #{project_client}, #{project_startline}, #{project_deadline}, #{project_type}, #{project_content}, #{project_register},#{project_tech})
+                       VALUES(#{seq_project}, #{project_name}, #{project_profit}, #{project_client}, #{project_startline}, #{project_deadline}, #{project_type}, #{project_content}, #{project_register},#{project_tech})
 	</insert>
 	
 	<!-- 프로젝트 참여 사원 등록 -->
