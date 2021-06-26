@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
-<mapper namespace="com.mybatis.mapper.">
+<mapper namespace="com.mybatis.mapper.MainMapper">
 
 	<!-- login 시 DB에서 아이디에 해당하는 비번을 불러와서 사용자가 입력한 비번과 일치하면 로그인 -->
 	<select id="getPassword" parameterType="int" resultType="string">
