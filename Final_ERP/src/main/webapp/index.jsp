@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+
+<title>파이널 index.jsp</title>
 </head>
 <body>
-adsd
+	파이널 index.jsp
 </body>
 </html>

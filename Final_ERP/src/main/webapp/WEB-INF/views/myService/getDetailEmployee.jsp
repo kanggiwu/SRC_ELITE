@@ -60,7 +60,7 @@
           licence_date = "";
           licence_expire = "";
         }
-        }
+        
       }
   %>    
 <!DOCTYPE html>

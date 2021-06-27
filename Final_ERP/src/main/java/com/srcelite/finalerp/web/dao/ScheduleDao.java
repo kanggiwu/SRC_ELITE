@@ -1,8 +1,8 @@
-package com.srcelite.finalerp.web.mvc;
+package com.srcelite.finalerp.web.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
-public class NoticeDao {
+public class ScheduleDao {
 	SqlSessionTemplate sqlSessionTemplate = null;
 
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {

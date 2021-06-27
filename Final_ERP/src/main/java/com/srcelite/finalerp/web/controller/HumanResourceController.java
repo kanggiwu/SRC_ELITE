@@ -1,4 +1,4 @@
-package com.srcelite.finalerp.web.mvc;
+package com.srcelite.finalerp.web.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
+import com.srcelite.finalerp.web.logic.HumanResourceLogic;
 import com.util.HashMapBinder;
+
 
 public class HumanResourceController extends MultiActionController {
 	HumanResourceLogic humanResourceLogic = null;

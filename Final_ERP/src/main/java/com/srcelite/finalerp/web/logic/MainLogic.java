@@ -1,6 +1,8 @@
-package com.srcelite.finalerp.web.mvc;
+package com.srcelite.finalerp.web.logic;
 
 import java.util.Map;
+
+import com.srcelite.finalerp.web.dao.MainDao;
 
 public class MainLogic {
 	MainDao mainDao = null;
