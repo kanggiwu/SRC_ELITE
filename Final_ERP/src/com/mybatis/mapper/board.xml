@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.mybatis.mapper.BoardMapper">
+	<resultMap id="boardMMap" type="bmVO">
+	 <result property="bm_no" column="bm_no"/>
+	 <result property="bm_title" column="bm_title"/>
+	 <result property="bm_date" column="bm_date"/>
+	 <result property="bm_hit" column="bm_hit"/>
+	 <result property="bs_seq" column="bs_seq"/>
+	 <result property="bs_file" column="bs_file"/>
+	 <result property="bs_size" column="bs_size"/>
+	</resultMap>
+	<resultMap id="boardSMap" type="bsVO">
+	 <result property="bm_no" column="bm_no"/>
+	 <result property="bs_seq" column="bs_seq"/>
+	 <result property="bs_file" column="bs_file"/>
+	 <result property="bs_size" column="bs_size"/>
+	</resultMap>
+	<delete id="boardMDelete" parameterType="map">
+		DELETE FROM board_master2019 WHERE bm_no=#{bm_no}
+	</delete>
+	<delete id="boardSDel" parameterType="map">
+		DELETE FROM board_sub2019 WHERE bm_no=#{bm_no}
+	</delete>
+	<select id="getBmNo" parameterType="int" resultType="int">
+		SELECT NVL((SELECT /*+index_desc(board_master2019 BOARD_MNO_PK)*/ bm_no
+		              FROM board_master2019
+		             WHERE rownum=1),0)+1 bm_no FROM dual
+	</select>
+	<select id="getBmGroup" parameterType="map" resultType="int">
+		SELECT NVL((SELECT /*+index_desc(board_master2019 i_group)*/ bm_group
+		              FROM board_master2019
+		             WHERE rownum=1 AND bm_group > 0),0)+1 bm_group 
+		  FROM dual
+	</select>
+	<insert id="boardMInsert" parameterType="map">
+		INSERT INTO board_master2019(bm_no, bm_title, bm_writer, bm_email
+		                           , bm_content, bm_date, bm_group, bm_pos, bm_step, bm_pw) 
+		                      values(#{bm_no},#{bm_title},#{bm_writer},#{bm_email}
+		                           , #{bm_content}, to_char(sysdate, 'YYYY-MM-DD')
+		                           , #{bm_group},#{bm_pos},#{bm_step},#{bm_pw}
+		                            )
+	</insert>
+	<insert id="boardSInsert" parameterType="map">
+		INSERT INTO board_sub2019(bm_no,bs_seq,bs_file,bs_size) values(#{bm_no},#{bs_seq},#{bs_file},#{bs_size})
+	</insert>
+	<update id="hitCount" parameterType="int">
+		UPDATE board_master2019
+		   SET bm_hit = bm_hit + 1
+		 WHERE bm_no = #{value}
+	</update>
+	<update id="bmStepUpdate" parameterType="map">
+		UPDATE board_master2019
+		   SET bm_step = bm_step + 1
+		 WHERE bm_group = #{bm_group}
+		 <![CDATA[ and bm_step > #{bm_step} ]]>
+	</update>
+	<update id="boardMUpdate" parameterType="map">
+		UPDATE board_master2019
+		   SET bm_title = #{bm_title}
+			  ,bm_writer = #{bm_writer}
+			  ,bm_content = #{bm_content}
+			  ,bm_email = #{bm_email}
+			  ,bm_pw = #{bm_pw}
+		 WHERE bm_no = #{bm_no}
+	</update>
+	<select id="getBoardList" parameterType="map" resultType="map">
+		 SELECT bm.bm_no, bm.bm_title, bm.bm_date, NVL(bs.bs_file,'') bs_file, bm.bm_hit
+		       ,bm.bm_group, bm.bm_pos, bm.bm_step, bm.bm_email, bm.bm_pw
+		       ,bm.bm_writer, bm.bm_content
+		  FROM board_master2019 bm
+		      ,board_sub2019 bs
+		 WHERE bm.bm_no = bs.bm_no(+)	
+		<if test='cb_search!=null and cb_search.equals("bm_title")'>
+	  	   AND bm.bm_title LIKE '%'||#{tb_search}||'%'
+		</if>	 
+		<if test='bm_no > 0'>
+	  	   AND bm.bm_no = #{bm_no}
+		</if>	 
+		ORDER BY bm_group  desc, bm_step asc
+	</select>
+	<select id="getBoardMap" parameterType="map" resultMap="boardMMap">
+		 SELECT bm.bm_no, bm.bm_title, bm.bm_date, bs.bs_file, bm.bm_hit
+		  FROM board_master2019 bm
+		      ,board_sub2019 bs
+		 WHERE bm.bm_no = bs.bm_no(+)	
+	</select>
+	<select id="test" parameterType="map" resultType="string"> 
+		select TO_CHAR(sysdate, 'YYYY-MM-DD') from dual
+	</select> 
+</mapper>

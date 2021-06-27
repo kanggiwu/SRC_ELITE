@@ -8,15 +8,15 @@
 	<select id="getAttendanceThisMonth" parameterType="int" resultType="map">
 		 SELECT attendance_code, emp_no, attendance_start_work
   		   FROM attendance
-		  WHERE emp_no = 1/* #{emp_no} */
+		  WHERE emp_no = #{emp_no}
     		AND attendance_start_work BETWEEN TRUNC(SYSDATE+1)-TO_CHAR(SYSDATE,'DD') AND TRUNC(LAST_DAY(SYSDATE))+0.99999421
 	</select>
 	
-	<!-- 사용자가 선택한 월의 일정 리스트 가져오기 -->
+	<!-- 사용자가 선택한 월의 일정 리스트 가져오기 --> <!-- 해당 월의 날짜스트링 부분은 Dao 작성시 자바 변수명을 확인하여 추가 -->
 	<select id="getAttendanceOptional" parameterType="string" resultType="map">
 		    SELECT attendance_code, emp_no, attendance_start_work
   			  FROM attendance
- 			 WHERE     emp_no = 5
+ 			 WHERE emp_no = #{emp_no}
        			AND TO_DATE (SUBSTR (attendance_start_work, 1, 10), 'YYYY/MM/DD') 
              	BETWEEN   TRUNC (TO_DATE(#{해당월의 날짜스트링})  + 1) - TO_CHAR (TO_DATE(#{해당월의 날짜스트링}), 'DD')
              	AND TRUNC ( LAST_DAY (#{해당월의 날짜스트링}) + 0.99999421
