@@ -17,8 +17,8 @@
 	SELECT notice_no, notice_type, notice_title, notice_content, notice_date
   	  FROM      notice
   	 WHERE notice_type = #{notice_type}
-  	 <if test='#{} != null'>
-  	 	AND notice_title LIKE '%'||#{}||'%'
+  	 <if test='#{추가예정} != null'>
+  	 	AND notice_title LIKE '%'||#{추가예정}||'%'
   	 </if>
   	 ORDER BY notice_date DESC
 	</select>

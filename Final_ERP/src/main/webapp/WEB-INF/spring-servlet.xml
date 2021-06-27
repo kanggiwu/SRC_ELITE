@@ -6,35 +6,35 @@
 	class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
 
 	<!--컨트롤러의 빈을 정의하여 메소드 리졸버와 로직 클래스를 객체주입 -->	
-	<bean id="main-controller" class="com.srcelite.finalerp.web.mvc.MainController">
+	<bean id="main-controller" class="com.srcelite.finalerp.web.controller.MainController">
 		<property name="methodNameResolver" ref="erp-resolver"/>
 		<property name="mainLogic" ref="main-logic"/>
 	</bean>
-	<bean id="notice-controller" class="com.srcelite.finalerp.web.mvc.NoticeController">
+	<bean id="notice-controller" class="com.srcelite.finalerp.web.controller.NoticeController">
 		<property name="methodNameResolver" ref="erp-resolver"/>
 		<property name="noticeLogic" ref="notice-logic"/>
 	</bean>
-	<bean id="schedule-controller" class="com.srcelite.finalerp.web.mvc.ScheduleController">
+	<bean id="schedule-controller" class="com.srcelite.finalerp.web.controller.ScheduleController">
 		<property name="methodNameResolver" ref="erp-resolver"/>
 		<property name="scheduleLogic" ref="schedule-logic"/>
 	</bean>
-	<bean id="account-user-controller" class="com.srcelite.finalerp.web.mvc.AccountUserController">
+	<bean id="account-user-controller" class="com.srcelite.finalerp.web.controller.AccountUserController">
 		<property name="methodNameResolver" ref="erp-resolver"/>
 		<property name="accountUserLogic" ref="account-user-logic"/>
 	</bean>
-	<bean id="account-manager-controller" class="com.srcelite.finalerp.web.mvc.AccountManagerController">
+	<bean id="account-manager-controller" class="com.srcelite.finalerp.web.controller.AccountManagerController">
 		<property name="methodNameResolver" ref="erp-resolver"/>
 		<property name="accountManagerLogic" ref="account-manager-logic"/>
 	</bean>
-	<bean id="human-resource-controller" class="com.srcelite.finalerp.web.mvc.HumanResourceController">
+	<bean id="human-resource-controller" class="com.srcelite.finalerp.web.controller.HumanResourceController">
 		<property name="methodNameResolver" ref="erp-resolver"/>
 		<property name="humanResourceLogic" ref="human-resource-logic"/>
 	</bean>
-	<bean id="approval-controller" class="com.srcelite.finalerp.web.mvc.ApprovalController">
+	<bean id="approval-controller" class="com.srcelite.finalerp.web.controller.ApprovalController">
 		<property name="methodNameResolver" ref="erp-resolver"/>
 		<property name="approvalLogic" ref="approval-logic"/>
 	</bean>
-	<bean id="project-history-controller" class="com.srcelite.finalerp.web.mvc.ProjectHistoryController">
+	<bean id="project-history-controller" class="com.srcelite.finalerp.web.controller.ProjectHistoryController">
 		<property name="methodNameResolver" ref="erp-resolver"/>
 		<property name="projectHistoryLogic" ref="project-history-logic"/>
 	</bean>
@@ -92,9 +92,9 @@
 				<prop key="/approval/getNumUnsignedApproval.src1">approval-controller</prop>
 				<prop key="/approval/getLineApproval.src1">approval-controller</prop>
 
-				<prop key="/approval/getProjectHistoryList.src1">project-history-controller</prop>
-				<prop key="/approval/getDetailProjectHistory.src1">project-history-controller</prop>
-				<prop key="/approval/insertProjectHistory.src1">project-history-controller</prop>
+				<prop key="/projecthistory/getProjectHistoryList.src1">project-history-controller</prop>
+				<prop key="/projecthistory/getDetailProjectHistory.src1">project-history-controller</prop>
+				<prop key="/projecthistory/insertProjectHistory.src1">project-history-controller</prop>
 			</props>
 		</property>
 	</bean>
