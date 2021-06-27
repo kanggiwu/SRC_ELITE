@@ -30,7 +30,7 @@
 	
 	<!-- 프로젝트 상세 업데이트 및 인력 추가 -->
 	<!-- 인력추가시 사원번호는 integer배열로 받아야 합니다 -->
-	<select id="updateProjectInfo" parameterType="map" statementType="CALLABLE" resultMap = "map">
+	<select id="updateProjectInfo" parameterType="map" statementType="CALLABLE" resultType = "map">
 		{call 
 				prc_array_test(
 							#{project_no,mode=IN,jdbcType=NUMERIC} 
