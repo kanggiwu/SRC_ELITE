@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ERP 테스트</title>
 </head>
 <body>
-
+	 final project ERP 테스트 화면
 </body>
 </html>

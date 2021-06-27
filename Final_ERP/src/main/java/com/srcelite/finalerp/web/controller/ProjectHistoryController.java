@@ -1,4 +1,4 @@
-package com.srcelite.finalerp.web.mvc;
+package com.srcelite.finalerp.web.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
+import com.srcelite.finalerp.web.logic.ProjectHistoryLogic;
 import com.util.HashMapBinder;
 
 public class ProjectHistoryController extends MultiActionController {

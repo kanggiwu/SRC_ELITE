@@ -1,4 +1,4 @@
-package com.srcelite.finalerp.web.mvc;
+package com.srcelite.finalerp.web.controller;
 
 import java.time.chrono.HijrahChronology;
 
@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
+import com.srcelite.finalerp.web.logic.MainLogic;
 
 public class MainController extends MultiActionController{
 	MainLogic mainLogic = null;
