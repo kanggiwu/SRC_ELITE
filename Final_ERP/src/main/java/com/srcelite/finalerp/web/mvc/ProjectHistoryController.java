@@ -25,7 +25,17 @@ public class ProjectHistoryController extends MultiActionController {
 	public ModelAndView getProjectHistoryList(HttpServletRequest request, HttpServletResponse response) 
 	throws Exception
 	{
-		return null;
+		logger.info("getProjectHistoryList 호출 성공");
+		HashMapBinder hmb = new HashMapBinder(request);
+		Map<String,Object> target = new HashMap<>();
+		hmb.bind(target);
+		List<Map<String,Object>> projectHistoryList = null;
+		projectHistoryList=projectHistoryLogic.getProjectHistoryList(target);
+		logger.info("projectHistoryList:"+projectHistoryList);//
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("getProjectHistoryList");
+		mav.addObject("projectHistoryList", projectHistoryList);
+		return mav;
 	}
 	
 	//프로젝트이력관리 상세 조회

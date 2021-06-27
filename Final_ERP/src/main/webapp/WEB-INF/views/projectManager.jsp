@@ -179,7 +179,7 @@ else{//조회 결과가 있을 때
 					<td onclick="openPopup()"><%=pmap.get("project_name").toString()%></td>
 					<td><%=pmap.get("project_startline").toString()%>&nbsp;~&nbsp;
 						<%=pmap.get("project_deadline").toString()%></td>
-					<td><%=pmap.get("emp_no").toString()%></td>
+					<td><%=pmap.get("emp_name").toString()%></td>
 					<td><%=pmap.get("project_type").toString()%></td>
 				</tr>
 <% 

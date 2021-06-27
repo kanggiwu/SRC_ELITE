@@ -92,9 +92,9 @@
 				<prop key="/approval/getNumUnsignedApproval.src1">approval-controller</prop>
 				<prop key="/approval/getLineApproval.src1">approval-controller</prop>
 
-				<prop key="/approval/getProjectHistoryList.src1">project-history-controller</prop>
-				<prop key="/approval/getDetailProjectHistory.src1">project-history-controller</prop>
-				<prop key="/approval/insertProjectHistory.src1">project-history-controller</prop>
+				<prop key="/projecthistory/getProjectHistoryList.src1">project-history-controller</prop>
+				<prop key="/projecthistory/getDetailProjectHistory.src1">project-history-controller</prop>
+				<prop key="/projecthistory/insertProjectHistory.src1">project-history-controller</prop>
 			</props>
 		</property>
 	</bean>

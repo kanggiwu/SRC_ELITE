@@ -5,8 +5,9 @@
 <mapper namespace="com.mybatis.mapper.ProjectHistoryMapper">
 	<resultMap id = "rm_project" type="map"></resultMap>
 	<!-- 프로젝트 리스트 조회 -->
-	<select id="getProjectHistoryList" resultType="map">
-		SELECT p.project_name, p.project_startline || ' ~ ' || p.project_deadline, e.emp_name, p.project_type 
+	<select id="getProjectHistoryList" parameterType="map" resultType="map">
+		<!--SELECT p.project_name, p.project_startline || ' ~ ' || p.project_deadline, e.emp_name, p.project_type   -->
+		SELECT p.project_name, p.project_startline, p.project_deadline, e.emp_name, p.project_type 
 		  FROM project p, project_emp pe, emp e
 		 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no
 	</select>
