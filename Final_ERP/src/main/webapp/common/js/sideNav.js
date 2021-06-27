@@ -8,8 +8,8 @@ const sideNavMainTitleApi = [
     id: "group",
     title: "공지사항",
     className: "",
-    ref: "#",
-    onClick: "",
+    ref: "../../myService/notice.jsp",
+    onClick: "#",
     collapsed: false,
   },
   {
