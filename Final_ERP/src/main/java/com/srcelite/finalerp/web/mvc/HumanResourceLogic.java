@@ -14,9 +14,16 @@ public class HumanResourceLogic {
 	//조직도 수정
 	public void updateOrganizationChart(Map<String,Object> pmap)                   {}
 	//사원정보 리스트조회
-	public List<Map<String,Object>>  getEmployeeList(Map<String,Object> pmap)      {return null;}
+	public List<Map<String,Object>>  getEmployeeList(Map<String,Object> pmap)      {
+		List<Map<String,Object>> boardList = null;
+		boardList = humanResourceDao.getEmployeeList(pmap);
+		return boardList;
+		}
 	//사원정보 상세조회
-	public Map<String,Object>  getDetailEmployee(Map<String,Object> pmap)          {return null;}
+	public List<Map<String,Object>>  getDetailEmployee(Map<String,Object> pmap)          {
+		List<Map<String,Object>> boardDetail = null;
+		boardDetail = humanResourceDao.getEmployeeDetail(pmap);
+		return boardDetail;}
 	//사원정보 수정
 	public void updateEmployee(Map<String,Object> pmap)                            {}
 	//사원정보 추가
