@@ -80,7 +80,7 @@ public class HashMapBinder {
 		//<input type="text" name="mem_id"
 		while(en.hasMoreElements()) {
 			String key = (String)en.nextElement();
-			logger.info("value:"+request.getParameter(key));
+			logger.info("value:"+request.getParameter(key)+ "key : " + key);
 			target.put(key, request.getParameter(key));
 		}
 	}////////end of bind

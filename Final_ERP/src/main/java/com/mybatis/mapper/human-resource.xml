@@ -52,12 +52,19 @@
 	
 		<!-- 사원 상세 정보 가져오기 -->
 	<select id="getDetailEmpInfo" parameterType="map" resultType="map">
-	SELECT e.emp_no, e.emp_name, TRUNC(MONTHS_BETWEEN(SYSDATE, emp_hiredate)/12)||'년차' 연차, 
-		d.dept_name, nvl((t.team_name),'No Team') team_name, r.rank_name, e.emp_hiredate, 
+	SELECT  e.emp_no, e.emp_name, TRUNC(MONTHS_BETWEEN(SYSDATE, emp_hiredate)/12)||'년차' emp_year, 
+		d.dept_name, nvl((t.team_name),'없음') team_name, r.rank_name, e.emp_hiredate, 
 		e. emp_retiredate,  e.emp_tel, e.emp_email,e.emp_status, e.emp_account, 
-		l.licence_no, l.licence_name,l.licence_type,l.licence_level,l.licence_date,l.licence_expire
-    FROM emp e, dept d, rank r, team t, licence_emp le, licence l
+		(select count(licence_no)
+		from licence_emp le, emp e
+		where le.emp_no = e.emp_no and e.emp_No = #{emp_no}) licences
+    FROM emp e, dept d, rank r, team t
    WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no and E.TEAM_NO = T.TEAM_NO(+)  
-    	and le.emp_no(+) = e.emp_no and le.licence_no = l.licence_no(+) and e.emp_no = #{emp_no}
+    	and e.emp_no = #{emp_no}
+	</select>
+	<select id="getEmpLicenceInfo" parameterType="map" resultType="map">
+	select	l.licence_no, l.licence_name,l.licence_type,l.licence_level,l.licence_date,l.licence_expire
+	from licence_emp le, licence l
+	where le.licence_no = l.licence_no and le.emp_no = #{emp_no}
 	</select>
 </mapper>

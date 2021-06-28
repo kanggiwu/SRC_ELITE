@@ -6,11 +6,12 @@
 	path.append("/");
 	List<Map<String,Object>> boardList = null;
 	boardList = (List<Map<String,Object>>)request.getAttribute("boardList");
-	int size = 0;
-	if(boardList!=null){
-		size = boardList.size();
-	}
-	out.print("size:"+size);
+    int size = 0;
+    if(boardList!=null){
+      size = boardList.size();
+
+	} 
+    out.print("size:"+size);
 %>
 <!DOCTYPE html>
 <html>
@@ -98,14 +99,13 @@ $setRows.submit(function (e) {
 
 $setRows.submit();
   });
-  
 
   </script>
 <title>HR - ERP PROGRAM</title>
 </head>
 <body class="sb-nav-fixed">
-<nav id="topNav"></nav>
-<div id="layoutSidenav">
+  <nav id="topNav"></nav>
+  <div id="layoutSidenav">
    <div id="layoutSidenav_nav"></div>
    <div id="layoutSidenav_content">
 		<main id="input_div">
@@ -154,7 +154,7 @@ $setRows.submit();
                   data-url="./member.json">
 
                   <form action="" id="setRows">
-                    <input type="hidden" name="rowPerPage" value="5" id="rowPerPage">
+                    <input type="hidden" name="rowPerPage" value="10" id="rowPerPage">
                   </form>
     <thead>
       <tr>
@@ -166,79 +166,37 @@ $setRows.submit();
       </tr>
     </thead>
     <tbody>
-      <tr onclick="location.href='getDetailEmployee.jsp'">
-        <td>2020-02-16</td>
-        <td>개구리</td>
-        <td>인사과</td>
-        <td>사원</td>
-        <td>재직</td>
-        </tr>
-      <tr onclick="location.href='getDetailEmployee.jsp'">
-        <td>2020-02-16</td>
-        <td>개구리</td>
-        <td>인사과</td>
-        <td>사원</td>
-        <td>재직</td>
-        </tr>
-      <tr onclick="location.href='getDetailEmployee.jsp'">
-        <td>2020-02-16</td>
-        <td>개구리</td>
-        <td>인사과</td>
-        <td>사원</td>
-        <td>재직</td>
-        </tr>
-      <tr onclick="location.href='getDetailEmployee.jsp'">
-        <td>2020-02-16</td>
-        <td>개구리</td>
-        <td>인사과</td>
-        <td>사원</td>
-        <td>재직</td>
-        </tr>
-      <tr onclick="location.href='getDetailEmployee.jsp'">
-        <td>2020-02-16</td>
-        <td>개구리</td>
-        <td>인사과</td>
-        <td>사원</td>
-        <td>재직</td>
-        </tr>
-      <tr onclick="location.href='getDetailEmployee.jsp'">
-        <td>2020-02-16</td>
-        <td>개구리</td>
-        <td>인사과</td>
-        <td>사원</td>
-        <td>재직</td>
-        </tr>
-      <tr onclick="location.href='getDetailEmployee.jsp'">
-        <td>2020-02-16</td>
-        <td>개구리</td>
-        <td>인사과</td>
-        <td>사원</td>
-        <td>재직</td>
-        </tr>
-      <tr onclick="location.href='getDetailEmployee.jsp'">
-        <td>2020-02-16</td>
-        <td>개구리</td>
-        <td>인사과</td>
-        <td>사원</td>
-        <td>재직</td>
-        </tr>
-      <tr onclick="location.href='getDetailEmployee.jsp'">
-        <td>2020-02-16</td>
-        <td>개구리</td>
-        <td>인사과</td>
-        <td>사원</td>
-        <td>재직</td>
-        </tr>
-      <tr onclick="location.href='getDetailEmployee.jsp'">
-        <td>2020-02-16</td>
-        <td>개구리</td>
-        <td>인사과</td>
-        <td>사원</td>
-        <td>재직</td>
-        </tr>
+<%
+			//조회 결과가 없는거야?
+			if(size==0){
+%>
+	        <tr>
+	            <th colspan="5">조회 결과가 없습니다.</th>
+	        </tr>
+<%
+			}
+			else{//조회 결과가 있는데..
+	     		for(int i=0;i<size;i++){
+	     			Map<String,Object> rmap = boardList.get(i);
+	     			if(i==size) break;
+%>
+		
+	        <tr onclick="location.href='getDetailEmployee.src1?emp_no=<%=rmap.get("EMP_NO")%>'">
+	            <td><%=rmap.get("EMP_NO") %></td>          
+	            <td><%=rmap.get("EMP_NAME") %></td>
+	            <td><%=rmap.get("DEPT_NAME") %></td>
+	            <td><%=rmap.get("RANK_NAME") %></td>
+	            <td><%=rmap.get("EMP_STATUS") %></td>
+	        </tr>
+<%
+				}///end of for
+			}///end of else
+%> 
+
     </tbody>
   </table>
   </div>
+
 <!-- 
  		  	<div class="text-center">
  			<div class="text-center" align="center">

@@ -6,10 +6,12 @@
     path.append("/");
     out.print(path);
     List<Map<String,Object>> boardDetail = null;
+    List<Map<String,Object>> licenceList = null;
       boardDetail = (List<Map<String,Object>>)request.getAttribute("boardDetail");
+      licenceList = (List<Map<String,Object>>)request.getAttribute("licenceList");
       int size = 0;
-      String emp_no 	= null;
-      String emp_name 		= null;
+      String emp_no = null;
+      String emp_name 	=	null;  
       String emp_year 	= null;
       String dept_name 	= null;
       String team_name 	= null;
@@ -27,41 +29,44 @@
       String licence_date 		= null;	
       String licence_expire 		= null;	
       if(boardDetail!=null){
-        size = boardDetail.size();
-        Map<String,Object> rmap = boardDetail.get(0);
-        emp_no = rmap.get("emp_no").toString();
-        emp_name = rmap.get("emp_name").toString();
-        emp_year = rmap.get("emp_year").toString();
-        dept_name = rmap.get("dept_name").toString();
-        team_name = rmap.get("team_name").toString();
-        rank_name = rmap.get("rank_name").toString();
-        emp_hiredate = rmap.get("emp_name").toString();
-        if(rmap.get("emp_retiredate")!=null){
-          emp_retiredate = rmap.get("emp_retiredate").toString();		
-        }else{
-          emp_retiredate = "";
+          Map<String,Object> rmap = boardDetail.get(0);
+          emp_no = rmap.get("EMP_NO").toString();
+          emp_name = rmap.get("EMP_NAME").toString();
+          emp_year = rmap.get("EMP_YEAR").toString();
+          dept_name = rmap.get("DEPT_NAME").toString();
+          team_name = rmap.get("TEAM_NAME").toString();
+	      rank_name = rmap.get("RANK_NAME").toString();
+          emp_hiredate = rmap.get("EMP_HIREDATE").toString();
+          if(rmap.get("EMP_RETIREDATE")!=null){
+            emp_retiredate = rmap.get("EMP_RETIREDATE").toString();		
+          }else{
+            emp_retiredate = "";
+          }
+          emp_tel = rmap.get("EMP_TEL").toString();
+          emp_email = rmap.get("EMP_EMAIL").toString();
+          emp_status = rmap.get("EMP_STATUS").toString();
+          emp_account = rmap.get("EMP_ACCOUNT").toString();
+          
+        	  size = licenceList.size();
+          if(size>0){
+          Map<String,Object> lmap = licenceList.get(0);
+            licence_no = lmap.get("LICENCE_NO").toString();		
+             licence_name = lmap.get("LICENCE_NAME").toString();		
+/*            licence_type = lmap.get("LICENCE_TYPE").toString();		
+            licence_level = lmap.get("LICENCE_LEVEL").toString();		
+            licence_date = lmap.get("LICENCE_DATE").toString();		
+            licence_expire = lmap.get("LICENCE_EXPIRE").toString();	 */	
+          }else{
+            licence_no = "";
+            licence_name = "";
+            licence_type = "";
+            licence_level = "";
+            licence_date = "";
+            licence_expire = "";
+          }
+          
         }
-        emp_tel = rmap.get("emp_tel").toString();
-        emp_email = rmap.get("emp_email").toString();
-        emp_status = rmap.get("emp_status").toString();
-        emp_account = rmap.get("emp_account").toString();
-        if(rmap.get("licence_no")!=null){
-          licence_no = rmap.get("licence_no").toString();		
-          licence_name = rmap.get("licence_name").toString();		
-          licence_type = rmap.get("licence_type").toString();		
-          licence_level = rmap.get("licence_level").toString();		
-          licence_date = rmap.get("licence_date").toString();		
-          licence_expire = rmap.get("licence_expire").toString();		
-        }else{
-          licence_no = "";
-          licence_name = "";
-          licence_type = "";
-          licence_level = "";
-          licence_date = "";
-          licence_expire = "";
-        }
-        
-      }
+
   %>    
 <!DOCTYPE html>
 <html>
@@ -77,6 +82,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous" ></script>
 <link href="../common/main.css" rel="stylesheet" />
 <link href="../common/css/custom.css" rel="stylesheet" />
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 <script>
   //자격증 로우 추가
@@ -158,20 +164,20 @@ function insAction() {
 								<br>
 								<div class="input-group">
 								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">이름</span>
-								  <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" >
+								  <input type="text" class="form-control" value="<%=emp_name%>" aria-describedby="basic-addon1" >
 								</div>
 								<br>				
 								<div class="input-group">
 								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">부서</span>
 						          <select class="form-control">
-                        <option value="" selected disabled hidden >부서</option>
+                        <option value="" selected disabled hidden ><%=dept_name%></option>
 						              <option>인사</option>
 						              <option>회계</option>
 						              <option>개발</option>
 						              <option>임원</option>
 						          </select>
 						          <select class="form-control">
-                        <option value="" selected disabled hidden >팀</option>
+                        <option value="" selected disabled hidden ><%=team_name%></option>
 						              <option>개발1팀</option>
 						              <option>개발2팀</option>
 						              <option>개발3팀</option>
@@ -182,6 +188,7 @@ function insAction() {
 								<div class="input-group">
 								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">직위</span>
 								  <select class="form-control">
+                        <option value="" selected disabled hidden ><%=rank_name%></option>
 						            <option>사원</option>
 						            <option>대리</option>
 						            <option>과장</option>
@@ -199,22 +206,23 @@ function insAction() {
 						  <br>
 							<div class="input-group">
 							  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">사원번호</span>
-							  <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1">
+							  <input type="text" class="form-control" value="<%=emp_no%>" aria-describedby="basic-addon1">
 							</div>
 							<br>				
 							<div class="input-group">
 							  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">연차</span>
-							  <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1">
+							  <input type="text" class="form-control" value="<%=emp_year%>" aria-describedby="basic-addon1">
 							</div>
 							<br>						
 							<div class="input-group">
 							  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">입사일자</span>
-							  <input type="date" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                
+							  <input type="date" class="form-control" value="<%=emp_hiredate%>" aria-describedby="basic-addon1">
 							</div>						
 							<br>						
 							<div class="input-group">
 							  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">퇴사일자</span>
-							  <input type="date" class="form-control" placeholder="" aria-describedby="basic-addon1">
+							  <input type="date" class="form-control" value="<%=emp_retiredate%>" aria-describedby="basic-addon1">
 							</div>						
 						  </div>
 					    </div>
@@ -223,17 +231,18 @@ function insAction() {
 							  <br>
 								<div class="input-group">
 								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">전화번호</span>
-								  <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1">
+								  <input type="text" class="form-control" value="<%=emp_hiredate%>" aria-describedby="basic-addon1">
 								</div>
 								<br>				
 								<div class="input-group">
 								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">이메일</span>
-								  <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1">
+								  <input type="text" class="form-control" value="<%=emp_email%>" aria-describedby="basic-addon1">
 								</div>
 								<br>						
 								<div class="input-group">
 								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">고용상태</span>
 								  <select class="form-control">
+                        <option value="" selected disabled hidden ><%=emp_status%></option>
 						            <option>재직</option>
 						            <option>휴직</option>
 						            <option>퇴직</option>
@@ -243,7 +252,7 @@ function insAction() {
 								<div class="input-group">
 								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">급여계좌</span>
                   <input type="text" class="form-control" placeholder="국민은행" aria-describedby="basic-addon1" disabled>
-								  <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1">
+								  <input type="text" class="form-control" value="<%=emp_account%>" aria-describedby="basic-addon1">
 								</div>						
 							  </div>
 						    </div>
@@ -275,6 +284,22 @@ function insAction() {
                         <td><input type="text" id="AddLicenseRow5" class="form-control" /></td>
                         <td><input type="text" id="AddLicenseRow6" class="form-control" /></td>
 					       		 </tr>
+<%
+
+				     		for(int i=0;i<size;i++){
+				     			if(i==size) break;
+%>							    
+					    	   	   <tr>
+                        <td><input type="text" id="AddLicenseRow1" value="<%=licence_no%>" class="form-control" disabled/></td>
+                        <td><input type="text" id="AddLicenseRow2" value="<%=licence_name%>"class="form-control" disabled/></td>
+                        <td><input type="text" id="AddLicenseRow3" class="form-control" disabled/></td>
+                        <td><input type="text" id="AddLicenseRow4" class="form-control" disabled/></td>
+                        <td><input type="text" id="AddLicenseRow5" class="form-control" disabled/></td>
+                        <td><input type="text" id="AddLicenseRow6" class="form-control" disabled/></td>
+					       		 </tr>
+<%
+				}///end of for
+%> 					       		 
 							    </tbody>
 			    			</table>
 					  	</div>

@@ -46,7 +46,7 @@
                              ,#{arr_peno,mode=IN,jdbcType=ARRAY}
                              )
 		}
-	</select>  -->
+	</select>  
 
 	<!-- 프로젝트 이력추가 -->
 	<insert id="insertProjectInfo" parameterType="map">

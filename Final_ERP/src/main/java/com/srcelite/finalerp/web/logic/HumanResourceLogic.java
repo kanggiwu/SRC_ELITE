@@ -29,5 +29,15 @@ public class HumanResourceLogic {
 	//사원정보 수정
 	public void updateEmployee(Map<String,Object> pmap)                            {}
 	//사원정보 추가
-	public void insertEmployee(Map<String,Object> pmap)                            {}
+	public int insertEmployee(Map<String,Object> pmap)                            {
+		int result = 0;
+		result = humanResourceDao.insertEmployee(pmap);
+		return result;
+	}
+	public List<Map<String, Object>> getEmpLicenceList(Map<String, Object> pmap) {
+		List<Map<String,Object>> licenceList = null;
+		licenceList = humanResourceDao.getEmpLicenceList(pmap);
+		return licenceList;
+	}
+	
 }

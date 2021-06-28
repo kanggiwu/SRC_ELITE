@@ -158,8 +158,14 @@
 			    			</table>
 					  	</div>
 						<div style="text-align: right; padding: 5px;">
-							<button class="btn btn-light" onclick="">자격증 추가</button>
+							<button class="btn btn-light" onclick="$('#alert').show()">자격증 추가</button>
 						</div>
+				        <div id="alert" class="alert alert-success fade in" style="display:none;">
+				            <a href="#" class="close" data-dismiss="alert"
+				                aria-label="close">×</a>
+				            <h4>Alert!</h4>
+				            이것은 알람 표시입니다.
+				        </div>						
 				<!-- 컨텐츠 들어갈내용 끝   -->
      			</div>
 			</div>
