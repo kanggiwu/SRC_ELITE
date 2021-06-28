@@ -43,10 +43,8 @@ public class ScheduleController extends MultiActionController {
 		scheduleList=scheduleLogic.getScheduleList(pMap);
 		logger.info("scheduleList: "+scheduleList);
 		mav.addObject("scheduleList",scheduleList);
-		
-		
 		mav.setViewName("../index");
-
+		
 		return mav;
 	}
 	//일정 상세조회
@@ -62,8 +60,6 @@ public class ScheduleController extends MultiActionController {
 		mav.addObject("detailSchedule",detailSchedule);
 
 		return mav;
-		
-		
 		
 	}
 	//일정 추가

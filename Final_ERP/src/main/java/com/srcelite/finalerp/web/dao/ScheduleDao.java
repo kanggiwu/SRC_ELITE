@@ -12,8 +12,6 @@ public class ScheduleDao {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 	
-
-
 	public List<Map<String, Object>> getAttendance(Map<String, Object> pmap) {
 		List<Map<String, Object>> attendancetList = null;
 		
@@ -28,5 +26,5 @@ public class ScheduleDao {
 		
 		return null;
 	}
-
 }
+
