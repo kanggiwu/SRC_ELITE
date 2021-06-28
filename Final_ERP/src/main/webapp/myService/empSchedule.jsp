@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	String emp_name = (String)session.getAttribute("emp_name");
+	String emp_name = (String)session.getAttribute("scheduleInfo");
 	if(emp_name==null){
 		emp_name = "이순신";
 	}

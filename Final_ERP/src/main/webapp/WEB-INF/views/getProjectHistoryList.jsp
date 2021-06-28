@@ -4,11 +4,11 @@
 <%
 	StringBuilder path = new StringBuilder(request.getContextPath());
 	path.append("/");
-	List<Map<String,Object>> projectHistList = null;
-	projectHistList = (List<Map<String,Object>>)request.getAttribute("projectHistList");
+	List<Map<String,Object>> projectHistoryList = null;
+	projectHistoryList = (List<Map<String,Object>>)request.getAttribute("projectHistoryList");
 	int size = 0;
-	if(projectHistList!=null){
-		size = projectHistList.size();
+	if(projectHistoryList!=null){
+		size = projectHistoryList.size();
 	}
 	out.print("size:"+size);
 %> 
@@ -120,7 +120,7 @@ $setRows.submit();
 -->
 <script>
     function openPopup(){
-        window.open("projectDetail.src1?project_no=<%=pmap.get("project_no") %>", "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
+        window.open("projectDetail.jsp", "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
     }
 </script>
 <!-- -----------------------------------검색부분---------------------------------- -->
@@ -170,7 +170,7 @@ if(size==0){
 }
 else{//조회 결과가 있을 때
 	for(int i=0;i<size;i++){
-		Map<String,Object> pmap = projectHistList.get(i);
+		Map<String,Object> pmap = projectHistoryList.get(i);
 		if(i==size) break;
 %>    	
 			<!-- 
