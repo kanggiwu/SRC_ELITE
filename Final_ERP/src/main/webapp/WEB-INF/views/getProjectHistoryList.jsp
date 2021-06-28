@@ -4,11 +4,11 @@
 <%
 	StringBuilder path = new StringBuilder(request.getContextPath());
 	path.append("/");
-	List<Map<String,Object>> projectHistList = null;
-	projectHistList = (List<Map<String,Object>>)request.getAttribute("projectHistList");
+	List<Map<String,Object>> projectHistoryList = null;
+	projectHistoryList = (List<Map<String,Object>>)request.getAttribute("projectHistoryList");
 	int size = 0;
-	if(projectHistList!=null){
-		size = projectHistList.size();
+	if(projectHistoryList!=null){
+		size = projectHistoryList.size();
 	}
 	out.print("size:"+size);
 %> 
@@ -27,11 +27,7 @@
 <link href="../common/main.css" rel="stylesheet" />
 <link href="../common/css/custom.css" rel="stylesheet" />
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
-<script>
-    function openPopup(){
-        window.open("projectDetail.jsp", "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
-    }
-</script>
+
 <!--페이징 처리   =================================================================================-->
 <script>
   $(document).ready(function () {
@@ -122,6 +118,11 @@ $setRows.submit();
 <!--
 ******************************************* 컨텐츠 들어갈내용 시작************************************************
 -->
+<script>
+    function openPopup(){
+        window.open("projectDetail.jsp", "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
+    }
+</script>
 <!-- -----------------------------------검색부분---------------------------------- -->
 <form class="form-horizontal" role="form">
 <div class="form-inline form-group">
@@ -156,6 +157,7 @@ $setRows.submit();
 					<th style="width: 15%">종류</th>
 				</tr>
 			</thead>
+
 			<tbody>
 <%
 //조회 결과가 없는 거야?
@@ -168,7 +170,7 @@ if(size==0){
 }
 else{//조회 결과가 있을 때
 	for(int i=0;i<size;i++){
-		Map<String,Object> pmap = projectHistList.get(i);
+		Map<String,Object> pmap = projectHistoryList.get(i);
 		if(i==size) break;
 %>    	
 			<!-- 
@@ -179,7 +181,7 @@ else{//조회 결과가 있을 때
 					<td onclick="openPopup()"><%=pmap.get("project_name").toString()%></td>
 					<td><%=pmap.get("project_startline").toString()%>&nbsp;~&nbsp;
 						<%=pmap.get("project_deadline").toString()%></td>
-					<td><%=pmap.get("emp_no").toString()%></td>
+					<td><%=pmap.get("emp_name").toString()%></td>
 					<td><%=pmap.get("project_type").toString()%></td>
 				</tr>
 <% 
@@ -234,11 +236,6 @@ else{//조회 결과가 있을 때
 		</main>
 	</div>
 </div>
-
-
-
-
-
 
 
 <!-- 슬라이드바 사용할때 필요 -->
