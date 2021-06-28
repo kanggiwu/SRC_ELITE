@@ -36,4 +36,41 @@ public class HashMapBinder {
 			target.put(key, request.getParameter(key));
 		}
 	}////////end of bind
+	public void multiBind(Map<String,Object> target) {
+		target.clear();
+		try {
+			multi = new MultipartRequest(request, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
+		} catch (Exception e) {
+			logger.info("Exception : "+e.toString());
+		}
+		Enumeration en = multi.getParameterNames();//배열 구조체 묶음
+		//<input type="text" name="mem_id"
+		while(en.hasMoreElements()) {
+			String key = (String)en.nextElement();
+			logger.info("value:"+multi.getParameter(key));
+			target.put(key, multi.getParameter(key));
+			logger.info("value:"+target);
+		}
+		//첨부파일에 대한 정보를 받아오기
+		Enumeration<String> files = multi.getFileNames();
+		if(files !=null) {
+			File file = null;//파일명을 객체로 만들 어 줄 뿐 안에 내용까지 생성되는 것은 아님.
+			while(files.hasMoreElements()) {
+				String fname = files.nextElement();
+				String filename = multi.getFilesystemName(fname);
+				target.put("bs_file", filename);
+				if(filename !=null && filename.length()>1) {
+					file = new File(realFolder+"\\"+filename);
+				}
+			}///////////end of while
+			//첨부파일의 크기를 담을 변수
+			double size = 0;
+			if(file !=null) {
+				size = file.length();
+				size = file.length();
+				target.put("bs_size", size);
+			}
+			
+		}
+	}////////end of multiBind
 }
