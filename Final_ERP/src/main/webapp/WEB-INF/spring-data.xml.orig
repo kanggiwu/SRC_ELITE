@@ -7,16 +7,16 @@
 			<value>oracle.jdbc.driver.OracleDriver</value>
 		</property>
 	<!-- 외부 ip 연결 시 사용 부분  -->
-
-<!--
-		<property name="url">
+<<<<<<< HEAD
+ 		<property name="url">
 			<value>jdbc:oracle:thin:115.91.81.108:15210:orcl11</value>
-			-->
 	<!-- 로컬 DB 사용 부분  -->
-
+		<!--<property name="url">
+			<value>jdbc:oracle:thin:192.68.0.28:1521:orcl11</value> -->
+=======
 		<property name="url">
 			<value>jdbc:oracle:thin:@115.91.81.108:15210:orcl11</value> 
-
+>>>>>>> refs/remotes/origin/main
 		</property>
 		<property name="username">
 			<value>SRC_FINAL</value>

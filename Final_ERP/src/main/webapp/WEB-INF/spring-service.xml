@@ -3,35 +3,42 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="main-logic" class="com.srcelite.finalerp.web.mvc.MainLogic">
+	<bean id="main-logic" class="com.srcelite.finalerp.web.logic.MainLogic">
+		<property name="mainDao" ref="main-dao"></property>
+	</bean>
+
+	<bean id="notice-logic" class="com.srcelite.finalerp.web.logic.NoticeLogic" >
+		<property name="noticeDao" ref="notice-dao"></property>
 		
 	</bean>
 
-	<bean id="notice-logic" class="com.srcelite.finalerp.web.mvc.NoticeLogic" >
-		
-	</bean>
-
-	<bean id="schedule-logic" class="com.srcelite.finalerp.web.mvc.ScheduleLogic">
+	<bean id="schedule-logic" class="com.srcelite.finalerp.web.logic.ScheduleLogic">
+		<property name="scheduleDao" ref="schedule-dao"></property>
 		
 	</bean>	
 
-	<bean id="account-user-logic" class="com.srcelite.finalerp.web.mvc.AccountUserLogic">
+	<bean id="account-user-logic" class="com.srcelite.finalerp.web.logic.AccountUserLogic">
+		<property name="accountUserDao" ref="account-user-dao"></property>
 
 	</bean>
 
-	<bean id="account-manager-logic" class="com.srcelite.finalerp.web.mvc.AccountManagerLogic">
+	<bean id="account-manager-logic" class="com.srcelite.finalerp.web.logic.AccountManagerLogic">
+		<property name="accountManagerDao" ref="account-manager-dao"></property>
 		
 	</bean>
 
-	<bean id="human-resource-logic" class="com.srcelite.finalerp.web.mvc.HumanResourceLogic">
+	<bean id="human-resource-logic" class="com.srcelite.finalerp.web.logic.HumanResourceLogic">
+		<property name="humanResourceDao" ref="human-resource-dao"></property>
 		
 	</bean>
 
-	<bean id="approval-logic" class="com.srcelite.finalerp.web.mvc.ApprovalLogic">
+	<bean id="approval-logic" class="com.srcelite.finalerp.web.logic.ApprovalLogic">
+		<property name="approvalDao" ref="approval-dao"></property>
 		
 	</bean>
 
-	<bean id="project-history-logic" class="com.srcelite.finalerp.web.mvc.ProjectHistoryLogic">
+	<bean id="project-history-logic" class="com.srcelite.finalerp.web.logic.ProjectHistoryLogic">
+		<property name="projectHistoryDao" ref="project-history-dao"></property>
 		
 	</bean>
 </beans>
