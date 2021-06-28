@@ -1,9 +1,11 @@
-package com.srcelite.finalerp.web.mvc;
+package com.srcelite.finalerp.web.logic;
 
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.servlet.ModelAndView;
+
+import com.srcelite.finalerp.web.dao.ApprovalDao;
 
 public class ApprovalLogic {
 	ApprovalDao approvalDao = null;

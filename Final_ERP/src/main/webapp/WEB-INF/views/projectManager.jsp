@@ -27,11 +27,7 @@
 <link href="../common/main.css" rel="stylesheet" />
 <link href="../common/css/custom.css" rel="stylesheet" />
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
-<script>
-    function openPopup(){
-        window.open("projectDetail.jsp", "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
-    }
-</script>
+
 <!--페이징 처리   =================================================================================-->
 <script>
   $(document).ready(function () {
@@ -122,6 +118,11 @@ $setRows.submit();
 <!--
 ******************************************* 컨텐츠 들어갈내용 시작************************************************
 -->
+<script>
+    function openPopup(){
+        window.open("projectDetail.src1?project_no=<%=pmap.get("project_no") %>", "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
+    }
+</script>
 <!-- -----------------------------------검색부분---------------------------------- -->
 <form class="form-horizontal" role="form">
 <div class="form-inline form-group">
@@ -156,6 +157,7 @@ $setRows.submit();
 					<th style="width: 15%">종류</th>
 				</tr>
 			</thead>
+
 			<tbody>
 <%
 //조회 결과가 없는 거야?
@@ -234,11 +236,6 @@ else{//조회 결과가 있을 때
 		</main>
 	</div>
 </div>
-
-
-
-
-
 
 
 <!-- 슬라이드바 사용할때 필요 -->

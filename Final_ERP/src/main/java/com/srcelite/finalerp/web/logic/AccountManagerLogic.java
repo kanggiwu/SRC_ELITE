@@ -1,4 +1,4 @@
-package com.srcelite.finalerp.web.mvc;
+package com.srcelite.finalerp.web.logic;
 
 import java.util.List;
 import java.util.Map;
@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.ModelAndView;
+
+import com.srcelite.finalerp.web.dao.AccountManagerDao;
 
 public class AccountManagerLogic {
 	AccountManagerDao accountManagerDao = null;

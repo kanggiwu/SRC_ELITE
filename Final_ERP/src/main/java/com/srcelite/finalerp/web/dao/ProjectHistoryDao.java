@@ -1,4 +1,4 @@
-package com.srcelite.finalerp.web.mvc;
+package com.srcelite.finalerp.web.dao;
 
 import java.util.List;
 import java.util.Map;

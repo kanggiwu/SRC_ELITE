@@ -1,7 +1,9 @@
-package com.srcelite.finalerp.web.mvc;
+package com.srcelite.finalerp.web.logic;
 
 import java.util.List;
 import java.util.Map;
+
+import com.srcelite.finalerp.web.dao.NoticeDao;
 
 public class NoticeLogic {
 	NoticeDao noticeDao = null;

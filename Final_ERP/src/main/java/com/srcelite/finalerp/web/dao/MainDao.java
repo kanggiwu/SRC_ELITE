@@ -1,15 +1,11 @@
-package com.srcelite.finalerp.web.mvc;
-
-import java.util.List;
-import java.util.Map;
+package com.srcelite.finalerp.web.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
-public class AccountUserDao {
+public class MainDao {
 	SqlSessionTemplate sqlSessionTemplate = null;
 
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
-
 }
