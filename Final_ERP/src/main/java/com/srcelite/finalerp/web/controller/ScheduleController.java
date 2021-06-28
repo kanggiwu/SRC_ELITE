@@ -35,7 +35,6 @@ public class ScheduleController extends MultiActionController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("../index");
 		mav.addObject("attendanceOptionalList",attendanceOptionalList);
-
 		return mav;
 	}
 	//일정 상세조회
@@ -46,10 +45,7 @@ public class ScheduleController extends MultiActionController {
 		logger.info("쿼리스트링: "+pMap);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("../index");
-
 		return mav;
-		
-		
 		
 	}
 	//일정 추가

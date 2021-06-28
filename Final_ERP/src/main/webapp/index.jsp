@@ -16,10 +16,6 @@
 	}
 	
 %>
-
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
