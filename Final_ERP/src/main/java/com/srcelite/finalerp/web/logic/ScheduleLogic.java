@@ -16,16 +16,15 @@ public class ScheduleLogic {
 	
 	
 	//일정 조회(월)
-	public List<Map<String,Object>> getCalendarSchedule(Map<String,Object> pmap)   {
+	public List<Map<String,Object>> getAttendance(Map<String,Object> pmap)   {
 		logger.info("Logic getCalendarSchedule 호출 성공");
-		List<Map<String,Object>> scheduleList = null;
+		List<Map<String,Object>> attendanceList = null;
 		
-		int emp_no = Integer.parseInt(pmap.get("emp_no").toString());
-		scheduleList = scheduleDao.getAttendanceThisMonth(emp_no);
+		attendanceList = scheduleDao.getAttendance(pmap);
 		
-		
-		
-		return scheduleList;}
+		return attendanceList;
+		}
+
 	//일정 상세조회
 	public Map<String,Object> getDetailSchedule(Map<String,Object> pmap)    {return null;}
 	//일정 추가

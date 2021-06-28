@@ -13,10 +13,13 @@ public class ScheduleDao {
 	}
 	
 
-	public List<Map<String, Object>> getAttendanceThisMonth(int emp_no) {
-		List<Map<String, Object>> scheduleList = null;
-		scheduleList = sqlSessionTemplate.selectList("getAttendanceThisMonth",emp_no);
+
+	public List<Map<String, Object>> getAttendance(Map<String, Object> pmap) {
+		List<Map<String, Object>> attendancetMonthList = null;
 		
-		return scheduleList;
+		attendancetMonthList = sqlSessionTemplate.selectList("getAttendance",pmap);
+		
+		return attendancetMonthList;
 	}
+
 }

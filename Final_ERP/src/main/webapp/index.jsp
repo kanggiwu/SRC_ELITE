@@ -10,7 +10,7 @@
 		out.print(size);
 		out.print("<br>");
 		for (Map<String, Object> schedule : scheduleList) {
-			out.print(schedule.get("SCHEDULE_NO"));
+			out.print(schedule.get("ATTENDANCE_CODE"));
 			out.print("<br>");
 		}
 	}
@@ -24,16 +24,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<<<<<<< HEAD
 <title>ERP 테스트</title>
 </head>
 <body>
 	 final project ERP 테스트 화면
-=======
-<title>파이널 index.jsp</title>
-</head>
-<body>
-	파이널 index.jsp
->>>>>>> DH_01
+
 </body>
 </html>
