@@ -18,7 +18,7 @@
 <link href="<%=path.toString() %>common/css/custom.css" rel="stylesheet" />
 <title>공지사항 화면</title>
 </head>
-<body>
+<body class="sb-nav-fixed">
 <nav id="topNav"></nav>
 <div id="layoutSidenav">
    <div id="layoutSidenav_nav"></div>
@@ -29,14 +29,54 @@
 				<div id="page_contents" style="max-width: 1730px; border: 1px solid #5C80AB; margin: 50px 50px;">
      			<!-- 컨텐츠 들어갈내용 시작-->
 			<div>
-		      <h2 style="text-align:center;">공지 사항 화면</h2>
-			  <div id="emp_table" style="width:100%; height:300px;">
-			  	<div class="table-responsive">
-	                 
+		    <div class= col-xs-4 style="text-align: left; padding: 5px; display: inline-block; width: 40%;">
+	
+  <div class="col-xs-2">
+    </div>  
+      </div>
+    	     			<!-- 추가버튼 클릭시 내용 추가 창으로 이동 -->
+     			<div style="text-align: right; padding: 5px; display: inline-block; width: 59%">
+     			
+     		    </div>
+    <table class="table table-bordered table-striped" id="products">
+    	<!-- 페이징 처리 부분 //반드시 테이블 안에 넣어야됨// -->
+                     <form action="" id="setRows">
+                    <input type="hidden" name="rowPerPage" value="2" id="rowPerPage">
+                  </form>
+                  <!-- 공지부분 -->
+            <thead>
+        <tr class="thead-dark">
+            <th>분류</th>
+            <th>공지제목</th>
+            <th>등록일</th> 
+        </tr>
+        </thead>
+        <tbody>
+            <!-- 상세보기 페이지 이동 -->
+        <tr onClick="location.href='notice_detail.jsp'">
+              <td>공통</td>
+            <td>
+                홈페이지 점검 안내
+            </td>
+             <td>2021-07-15</td>
+        </tr>
+        <tr>
+              <td>인사</td>
+            <td>
+                공지사항1
+            </td>
+          
+            <td>2021-07-14</td>
+        </tr>
+        <tr>
+     
+  </tbody>
+    </table>
 
 	             </div>
 			  </div>	
 		    </div>
+		    
      			<!-- 컨텐츠 들어갈내용 끝   -->
      			
      			</div>
