@@ -23,11 +23,21 @@
                    = #{yy/mm}
 	</select>
 
-	<!-- 일정 조회  1:공통 2:인사부 3:회계부 4:개발부 5:프로젝트 6개인 -->
+	<!-- 일정 조회  1:공통 2:프로젝트 3:개인 부서번호:부서 -->
 	<select id="getScheduleList" parameterType="int" resultType="map">
 		SELECT schedule_code, emp_no, schedule_type, schedule_title, schedule_startdate, schedule_enddate, schedule_content
  		  FROM schedule
-		 WHERE schedule_type = #{schedule_type}
+		 <if test="schedule_type%10==0">
+		 	JOIN emp
+		 	ON schedule_type=emp.dept_no
+		 </if>
+		 <if test="schedule_type==1||schedule_type%10==2">
+		 	WHERE schedule_type=#{schedule_type}
+		 </if>
+		 <if test="schedule_type==3">
+		 	WHERE schedule_type=3
+		 	AND emp_no = #{emp_no}
+		 </if>
 	</select>
 	
 	<!-- 스케쥴 정보 입력 -->
