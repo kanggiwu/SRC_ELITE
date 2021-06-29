@@ -3,9 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="main-logic" class="com.srcelite.finalerp.web.logic.MainLogic">
+	 <bean id="main-logic" class="com.srcelite.finalerp.web.logic.MainLogic">
 		<property name="mainDao" ref="main-dao"></property>
-	</bean>
+	</bean> 
 
 	<bean id="notice-logic" class="com.srcelite.finalerp.web.logic.NoticeLogic" >
 		<property name="noticeDao" ref="notice-dao"></property>

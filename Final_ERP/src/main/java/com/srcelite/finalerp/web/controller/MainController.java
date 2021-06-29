@@ -31,7 +31,8 @@ public class MainController extends MultiActionController{
 	}
 	
 	// 출근
-	public void insertAttendanceTime(HttpServletRequest request, HttpServletResponse response) {
+	public void insertAttendanceTime(HttpServletRequest request, HttpServletResponse response) 
+	throws Exception{
 		logger.info("insertAttendanceTime호출 성공");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String,Object> pmap = new HashMap<>();
