@@ -62,6 +62,30 @@ function insAction() {
 			$('#board_ins').submit();
       location.href = 'getEmployeeList.jsp'
 		}
+		
+// 콘텐츠 수정 :: 사진 수정 시 이미지 미리보기
+function readURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			$('#imgArea').attr('src', e.target.result); 
+		}
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+
+$(":input[name='u_file']").change(function() {
+	if( $(":input[name='u_file']").val() == '' ) {
+		$('#imgArea').attr('src' , '');  
+	}
+	$('#imgViewArea').css({ 'display' : '' });
+	readURL(this);
+});
+
+// 이미지 에러 시 미리보기영역 미노출
+function imgAreaError(){
+	$('#imgViewArea').css({ 'display' : 'none' });
+}		
 </script>
 <title>HR - ERP PROGRAM</title>
 </head>
@@ -87,11 +111,11 @@ function insAction() {
                 <form id="emp_ins" method="post" enctype="multipart/form-data" action="updateEmployee.src1">
 			   			<div class="row">
 						    <div class="col-lg-6">
-								<div id="emp_table" style="width:100%; height:250px;">
-									<img id="men" src="../erp_lab/img/img_avatar.png" style="width: 200px; left: 20%; position: relative;">
+								<div id="imgViewArea" style="width:100%; height:250px;">
+									<img id="imgArea" style="width: 200px; left: 20%; position: relative;" onerror="imgAreaError()">
 								 <div class="form-group" style="left: 20%; position: relative;">
-								    <label for="exampleInputFile"></label>
-								    <input type="file" id="exampleInputFile">
+								    <label for="u_file"></label>
+								    <input type="file" id="u_file" name="u_file">
 								  </div>
 								</div>
 								<hr>

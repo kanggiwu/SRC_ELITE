@@ -167,11 +167,11 @@ function handleOnChange(e) {
                 <form id="emp_ins" method="post" enctype="multipart/form-data" action="updateEmployee.src1">
 			   			<div class="row">
 						    <div class="col-lg-6">
-								<div id="emp_table" style="width:100%; height:250px;">
-									<img id="men" src="../erp_lab/img/img_avatar.png" style="width: 200px; left: 20%; position: relative;">
+								<div id="imgViewArea" style="width:100%; height:250px;">
+									<img id="imgArea" style="width: 200px; left: 20%; position: relative;" onerror="imgAreaError()">
 								 <div class="form-group" style="left: 20%; position: relative;">
-								    <label for="exampleInputFile"></label>
-								    <input type="file" id="exampleInputFile">
+								    <label for="u_file"></label>
+								    <input type="file" id="u_file" name="u_file">
 								  </div>
 								</div>
 								<hr>
