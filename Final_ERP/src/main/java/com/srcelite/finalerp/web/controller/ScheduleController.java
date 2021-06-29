@@ -28,14 +28,23 @@ public class ScheduleController extends MultiActionController {
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String,Object> pMap =new HashMap<>();
 		hmb.bind(pMap);
-		List<Map<String,Object>> attendanceOptionalList = null;
 		logger.info("쿼리스트링: "+pMap);
-		attendanceOptionalList=scheduleLogic.getAttendance(pMap);
-		logger.info("attendanceOptionalList: "+attendanceOptionalList);
 		ModelAndView mav = new ModelAndView();
+		
+		//개인일정인 경우 출석 시간 받아오기
+		if("3".equals(pMap.get("schedule_type").toString())) {
+			List<Map<String,Object>> attendanceList = null;
+			attendanceList=scheduleLogic.getAttendance(pMap);
+			logger.info("attendanceList: "+attendanceList);
+			mav.addObject("attendanceList",attendanceList);
+		}
+		
+		List<Map<String,Object>> scheduleList = null;
+		scheduleList=scheduleLogic.getScheduleList(pMap);
+		logger.info("scheduleList: "+scheduleList);
+		mav.addObject("scheduleList",scheduleList);
 		mav.setViewName("../index");
-		mav.addObject("attendanceOptionalList",attendanceOptionalList);
-
+		
 		return mav;
 	}
 	//일정 상세조회
@@ -44,19 +53,20 @@ public class ScheduleController extends MultiActionController {
 		Map<String,Object> pMap =new HashMap<>();
 		hmb.bind(pMap);
 		logger.info("쿼리스트링: "+pMap);
+		Map<String,Object> detailSchedule = null;
+		detailSchedule = scheduleLogic.getDetailSchedule(pMap);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("../index");
+		mav.addObject("detailSchedule",detailSchedule);
 
 		return mav;
-		
-		
 		
 	}
 	//일정 추가
 	public void insertSchedule(HttpServletRequest request, HttpServletResponse response){
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String,Object> pMap =new HashMap<>();
-//		hmb.bindPost(pMap);
+		hmb.bind(pMap);
 		logger.info("쿼리스트링: "+pMap);
 		
 		
@@ -67,14 +77,14 @@ public class ScheduleController extends MultiActionController {
 	public void updateSchedule(HttpServletRequest request, HttpServletResponse response){
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String,Object> pMap =new HashMap<>();
-//		hmb.bindPost(pMap);
+		hmb.bind(pMap);
 		logger.info("쿼리스트링: "+pMap);
 	}
 	//일정 삭제
 	public void deleteSchedule(HttpServletRequest request, HttpServletResponse response){
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String,Object> pMap =new HashMap<>();
-//		hmb.bindPost(pMap);
+		hmb.bind(pMap);
 		logger.info("쿼리스트링: "+pMap);
 	}
 }

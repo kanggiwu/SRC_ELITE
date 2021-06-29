@@ -12,9 +12,13 @@ public class HumanResourceLogic {
 		this.humanResourceDao = humanResourceDao;
 	}
 	//조직도 조회
-	public Map<String,Object> getOrganizationChart(Map<String,Object> pmap)       {return null;}
+	public Map<String,Object> getOrganizationChart(Map<String,Object> pmap) {
+		return null;
+	}
 	//조직도 수정
-	public void updateOrganizationChart(Map<String,Object> pmap)                   {}
+	public void updateOrganizationChart(Map<String,Object> pmap) {
+		
+	}
 	//사원정보 리스트조회
 	public List<Map<String,Object>>  getEmployeeList(Map<String,Object> pmap)      {
 		List<Map<String,Object>> boardList = null;
@@ -27,7 +31,9 @@ public class HumanResourceLogic {
 		boardDetail = humanResourceDao.getEmployeeDetail(pmap);
 		return boardDetail;}
 	//사원정보 수정
-	public void updateEmployee(Map<String,Object> pmap)                            {}
+	public void updateEmployee(Map<String,Object> pmap) {
+		
+	}
 	//사원정보 추가
 	public int insertEmployee(Map<String,Object> pmap)                            {
 		int result = 0;
@@ -39,5 +45,5 @@ public class HumanResourceLogic {
 		licenceList = humanResourceDao.getEmpLicenceList(pmap);
 		return licenceList;
 	}
-	
+
 }

@@ -12,14 +12,19 @@ public class ScheduleDao {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 	
-
-
 	public List<Map<String, Object>> getAttendance(Map<String, Object> pmap) {
-		List<Map<String, Object>> attendancetMonthList = null;
+		List<Map<String, Object>> attendancetList = null;
 		
-		attendancetMonthList = sqlSessionTemplate.selectList("getAttendance",pmap);
+		attendancetList = sqlSessionTemplate.selectList("getAttendance",pmap);
 		
-		return attendancetMonthList;
+		return attendancetList;
 	}
 
+
+
+	public List<Map<String, Object>> getScheduleList(Map<String, Object> pMap) {
+		
+		return null;
+	}
 }
+
