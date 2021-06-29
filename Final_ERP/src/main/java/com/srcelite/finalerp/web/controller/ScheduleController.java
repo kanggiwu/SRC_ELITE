@@ -56,7 +56,7 @@ public class ScheduleController extends MultiActionController {
 	public void insertSchedule(HttpServletRequest request, HttpServletResponse response){
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String,Object> pMap =new HashMap<>();
-		hmb.bindPost(pMap);
+//		hmb.bindPost(pMap);
 		logger.info("쿼리스트링: "+pMap);
 		
 		
@@ -67,14 +67,14 @@ public class ScheduleController extends MultiActionController {
 	public void updateSchedule(HttpServletRequest request, HttpServletResponse response){
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String,Object> pMap =new HashMap<>();
-		hmb.bindPost(pMap);
+//		hmb.bindPost(pMap);
 		logger.info("쿼리스트링: "+pMap);
 	}
 	//일정 삭제
 	public void deleteSchedule(HttpServletRequest request, HttpServletResponse response){
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String,Object> pMap =new HashMap<>();
-		hmb.bindPost(pMap);
+//		hmb.bindPost(pMap);
 		logger.info("쿼리스트링: "+pMap);
 	}
 }

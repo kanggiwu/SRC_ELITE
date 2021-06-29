@@ -99,7 +99,18 @@ $setRows.submit(function (e) {
 
 $setRows.submit();
   });
-
+  /// 검색 콤보박스 중분류 비활성화하기
+  function handleOnChange(e) {
+	  // 선택된 데이터 가져오기
+	  const value = e.value;
+	  console.log(value);
+	  if(value != "option_dept_si"){
+		  document.getElementById('team_options').disabled = true;
+		  $("#team_options").val("option_team").prop("selected", true);
+	  }else{
+		  document.getElementById('team_options').disabled = false;
+	  }
+}
   </script>
 <title>HR - ERP PROGRAM</title>
 </head>
@@ -115,29 +126,29 @@ $setRows.submit();
 				<div id="page_contents" style="max-width: 1730px; margin: 10px 100px;">
      			<!-- 컨텐츠 들어갈내용 시작-->
 	<div class="col" >
-		<div style="text-align: left; padding: 5px; display: inline-block; width: 40%;">
+		<div style="text-align: left; padding: 5px; display: inline-block; width: 49%;">
       
-      <span class="input-group">
-        <select class="form-control">
-          <option value="" selected disabled hidden >부서</option>
-          <option>개발</option>
-          <option>인사</option>
-          <option>회계</option>
-          <option>임원</option>
+      <span class="input-group" >
+        <select class="form-control" id="dept_options" onchange="handleOnChange(this)">
+          <option value="option_dept" selected disabled hidden >부서</option>
+          <option value="option_dept_si">개발</option>
+          <option value="option_dept_hr">인사</option>
+          <option value="option_dept_ac">회계</option>
+          <option value="option_dept_head">임원</option>
          </select>
-         <select class="form-control ">
-          <option value="" selected disabled hidden >팀</option>
-          <option>1팀</option>
-          <option>2팀</option>
-          <option>3팀</option>
-          <option>SM</option>
+         <select class="form-control" id="team_options" disabled>
+          <option value="option_team" selected disabled hidden >팀</option>
+          <option value="option_team_1">1팀</option>
+          <option value="option_team_2">2팀</option>
+          <option value="option_team_3">3팀</option>
+          <option value="option_team_sm">SM</option>
          </select>           
         <input type="text" class="form-control float-left " placeholder="검색">
         <a class="btn btn-default float-left" href="" role="button"><i class="fas fa-search"></i></a>
       </span>  
 		</div>
-		<div style="text-align: right; padding: 5px; display: inline-block; width: 59%">
-			<button class="btn btn-info" onclick="location.href='insertEmployee.jsp'">
+		<div style="text-align: right; padding: 5px; display: inline-block; width: 50%">
+			<button class="btn btn-info" onclick="location.href='getDetailEmployee.src1'">
 			사원 추가</button>
 		
 		</div>
@@ -216,7 +227,6 @@ $setRows.submit();
 		</main>
 	</div>
 </div>
-
 <!-- 슬라이드바 사용할때 필요 -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <!-- 탑메뉴 사용 -->

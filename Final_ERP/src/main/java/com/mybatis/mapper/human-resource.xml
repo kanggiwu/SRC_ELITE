@@ -6,7 +6,7 @@
 
 	<!-- 사원 리스트 출력 -->
 	<select id="getEmpList" resultType="map">
-		SELECT e.emp_no, e.emp_name, d.dept_name, r.rank_name, e.emp_status
+		SELECT e.emp_no, e.emp_name, d.dept_name, r.rank_name, decode(e.emp_status,0,'재직',1,'휴직',2,'퇴직') emp_status
  		  FROM EMP e, DEPT d, rank r
 		 WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no
 		 ORDER BY emp_no ASC
@@ -53,8 +53,9 @@
 		<!-- 사원 상세 정보 가져오기 -->
 	<select id="getDetailEmpInfo" parameterType="map" resultType="map">
 	SELECT  e.emp_no, e.emp_name, TRUNC(MONTHS_BETWEEN(SYSDATE, emp_hiredate)/12)||'년차' emp_year, 
-		d.dept_name, nvl((t.team_name),'없음') team_name, r.rank_name, e.emp_hiredate, 
-		e. emp_retiredate,  e.emp_tel, e.emp_email,e.emp_status, e.emp_account, 
+		d.dept_name, nvl((t.team_name),'없음') team_name, r.rank_name, to_char(E.EMP_HIREDATE,'YYYY-MM-DD') emp_hiredate, 
+		to_char(E.emp_retiredate,'YYYY-MM-DD') emp_retiredate,  e.emp_tel, e.emp_email,
+		decode(e.emp_status,0,'재직',1,'휴직',2,'퇴직') emp_status, e.emp_account, 
 		(select count(licence_no)
 		from licence_emp le, emp e
 		where le.emp_no = e.emp_no and e.emp_No = #{emp_no}) licences
@@ -62,7 +63,7 @@
    WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no and E.TEAM_NO = T.TEAM_NO(+)  
     	and e.emp_no = #{emp_no}
 	</select>
-	<select id="getEmpLicenceInfo" parameterType="map" resultType="map">
+	<select id="getLicenceInfo" parameterType="map" resultType="map">
 	select	l.licence_no, l.licence_name,l.licence_type,l.licence_level,l.licence_date,l.licence_expire
 	from licence_emp le, licence l
 	where le.licence_no = l.licence_no and le.emp_no = #{emp_no}

@@ -66,7 +66,7 @@ public class HumanResourceController extends MultiActionController {
 		ModelAndView mav = new ModelAndView();
 		
 		logger.info("emp_no value: "+pmap.get("emp_no"));
-		if(pmap.get("emp_no") != "0") {
+		if(pmap.get("emp_no") != null) {
 			boardDetail = humanResourceLogic.getDetailEmployee(pmap);
 			logger.info("licences value: "+boardDetail.get(0).get("LICENCES"));
 			if(boardDetail.get(0).get("LICENCES") != "0") {
@@ -87,7 +87,7 @@ public class HumanResourceController extends MultiActionController {
 	{
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
-		hmb.multiBind(pmap);
+		hmb.bind(pmap);
 		int result = 0;
 		result = humanResourceLogic.insertEmployee(pmap);
 		if(result == 1) {

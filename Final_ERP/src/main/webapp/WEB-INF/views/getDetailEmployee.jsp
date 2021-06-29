@@ -47,23 +47,7 @@
           emp_status = rmap.get("EMP_STATUS").toString();
           emp_account = rmap.get("EMP_ACCOUNT").toString();
           
-        	  size = licenceList.size();
-          if(size>0){
-          Map<String,Object> lmap = licenceList.get(0);
-            licence_no = lmap.get("LICENCE_NO").toString();		
-             licence_name = lmap.get("LICENCE_NAME").toString();		
-/*            licence_type = lmap.get("LICENCE_TYPE").toString();		
-            licence_level = lmap.get("LICENCE_LEVEL").toString();		
-            licence_date = lmap.get("LICENCE_DATE").toString();		
-            licence_expire = lmap.get("LICENCE_EXPIRE").toString();	 */	
-          }else{
-            licence_no = "";
-            licence_name = "";
-            licence_type = "";
-            licence_level = "";
-            licence_date = "";
-            licence_expire = "";
-          }
+        	
           
         }
 
@@ -87,23 +71,39 @@
 <script>
   //자격증 로우 추가
   function add_row() {
-    var my_tbody = document.getElementById('licence-tbody');
-    // var row = my_tbody.insertRow(0); // 상단에 추가
-    var row = my_tbody.insertRow( my_tbody.rows.length ); // 하단에 추가
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    var cell4 = row.insertCell(3);
-    var cell5 = row.insertCell(4);
-    var cell6 = row.insertCell(5);
-    cell1.innerHTML = document.getElementById('AddLicenseRow1').value;
-    cell2.innerHTML = document.getElementById('AddLicenseRow2').value;
-    cell3.innerHTML = document.getElementById('AddLicenseRow3').value;
-    cell4.innerHTML = document.getElementById('AddLicenseRow4').value;
-    cell5.innerHTML = document.getElementById('AddLicenseRow5').value;
-    cell6.innerHTML = document.getElementById('AddLicenseRow6').value;
-  }
-
+	  console.log("1"+document.getElementById('AddLicenseRow1').value+"1");
+	  console.log(document.getElementById('AddLicenseRow2').value);
+	  console.log(document.getElementById('AddLicenseRow3').value);
+	  console.log(document.getElementById('AddLicenseRow4').value);
+	  console.log(document.getElementById('AddLicenseRow5').value);
+	  console.log(document.getElementById('AddLicenseRow6').value);
+	  if(document.getElementById('AddLicenseRow1').value !== null ||
+			  document.getElementById('AddLicenseRow2').value !== null ||	  
+			  document.getElementById('AddLicenseRow3').value !== null ||	  
+			  document.getElementById('AddLicenseRow4').value !== null ||	  
+			  document.getElementById('AddLicenseRow5').value !== null ||	  
+			  document.getElementById('AddLicenseRow6').value !== null 	  
+	  ){
+	    var my_tbody = document.getElementById('licence-tbody');
+	    // var row = my_tbody.insertRow(0); // 상단에 추가
+	    var row = my_tbody.insertRow( my_tbody.rows.length ); // 하단에 추가
+	    var cell1 = row.insertCell(0);
+	    var cell2 = row.insertCell(1);
+	    var cell3 = row.insertCell(2);
+	    var cell4 = row.insertCell(3);
+	    var cell5 = row.insertCell(4);
+	    var cell6 = row.insertCell(5);
+	    cell1.innerHTML = document.getElementById('AddLicenseRow1').value;
+	    cell2.innerHTML = document.getElementById('AddLicenseRow2').value;
+	    cell3.innerHTML = document.getElementById('AddLicenseRow3').value;
+	    cell4.innerHTML = document.getElementById('AddLicenseRow4').value;
+	    cell5.innerHTML = document.getElementById('AddLicenseRow5').value;
+	    cell6.innerHTML = document.getElementById('AddLicenseRow6').value;
+		  }
+	  else{
+		  alert("X");
+	  }
+	  }
   function delete_row() {
     var my_tbody = document.getElementById('licence-tbody');
     if (my_tbody.rows.length < 1) return;
@@ -117,14 +117,31 @@
   fieldset.disabled = false;
   var empUpdReady = document.getElementById('EmpUpdReady');
   empUpdReady.style.visibility = 'hidden';
+  if(document.getElementById('dept_options') != "개발"){
+	  document.getElementById('team_options').disabled = true;	  
+  }
   document.getElementById('EmpUpdSubmit').style.display = ''
+  
 }
 
 function insAction() {
 			console.log("입력 액션 호출");
 			$('#board_ins').submit();
-      location.href = 'getEmployeeList.jsp'
+      location.href = 'getEmployeeList.src1'
 		}
+/// 콤보박스 중분류 비활성화하기
+function handleOnChange(e) {
+	  // 선택된 데이터 가져오기
+	  const value = e.value;
+	  console.log(value);
+	  if(value != "option_dept_si"){
+		  document.getElementById('team_options').disabled = true;
+		  $("#team_options").val("option_team_none").prop("selected", true);
+	  }else{
+		  document.getElementById('team_options').disabled = false;
+		  
+	  }
+}		
 </script>
 <title>HR - ERP PROGRAM</title>
 </head>
@@ -144,7 +161,7 @@ function insAction() {
                  <div style="text-align: right; padding: 5px;">
                   <button class="btn btn-info" id="EmpUpdReady" onclick="fieldsetDisable()">수정</button>
                   <button class="btn btn-info" id="EmpUpdSubmit" onclick="insAction();" style="display:none;">수정 완료</button>
-                  <button class="btn btn-danger" onclick="location.href='getEmployeeList.jsp'">취소</button>
+                  <button class="btn btn-danger" onclick="location.href='getEmployeeList.src1'">취소</button>
                 </div>
                 <fieldset id='btn_fieldset' disabled>
                 <form id="emp_ins" method="post" enctype="multipart/form-data" action="updateEmployee.src1">
@@ -169,19 +186,20 @@ function insAction() {
 								<br>				
 								<div class="input-group">
 								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">부서</span>
-						          <select class="form-control">
-                        <option value="" selected disabled hidden ><%=dept_name%></option>
-						              <option>인사</option>
-						              <option>회계</option>
-						              <option>개발</option>
-						              <option>임원</option>
+						          <select class="form-control" id="dept_options" onchange="handleOnChange(this)">
+                      			   <option value="option_dept" selected disabled hidden ><%=dept_name%></option>
+						              <option value="option_dept_hr">인사</option>
+						              <option value="option_dept_ac">회계</option>
+						              <option value="option_dept_si">개발</option>
+						              <option value="option_dept_head">임원</option>
 						          </select>
-						          <select class="form-control">
-                        <option value="" selected disabled hidden ><%=team_name%></option>
-						              <option>개발1팀</option>
-						              <option>개발2팀</option>
-						              <option>개발3팀</option>
-						              <option>SM팀</option>
+						          <select class="form-control" id="team_options">
+                    			    <option  value="option_team" selected disabled hidden ><%=team_name%></option>
+						              <option value="option_team_1">개발1팀</option>
+						              <option value="option_team_2">개발2팀</option>
+						              <option value="option_team_3">개발3팀</option>
+						              <option value="option_team_sm">SM팀</option>
+						              <option value="option_team_none" hidden >없음</option>
 						          </select>
 								</div>
 								<br>						
@@ -191,9 +209,12 @@ function insAction() {
                         <option value="" selected disabled hidden ><%=rank_name%></option>
 						            <option>사원</option>
 						            <option>대리</option>
+						            <option>차장</option>
 						            <option>과장</option>
 						            <option>부장</option>
-						            <option>사장</option>
+						            <option>부사장</option>
+						            <option>이사</option>
+						            <option>대표</option>
 					       	   </select>
 								</div>						
 							</div>	
@@ -231,7 +252,7 @@ function insAction() {
 							  <br>
 								<div class="input-group">
 								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">전화번호</span>
-								  <input type="text" class="form-control" value="<%=emp_hiredate%>" aria-describedby="basic-addon1">
+								  <input type="text" class="form-control" value="<%=emp_tel%>" aria-describedby="basic-addon1">
 								</div>
 								<br>				
 								<div class="input-group">
@@ -286,8 +307,17 @@ function insAction() {
 					       		 </tr>
 <%
 
+				     		size = licenceList.size();
+				     	    if(size>0){
 				     		for(int i=0;i<size;i++){
 				     			if(i==size) break;
+				     	          Map<String,Object> lmap = licenceList.get(i);
+				     	            licence_no = lmap.get("LICENCE_NO").toString();		
+				     	             licence_name = lmap.get("LICENCE_NAME").toString();		
+				     	/*            licence_type = lmap.get("LICENCE_TYPE").toString();		
+				     	            licence_level = lmap.get("LICENCE_LEVEL").toString();		
+				     	            licence_date = lmap.get("LICENCE_DATE").toString();		
+				     	            licence_expire = lmap.get("LICENCE_EXPIRE").toString();	 */	
 %>							    
 					    	   	   <tr>
                         <td><input type="text" id="AddLicenseRow1" value="<%=licence_no%>" class="form-control" disabled/></td>
@@ -298,8 +328,9 @@ function insAction() {
                         <td><input type="text" id="AddLicenseRow6" class="form-control" disabled/></td>
 					       		 </tr>
 <%
-				}///end of for
-%> 					       		 
+							}///end of for
+						}///end of if
+%> 							       		 
 							    </tbody>
 			    			</table>
 					  	</div>

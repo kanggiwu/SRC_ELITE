@@ -29,7 +29,7 @@ public class HumanResourceDao {
 	}
 	public List<Map<String, Object>> getEmpLicenceList(Map<String, Object> pmap) {
 		List<Map<String, Object>> licenceList = null;
-		licenceList = sqlSessionTemplate.selectList("getEmpLicenceInfo",pmap);
+		licenceList = sqlSessionTemplate.selectList("getLicenceInfo",pmap);
 		return licenceList;
 	}
 }
