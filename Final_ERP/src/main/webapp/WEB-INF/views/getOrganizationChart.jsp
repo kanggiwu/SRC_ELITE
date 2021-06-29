@@ -39,6 +39,20 @@
 	function imgAreaError(){
 		$('#imgViewArea').css({ 'display' : 'none' });
 	}
+	
+	$(document).ready(function(){
+		  $("#fileInput").on('change',function(){
+		    if(window.FileReader){
+		      var filename = $(this)[0].files[0].name;
+		      console.log(filename+"1");
+		    } else{
+		      var filename = $(this)[0].val().split('/').pop().split('\\').pop();
+		      console.log(filename+"2");
+		    }
+		    //추출한 파일명 삽입
+		    $("#userfile").val(filename);
+		  });
+		});	
 </script>
 <title>HR - ERP PROGRAM</title>
 </head>
@@ -60,7 +74,7 @@
             <label for="InputSubject1">파일첨부</label>
             <input id="fileInput" name="u_file" filestyle="" type="file" data-class-button="btn btn-default" data-class-input="form-control"
             data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" 
-            style="position: absolute; clip: rect(0px 0px 0px 0px);">
+            style="position: absolute; clip: rect(0px 0px 0px 0px);" accept="image/*">
             <div class="bootstrap-filestyle input-group">
               <input type="text" id="userfile" class="form-control" name="userfile" disabled="">
               <span class="group-span-filestyle input-group-btn" tabindex="0">

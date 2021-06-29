@@ -27,31 +27,18 @@ public class HumanResourceController extends MultiActionController {
 	{
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String, Object> pmap = new HashMap<String, Object>();
+		logger.info(req.getParameter("emp_name"));
 		hmb.bind(pmap);
 		List<Map<String,Object>> boardList = null;
+		logger.info("emp_name value: "+pmap.get("emp_name"));
+		logger.info("dept_name value: "+pmap.get("dept_name"));
+		logger.info("rank_name value: "+pmap.get("rank_name"));
+		if(pmap.get("dept_name") != null) {
+			boardList = humanResourceLogic.getEmpSearchList(pmap);
+		}else {
 		boardList = humanResourceLogic.getEmployeeList(pmap);
+		}
 		ModelAndView mav = new ModelAndView();
-//		List<Map<String,Object>> boardList = new ArrayList<Map<String,Object>>();
-//		pmap.put("emp_no", "1111");
-//		pmap.put("emp_name", "개구리");
-//		pmap.put("dept_name", "인사부");
-//		pmap.put("rank_name", "사장");
-//		pmap.put("emp_status", "재직");
-//		boardList.add(pmap);
-//		pmap = new HashMap<String, Object>();
-//		pmap.put("emp_no", "1112");
-//		pmap.put("emp_name", "왕눈이");
-//		pmap.put("dept_name", "회계부");
-//		pmap.put("rank_name", "사원");
-//		pmap.put("emp_status", "휴직");
-//		boardList.add(pmap);
-//		pmap = new HashMap<String, Object>();
-//		pmap.put("emp_no", "1113");
-//		pmap.put("emp_name", "투투");
-//		pmap.put("dept_name", "개발부");
-//		pmap.put("rank_name", "과장");
-//		pmap.put("emp_status", "퇴직");
-//		boardList.add(pmap);
 		mav.setViewName("getEmployeeList");
 		mav.addObject("boardList", boardList);
 		return mav;
@@ -97,6 +84,15 @@ public class HumanResourceController extends MultiActionController {
 			res.sendRedirect("등록실패 페이지 이동처리");
 		}
 	}	
+	public ModelAndView getOrganizationChart(HttpServletRequest req, HttpServletResponse res)
+	throws Exception
+	{
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("getOrganizationChart");
+		return mav;
+		
+	}
 	public void updateOrganizationChart(HttpServletRequest req, HttpServletResponse res)
 			throws Exception
 	{

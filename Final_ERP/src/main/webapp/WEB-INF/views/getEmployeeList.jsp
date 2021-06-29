@@ -99,18 +99,11 @@ $setRows.submit(function (e) {
 
 $setRows.submit();
   });
-  /// 검색 콤보박스 중분류 비활성화하기
-  function handleOnChange(e) {
-	  // 선택된 데이터 가져오기
-	  const value = e.value;
-	  console.log(value);
-	  if(value != "option_dept_si"){
-		  document.getElementById('team_options').disabled = true;
-		  $("#team_options").val("option_team").prop("selected", true);
-	  }else{
-		  document.getElementById('team_options').disabled = false;
-	  }
-}
+  
+	function empSearch() {
+		console.log("입력 액션 호출");
+		$('#emp_search').submit();
+	}  
   </script>
 <title>HR - ERP PROGRAM</title>
 </head>
@@ -127,25 +120,31 @@ $setRows.submit();
      			<!-- 컨텐츠 들어갈내용 시작-->
 	<div class="col" >
 		<div style="text-align: left; padding: 5px; display: inline-block; width: 49%;">
-      
-      <span class="input-group" >
-        <select class="form-control" id="dept_options" onchange="handleOnChange(this)">
-          <option value="option_dept" selected disabled hidden >부서</option>
-          <option value="option_dept_si">개발</option>
-          <option value="option_dept_hr">인사</option>
-          <option value="option_dept_ac">회계</option>
-          <option value="option_dept_head">임원</option>
-         </select>
-         <select class="form-control" id="team_options" disabled>
-          <option value="option_team" selected disabled hidden >팀</option>
-          <option value="option_team_1">1팀</option>
-          <option value="option_team_2">2팀</option>
-          <option value="option_team_3">3팀</option>
-          <option value="option_team_sm">SM</option>
-         </select>           
-        <input type="text" class="form-control float-left " placeholder="검색">
-        <a class="btn btn-default float-left" href="" role="button"><i class="fas fa-search"></i></a>
-      </span>  
+     	 <form id="emp_search" method="post" enctype="multipart/form-data" action="getEmployeeList.src1">
+	      <span class="input-group" >
+	        <select name="dept_name" class="form-control" id="dept_options">
+	          <option value="option_dept" selected disabled hidden >부서</option>
+	          <option value="option_dept_si">개발</option>
+	          <option value="option_dept_hr">인사</option>
+	          <option value="option_dept_ac">회계</option>
+	          <option value="option_dept_head">임원</option>
+	         </select>
+	         <select name="rank_name" class="form-control" id="rank_options">
+	          <option value="option_rank" selected disabled hidden >직위</option>
+	          <option value="option_rank_1">사원</option>
+	          <option value="option_rank_2">대리</option>
+	          <option value="option_rank_3">차장</option>
+	          <option value="option_rank_4">과장</option>
+	          <option value="option_rank_5">부장</option>
+	          <option value="option_rank_6">부사장</option>
+	          <option value="option_rank_7">이사</option>
+	          <option value="option_rank_8">대표</option>
+	         </select>           
+	        <input name='emp_name' type="text" class="form-control float-left " placeholder="검색">
+	        <input type='submit' role="button">
+	        <a class="btn btn-default float-left" role="button"><i class="fas fa-search"></i></a>
+	      </span>
+      	</form>  
 		</div>
 		<div style="text-align: right; padding: 5px; display: inline-block; width: 50%">
 			<button class="btn btn-info" onclick="location.href='getDetailEmployee.src1'">

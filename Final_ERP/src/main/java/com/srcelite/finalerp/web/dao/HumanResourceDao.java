@@ -32,4 +32,9 @@ public class HumanResourceDao {
 		licenceList = sqlSessionTemplate.selectList("getLicenceInfo",pmap);
 		return licenceList;
 	}
+	public List<Map<String, Object>> getEmpSearchList(Map<String, Object> pmap) {
+		List<Map<String, Object>> boardList = null;
+		boardList = sqlSessionTemplate.selectList("getEmpListProc",pmap);
+		return boardList;
+	}
 }

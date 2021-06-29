@@ -133,7 +133,7 @@
 				<prop key="/manageraccount/insertExpense.src1">insertExpense</prop>
 				<prop key="/manageraccount/getBalanceLIst.src1">getBalanceLIst</prop>
 
-				<prop key="/humanresource/getOrganizationChart.src1">getBalanceLIst</prop>
+				<prop key="/humanresource/getOrganizationChart.src1">getOrganizationChart</prop>
 				<prop key="/humanresource/updateOrganizationChart.src1">updateOrganizationChart</prop>
 				<prop key="/humanresource/getEmployeeList.src1">getEmployeeList</prop>
 				<prop key="/humanresource/getDetailEmployee.src1">getDetailEmployee</prop>

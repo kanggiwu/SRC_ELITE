@@ -45,5 +45,10 @@ public class HumanResourceLogic {
 		licenceList = humanResourceDao.getEmpLicenceList(pmap);
 		return licenceList;
 	}
+	public List<Map<String, Object>> getEmpSearchList(Map<String, Object> pmap) {
+		List<Map<String,Object>> boardList = null;
+		boardList = humanResourceDao.getEmpSearchList(pmap);
+		return boardList;
+	}
 
 }

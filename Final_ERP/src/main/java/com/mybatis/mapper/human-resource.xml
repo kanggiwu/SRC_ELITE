@@ -52,9 +52,9 @@
 	
 		<!-- 사원 상세 정보 가져오기 -->
 	<select id="getDetailEmpInfo" parameterType="map" resultType="map">
-	SELECT  e.emp_no, e.emp_name, TRUNC(MONTHS_BETWEEN(SYSDATE, emp_hiredate)/12)||'년차' emp_year, 
-		d.dept_name, nvl((t.team_name),'없음') team_name, r.rank_name, to_char(E.EMP_HIREDATE,'YYYY-MM-DD') emp_hiredate, 
-		to_char(E.emp_retiredate,'YYYY-MM-DD') emp_retiredate,  e.emp_tel, e.emp_email,
+	SELECT  e.emp_no, e.emp_name, 
+		d.dept_name, nvl((t.team_name),'없음') team_name, r.rank_name, substr(emp_hiredate,1,10) EMP_HIREDATE, 
+		substr(emp_retiredate,1,10) EMP_RETIREDATE,  e.emp_tel, e.emp_email,
 		decode(e.emp_status,0,'재직',1,'휴직',2,'퇴직') emp_status, e.emp_account, 
 		(select count(licence_no)
 		from licence_emp le, emp e
