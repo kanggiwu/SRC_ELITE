@@ -21,18 +21,31 @@ public class ScheduleLogic {
 		List<Map<String,Object>> attendanceList = null;
 		
 		attendanceList = scheduleDao.getAttendance(pmap);
-		
 		return attendanceList;
 		}
 
 	//일정 상세조회
-	public Map<String,Object> getDetailSchedule(Map<String,Object> pmap)    {return null;}
+	public Map<String,Object> getDetailSchedule(Map<String,Object> pmap)    {
+		Map<String,Object> detailSchedule = null;
+		
+		
+		return detailSchedule;
+	}
+	
+	public List<Map<String, Object>> getScheduleList(Map<String, Object> pMap) {
+		List<Map<String,Object>> scheduleList = null;
+		scheduleList=scheduleDao.getScheduleList(pMap);
+		
+		return scheduleList;
+	}
 	//일정 추가
 	public void insertSchedule(Map<String,Object> pmap) {}
 	//일정 수정
 	public void updateSchedule(Map<String,Object> pmap) {}
 	//일정 삭제
 	public void deleteSchedule(Map<String,Object> pmap) {}
+
+
 	
 	
 	
