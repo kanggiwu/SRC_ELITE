@@ -22,6 +22,7 @@
       String emp_email 		= null;	
       String emp_status 		= null;	
       String emp_account		= null;	
+      String emp_picture_path		= null;	
       String licence_no 		= null;	
       String licence_name 		= null;	
       String licence_type 		= null;	
@@ -47,6 +48,7 @@
           emp_email = rmap.get("EMP_EMAIL").toString();
           emp_status = rmap.get("EMP_STATUS").toString();
           emp_account = rmap.get("EMP_ACCOUNT").toString();
+          emp_picture_path = rmap.get("EMP_PICTURE_PATH").toString();
           
         	
           
@@ -149,18 +151,18 @@ function readURL(input) {
 	}
 }
 
-$(":input[name='u_file']").change(function() {
+/* $(":input[name='u_file']").change(function() {
 	if( $(":input[name='u_file']").val() == '' ) {
 		$('#imgArea').attr('src' , '');  
 	}
 	$('#imgViewArea').css({ 'display' : '' });
 	readURL(this);
-});
+}); */
 
 // 이미지 에러 시 미리보기영역 미노출
-function imgAreaError(){
+/* function imgAreaError(){
 	$('#imgViewArea').css({ 'display' : 'none' });
-}
+} */
 function empUpdateAction() {
 			console.log("입력 액션 호출");
 			$('#employee_update').submit();
@@ -192,10 +194,9 @@ function empUpdateAction() {
 			   			<div class="row">
 						    <div class="col-lg-6">
 								<div id="imgViewArea" style="width:100%; height:250px;">
-									<img id="imgArea" style="width: 200px; left: 20%; position: relative;" alt="profile" onerror="imgAreaError()">
+									<img id="imgArea" src="../<%=emp_picture_path%>"style="width: 200px; left: 20%; position: relative;" alt="profile" onerror="imgAreaError()">
 								 <div class="form-group" style="left: 20%; position: relative;">
-								    <label for="u_file"></label>
-								    <input type="file" id="u_file" onchange="readURL(this);" name="u_file" accept="image/*">
+								    <input type="file" id="u_file" onchange="readURL(this);" name="emp_picture_path" accept="image/*">
 								</div>
 								  </div>
 								<hr>
@@ -301,6 +302,8 @@ function empUpdateAction() {
 								</div>						
 							  </div>
 						    </div>
+            				</form>
+			                <form id="licence_add" method="post" enctype="multipart/form-data" action="updateEmployee.src1">
 					         <table class="table table-bordered table-hover"  id="testTable"
 			                       id="table"
 			              data-toggle="table"
@@ -311,23 +314,26 @@ function empUpdateAction() {
 			              data-pagination="true"
 			                  data-url="./member.json">
 			    			<thead>
-							      <tr>
-							        <th>자격증 번호</th>
-							        <th>자격증 이름</th>
+			    				<tr>
+			    					<th colspan="6">보유 자격증</th>
+			    				</tr>
+							     <tr>
+							        <th>번호</th>
+							        <th>이름</th>
 							        <th>분류</th>
 							        <th>레벨</th>
 							        <th>취득일</th>
 							        <th>만기일</th>
-							      </tr>
-							    </thead>
+							     </tr>
+							 </thead>
 							    <tbody id="licence-tbody">
 					    	   	   <tr>
-                        <td><input type="text" id="AddLicenseRow1" class="form-control" /></td>
-                        <td><input type="text" id="AddLicenseRow2" class="form-control" /></td>
-                        <td><input type="text" id="AddLicenseRow3" class="form-control" /></td>
-                        <td><input type="text" id="AddLicenseRow4" class="form-control" /></td>
-                        <td><input type="text" id="AddLicenseRow5" class="form-control" /></td>
-                        <td><input type="text" id="AddLicenseRow6" class="form-control" /></td>
+			                        <td><input type="text" name="licence_no" id="AddLicenseRow1" class="form-control" /></td>
+			                        <td><input type="text" name="licence_name" id="AddLicenseRow2" class="form-control" /></td>
+			                        <td><input type="text" name="licence_type" id="AddLicenseRow3" class="form-control" /></td>
+			                        <td><input type="text" name="licence_level" id="AddLicenseRow4" class="form-control" /></td>
+			                        <td><input type="text" name="licence_date" id="AddLicenseRow5" class="form-control" /></td>
+			                        <td><input type="text" name="licence_expire" id="AddLicenseRow6" class="form-control" /></td>
 					       		 </tr>
 <%
 
@@ -344,12 +350,12 @@ function empUpdateAction() {
 				     	            licence_expire = lmap.get("LICENCE_EXPIRE").toString();	 */	
 %>							    
 					    	   	   <tr>
-                        <td><input type="text" id="AddLicenseRow1" value="<%=licence_no%>" class="form-control" disabled/></td>
-                        <td><input type="text" id="AddLicenseRow2" value="<%=licence_name%>"class="form-control" disabled/></td>
-                        <td><input type="text" id="AddLicenseRow3" class="form-control" disabled/></td>
-                        <td><input type="text" id="AddLicenseRow4" class="form-control" disabled/></td>
-                        <td><input type="text" id="AddLicenseRow5" class="form-control" disabled/></td>
-                        <td><input type="text" id="AddLicenseRow6" class="form-control" disabled/></td>
+                        <td><input type="text" value="<%=licence_no%>" class="form-control" disabled/></td>
+                        <td><input type="text" value="<%=licence_name%>"class="form-control" disabled/></td>
+                        <td><input type="text" class="form-control" disabled/></td>
+                        <td><input type="text" class="form-control" disabled/></td>
+                        <td><input type="text" class="form-control" disabled/></td>
+                        <td><input type="text" class="form-control" disabled/></td>
 					       		 </tr>
 <%
 							}///end of for
@@ -357,8 +363,8 @@ function empUpdateAction() {
 %> 							       		 
 							    </tbody>
 			    			</table>
+            				</form>
 					  	</div>
-            </form>
               <div style="text-align: right; padding: 5px;">
                 <button class="btn btn-light" onclick="add_row()">자격증 추가</button>
                 <button class="btn btn-light" onclick="delete_row()">자격증 삭제</button>

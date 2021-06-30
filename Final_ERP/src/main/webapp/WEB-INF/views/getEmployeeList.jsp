@@ -140,7 +140,7 @@ $setRows.submit();
 	          <option value="이사">이사</option>
 	          <option value="대표">대표</option>
 	         </select>           
-	        <input name='emp_name' type="text" class="form-control float-left " placeholder="검색">
+	        <input name="emp_name" type="text" class="form-control float-left " placeholder="검색">
 	        <a href="javascript:empSearchAction()" class="btn btn-default float-left" role="button"><i class="fas fa-search"></i></a>
 	      </span>
       	</form>  

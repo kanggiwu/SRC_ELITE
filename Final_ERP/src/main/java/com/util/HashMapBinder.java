@@ -17,6 +17,7 @@ public class HashMapBinder {
 	//첨부파일은 반드시 post방식으로 전송해야 한다.
 	MultipartRequest multi = null;//기존의 request로는 값을 가져오지 못하게 됨.
 	String realFolder = "";
+	String myFolder = "";
 	//첨부파일 한글처리
 	String encType = "utf-8";
 	//첨부파일 크기 제한
@@ -25,7 +26,10 @@ public class HashMapBinder {
 	public HashMapBinder() {}
 	public HashMapBinder(HttpServletRequest request) {
 		this.request = request;
-		realFolder = "C:\\portfolio_kosmo\\lab_spring4\\spring4_1_1\\WebContent\\pds";
+//		realFolder = "http:\\localhost:6001\\pds";
+		realFolder = "C:\\SRC_ELITE\\Final_ERP\\src\\main\\webapp\\pds";
+		myFolder = "Final_ERP\\src\\main\\webapp\\pds";
+//		realFolder = "C:\\portfolio_kosmo\\lab_spring4\\spring4_1_1\\WebContent\\pds";
 //		realFolder = "C:\\bbigal_programing\\workspace_web\\SRC_ELITE\\Final_ERP\\src\\main\\webapp\\pds";
 	}
 	public void bind(Map<String,Object> target) {
@@ -58,18 +62,19 @@ public class HashMapBinder {
 			while(files.hasMoreElements()) {
 				String fname = files.nextElement();
 				String filename = multi.getFilesystemName(fname);
-				target.put("bs_file", filename);
+//				target.put("emp_picture_path", filename);
+				target.put("emp_picture_path", (myFolder+"\\"+filename));
 				if(filename !=null && filename.length()>1) {
 					file = new File(realFolder+"\\"+filename);
 				}
 			}///////////end of while
 			//첨부파일의 크기를 담을 변수
-			double size = 0;
-			if(file !=null) {
-				size = file.length();
-				size = file.length();
-				target.put("bs_size", size);
-			}
+//			double size = 0;
+//			if(file !=null) {
+//				size = file.length();
+//				size = file.length();
+//				target.put("bs_size", size);
+//			}
 			
 		}
 	}////////end of multiBind

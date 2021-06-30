@@ -31,18 +31,15 @@ public class HumanResourceLogic {
 		boardDetail = humanResourceDao.getEmployeeDetail(pmap);
 		return boardDetail;}
 	//사원정보 수정
-	public void updateEmployee(Map<String,Object> pmap) {
-		
+	public int updateEmployee(Map<String,Object> pmap) {
+		int result = 0;
+		result = humanResourceDao.updateEmployee(pmap);
+		return result;
 	}
 	//사원정보 추가
 	public int insertEmployee(Map<String,Object> pmap)                            {
 		int result = 0;
 		result = humanResourceDao.insertEmployee(pmap);
-		return result;
-	}
-	public int upsertEmployee(Map<String, Object> pmap) {
-		int result = 0;
-		result = humanResourceDao.updateEmployee(pmap);
 		return result;
 	}
 	public List<Map<String, Object>> getEmpLicenceList(Map<String, Object> pmap) {

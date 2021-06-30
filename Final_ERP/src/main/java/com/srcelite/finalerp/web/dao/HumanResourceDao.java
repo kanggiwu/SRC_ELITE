@@ -3,9 +3,11 @@ package com.srcelite.finalerp.web.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 
 public class HumanResourceDao {
+	Logger logger = Logger.getLogger(HumanResourceDao.class);
 	SqlSessionTemplate sqlSessionTemplate = null;
 
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
@@ -14,6 +16,7 @@ public class HumanResourceDao {
 	public List<Map<String, Object>> getEmployeeList(Map<String, Object> pmap) {
 		List<Map<String, Object>> boardList = null;
 		boardList = sqlSessionTemplate.selectList("getEmpList",pmap);
+		logger.info("List: "+ boardList);
 		return boardList;
 	}
 	public List<Map<String, Object>> getEmployeeDetail(Map<String, Object> pmap) {
@@ -29,8 +32,8 @@ public class HumanResourceDao {
 	}
 	public int updateEmployee(Map<String, Object> pmap) {
 		int result = 0;
+//		sqlSessionTemplate.update("updateEmpInfo",pmap);
 		result = 1;
-//		sqlSessionTemplate.insert("insertEmpInfo",pmap);
 		return result;
 	}
 	public List<Map<String, Object>> getEmpLicenceList(Map<String, Object> pmap) {
@@ -40,7 +43,9 @@ public class HumanResourceDao {
 	}
 	public List<Map<String, Object>> getEmpSearchList(Map<String, Object> pmap) {
 		List<Map<String, Object>> boardList = null;
-		boardList = sqlSessionTemplate.selectList("getEmpListProc",pmap);
+		sqlSessionTemplate.selectList("getEmpListProc",pmap);
+		logger.info("1: "+ pmap.get("e_cursor"));
+		boardList = (List<Map<String, Object>>) pmap.get("e_cursor");
 		return boardList;
 	}
 }

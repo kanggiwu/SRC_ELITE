@@ -24,8 +24,9 @@
 		
 	<!-- 사원 정보 등록 -->
 	<insert id="insertEmpInfo" parameterType="map">
-		INSERT INTO emp (emp_no, emp_name, emp_pw, emp_status, dept_no, rank_no, emp_job, emp_hiredate, emp_retiredate, emp_email, emp_tel, emp_auth, emp_picture_path)
-            VALUES(#{seq_emp}, #{emp_name}, #{emp_pw}, #{emp_status}, #{dept_no}, #{rank_no}, #{emp_job}, #{emp_hiredate}, #{emp_retiredate}, #{emp_email}, #{emp_tel}, #{emp_auth}. #{emp_picture_path})
+	<!-- 팀, 계좌일자 추가하였습니다 -->
+		INSERT INTO emp (emp_no, emp_name, emp_pw, emp_status, dept_no, rank_no, team_name, emp_hiredate, emp_retiredate, emp_email, emp_tel, emp_account, emp_picture_path
+            VALUES(#{seq_emp}, #{emp_name}, #{emp_pw}, #{emp_status}, #{dept_no}, #{rank_no}, #{team_name}, #{emp_hiredate}, #{emp_retiredate}, #{emp_email}, #{emp_tel}, #{emp_account}, #{emp_picture_path}
 	</insert>
 
 	<!-- 자격증 소유자 등록 -->
@@ -35,17 +36,19 @@
 
 	<!-- 사원 정보 수정 -->
 	<update id="updateEmpInfo" parameterType="map">
+	<!-- 팀과 입사일자, 계좌번호, 사진을 추가하였습니다 -->
 		UPDATE EMP
 		SET
     		emp_name = #{emp_name}
     		,emp_status = #{emp_status}
     		,dept_no = #{dept_no}
     		,rank_no = #{rank_no}
-    		,emp_job = #{emp_job}
+    		,team_name = #{team_name}
+    		,emp_hiredate = #{emp_hiredate}
     		,emp_retiredate = #{emp_retiredate}
     		,emp_email = #{emp_email}
     		,emp_tel = #{emp_tel}
-    		,emp_auth = #{emp_auth}
+    		,emp_account = #{emp_account}
     		,emp_picture_path = #{emp_picture_path}
 		WHERE emp_no =#{emp_no}
 	</update>
@@ -55,7 +58,7 @@
 	SELECT  e.emp_no, e.emp_name, 
 		d.dept_name, nvl((t.team_name),'없음') team_name, r.rank_name, substr(emp_hiredate,1,10) EMP_HIREDATE, 
 		substr(emp_retiredate,1,10) EMP_RETIREDATE,  e.emp_tel, e.emp_email,
-		decode(e.emp_status,0,'재직',1,'휴직',2,'퇴직') emp_status, e.emp_account, 
+		decode(e.emp_status,0,'재직',1,'휴직',2,'퇴직') emp_status, e.emp_account, e.emp_picture_path, 
 		(select count(licence_no)
 		from licence_emp le, emp e
 		where le.emp_no = e.emp_no and e.emp_No = #{emp_no}) licences

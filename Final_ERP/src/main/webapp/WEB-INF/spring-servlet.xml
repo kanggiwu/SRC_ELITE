@@ -82,7 +82,10 @@
 				<prop key="/humanresource/getDetailEmployee.src1">human-resource-controller</prop>
 				<prop key="/humanresource/insertEmployee.src1">human-resource-controller</prop>
 				<prop key="/humanresource/updateEmployee.src1">human-resource-controller</prop>
+				<!-- 검색 기능과 자격증 추가 삭제 기능을 넣었습니다 -->
 				<prop key="/humanresource/getEmpSearchList.src1">human-resource-controller</prop>
+				<prop key="/humanresource/insertLIcenceInfo.src1">human-resource-controller</prop>
+				<prop key="/humanresource/deleteLIcenceInfo.src1">human-resource-controller</prop>
 
 				<prop key="/approval/getApprovalForm.src1">approval-controller</prop>
 				<prop key="/approval/submitApproval.src1">approval-controller</prop>
@@ -140,7 +143,10 @@
 				<prop key="/humanresource/getDetailEmployee.src1">getDetailEmployee</prop>
 				<prop key="/humanresource/insertEmployee.src1">insertEmployee</prop>
 				<prop key="/humanresource/updateEmployee.src1">updateEmployee</prop>
+				<!-- 검색 기능과 자격증 추가 삭제 기능을 넣었습니다 -->
 				<prop key="/humanresource/getEmpSearchList.src1">getEmpSearchList</prop>
+				<prop key="/humanresource/insertLIcenceInfo.src1">insertLIcenceInfo</prop>
+				<prop key="/humanresource/deleteLIcenceInfo.src1">deleteLIcenceInfo</prop>
 
 				<prop key="/approval/getApprovalForm.src1">getApprovalForm</prop>
 				<prop key="/approval/submitApproval.src1">submitApproval</prop>
