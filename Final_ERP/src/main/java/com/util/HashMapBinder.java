@@ -36,4 +36,5 @@ public class HashMapBinder {
 			target.put(key, request.getParameter(key));
 		}
 	}////////end of bind
+	
 }

@@ -41,7 +41,7 @@ public class NoticeController extends MultiActionController {
 		List<Map<String, Object>> noticeAllList = null;
 		noticeAllList = noticeLogic.getAllNoticeList(target);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("notice/getAllNoticeList");
+		mav.setViewName("getAllNoticeList");
 		mav.addObject("noticeAllList", noticeAllList);
 		return mav;
 	}
@@ -66,7 +66,7 @@ public class NoticeController extends MultiActionController {
 	public void insertNotice(HttpServletRequest request, HttpServletResponse response) {
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pmap = new HashMap<>();
-		hmb.multiBind(pmap);
+		hmb.bind(pmap);
 		int result = 0;
 			
 	}
@@ -76,8 +76,8 @@ public class NoticeController extends MultiActionController {
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pmap = new HashMap<>();
 		// 사용자가 입력한 값이나 서버에서 클라이언트에게 요청한 값 넘김.
-		// hmb.bindPost(pmap);
-		hmb.multiBind(pmap);
+		 hmb.bind(pmap);
+//		hmb.multiBind(pmap);
 		int result = 0;
 		}
 

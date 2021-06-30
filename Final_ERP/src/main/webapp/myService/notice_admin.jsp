@@ -33,7 +33,7 @@
      			<div class= col-xs-4 style="text-align: left; padding: 5px; display: inline-block; width: 40%;">
 	<span class="input-group">
 	        <select class="form-control">
-          <option value="" selected disabled hidden >분류</option>
+          <option value="" selected disabled hidden>분류</option>
           <option>공통</option>
           <option>인사</option>
           <option>회계</option>
@@ -49,9 +49,7 @@
     	     			<!-- 추가버튼 클릭시 내용 추가 창으로 이동 -->
      			<div style="text-align: right; padding: 5px; display: inline-block; width: 59%">
      			<button class="btn btn-primary btn-sm pull-right" onClick="location.href='notice_insert.jsp'">추가</button>
-     			<button class="btn btn-primary btn-sm pull-right" onClick="location.href='notice_update.jsp'">수정</button>
-     			<button class="btn btn-primary btn-sm pull-right" onClick="#">삭제</button>
-     		    </div>
+     		     		    </div>
     <table class="table table-bordered table-striped" id="products">
     	<!-- 페이징 처리 부분 //반드시 테이블 안에 넣어야됨// -->
                      <form action="" id="setRows">
@@ -66,8 +64,13 @@
         </tr>
         </thead>
         <tbody>
-            <!-- 상세보기 페이지 이동 -->
-        <tr onClick="location.href='notice_detail_admin.jsp'">
+     <%--    
+       	<tr>
+              <td><%= notice.get(i).getNOITCE_TYPE()%></td>
+              <td><a herf="notice_detail.jsp="><%= notice.get(i).getNOITCE_TITLE()%></a></td>
+              <td><%= notice.get(i).getNOITCE_DATE()%></td>
+              return update
+              </tr> --%>
               <td>공통</td>
             <td>
                 홈페이지 점검 안내
@@ -91,26 +94,7 @@
         </tr>
   </tbody>
     </table>
-<!-- 
-<div class="text-center">
- 			<div class="text-center" align="center">
-  		 	<ul class="pagination justify-content-center">
-   		 	 	<li class="page-item"><a class="page-link" href="#">처음</a></li>
-   		 	 	<li class="page-item"><a class="page-link" href="#">이전</a></li>
- 		   	 	<li class="page-item"><a class="page-link" href="#">1</a></li>
-  				 <li class="page-item"><a class="page-link" href="#">2</a></li>
-  				 <li class="page-item"><a class="page-link" href="#">3</a></li>
-  				 <li class="page-item"><a class="page-link" href="#">4</a></li>
-  				 <li class="page-item"><a class="page-link" href="#">5</a></li>
-  				 <li class="page-item"><a class="page-link" href="#">6</a></li>
-  				 <li class="page-item"><a class="page-link" href="#">7</a></li>
-  				 <li class="page-item"><a class="page-link" href="#">8</a></li>
-  				 <li class="page-item"><a class="page-link" href="#">9</a></li>
-  				 <li class="page-item"><a class="page-link" href="#">10</a></li>
-  				 <li class="page-item"><a class="page-link" href="#">다음</a></li>
-  				 <li class="page-item"><a class="page-link" href="#">끝</a></li>
-	 		 </ul>
-	 		</div> -->
+
 		<!-- 컨텐츠 들어갈내용 끝   -->
 <!-- 페이징 처리 부분  -->
 <script src="../common/js/paging.js"></script>
