@@ -24,9 +24,9 @@ public class AccountManagerController extends MultiActionController {
 	public void insertMonthSalary(HttpServletRequest request, HttpServletResponse response) {}
 	
 	// 수익 관리 조회
-	public ModelAndView getProfitList(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView getProfitLis (HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-		return mav;
+//		return mav;
 	}
 	
 	// 수익 관리 수정

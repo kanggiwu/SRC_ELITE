@@ -40,8 +40,44 @@ public class ProjectHistoryController extends MultiActionController {
 	}
 	
 	//프로젝트이력관리 상세 조회
-	public ModelAndView getDetailProjectHistory(HttpServletRequest request, HttpServletResponse response) 	{return null;}
+	public ModelAndView getDetailProjectHistory(HttpServletRequest request, HttpServletResponse response)
+	throws Exception
+	{
+		logger.info("getDetailProjectHistory 호출 성공");
+		HashMapBinder hmb = new HashMapBinder(request);
+		Map<String,Object> target = new HashMap<>();
+		hmb.bind(target);		
+		logger.info("emp_no : "+target.get("emp_no"));
+		logger.info("project_no : "+target.get("project_no"));
+		List<Map<String,Object>> detailProjectHistory = null;
+		detailProjectHistory=projectHistoryLogic.getDetailProjectHistory(target);
+		logger.info("detailProjectHistory:"+detailProjectHistory);//
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("getDetailProjectHistory");
+		mav.addObject("detailProjectHistory", detailProjectHistory);
+		return mav;
+	}
+	
 	// 프로젝트이력관리  추가
-	public ModelAndView insertProjectHistory(HttpServletRequest request, HttpServletResponse response)      {return null;}
+	//public ModelAndView insertProjectHistory(HttpServletRequest request, HttpServletResponse response) 
+	public void insertProjectHistory(HttpServletRequest request, HttpServletResponse response) 
+	throws Exception
+	{
+		logger.info("insertProjectHistory 호출 성공");
+		HashMapBinder hmb = new HashMapBinder(request);
+		Map<String,Object> pmap = new HashMap<>();
+		//사용자가 입력한 값이나 서버에서 클라이언트에게 요청한 값 넘김.
+		//hmb.bindPost(pmap);
+		hmb.multiBind(pmap);
+		int result = 0;
+		result = projectHistoryLogic.insertProjectHistory(pmap);
+		if(result == 1) {
+			request.sendRedirect("./getBoardList.sp4");
+		}
+		else {
+			request.sendRedirect("등록실패 페이지 이동처리");
+		}
+		//return null;
+	}
 
 }

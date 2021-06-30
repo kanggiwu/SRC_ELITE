@@ -29,11 +29,25 @@ public class ProjectHistoryLogic {
 	}
 	
 	//프로젝트이력관리 상세 조회
-	public Map<String,Object> getDetailProjectHistory(HttpServletRequest request, HttpServletResponse response)     
-	{return null;}
+	//public Map<String,Object> getDetailProjectHistory(HttpServletRequest request, HttpServletResponse response)     
+	public List<Map<String,Object>> getDetailProjectHistory(Map<String, Object> pmap)     
+	{
+		logger.info("getDetailProjectHistory 호출 성공");
+		List<Map<String,Object>> detailProjectHistory = null;
+		detailProjectHistory = projectHistoryDao.getProjectHistoryList(pmap);			
+		return detailProjectHistory;
+	}
 	
 	// 프로젝트이력관리  추가
-	public void insertProjectHistory(HttpServletRequest request, HttpServletResponse response)                      {}
+	//public void insertProjectHistory(HttpServletRequest request, HttpServletResponse response)                      {}
+	public int insertProjectHistory(Map<String, Object> pmap)             
+	{
+		logger.info("insertProjectHistory 호출 성공");
+		int result = 0;
+		int bm_no = 0;
+		
+		return result;
+	}
 
 
 

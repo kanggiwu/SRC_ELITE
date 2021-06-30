@@ -176,30 +176,20 @@ else{//조회 결과가 있을 때
 			<!-- 
 			===============DB에서 데이터 가져와서 뿌려주기======================
 			 -->
-				<tr>
+				<!-- <tr onclick="openPopup()"> -->
+				<tr onclick="location.href='getDetailProjectHistory.src1?emp_no=<%=pmap.get("EMP_NO")%>
+					&project_no=<%=pmap.get("PROJECT_NO")%>'">
 					<!--<td onclick="openPopup()">부트스트랩</td>  -->
-					<td onclick="openPopup()"><%=pmap.get("project_name").toString()%></td>
-					<td><%=pmap.get("project_startline").toString()%>&nbsp;~&nbsp;
-						<%=pmap.get("project_deadline").toString()%></td>
-					<td><%=pmap.get("emp_name").toString()%></td>
-					<td><%=pmap.get("project_type").toString()%></td>
+					<td ><%=pmap.get("PROJECT_NAME").toString()%></td>
+					<td><%=pmap.get("PROJECT_STARTLINE").toString()%>&nbsp;~&nbsp;
+						<%=pmap.get("PROJECT_DEADLINE").toString()%></td>
+					<td><%=pmap.get("EMP_NAME").toString()%></td>
+					<td><%=pmap.get("PROJECT_TYPE").toString()%></td>
 				</tr>
 <% 
 	}///end of for
 } ///end of if
 %>
-				<tr>
-					<td onclick="openPopup()">부트스트랩2</td>
-					<td>7월8일</td>
-					<td>유재석</td>
-					<td>SI</td>
-				</tr>
-				<tr>
-					<td onclick="openPopup()">부트스트랩2</td>
-					<td>7월8일</td>
-					<td>유재석</td>
-					<td>SI</td>
-				</tr>
 			</tbody>
 			
 		</table> 

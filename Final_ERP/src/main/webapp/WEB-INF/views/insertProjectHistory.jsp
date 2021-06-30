@@ -33,9 +33,11 @@
    <div class='col-sm-6'>
 		<form class="form-horizontal" role="form">
 			<div class="form-group">
+<!-- =========프로젝트명 DB에서 가져와서 뿌려주기 ========================== -->
 				<label for="txt_proName">프로젝트명</label>
 				<select class="form-control">
 				  <option></option>
+<!-- =========프로젝트명 DB에서 가져와서 뿌려주기끝 ========================== -->				  
 				  <option></option>
 				  <option></option>
 				  <option></option>
@@ -127,7 +129,7 @@
 			<!-- 
 				===============사원정보테이블 만들기======================
 			-->
-			<div class="form-group"'>
+			<div class="form-group"'></div>
 			<div style="overflow:scroll; width:100%; height:300px;">
 			<table class="table table-hover" >
 				<thead>
@@ -261,6 +263,32 @@
 						<td>유재석</td>
 					</tr>
 				</tbody>	
+			</table>
+			</div>
+			<div>
+			<table class="table table-hover" >
+				<thead>
+					<tr style="background-color:lightgray">						
+						<th style="width: 10%">선택</th>
+						<th style="width: 30%">사원번호</th>
+						<th style="width: 20%">부서명</th>
+						<th style="width: 20%">직위명</th>
+						<th style="width: 20%">사원명</th>
+					</tr>
+				</thead>
+				<tbody>
+				<!-- ==============위에서 선택된 데이터 가져와서 뿌려주기======================-->
+					<tr>						
+						<td>
+        					<input type="checkbox" class="styled" id="singleCheckbox1" value="option1" aria-label="Single checkbox One">
+        				</td>
+						<td>123456</td>
+						<td>개발부</td>
+						<td>팀장</td>
+						<td>유재석</td>
+					</tr>
+				<!-- ==============위에서 선택된 데이터 가져와서 뿌려주기 끝======================-->
+				</tbody>
 			</table>
 			</div>
 		</form>	
