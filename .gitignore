@@ -14,7 +14,7 @@ local.properties
 .recommenders
 build/
 .classpath
-Server/
+Servers/
 
 # External tool builders
 .externalToolBuilders/
