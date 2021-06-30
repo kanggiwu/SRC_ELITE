@@ -118,29 +118,24 @@
   fieldset.disabled = false;
   var empUpdReady = document.getElementById('EmpUpdReady');
   empUpdReady.style.visibility = 'hidden';
-  if(document.getElementById('dept_options') != "개발"){
+/*   if(document.getElementById('dept_options') != "개발부"){
 	  document.getElementById('team_options').disabled = true;	  
-  }
+  } */
   document.getElementById('EmpUpdSubmit').style.display = ''
   
 }
 
-function insAction() {
-			console.log("입력 액션 호출");
-			$('#board_ins').submit();
-      location.href = 'getEmployeeList.src1'
-		}
 /// 콤보박스 중분류 비활성화하기
 function handleOnChange(e) {
 	  // 선택된 데이터 가져오기
 	  const value = e.value;
 	  console.log(value);
-	  if(value != "option_dept_si"){
+	  if(value != "개발부"){
 		  document.getElementById('team_options').disabled = true;
-		  $("#team_options").val("option_team_none").prop("selected", true);
+		  $("#team_options").val("").prop("selected", true);
 	  }else{
 		  document.getElementById('team_options').disabled = false;
-		  
+		  $("#team_options").val("개발1팀").prop("selected", true);
 	  }
 }
 // 콘텐츠 수정 :: 사진 수정 시 이미지 미리보기
@@ -166,6 +161,11 @@ $(":input[name='u_file']").change(function() {
 function imgAreaError(){
 	$('#imgViewArea').css({ 'display' : 'none' });
 }
+function empUpdateAction() {
+			console.log("입력 액션 호출");
+			$('#employee_update').submit();
+     // location.href = 'getEmployeeList.src1'
+		}
 </script>
 <title>HR - ERP PROGRAM</title>
 </head>
@@ -184,11 +184,11 @@ function imgAreaError(){
                <div class="col" >
                  <div style="text-align: right; padding: 5px;">
                   <button class="btn btn-info" id="EmpUpdReady" onclick="fieldsetDisable()">수정</button>
-                  <button class="btn btn-info" id="EmpUpdSubmit" onclick="insAction();" style="display:none;">수정 완료</button>
+                  <button class="btn btn-info" id="EmpUpdSubmit" onclick="empUpdateAction();" style="display:none;">수정 완료</button>
                   <button class="btn btn-danger" onclick="location.href='getEmployeeList.src1'">취소</button>
                 </div>
                 <fieldset id='btn_fieldset' disabled>
-                <form id="emp_ins" method="post" enctype="multipart/form-data" action="updateEmployee.src1">
+                <form id="employee_update" method="post" enctype="multipart/form-data" action="updateEmployee.src1">
 			   			<div class="row">
 						    <div class="col-lg-6">
 								<div id="imgViewArea" style="width:100%; height:250px;">
@@ -205,41 +205,41 @@ function imgAreaError(){
 								<br>
 								<div class="input-group">
 								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">이름</span>
-								  <input type="text" class="form-control" value="<%=emp_name%>" aria-describedby="basic-addon1" >
+								  <input type="text" name="emp_name" class="form-control" value="<%=emp_name%>" aria-describedby="basic-addon1" >
 								</div>
 								<br>				
 								<div class="input-group">
 								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">부서</span>
-						          <select class="form-control" id="dept_options" onchange="handleOnChange(this)">
-                      			   <option value="option_dept" selected disabled hidden ><%=dept_name%></option>
-						              <option value="option_dept_hr">인사</option>
-						              <option value="option_dept_ac">회계</option>
-						              <option value="option_dept_si">개발</option>
-						              <option value="option_dept_head">임원</option>
+						          <select class="form-control" name="dept_name" id="dept_options" onchange="handleOnChange(this)">
+                      			   <option value="<%=dept_name%>" selected ><%=dept_name%></option>
+						              <option value="인사부">인사부</option>
+						              <option value="회계부">회계부</option>
+						              <option value="개발부">개발부</option>
+						              <option value="임원">임원</option>
 						          </select>
-						          <select class="form-control" id="team_options">
-                    			    <option  value="option_team" selected disabled hidden ><%=team_name%></option>
-						              <option value="option_team_1">개발1팀</option>
-						              <option value="option_team_2">개발2팀</option>
-						              <option value="option_team_3">개발3팀</option>
-						              <option value="option_team_sm">SM팀</option>
-						              <option value="option_team_none" hidden >없음</option>
+						          <select class="form-control" name="team_name" id="team_options">
+                    			    <option  value="<%=team_name%>" selected hidden  ><%=team_name%></option>
+						              <option value="개발1팀">개발1팀</option>
+						              <option value="개발2팀">개발2팀</option>
+						              <option value="개발3팀">개발3팀</option>
+						              <option value="SM팀">SM팀</option>
+						              <option value="" hidden >없음</option>
 						          </select>
 								</div>
 								<br>						
 								<div class="input-group">
 								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">직위</span>
-								  <select class="form-control">
-                        <option value="" selected disabled hidden ><%=rank_name%></option>
-						            <option>사원</option>
-						            <option>대리</option>
-						            <option>차장</option>
-						            <option>과장</option>
-						            <option>부장</option>
-						            <option>부사장</option>
-						            <option>이사</option>
-						            <option>대표</option>
-					       	   </select>
+								  <select class="form-control" name="rank_name" >
+                       				 <option value="<%=rank_name%>" selected   ><%=rank_name%></option>
+							            <option value="사원">사원</option>
+							            <option value="대리">대리</option>
+							            <option value="차장">차장</option>
+							            <option value="과장">과장</option>
+							            <option value="부장">부장</option>
+							            <option value="부사장">부사장</option>
+							            <option value="이사">이사</option>
+							            <option value="대표">대표</option>
+					       	   		</select>
 								</div>						
 							</div>	
 							<hr>
@@ -251,7 +251,7 @@ function imgAreaError(){
 						  <br>
 							<div class="input-group">
 							  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">사원번호</span>
-							  <input type="text" class="form-control" value="<%=emp_no%>" aria-describedby="basic-addon1">
+							  <input type="text" name="emp_no" class="form-control" value="<%=emp_no%>" aria-describedby="basic-addon1">
 							</div>
 							<br>				
 							<div class="input-group">
@@ -262,12 +262,12 @@ function imgAreaError(){
 							<div class="input-group">
 							  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">입사일자</span>
                 
-							  <input type="date" class="form-control" value="<%=emp_hiredate%>" aria-describedby="basic-addon1">
+							  <input type="date" name="emp_hiredate" class="form-control" value="<%=emp_hiredate%>" aria-describedby="basic-addon1">
 							</div>						
 							<br>						
 							<div class="input-group">
 							  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">퇴사일자</span>
-							  <input type="date" class="form-control" value="<%=emp_retiredate%>" aria-describedby="basic-addon1">
+							  <input type="date" name="emp_retiredate" class="form-control" value="<%=emp_retiredate%>" aria-describedby="basic-addon1">
 							</div>						
 						  </div>
 					    </div>
@@ -276,28 +276,28 @@ function imgAreaError(){
 							  <br>
 								<div class="input-group">
 								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">전화번호</span>
-								  <input type="text" class="form-control" value="<%=emp_tel%>" aria-describedby="basic-addon1">
+								  <input type="text" name="emp_tel" class="form-control" value="<%=emp_tel%>" aria-describedby="basic-addon1">
 								</div>
 								<br>				
 								<div class="input-group">
 								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">이메일</span>
-								  <input type="text" class="form-control" value="<%=emp_email%>" aria-describedby="basic-addon1">
+								  <input type="text" name="emp_email" class="form-control" value="<%=emp_email%>" aria-describedby="basic-addon1">
 								</div>
 								<br>						
 								<div class="input-group">
 								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">고용상태</span>
-								  <select class="form-control">
-                        <option value="" selected disabled hidden ><%=emp_status%></option>
-						            <option>재직</option>
-						            <option>휴직</option>
-						            <option>퇴직</option>
+								  <select name="emp_status" class="form-control" >
+                       				 <option value="<%=emp_status%>"  selected  ><%=emp_status%></option>
+						            <option value="재직">재직</option>
+						            <option value="휴직">휴직</option>
+						            <option value="퇴직">퇴직</option>
 					       	   </select>
 								</div>
 								<br>						
 								<div class="input-group">
 								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">급여계좌</span>
-                  <input type="text" class="form-control" placeholder="국민은행" aria-describedby="basic-addon1" disabled>
-								  <input type="text" class="form-control" value="<%=emp_account%>" aria-describedby="basic-addon1">
+               					   <input type="text" class="form-control" placeholder="국민은행" aria-describedby="basic-addon1" disabled>
+								  <input type="text" name="emp_account" class="form-control" value="<%=emp_account%>" aria-describedby="basic-addon1">
 								</div>						
 							  </div>
 						    </div>

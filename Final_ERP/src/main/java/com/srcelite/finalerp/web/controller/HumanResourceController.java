@@ -74,7 +74,7 @@ public class HumanResourceController extends MultiActionController {
 	{
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
-		hmb.bind(pmap);
+		hmb.multiBind(pmap);
 		int result = 0;
 		result = humanResourceLogic.insertEmployee(pmap);
 		if(result == 1) {
@@ -103,6 +103,38 @@ public class HumanResourceController extends MultiActionController {
 		result = humanResourceLogic.insertEmployee(pmap);
 		if(result == 1) {
 			res.sendRedirect("");
+		}
+		else {
+			res.sendRedirect("등록실패 페이지 이동처리");
+		}
+	}
+	public ModelAndView getEmpSearchList(HttpServletRequest req, HttpServletResponse res)
+	throws Exception
+	{
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		hmb.multiBind(pmap);
+		List<Map<String,Object>> boardList = null;
+		logger.info("emp_name value: "+pmap.get("emp_name"));
+		logger.info("dept_name value: "+pmap.get("dept_name"));
+		logger.info("rank_name value: "+pmap.get("rank_name"));
+			boardList = humanResourceLogic.getEmpSearchList(pmap);
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("getEmployeeList");
+		mav.addObject("boardList", boardList);
+		return mav;
+	}
+	public void updateEmployee(HttpServletRequest req, HttpServletResponse res)
+			throws Exception
+	{
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String,Object> pmap = new HashMap<>();
+		hmb.multiBind(pmap);
+		int result = 0;
+		result = humanResourceLogic.upsertEmployee(pmap);
+		if(result == 1) {
+			res.sendRedirect("getEmployeeList.src1");
 		}
 		else {
 			res.sendRedirect("등록실패 페이지 이동처리");

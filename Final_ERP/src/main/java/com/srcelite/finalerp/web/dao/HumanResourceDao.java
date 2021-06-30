@@ -27,6 +27,12 @@ public class HumanResourceDao {
 //		sqlSessionTemplate.insert("insertEmpInfo",pmap);
 		return result;
 	}
+	public int updateEmployee(Map<String, Object> pmap) {
+		int result = 0;
+		result = 1;
+//		sqlSessionTemplate.insert("insertEmpInfo",pmap);
+		return result;
+	}
 	public List<Map<String, Object>> getEmpLicenceList(Map<String, Object> pmap) {
 		List<Map<String, Object>> licenceList = null;
 		licenceList = sqlSessionTemplate.selectList("getLicenceInfo",pmap);

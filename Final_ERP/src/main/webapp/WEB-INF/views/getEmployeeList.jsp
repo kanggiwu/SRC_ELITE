@@ -100,7 +100,7 @@ $setRows.submit(function (e) {
 $setRows.submit();
   });
   
-	function empSearch() {
+	function empSearchAction() {
 		console.log("입력 액션 호출");
 		$('#emp_search').submit();
 	}  
@@ -120,29 +120,28 @@ $setRows.submit();
      			<!-- 컨텐츠 들어갈내용 시작-->
 	<div class="col" >
 		<div style="text-align: left; padding: 5px; display: inline-block; width: 49%;">
-     	 <form id="emp_search" method="post" enctype="multipart/form-data" action="getEmployeeList.src1">
+     	 <form id="emp_search" method="post" enctype="multipart/form-data" action="getEmpSearchList.src1">
 	      <span class="input-group" >
 	        <select name="dept_name" class="form-control" id="dept_options">
-	          <option value="option_dept" selected disabled hidden >부서</option>
-	          <option value="option_dept_si">개발</option>
-	          <option value="option_dept_hr">인사</option>
-	          <option value="option_dept_ac">회계</option>
-	          <option value="option_dept_head">임원</option>
+	          <option value="전체">부서</option>
+	          <option value="개발부">개발</option>
+	          <option value="인사부">인사</option>
+	          <option value="회계부">회계</option>
+	          <option value="임원">임원</option>
 	         </select>
 	         <select name="rank_name" class="form-control" id="rank_options">
-	          <option value="option_rank" selected disabled hidden >직위</option>
-	          <option value="option_rank_1">사원</option>
-	          <option value="option_rank_2">대리</option>
-	          <option value="option_rank_3">차장</option>
-	          <option value="option_rank_4">과장</option>
-	          <option value="option_rank_5">부장</option>
-	          <option value="option_rank_6">부사장</option>
-	          <option value="option_rank_7">이사</option>
-	          <option value="option_rank_8">대표</option>
+	          <option value="전체">직위</option>
+	          <option value="사원">사원</option>
+	          <option value="대리">대리</option>
+	          <option value="차장">차장</option>
+	          <option value="과장">과장</option>
+	          <option value="부장">부장</option>
+	          <option value="부사장">부사장</option>
+	          <option value="이사">이사</option>
+	          <option value="대표">대표</option>
 	         </select>           
 	        <input name='emp_name' type="text" class="form-control float-left " placeholder="검색">
-	        <input type='submit' role="button">
-	        <a class="btn btn-default float-left" role="button"><i class="fas fa-search"></i></a>
+	        <a href="javascript:empSearchAction()" class="btn btn-default float-left" role="button"><i class="fas fa-search"></i></a>
 	      </span>
       	</form>  
 		</div>

@@ -40,6 +40,11 @@ public class HumanResourceLogic {
 		result = humanResourceDao.insertEmployee(pmap);
 		return result;
 	}
+	public int upsertEmployee(Map<String, Object> pmap) {
+		int result = 0;
+		result = humanResourceDao.updateEmployee(pmap);
+		return result;
+	}
 	public List<Map<String, Object>> getEmpLicenceList(Map<String, Object> pmap) {
 		List<Map<String,Object>> licenceList = null;
 		licenceList = humanResourceDao.getEmpLicenceList(pmap);

@@ -82,6 +82,7 @@
 				<prop key="/humanresource/getDetailEmployee.src1">human-resource-controller</prop>
 				<prop key="/humanresource/insertEmployee.src1">human-resource-controller</prop>
 				<prop key="/humanresource/updateEmployee.src1">human-resource-controller</prop>
+				<prop key="/humanresource/getEmpSearchList.src1">human-resource-controller</prop>
 
 				<prop key="/approval/getApprovalForm.src1">approval-controller</prop>
 				<prop key="/approval/submitApproval.src1">approval-controller</prop>
@@ -139,6 +140,7 @@
 				<prop key="/humanresource/getDetailEmployee.src1">getDetailEmployee</prop>
 				<prop key="/humanresource/insertEmployee.src1">insertEmployee</prop>
 				<prop key="/humanresource/updateEmployee.src1">updateEmployee</prop>
+				<prop key="/humanresource/getEmpSearchList.src1">getEmpSearchList</prop>
 
 				<prop key="/approval/getApprovalForm.src1">getApprovalForm</prop>
 				<prop key="/approval/submitApproval.src1">submitApproval</prop>
