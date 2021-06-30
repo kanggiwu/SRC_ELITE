@@ -85,7 +85,11 @@ public class NoticeController extends MultiActionController {
 	public void deleteNotice(HttpServletRequest request, HttpServletResponse response) {
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pmap = new HashMap<>();
+<<<<<<< HEAD
 //		hmb.bindPost(pmap);
+=======
+		hmb.bind(pmap);
+>>>>>>> origin/main
 		int result = 0;
 	
 	}
