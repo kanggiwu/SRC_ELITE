@@ -56,9 +56,11 @@ public class HumanResourceController extends MultiActionController {
 		if(pmap.get("emp_no") != null) {
 			boardDetail = humanResourceLogic.getDetailEmployee(pmap);
 			logger.info("licences value: "+boardDetail.get(0).get("LICENCES"));
-			if(boardDetail.get(0).get("LICENCES") != "0") {
+			if( Integer.parseInt(String.valueOf(boardDetail.get(0).get("LICENCES"))) > 0) {
+				logger.info("자격증 보유 중");
 				List<Map<String,Object>> licenceList = null;
 				licenceList = humanResourceLogic.getEmpLicenceList(pmap);
+				logger.info(licenceList);
 				mav.addObject("licenceList", licenceList);
 			}
 			mav.setViewName("getDetailEmployee");

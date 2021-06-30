@@ -59,9 +59,9 @@
 		d.dept_name, nvl((t.team_name),'없음') team_name, r.rank_name, substr(emp_hiredate,1,10) EMP_HIREDATE, 
 		substr(emp_retiredate,1,10) EMP_RETIREDATE,  e.emp_tel, e.emp_email,
 		decode(e.emp_status,0,'재직',1,'휴직',2,'퇴직') emp_status, e.emp_account, e.emp_picture_path, 
-		(select count(licence_no)
+		to_char((select count(licence_no)
 		from licence_emp le, emp e
-		where le.emp_no = e.emp_no and e.emp_No = #{emp_no}) licences
+		where le.emp_no = e.emp_no and e.emp_No = #{emp_no})) as licences
     FROM emp e, dept d, rank r, team t
    WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no and E.TEAM_NO = T.TEAM_NO(+)  
     	and e.emp_no = #{emp_no}
