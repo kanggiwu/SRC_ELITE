@@ -12,9 +12,8 @@
 	String project_manager 		= null;
 	String emp_name		 		= null;
 	String project_tech 		= null;
-	String project_startline	= null;
-	String project_deadline		= null;
-	double project_profit 		= 0.0;
+	String project_period	= null;
+	String project_profit 		= null;
 	String project_type 		= null;
 	String project_content 		= null;	
 	if(detailProjectHistory!=null){
@@ -25,13 +24,12 @@
 		project_manager = pmap.get("PROJECT_MANAGER").toString();
 		emp_name = pmap.get("EMP_NAME").toString();
 		project_tech = pmap.get("PROJECT_TECH").toString();
-		project_startline = pmap.get("PROJECT_STARTLINE").toString();
-		project_deadline = pmap.get("PROJECT_DEADLINE").toString();
-		project_profit = (double)pmap.get("PROJECT_PROFIT");
+		project_period = pmap.get("PROJECT_PERIOD").toString();
+		project_profit = pmap.get("PROJECT_PROFIT").toString();
 		project_type = pmap.get("PROJECT_TYPE").toString();
 		project_content = pmap.get("PROJECT_CONTENT").toString();
 	}
-	out.print("detailProjectHistory:"+detailProjectHistory);
+	//out.print("detailProjectHistory:"+detailProjectHistory);
 %>       
 <!DOCTYPE html>
 <html>
@@ -49,11 +47,10 @@
 <link href="../common/css/custom.css" rel="stylesheet" />
 <title>Insert title here</title>
 </head>
-<body>
 <br><br>
 <div class="container">
 <div class="row">
-   <div class='col-sm-6'  >
+    <div class='col-sm-6'  > 
 		<form class="form-horizontal" role="form">
 			<div class="form-group" >
 				<label for="txt_proName">프로젝트명</label>				
@@ -61,59 +58,74 @@
 			</div>
 			<div class="form-group">
 				<label for="dat_period">기간</label>
-				<div class="form-inline">
-					<input type="date" class="form-control" id="dat_period" value="<%=project_startline%>">&nbsp; ~ &nbsp;
-					<input type="date" class="form-control" id="dat_period" value="<%=project_deadline%>">
-				</div>
+				<input type="text" class="form-control" id="txt_period" value="<%=project_period%>">
 			</div>
 			<div class="form-group">
 				<label for="txt_company">발주사</label>
 				<input type="text" class="form-control" id="txt_company" value="<%=project_client%>">
 			</div>
-			<!-- ============담당자 체크==================== -->
+		</form>
+		</div>	
+		<div class='col-sm-6'>
+		<form class="form-horizontal" role="form">
 			<div class="form-group">
 				<label for="txt_emp">담당자</label>
-<% 
-	if(project_manager=="Y"){
-%>
-				<input type="text" class="form-control" id="txt_emp" value="<%=emp_name%>">
-<%
-	};
-%>	
-			</div>
-			<div class="form-group">
-				<label for="txt_prodeeds">수익금</label>
-				<input type="text" class="form-control" id="txt_prodeeds"  value="<%=project_profit%>">
+				<input type="text" class="form-control" id="txt_emp" value="<%=emp_name%>">	
 			</div>
 			<div class="form-group">
 				<label for="txt_kind">종류</label>
 				<input type="text" class="form-control" id="txt_kind" value="<%=project_type%>">
 			</div>
-		</form>
-		</div>		
-		<div class='col-sm-6'>
-		<form class="form-horizontal" role="form">
-		<!--============== 여러명 처리(테이블로 만들까?) ==============-->
 			<div class="form-group">
-				<div class='col-sm-3'><label for="txt_emps">인력</label></div>
-				<textarea class="form-control" id="txt_emps" rows="3" cols="50" value="<%=emp_name%>"></textarea>					
+				<label for="txt_prodeeds">수익금</label>
+				<input type="text" class="form-control" id="txt_prodeeds"  value="<%=project_profit%>">
 			</div>
-		<!-- 여러명 처리 끝 -->
-			<div class="form-group">
-				<label for="txt_tech">기술</label>
-				<textarea class="form-control" id="txt_tech" rows="3" cols="50" value="<%=project_tech%>"></textarea>					
-			</div>
-			<div class="form-group">
-				<label for="txt_content">개발내용</label>
-				<textarea class="form-control" id="txt_content" rows="10" cols="50" value="<%=project_content%>"></textarea>					
-			</div>
-		</form>
+		</form>	
 		</div>
 	</div>
 	</div> 	
+	
+		<div class="text-right container">
+		<form class="form-horizontal" role="form">
+			<div class="form-group">
+				<label for="txt_tech">기술</label>
+				<textarea class="form-control" id="txt_tech" rows="3" cols="50"><%=project_tech%></textarea>					
+			</div>
+			<div class="form-group">
+				<label for="txt_content">개발내용</label>
+				<textarea class="form-control" id="txt_content" rows="3" cols="50"><%=project_content%></textarea>					
+			</div>
+		</form>
+		</div>
+<!-- ===========================인력부분 시작==================================== -->
+	<div class="text-right container">
+	<div class='row'>
+		<table id="products" class="table table-hover">
+            <form action="" id="setRows">
+            	<input type="hidden" name="rowPerPage" value="1" id="rowPerPage">
+            </form>		
+			<thead>
+				<tr style="background-color:lightgray">
+					<th style="width: 25%">사원번호</th>
+					<th style="width: 25%">부서명</th>
+					<th style="width: 25%">직위명</th>
+					<th style="width: 25%">사원명</th>
+				</tr>
+			</thead>
+
+			<tbody> 
+				<tr>
+					<%-- <td><%=pmap.get("PROJECT_NAME").toString()%></td>
+					<td><%=pmap.get("PROJECT_PERIOD").toString()%></td>
+					<td><%=pmap.get("EMP_NAME").toString()%></td>
+					<td><%=pmap.get("PROJECT_TYPE").toString()%></td> --%>
+				</tr>
+			</tbody>			
+		</table> 
+	</div>
+<!-- ===========================인력부분 끝==================================== -->
 		<div class="text-right container">
 		<button type="button" class="btn btn-info" onClick="self.close()">확인</button>	
 	</div>		
 
-</body>
 </html>

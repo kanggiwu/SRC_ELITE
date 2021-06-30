@@ -120,7 +120,7 @@ $setRows.submit();
 -->
 <script>
     function openPopup(){
-        window.open("projectDetail.jsp", "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
+        window.open("../myService/getDetailProjectHistory.jsp", "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
     }
 </script>
 <!-- -----------------------------------검색부분---------------------------------- -->
@@ -176,13 +176,11 @@ else{//조회 결과가 있을 때
 			<!-- 
 			===============DB에서 데이터 가져와서 뿌려주기======================
 			 -->
-				<!-- <tr onclick="openPopup()"> -->
-				<tr onclick="location.href='getDetailProjectHistory.src1?emp_no=<%=pmap.get("EMP_NO")%>
-					&project_no=<%=pmap.get("PROJECT_NO")%>'">
+					<!-- <tr onclick="openPopup()"> -->
+					<tr onclick="location.href='getDetailProjectHistory.src1?project_no=<%=pmap.get("PROJECT_NO")%>'">
 					<!--<td onclick="openPopup()">부트스트랩</td>  -->
-					<td ><%=pmap.get("PROJECT_NAME").toString()%></td>
-					<td><%=pmap.get("PROJECT_STARTLINE").toString()%>&nbsp;~&nbsp;
-						<%=pmap.get("PROJECT_DEADLINE").toString()%></td>
+					<td><%=pmap.get("PROJECT_NAME").toString()%></td>
+					<td><%=pmap.get("PROJECT_PERIOD").toString()%></td>
 					<td><%=pmap.get("EMP_NAME").toString()%></td>
 					<td><%=pmap.get("PROJECT_TYPE").toString()%></td>
 				</tr>
@@ -212,7 +210,7 @@ else{//조회 결과가 있을 때
 		<hr/>
 	</div>
 	<div class="text-right">
-		<button type="button" class="btn btn-warning btn-lg" onclick="location.href='addProManager.jsp'">
+		<button type="button" class="btn btn-warning btn-lg" onclick="location.href='../myService/insertProjectHistory.jsp'">
 			프로젝트 추가</button>	
 	</div>
 

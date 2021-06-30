@@ -7,16 +7,48 @@
 	<!-- 프로젝트 리스트 조회 -->
 	<select id="getProjectHistoryList" parameterType="map" resultType="map">
 		<!--SELECT p.project_name, p.project_startline || ' ~ ' || p.project_deadline, e.emp_name, p.project_type   -->
-		 SELECT p.project_no,e.emp_no,p.project_name, to_char(p.project_startline) as "PROJECT_STARTLINE", nvl(TO_CHAR(project_deadline,'YYYY-MM-DD'),'미정') as "PROJECT_DEADLINE", e.emp_name, p.project_type 
+		 <!-- SELECT p.project_no,e.emp_no,p.project_name, to_char(p.project_startline) as "PROJECT_STARTLINE", nvl(TO_CHAR(project_deadline,'YYYY-MM-DD'),'미정') as "PROJECT_DEADLINE", e.emp_name, p.project_type 
           FROM project p, project_emp pe, emp e
          WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no
+          -->
+         SELECT pro.project_no, e.emp_no,
+         		pro.project_name,
+		          SUBSTR (PRO.PROJECT_STARTLINE, 1, 10)
+		       || '~'
+		       || SUBSTR (PRO.PROJECT_DEADLINE, 1, 10)
+		          AS project_period,
+		       e.emp_name,
+		       pro.project_type
+		  FROM project pro, project_emp pro_emp, emp e
+		 WHERE     pro.project_no = pro_emp.project_no
+		       AND PRO_EMP.EMP_NO = e.emp_no
+		       AND project_manager = 'Y'
 	</select>
 
 	<!-- 프로젝트 상세 조회 -->
-	<select id="getDetailProject" parameterType="int" resultType="map">
-		SELECT p.project_name, p.project_client, e.emp_name, p.project_tech, p.project_startline, p.project_deadline, p.project_profit, p.project_type, p.project_content
+	<select id="getDetailProject" parameterType="map" resultType="map">
+		<!-- SELECT p.project_name, p.project_client, e.emp_name, p.project_tech, p.project_startline, p.project_deadline, p.project_profit, p.project_type, p.project_content
 		  FROM project p, project_emp pe, emp e
-		 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = #{project_no} AND e.emp_no = #{emp_no}
+		 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = #{project_no} AND e.emp_no = #{emp_no} -->
+		 SELECT 
+		       pro.project_no
+		    ,  pro.project_name
+		    ,  SUBSTR (PRO.PROJECT_STARTLINE, 1, 10) || '~' || SUBSTR (PRO.PROJECT_DEADLINE, 1, 10) AS project_period
+		    ,  pro.project_client
+		    ,  pro.project_profit
+		    ,  e.emp_name
+		    ,  pro.project_type
+		    ,  pro.project_tech
+		    ,  pro.project_content
+		    ,  e.emp_no
+		    , PRO_EMP.PROJECT_MANAGER
+		  FROM project pro, project_emp pro_emp, emp e
+		 WHERE     pro.project_no = pro_emp.project_no
+		       AND PRO_EMP.EMP_NO = e.emp_no
+		       AND pro_emp.project_manager = 'Y'
+		       AND pro.project_register = 'Y'
+		       AND pro.project_no = #{project_no}   
+		       
 	</select>
 	
 	<!-- 프로젝트 인원 리스트 조회 -->

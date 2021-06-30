@@ -34,7 +34,7 @@ public class ProjectHistoryLogic {
 	{
 		logger.info("getDetailProjectHistory 호출 성공");
 		List<Map<String,Object>> detailProjectHistory = null;
-		detailProjectHistory = projectHistoryDao.getProjectHistoryList(pmap);			
+		detailProjectHistory = projectHistoryDao.getDetailProjectHistoryList(pmap);			
 		return detailProjectHistory;
 	}
 	
