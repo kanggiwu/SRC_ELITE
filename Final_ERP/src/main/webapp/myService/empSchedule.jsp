@@ -40,6 +40,7 @@
 	// 	});
 	// });
 </script>
+
         <nav class="sb-topnav navbar navbar-expand navbar-dark" style="background-color:#282828;">
             <a class="navbar-brand" href="javascript:history.back();" style="width:20%; padding-top:12px;" >
             <i class="fas fa-arrow-left" style="width:50px; height:50px; float:left;"></i></a>
@@ -47,7 +48,32 @@
 		    <a class="navbar-brand" href="../erp_lab/main_content.jsp" style="width:20%; padding-top:12px;">
 		    <i class="fas fa-home" style="width:50px; height:50px; float:right;"></i></a>
 		    </nav>
+
       <div class="container"> 
+      <div class="panel panel-default">
+
+            <div class="panel-heading">
+                <h3 class="panel-title">필터</h3>
+            </div>
+
+            <div class="panel-body">
+                        <div class="col-lg-6">
+                    <label for="calendar_view">분류</label>
+                    <div class="input-group">
+                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="정연"
+                                checked>공통</label>
+                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="다현"
+                                checked>부서</label>
+                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="사나"
+                                checked>프로젝트</label>
+                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="나연"
+                                checked>개인</label>
+                        &nbsp
+                        <Button id= "selectSchedule" class="fc-button fc-state-default fc-corner-left fc-corner-right">조회</Button>
+                    </div>
+                </div>
+        </div>
+        <!-- /.filter panel -->
 <!-- 일정추가전 생기는 카탈로그 창 -->
         <!-- 일자 클릭시 메뉴오픈 -->
          <div id="contextMenu" class="dropdown clearfix">
@@ -66,6 +92,7 @@
             <div id="loading"></div>
             <div id="calendar"></div>
         </div>
+
 
 
         <!-- 일정 추가 MODAL -->
@@ -160,28 +187,8 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
-        <div class="panel panel-default">
 
-            <div class="panel-heading">
-                <h3 class="panel-title">필터</h3>
-            </div>
-
-            <div class="panel-body">
-
-                <div class="col-lg-6">
-                    <label for="calendar_view">카테고리</label>
-                    <div class="input-group">
-                        <select class="filter" id="type_filter" multiple="multiple">
-                            <option value="공통">공통</option>
-                            <option value="부서">부서</option>
-                            <option value="프로젝트">프로젝트</option>
-                            <option value="개인">개인</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /.filter panel -->
+        
     </div>
     <!-- /.container -->
 
