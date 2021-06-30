@@ -31,32 +31,28 @@ let newEvent = function (start, end, eventType) {
     modifyBtnContainer.hide();
     eventModal.modal('show');
 
-    /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
-    var eventId = 1 + Math.floor(Math.random() * 1000);
-    /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
+
 
     //새로운 일정 저장버튼 클릭
     $('#save-event').unbind();
     $('#save-event').on('click', function () {
 
         var eventData = {
-            _id: eventId,
-            title: editTitle.val(),
-            start: editStart.val(),
-            end: editEnd.val(),
-            description: editDesc.val(),
-            type: editType.val(),
-            username: '사나',
-            backgroundColor: editColor.val(),
-            textColor: '#ffffff',
+            schedule_title: editTitle.val(),
+            schedule_type: editType.val(),
+            schedule_startdate: editStart.val(),
+            schedule_enddate: editEnd.val(),
+            schedule_content: editDesc.val(),
             allDay: false
         };
+        
 
         if (eventData.start > eventData.end) {
             alert('끝나는 날짜가 앞설 수 없습니다.');
             return false;
         }
-
+		
+		
         if (eventData.title === '') {
             alert('일정명은 필수입니다.');
             return false;
@@ -82,9 +78,13 @@ let newEvent = function (start, end, eventType) {
         //새로운 일정 저장
         $.ajax({
             type: "get",
-            url: "",
+            url: "/schedule/insertSchedule.src1",
             data: {
-                //.....
+                schedule_type: eventData.schedule_type,
+                schedule_title: eventData.schedule_title,
+                schedule_startdate: eventData.schedule_startdate,
+                schedule_enddate: eventData.schedule_enddate,
+                schedule_content:eventData.schedule_content
             },
             success: function (response) {
                 //DB연동시 중복이벤트 방지를 위한

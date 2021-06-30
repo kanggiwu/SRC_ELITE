@@ -16,34 +16,36 @@
 	쿼리문 수정했습니다.attendance_start_work를 그대로 받아와야 DB에 있는 값으로 비교가 가능합니다.
 	-->
 	<select id="getAttendance" parameterType="string" resultType="map">
-		    SELECT attendance_no, emp_no, attendance_start_work
-                FROM attendance
-              WHERE emp_no = #{emp_no}
-                   AND SUBSTR(TO_CHAR(attendance_start_work),1,5)
-                   = #{yy/mm}
+		 SELECT attendance_no, emp_no, attendance_start_work
+         FROM attendance
+         WHERE emp_no = #{emp_no}
+         AND SUBSTR(attendance_start_work,3,5) = #{yy/mm}
 	</select>
 
 	<!-- 일정 조회  1:공통 2:프로젝트 3:개인 부서번호:부서 -->
 	<select id="getScheduleList" parameterType="int" resultType="map">
-		SELECT schedule_code, emp_no, schedule_type, schedule_title, schedule_startdate, schedule_enddate, schedule_content
+		SELECT schedule_no, emp_no, schedule_title, schedule_startdate, schedule_enddate, schedule_content
  		  FROM schedule
 		 <if test="schedule_type%10==0">
-		 	JOIN emp
-		 	ON schedule_type=emp.dept_no
+		 	WHERE schedule_type = (select dept_no from emp where emp_no =#{emp_no})
 		 </if>
-		 <if test="schedule_type==1||schedule_type%10==2">
-		 	WHERE schedule_type=#{schedule_type}
+		 <if test="schedule_type%10!=0">
+		 	WHERE schedule_type =#{schedule_type}
+		 	<if test="schedule_type==3">
+		 		and emp_no = #{emp_no}
+		 	</if>
 		 </if>
-		 <if test="schedule_type==3">
-		 	WHERE schedule_type=3
-		 	AND emp_no = #{emp_no}
-		 </if>
+		 
 	</select>
 	
 	<!-- 스케쥴 정보 입력 -->
 	<insert id="insertSchedule" parameterType="map">
-		INSERT INTO schedule (schedule_code, emp_no, schedule_type, schedule_title, schedule_startdate, schedule_enddate, schedule_content)
-        	 VALUES (#{schedule_code}, #{emp_no}, #{schedule_type}, #{schedule_title} , #{schedule_startdate}, #{schedule_enddate}, #{schedule_content})
+		<selectKey keyProperty="schedule_no" resultType="int" order="BEFORE">
+		 	SELECT SEQ_SCHEDULE.NEXTVAL FROM DUAL 
+		 </selectKey>
+		INSERT INTO schedule (schedule_no, emp_no, schedule_type
+		, schedule_title, schedule_startdate, schedule_enddate, schedule_content)
+       	VALUES (#{schedule_no}, #{emp_no}, #{schedule_type}, #{schedule_title} , #{schedule_startdate}, #{schedule_enddate}, #{schedule_content})
 	</insert>
 	
 	
@@ -73,4 +75,9 @@
 		DELETE schedule WHERE schedule_code = #{schedule_code};
 	</delete>
 
+	<select id="getDept" parameterType="map" resultType="String">
+		SELECT dept_no
+		FROM emp
+		WHERE emp_no=#{emp_no}
+	</select>
 </mapper>
