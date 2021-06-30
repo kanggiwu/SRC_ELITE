@@ -53,10 +53,10 @@
          <div id="contextMenu" class="dropdown clearfix">
             <ul class="dropdown-menu dropNewEvent" role="menu" aria-labelledby="dropdownMenu"
                 style="display:block;  position:static; margin-bottom:5px;">
-                <li><a tabindex="-1" href="#">개인일정1</a></li>
-                <li><a tabindex="-1" href="#">개인일정2</a></li>
-                <li><a tabindex="-1" href="#">개인일정3</a></li>
-                <li><a tabindex="-1" href="#">개인일정4</a></li>
+                <li><a tabindex="-1" href="#">공통</a></li>
+                <li><a tabindex="-1" href="#">부서</a></li>
+                <li><a tabindex="-1" href="#">프로젝트</a></li>
+                <li><a tabindex="-1" href="#">개인</a></li>
                 <li class="divider"></li>
                 <li><a tabindex="-1" href="#" data-role="close">Close</a></li>
             </ul>
@@ -127,32 +127,16 @@
                             <div class="col-xs-12">
                                 <label class="col-xs-4" for="edit-type">일정</label>
                                 <select class="inputModal" type="text" name="edit-type" id="edit-type">
-                                    <option value="개인일정1">개인일정1</option>
-                                    <option value="개인일정2">개인일정2</option>
-                                    <option value="개인일정3">개인일정3</option>
-                                    <option value="개인일정4">개인일정4</option>
+                                    <option value="공통">공통</option>
+                                    <option value="부서">부서</option>
+                                    <option value="프로젝트">프로젝트</option>
+                                    <option value="개인">개인</option>
                                 </select>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-color">색상</label>
-                                <select class="inputModal" name="color" id="edit-color">
-                                   <option value="D25565" style="color:#D25565;">빨간색</option>
-                                    <option value="9775fa" style="color:#9775fa;">보라색</option>
-                                    <option value="ffa94d" style="color:#ffa94d;">주황색</option>
-                                    <option value="74c0fc" style="color:#74c0fc;">파란색</option>
-                                    <option value="f06595" style="color:#f06595;">핑크색</option>
-                                    <option value="63e6be" style="color:#63e6be;">연두색</option>
-                                    <option value="a9e34b" style="color:#a9e34b;">초록색</option>
-                                    <option value="4d638c" style="color:#4d638c;">남색</option>
-                                    <option value="495057" style="color:#495057;">검정색</option>
-                                </select>
-                            </div>
-                        </div> 
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-desc">설명</label>
+                                <label class="col-xs-4" for="edit-desc">내용</label>
                                 <textarea rows="4" cols="50 " class="inputModal" name="edit-desc"
                                     id="edit-desc"></textarea>
                             </div>
@@ -188,10 +172,10 @@
                     <label for="calendar_view">카테고리</label>
                     <div class="input-group">
                         <select class="filter" id="type_filter" multiple="multiple">
-                            <option value="개인일정1">개인일정1</option>
-                            <option value="개인일정2">개인일정2</option>
-                            <option value="개인일정3">개인일정3</option>
-                            <option value="개인일정4">개인일정4</option>
+                            <option value="공통">공통</option>
+                            <option value="부서">부서</option>
+                            <option value="프로젝트">프로젝트</option>
+                            <option value="개인">개인</option>
                         </select>
                     </div>
                 </div>
@@ -208,9 +192,9 @@
     <script src="<%=path.toString() %>common/vendor/js/ko.js"></script>
     <script src="<%=path.toString() %>common/vendor/js/select2.min.js"></script>
     <script src="<%=path.toString() %>common/vendor/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="<%=path.toString() %>common/js/EmpMain.js"></script>
-    <script src="<%=path.toString() %>common/js/EmpAddEvent.js"></script>
-    <script src="<%=path.toString() %>common/js/EmpEditEvent.js"></script>
-    <script src="<%=path.toString() %>common/js/EmpEtcSetting.js"></script>
+    <script src="<%=path.toString() %>common/js/main.js"></script>
+    <script src="<%=path.toString() %>common/js/addEvent.js"></script>
+    <script src="<%=path.toString() %>common/js/editEvent.js"></script>
+    <script src="<%=path.toString() %>common/js/etcSetting.js"></script>
 </body>
 </html>
