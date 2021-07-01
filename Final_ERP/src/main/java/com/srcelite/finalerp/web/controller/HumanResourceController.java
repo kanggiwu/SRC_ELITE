@@ -51,7 +51,6 @@ public class HumanResourceController extends MultiActionController {
 		hmb.bind(pmap);
 		List<Map<String,Object>> boardDetail = null;
 		ModelAndView mav = new ModelAndView();
-		
 		logger.info("emp_no value: "+pmap.get("emp_no"));
 		if(pmap.get("emp_no") != null) {
 			boardDetail = humanResourceLogic.getDetailEmployee(pmap);

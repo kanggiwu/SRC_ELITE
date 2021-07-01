@@ -28,7 +28,7 @@ public class HashMapBinder {
 		this.request = request;
 //		realFolder = "http:\\localhost:6001\\pds";
 		realFolder = "C:\\SRC_ELITE\\Final_ERP\\src\\main\\webapp\\pds";
-		myFolder = "Final_ERP\\src\\main\\webapp\\pds";
+		myFolder = "/pds";
 //		realFolder = "C:\\portfolio_kosmo\\lab_spring4\\spring4_1_1\\WebContent\\pds";
 //		realFolder = "C:\\bbigal_programing\\workspace_web\\SRC_ELITE\\Final_ERP\\src\\main\\webapp\\pds";
 	}
@@ -62,10 +62,15 @@ public class HashMapBinder {
 			while(files.hasMoreElements()) {
 				String fname = files.nextElement();
 				String filename = multi.getFilesystemName(fname);
+				String previousFile = (String)target.get("previous_emp_picture_path");
 //				target.put("emp_picture_path", filename);
-				target.put("emp_picture_path", (myFolder+"\\"+filename));
 				if(filename !=null && filename.length()>1) {
+					logger.info("첨부 파일 있음");
 					file = new File(realFolder+"\\"+filename);
+					target.put("emp_picture_path", (myFolder+"/"+filename));
+				}else {
+					logger.info("첨부 파일 없음 -> 기존 파일 유지");
+					target.put("emp_picture_path", previousFile);
 				}
 			}///////////end of while
 			//첨부파일의 크기를 담을 변수

@@ -6,7 +6,7 @@
 	<resultMap  type="java.util.Map" id="empMap"></resultMap>
 	<!-- 사원 리스트 출력 -->
 	<select id="getEmpList" resultType="map">
-		SELECT e.emp_no, e.emp_name, d.dept_name, r.rank_name, decode(e.emp_status,0,'재직',1,'휴직',2,'퇴직') emp_status
+		SELECT e.emp_no, e.emp_name, d.dept_name, r.rank_name, e.emp_status
  		  FROM EMP e, DEPT d, rank r
 		 WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no
 		 ORDER BY emp_no ASC
@@ -23,10 +23,13 @@
 	</select>    
 		
 	<!-- 사원 정보 등록 -->
-	<insert id="insertEmpInfo" parameterType="map">
-	<!-- 팀, 계좌일자 추가하였습니다 -->
-		INSERT INTO emp (emp_no, emp_name, emp_pw, emp_status, dept_no, rank_no, team_name, emp_hiredate, emp_retiredate, emp_email, emp_tel, emp_account, emp_picture_path
-            VALUES(#{seq_emp}, #{emp_name}, #{emp_pw}, #{emp_status}, #{dept_no}, #{rank_no}, #{team_name}, #{emp_hiredate}, #{emp_retiredate}, #{emp_email}, #{emp_tel}, #{emp_account}, #{emp_picture_path}
+	<insert id="insertEmpInfo" parameterType="map"  useGeneratedKeys="true">
+	<!-- 팀, 계좌일자 추가하고 시퀀스 수정하였습니다 -->
+	<selectKey keyProperty="emp_no" resultType="int" order="BEFORE">
+		SELECT seq_emp.NEXTVAL FROM DUAL
+        </selectKey>
+		INSERT INTO emp (emp_no, emp_name, emp_pw, emp_status, dept_no, rank_no, team_no, emp_hiredate, emp_retiredate, emp_email, emp_tel, emp_account, emp_picture_path)
+            VALUES(#{emp_no}, #{emp_name}, #{emp_pw}, #{emp_status}, #{dept_no}, #{rank_no}, #{team_no}, #{emp_hiredate}, #{emp_retiredate}, #{emp_email}, #{emp_tel}, #{emp_account}, #{emp_picture_path})
 	</insert>
 
 	<!-- 자격증 소유자 등록 -->
@@ -43,7 +46,7 @@
     		,emp_status = #{emp_status}
     		,dept_no = #{dept_no}
     		,rank_no = #{rank_no}
-    		,team_name = #{team_name}
+    		,team_no = #{team_no}
     		,emp_hiredate = #{emp_hiredate}
     		,emp_retiredate = #{emp_retiredate}
     		,emp_email = #{emp_email}

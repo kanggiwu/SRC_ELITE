@@ -177,6 +177,7 @@ $setRows.submit();
     <tbody>
 <%
 			//조회 결과가 없는거야?
+	            String emp_status = null;
 			if(size==0){
 %>
 	        <tr>
@@ -195,7 +196,17 @@ $setRows.submit();
 	            <td><%=rmap.get("EMP_NAME") %></td>
 	            <td><%=rmap.get("DEPT_NAME") %></td>
 	            <td><%=rmap.get("RANK_NAME") %></td>
-	            <td><%=rmap.get("EMP_STATUS") %></td>
+	            <%
+	            switch(Integer.parseInt(String.valueOf(rmap.get("EMP_STATUS")))){
+	            case 0: emp_status = "재직";
+	            		break;
+	            case 1: emp_status = "휴직";
+	            		break;
+	            case 2: emp_status = "퇴직";
+	            		break;
+	            }
+	            %>
+	            <td><%=emp_status%></td>
 	        </tr>
 <%
 				}///end of for

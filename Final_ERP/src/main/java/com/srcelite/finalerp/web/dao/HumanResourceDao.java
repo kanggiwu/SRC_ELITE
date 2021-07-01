@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.dao.DataAccessException;
 
 public class HumanResourceDao {
 	Logger logger = Logger.getLogger(HumanResourceDao.class);
@@ -24,15 +25,15 @@ public class HumanResourceDao {
 		boardDetail = sqlSessionTemplate.selectList("getDetailEmpInfo",pmap);
 		return boardDetail;
 	}
-	public int insertEmployee(Map<String, Object> pmap) {
+	public int insertEmployee(Map<String, Object> pmap) 
+			throws DataAccessException{
 		int result = 0;
-		result = 1;
-//		sqlSessionTemplate.insert("insertEmpInfo",pmap);
+		sqlSessionTemplate.insert("insertEmpInfo",pmap);
 		return result;
 	}
 	public int updateEmployee(Map<String, Object> pmap) {
 		int result = 0;
-//		sqlSessionTemplate.update("updateEmpInfo",pmap);
+		sqlSessionTemplate.update("updateEmpInfo",pmap);
 		result = 1;
 		return result;
 	}

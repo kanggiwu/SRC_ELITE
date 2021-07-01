@@ -17,7 +17,11 @@ public class HumanResourceLogic {
 	}
 	//조직도 수정
 	public void updateOrganizationChart(Map<String,Object> pmap) {
-		
+		try {
+			
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	//사원정보 리스트조회
 	public List<Map<String,Object>>  getEmployeeList(Map<String,Object> pmap)      {
@@ -33,14 +37,22 @@ public class HumanResourceLogic {
 	//사원정보 수정
 	public int updateEmployee(Map<String,Object> pmap) {
 		int result = 0;
-		result = humanResourceDao.updateEmployee(pmap);
-		return result;
+		try {
+			result = humanResourceDao.updateEmployee(pmap);
+			return result;
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	//사원정보 추가
-	public int insertEmployee(Map<String,Object> pmap)                            {
+	public int insertEmployee(Map<String,Object> pmap) {
 		int result = 0;
-		result = humanResourceDao.insertEmployee(pmap);
-		return result;
+		try {
+			result = humanResourceDao.insertEmployee(pmap);
+			return result;
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	public List<Map<String, Object>> getEmpLicenceList(Map<String, Object> pmap) {
 		List<Map<String,Object>> licenceList = null;

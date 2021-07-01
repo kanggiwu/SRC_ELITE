@@ -51,6 +51,57 @@ if (boardDetail != null) {
 	emp_picture_path = rmap.get("EMP_PICTURE_PATH").toString();
 
 }
+
+int dept_no = 0;
+int team_no = 0;
+int rank_no = 0;
+int emp_status_no = 0;
+switch(dept_name){
+case "개발부": dept_no = 20; 
+			break;
+case "인사부": dept_no = 30; 
+			break;
+case "회계부": dept_no = 40; 
+			break;
+case "임원": dept_no = 10; 
+			break;
+}
+switch(team_name){
+case "개발1팀": team_no = 1; 
+			break;
+case "개발2팀": team_no = 2; 
+			break;
+case "개발3팀": team_no = 3; 
+			break;
+case "개발4팀": team_no = 4; 
+			break;
+}
+switch(rank_name){
+case "사원": rank_no = 8; 
+			break;
+case "대리": rank_no = 7; 
+			break;
+case "과장": rank_no = 6; 
+			break;
+case "차장": rank_no = 5; 
+			break;
+case "부장": rank_no = 4; 
+			break;
+case "이사": rank_no = 3; 
+			break;
+case "부사장": rank_no = 2; 
+			break;
+case "대표": rank_no = 1; 
+			break;
+}
+switch(emp_status){
+case "재직": emp_status_no = 0; 
+			break;
+case "휴직": emp_status_no = 1; 
+			break;
+case "퇴직": emp_status_no = 2; 
+			break;
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -134,12 +185,12 @@ if (boardDetail != null) {
 		// 선택된 데이터 가져오기
 		const value = e.value;
 		console.log(value);
-		if (value != "개발부") {
+		if (value != "20") {
 			document.getElementById('team_options').disabled = true;
-			$("#team_options").val("").prop("selected", true);
+			$("#team_options").val().prop("selected", true);
 		} else {
 			document.getElementById('team_options').disabled = false;
-			$("#team_options").val("개발1팀").prop("selected", true);
+			$("#team_options").val("1").prop("selected", true);
 		}
 	}
 	// 콘텐츠 수정 :: 사진 수정 시 이미지 미리보기
@@ -166,7 +217,9 @@ if (boardDetail != null) {
 	 $('#imgViewArea').css({ 'display' : 'none' });
 	 } */
 	function empUpdateAction() {
-		console.log("입력 액션 호출");
+		Swal.fire({
+		  title: '수정 되었습니다!',
+		  confirmButtonColor: '#17a2b8'})
 		$('#employee_update').submit();
 		// location.href = 'getEmployeeList.src1'
 	}
@@ -190,9 +243,9 @@ if (boardDetail != null) {
 						<div class="container">
 							<div class="col">
 								<div style="text-align: right; padding: 5px;">
-									<button class="btn btn-info" id="EmpUpdReady"
+									<button class="btn btn-warning" id="EmpUpdReady"
 										onclick="fieldsetDisable()">수정</button>
-									<button class="btn btn-info" id="EmpUpdSubmit"
+									<button class="btn btn-warning" id="EmpUpdSubmit"
 										onclick="empUpdateAction();" style="display: none;">수정
 										완료</button>
 									<button class="btn btn-danger"
@@ -211,6 +264,8 @@ if (boardDetail != null) {
 														style="left: 20%; position: relative;">
 														<input type="file" id="u_file" onchange="readURL(this);"
 															name="emp_picture_path" accept="image/*">
+														<input type="text" value="<%=emp_picture_path%>" 
+															name="previous_emp_picture_path" readonly hidden>
 													</div>
 												</div>
 												<hr>
@@ -228,37 +283,37 @@ if (boardDetail != null) {
 													<div class="input-group">
 														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">부서</span> <select
-															class="form-control" name="dept_name" id="dept_options"
+															class="form-control" name="dept_no" id="dept_options"
 															onchange="handleOnChange(this)">
-															<option value="<%=dept_name%>" selected><%=dept_name%></option>
-															<option value="인사부">인사부</option>
-															<option value="회계부">회계부</option>
-															<option value="개발부">개발부</option>
-															<option value="임원">임원</option>
-														</select> <select class="form-control" name="team_name"
+															<option value=<%=dept_no%> hidden><%=dept_name%></option>
+															<option value=20>개발부</option>
+															<option value=30>인사부</option>
+															<option value=40>회계부</option>
+															<option value=10>임원</option>
+														</select> <select class="form-control" name="team_no"
 															id="team_options">
-															<option value="<%=team_name%>" selected hidden><%=team_name%></option>
-															<option value="개발1팀">개발1팀</option>
-															<option value="개발2팀">개발2팀</option>
-															<option value="개발3팀">개발3팀</option>
-															<option value="SM팀">SM팀</option>
-															<option value="" hidden>없음</option>
+															<option value=<%=team_no%> hidden><%=team_name%></option>
+															<option value=1>개발1팀</option>
+															<option value=2>개발2팀</option>
+															<option value=3>개발3팀</option>
+															<option value=4>개발4팀</option>
+															<option value= hidden>없음</option>
 														</select>
 													</div>
 													<br>
 													<div class="input-group">
 														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">직위</span> <select
-															class="form-control" name="rank_name">
-															<option value="<%=rank_name%>" selected><%=rank_name%></option>
-															<option value="사원">사원</option>
-															<option value="대리">대리</option>
-															<option value="차장">차장</option>
-															<option value="과장">과장</option>
-															<option value="부장">부장</option>
-															<option value="부사장">부사장</option>
-															<option value="이사">이사</option>
-															<option value="대표">대표</option>
+															class="form-control" name="rank_no">
+															<option value=<%=rank_no%> hidden><%=rank_name%></option>
+															<option value=8>사원</option>
+															<option value=7>대리</option>
+															<option value=6>과장</option>
+															<option value=5>차장</option>
+															<option value=4>부장</option>
+															<option value=3>이사</option>
+															<option value=2>부사장</option>
+															<option value=1>대표</option>
 														</select>
 													</div>
 												</div>
@@ -273,7 +328,7 @@ if (boardDetail != null) {
 														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">사원번호</span> <input
 															type="text" name="emp_no" class="form-control"
-															value="<%=emp_no%>" aria-describedby="basic-addon1">
+															value="<%=emp_no%>" aria-describedby="basic-addon1" readonly>
 													</div>
 													<br>
 													<div class="input-group">
@@ -321,10 +376,10 @@ if (boardDetail != null) {
 														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">고용상태</span> <select
 															name="emp_status" class="form-control">
-															<option value="<%=emp_status%>" selected><%=emp_status%></option>
-															<option value="재직">재직</option>
-															<option value="휴직">휴직</option>
-															<option value="퇴직">퇴직</option>
+															<option value=<%=emp_status_no%> hidden><%=emp_status%></option>
+															<option value=0>재직</option>
+															<option value=1>휴직</option>
+															<option value=2>퇴직</option>
 														</select>
 													</div>
 													<br>
@@ -337,6 +392,7 @@ if (boardDetail != null) {
 															value="<%=emp_account%>" aria-describedby="basic-addon1">
 													</div>
 												</div>
+											</div>
 											</div>
 									</form>
 									<form id="licence_add" method="post"
@@ -417,6 +473,7 @@ if (boardDetail != null) {
 							</fieldset>
 							<!-- 컨텐츠 들어갈내용 끝   -->
 						</div>
+					</div>
 					</div>
 			</main>
 		</div>
