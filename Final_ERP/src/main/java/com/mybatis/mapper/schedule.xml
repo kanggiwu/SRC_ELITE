@@ -15,16 +15,16 @@
 	<!-- 사용자가 선택한 월의 일정 리스트 가져오기 --> <!-- 해당 월의 날짜스트링 부분은 Dao 작성시 자바 변수명을 확인하여 추가 
 	쿼리문 수정했습니다.attendance_start_work를 그대로 받아와야 DB에 있는 값으로 비교가 가능합니다.
 	-->
-	<select id="getAttendance" parameterType="string" resultType="map">
+	<select id="getAttendance" parameterType="map" resultType="map">
 		 SELECT attendance_no, emp_no, attendance_start_work
          FROM attendance
          WHERE emp_no = #{emp_no}
-         AND SUBSTR(attendance_start_work,3,5) = #{yy/mm}
+         AND SUBSTR(attendance_start_work,1,7) = #{date}
 	</select>
 
 	<!-- 일정 조회  1:공통 2:프로젝트 3:개인 부서번호:부서 -->
 	<select id="getScheduleList" parameterType="int" resultType="map">
-		SELECT schedule_no, emp_no, schedule_title, schedule_startdate, schedule_enddate, schedule_content
+		SELECT schedule_no , emp_no , schedule_type , schedule_title, schedule_startdate, schedule_enddate, schedule_content
  		  FROM schedule
 		 <if test="schedule_type%10==0">
 		 	WHERE schedule_type = (select dept_no from emp where emp_no =#{emp_no})

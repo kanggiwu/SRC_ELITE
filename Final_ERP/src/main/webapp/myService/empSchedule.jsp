@@ -12,7 +12,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Personal Schedules</title>
+    <title>일정 관리</title>
     <%@ include file ="../common/fontAwesomeUI.jsp" %>
     <!-- <link rel=" shortcut icon" href="../mihyun_cal/image/favicon.ico"> -->
 
@@ -60,16 +60,14 @@
                         <div class="col-lg-6">
                     <label for="calendar_view">분류</label>
                     <div class="input-group">
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="정연"
+                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="공통"
                                 checked>공통</label>
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="다현"
+                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="부서"
                                 checked>부서</label>
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="사나"
+                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="프로젝트"
                                 checked>프로젝트</label>
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="나연"
+                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="개인"
                                 checked>개인</label>
-                        &nbsp
-                        <Button id= "selectSchedule" class="fc-button fc-state-default fc-corner-left fc-corner-right">조회</Button>
                     </div>
                 </div>
         </div>

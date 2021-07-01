@@ -50,6 +50,7 @@ public class ScheduleController extends MultiActionController {
 
 		logger.info("쿼리스트링: " + pMap);
 		ModelAndView mav = new ModelAndView();
+		response.setContentType("application/json;charset=utf-8");
 
 		// 개인일정인 경우 출석 시간 받아오기
 		if ("3".equals(pMap.get("schedule_type").toString())) {
@@ -58,12 +59,11 @@ public class ScheduleController extends MultiActionController {
 			logger.info("attendanceList: " + attendanceList);
 			mav.addObject("attendanceList", attendanceList);
 		}
-
 		List<Map<String, Object>> scheduleList = null;
 		scheduleList = scheduleLogic.getScheduleList(pMap);
 		logger.info("scheduleList: " + scheduleList);
 		mav.addObject("scheduleList", scheduleList);
-		mav.setViewName("../index");
+		mav.setViewName("jsonSchedule");
 
 		return mav;
 	}
@@ -77,7 +77,7 @@ public class ScheduleController extends MultiActionController {
 		 * String emp_no=(String)session.getAttribute("emp_no"); 
 		 * pMap.put("emp_no",emp_no);
 		 */
-		// ?emp_no=#{emp_no}&schedule_type=[1,20,3]&yy/mm=#{yy/mm}
+		// ?emp_no=#{emp_no}&schedule_type=[1,20,3]&yy/mm=#{date}
 		
 		logger.info("쿼리스트링: " + pMap);
 		

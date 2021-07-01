@@ -24,6 +24,7 @@ public class ScheduleDao {
 
 
 	public List<Map<String, Object>> getScheduleList(Map<String, Object> pMap) {
+		logger.info("다오 getScheduleList 호출 성공");
 		List<Map<String, Object>> getScheduleList = null;
 		getScheduleList = sqlSessionTemplate.selectList("getScheduleList",pMap);
 		

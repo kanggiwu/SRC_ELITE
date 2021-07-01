@@ -21,6 +21,7 @@ var calendar = $('#calendar').fullCalendar({
                                 month : { eventLimit : 12 } // 한 날짜에 최대 이벤트 12개, 나머지는 + 처리됨
                               },
   eventLimitClick           : 'week', //popover
+  defaultDate               : moment('2021-06'),
   navLinks                  : true,
   timeFormat                : 'HH:mm',
   defaultTimedEventDuration : '01:00:00',
@@ -35,9 +36,9 @@ var calendar = $('#calendar').fullCalendar({
   eventLongPressDelay       : 0,
   selectLongPressDelay      : 0,  
   header                    : {
-                                left   : 'today, prevYear, nextYear, viewWeekends',
+                                left   : 'prevYear, today, nextYear',
                                 center : 'prev, title, next',
-                                right  : 'month, agendaWeek, agendaDay, listWeek'
+                                right  : 'viewWeekends, listWeek'
                               },
   views                     : {
                                 month : {
@@ -68,6 +69,7 @@ var calendar = $('#calendar').fullCalendar({
                                 }
                                },
 
+schedule_type: -1,
 
   eventRender: function (event, element, view) {
 
@@ -82,8 +84,7 @@ var calendar = $('#calendar').fullCalendar({
       }),
       content: $('<div />', {
           class: 'popoverInfoCalendar'
-        }).append('<p><strong>등록자:</strong> ' + event.username + '</p>')
-        .append('<p><strong>구분:</strong> ' + event.type + '</p>')
+        }).append('<p><strong>구분:</strong> ' + event.username + '</p>')
         .append('<p><strong>시간:</strong> ' + getDisplayEventDate(event) + '</p>')
         .append('<div class="popoverDescCalendar"><strong>설명:</strong> ' + event.description + '</div>'),
       delay: {
@@ -96,8 +97,8 @@ var calendar = $('#calendar').fullCalendar({
       container: 'body'
     });
 
-    return filtering(event);
-
+    //return filtering(event);
+	return true;
   },
 
   /* ****************
@@ -106,20 +107,35 @@ var calendar = $('#calendar').fullCalendar({
   events: function (start, end, timezone, callback) {
     $.ajax({
       type: "get",
-      url: /schedule/getCalendarSchedule,
+      url: "../schedule/getCalendarSchedule.src1",
       data: {
         // 화면이 바뀌면 Date 객체인 start, end 가 들어옴
-        startDate : moment(start).format('YYYY-MM-DD'),
-        endDate   : moment(end).format('YYYY-MM-DD')
+       emp_no:1,
+       date:"2010-05",
+       schedule_type:3
       },
-      success: function (response) {
-        var fixedDate = response.map(function (array) {
-          if (array.allDay && array.start !== array.end) {
-            array.end = moment(array.end).add(1, 'days'); // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
+      success: function (data) {
+      	alert("리턴이랑 데이터 받아오기 성공!"+data);
+/*      	var result = data;
+      	console.log(result);
+      	var jsonDoc = JSON.parse(result);
+      	console.log(jsonDoc.length);
+      	for(var i = 0; i<jsonDoc.length; i++){
+      		console.log(jsonDoc[i].SCHEDULE_TYPE+" ");
+      	}*/
+        var fixedDate = data.attendanceList.map(function (array) {
+      		alert("response.map 호출"+array.SCHEDULE_TYPE);
+      		alert("response.map 호출"+array.SCHEDULE_TITLE);
+			if (array.SCHEDULE_STARTDATE !== array.SCHEDULE_ENDDATE) {
+            array.SCHEDULE_ENDDATE = moment(array.SCHEDULE_ENDDATE).add(1, 'days'); // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
+          	
           }
           return array;
         });
         callback(fixedDate);
+      },
+      error:function(data){
+        alert("에러");
       }
     });
   },
@@ -264,25 +280,20 @@ function getDisplayEventDate(event) {
 }
 
 function filtering(event) {
-  var show_username = true;
+  
   var show_type = true;
 
-  var username = $('input:checkbox.filter:checked').map(function () {
+  schedule_type = $('input:checkbox.filter:checked').map(function () {
+   alert(schedule_type);
     return $(this).val();
   }).get();
-  var types = $('#type_filter').val();
+  
 
-  show_username = username.indexOf(event.username) >= 0;
+  show_type = schedule_type.indexOf(event.schedule_type) >= 0;
 
-  if (types && types.length > 0) {
-    if (types[0] == "all") {
-      show_type = true;
-    } else {
-      show_type = types.indexOf(event.type) >= 0;
-    }
-  }
 
-  return show_username && show_type;
+
+  return  show_type;
 }
 
 function calDateWhenResize(event) {
