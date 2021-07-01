@@ -1,5 +1,6 @@
 package com.srcelite.finalerp.web.dao;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -16,8 +17,7 @@ public class NoticeDao {
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
-
-
+	
 	public List<Map<String, Object>> getAllNoticeList(Map<String, Object> pmap) {
 		logger.info("NoticeDao == getAllNoticeList == 호출");
 
@@ -26,40 +26,15 @@ public class NoticeDao {
 		return noticeAllList;
 	}
 
-	public int insertNotice(Map<String, Object> pmap) throws DataAccessException{
-	
+	public List<Map<String, Object>> getNoticeDetail(Map<String, Object> pmap) {
+		List<Map<String, Object>> NoticeDetail = null;
+		NoticeDetail = sqlSessionTemplate.selectList("getNoticeDetail",pmap);
+		return NoticeDetail;
+	}
+	public int insertNotice(Map<String, Object> pmap) {
 		int result = 0;
 		result = 1;
-		sqlSessionTemplate.insert("noticeInsert",pmap);
+		sqlSessionTemplate.insert("insertNotice",pmap);
 		return result;
 	}
-	public void bmStepUpdate(Map<String, Object> pmap) {
-	
-		sqlSessionTemplate.update("bmStepUpdate",pmap);		
-	}
-	public void hitCount(int bm_no) {
-		
-		sqlSessionTemplate.update("hitCount",bm_no);		
-	}
-	public int getBmGroup() {
-		int result = 0;
-		result = sqlSessionTemplate.selectOne("getBmGroup");		
-		return result;
-	}
-	public int getBmNo() {
-		int result = 0;
-		result = sqlSessionTemplate.selectOne("getBmNo");		
-		return result;
-	}
-	public int updateNotice(Map<String, Object> pmap) {
-		int result = 0;
-		result = sqlSessionTemplate.update("noitceUpdate",pmap);	
-		return result;
-	}
-	public int deleteNotice(Map<String, Object> pmap) {
-				int result = 0;
-				result = sqlSessionTemplate.delete("noticeDelete",pmap);
-		return result;	
-	}
-
 }

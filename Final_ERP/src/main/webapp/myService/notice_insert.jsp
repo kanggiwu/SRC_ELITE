@@ -29,7 +29,7 @@
 				<div id="page_contents" style="max-width: 1730px; margin: 10px 100px;">
      	<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
      			<!-- 컨텐츠 들어갈내용 시작-->
-     	
+   
      	    <div class="label">
      	    <!--분류 선택-->
 		<select class="label-control">
@@ -40,10 +40,8 @@
 	  <option>개발</option>
 	 </select>
 	 <!-- 제목입력 -->
-	          <input type="text" class="label-control" id="title"
-       placeholder="공지 제목 입력(2-100)" name="title"
-       maxlength="100" required="required"
-       pattern=".{2,100}">
+     <input type="text" class="label-control" id="title" placeholder="공지 제목 입력" name="title"
+       maxlength="100" required="required">
     
     <!-- 내용입력 -->
     <div class="form-group">
@@ -54,16 +52,8 @@
  <!-- 등록 버튼 -->
   </div>
      	<!-- 내용업데이트(?) -->
-								<a class="btn btn-primary" onClick="location.href='notice_add.jsp'">등록</a>
-									<!-- @RequestMapping("/boardUpdate.do") public String
-									getBoardForUpdate { 
-                    
-									board=boardService.getBoard(vo.getId());
-									model.addAttribute("board" ,board); return "notice.detail.jsp";  
-									@RequestMapping("/updateProcess.do")
-									public String updateProcess(BoardVOvo) { 
-                     boardService.modifyBoard(vo); 
-                     return "redirect:notice.jsp; }} -->
+	<a class="btn btn-primary" onClick="location.href='notice_admin.jsp'">등록</a>
+								
 		<!-- 컨텐츠 들어갈내용 끝   -->
 		
 <!-- 페이징 처리 부분  -->
