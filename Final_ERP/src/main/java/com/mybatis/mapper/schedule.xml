@@ -19,7 +19,7 @@
 		 SELECT attendance_no, emp_no, attendance_start_work
          FROM attendance
          WHERE emp_no = #{emp_no}
-         AND SUBSTR(attendance_start_work,3,5) = #{yy/mm}
+         AND SUBSTR(attendance_start_work,3,5) = #{date}
 	</select>
 
 	<!-- 일정 조회  1:공통 2:프로젝트 3:개인 부서번호:부서 -->
