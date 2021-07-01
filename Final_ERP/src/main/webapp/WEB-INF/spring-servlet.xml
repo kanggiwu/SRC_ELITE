@@ -46,7 +46,7 @@
 			<props>
 				<prop key="/main/login.src1">main-controller</prop>
 				<prop key="/main/logout.src1">main-controller</prop>
-				<prop key="/main/startWork.src1">main-controller</prop>
+				<prop key="/main/insertAttendanceTime.src1">main-controller</prop>
 
 				<prop key="/notice/getMainNoticeList.src1">notice-controller</prop>
 				<prop key="/notice/getAllNoticeList.src1">notice-controller</prop>
@@ -103,7 +103,7 @@
 			<props>
 				<prop key="/main/login.src1">login</prop>
 				<prop key="/main/logout.src1">logout</prop>
-				<prop key="/main/startWork.src1">startWork</prop>
+				<prop key="/main/insertAttendanceTime.src1">insertAttendanceTime</prop>
 
 				<prop key="/notice/getMainNoticeList.src1">getMainNoticeList</prop>
 				<prop key="/notice/getAllNoticeList.src1">getAllNoticeList</prop>
