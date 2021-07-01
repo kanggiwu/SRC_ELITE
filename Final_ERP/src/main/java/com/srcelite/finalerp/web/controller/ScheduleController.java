@@ -46,7 +46,7 @@ public class ScheduleController extends MultiActionController {
 		 */
 		int emp_no = 34;
 		pMap.put("emp_no", emp_no);
-		// ?emp_no=#{emp_no}&schedule_type=[1,20,3]&yy/mm=#{yy/mm}
+		// ?emp_no=#{emp_no}&schedule_type=[1,20,3]&date=#{yy/mm}
 
 		logger.info("쿼리스트링: " + pMap);
 		ModelAndView mav = new ModelAndView();

@@ -35,9 +35,9 @@ var calendar = $('#calendar').fullCalendar({
   eventLongPressDelay       : 0,
   selectLongPressDelay      : 0,  
   header                    : {
-                                left   : 'today, prevYear, nextYear, viewWeekends',
+                                left   : 'prevYear, nextYear,today',
                                 center : 'prev, title, next',
-                                right  : 'month, agendaWeek, agendaDay, listWeek'
+                                right  : 'viewWeekends, listWeek'
                               },
   views                     : {
                                 month : {
@@ -106,7 +106,7 @@ var calendar = $('#calendar').fullCalendar({
   events: function (start, end, timezone, callback) {
     $.ajax({
       type: "get",
-      url: /schedule/getCalendarSchedule,
+    //  url: ,
       data: {
         // 화면이 바뀌면 Date 객체인 start, end 가 들어옴
         startDate : moment(start).format('YYYY-MM-DD'),
