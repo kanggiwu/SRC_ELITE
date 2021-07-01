@@ -36,7 +36,7 @@ public class MainController extends MultiActionController{
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String,Object> pmap = new HashMap<>();
 		hmb.multiBind(pmap);
-		int result = 0;
+		int result = 0; 
 		result = mainLogic.insertAttendanceTime(pmap);
 		if(result == 1) {
 //			response.sendRedirect("");
