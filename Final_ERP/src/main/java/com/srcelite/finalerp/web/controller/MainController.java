@@ -39,10 +39,10 @@ public class MainController extends MultiActionController{
 		int result = 0;
 		result = mainLogic.insertAttendanceTime(pmap);
 		if(result == 1) {
-			response.sendRedirect("");
+//			response.sendRedirect("");
 		}
 		else {
-			response.sendRedirect("");
+//			response.sendRedirect("");
 		}
 	}
 }

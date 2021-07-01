@@ -66,18 +66,15 @@
 
 
 	<select id="updateProjectInfo" parameterType="map" statementType="CALLABLE" resultType = "map">
-
-		{call 
-				prc_array_test(
+		{ call prc_array_test(
 							#{project_no,mode=IN,jdbcType=NUMERIC} 
-                             ,#{project_profit,mode=IN,jdbcType=NUMERIC}
-                             ,#{project_client,mode=IN,jdbcType=VARCHAR}
-                             ,#{project_type,mode=IN,jdbcType=VARCHAR}
-                             ,#{project_content,mode=IN,jdbcType=VARCHAR}
-                             ,#{project_tech,mode=IN,jdbcType=VARCHAR}
-                             ,#{emp_no,mode=IN,jdbcType=NUMERIC}
-                             ,#{arr_peno,mode=IN,jdbcType=ARRAY}
-                             )
+             ,#{project_profit,mode=IN,jdbcType=NUMERIC}
+             ,#{project_client,mode=IN,jdbcType=VARCHAR}
+             ,#{project_type,mode=IN,jdbcType=VARCHAR}
+             ,#{project_content,mode=IN,jdbcType=VARCHAR}
+             ,#{project_tech,mode=IN,jdbcType=VARCHAR}
+             ,#{emp_no,mode=IN,jdbcType=NUMERIC}
+             ,#{arr_peno,mode=IN,jdbcType=ARRAY} )
 		}
 	</select>  
 

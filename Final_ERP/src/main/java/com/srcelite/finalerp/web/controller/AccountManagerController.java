@@ -26,7 +26,7 @@ public class AccountManagerController extends MultiActionController {
 	// 수익 관리 조회
 	public ModelAndView getProfitLis (HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-//		return mav;
+		return mav;
 	}
 	
 	// 수익 관리 수정
