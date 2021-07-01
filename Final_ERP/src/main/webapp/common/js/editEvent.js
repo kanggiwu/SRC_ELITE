@@ -83,7 +83,7 @@ var editEvent = function (event, element, view) {
         //일정 업데이트
         $.ajax({
             type: "get",
-            url: "conUpdRoom.erp?&cfr_no="+event._id+"&cfr_title="+event.title+"&cfr_memo="+event.description+
+            url: "/schedule/updateSchedule.src1?&cfr_no="+event._id+"&cfr_title="+event.title+"&cfr_memo="+event.description+
             "&cfr_sdate="+event.start+"&cfr_edate="+event.end+
             "&cfr_type="+event.type+"&cfr_allday="+event.allDay+
             "&cfr_bgcolor="+event.backgroundColor,
@@ -114,7 +114,7 @@ $('#deleteEvent').on('click', function () {
     //삭제시
     $.ajax({
         type: "get",
-        url: "conDelRoom.erp?cfr_no="+$(this).data('id'),
+        url: "/schedule/deleteSchedule.src1?cfr_no="+$(this).data('id'),
 //        data: {
 //            //...
 //        },
