@@ -32,7 +32,8 @@ public class HashMapBinder {
 		Enumeration en = request.getParameterNames();//배열 구조체 묶음
 		while(en.hasMoreElements()) {
 			String key = (String)en.nextElement();
-			logger.info("value:"+request.getParameter(key)+ "key : " + key);
+			logger.info("key:"+key);
+			logger.info("value:"+request.getParameter(key));
 			target.put(key, request.getParameter(key));
 		}
 	}////////end of bind

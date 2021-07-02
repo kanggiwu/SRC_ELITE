@@ -51,6 +51,7 @@
 				<prop key="/notice/getMainNoticeList.src1">notice-controller</prop>
 				<prop key="/notice/getAllNoticeList.src1">notice-controller</prop>
 				<prop key="/notice/getDetailNotice.src1">notice-controller</prop>
+				<prop key="/notice/getNewNotice.src1">notice-controller</prop>
 				<prop key="/notice/insertNotice.src1">notice-controller</prop>
 				<prop key="/notice/updateNotice.src1">notice-controller</prop>
 				<prop key="/notice/deleteNotice.src1">notice-controller</prop>
@@ -108,6 +109,7 @@
 				<prop key="/notice/getMainNoticeList.src1">getMainNoticeList</prop>
 				<prop key="/notice/getAllNoticeList.src1">getAllNoticeList</prop>
 				<prop key="/notice/getDetailNotice.src1">getDetailNotice</prop>
+				<prop key="/notice/getNewNotice.src1">getNewNotice</prop>
 				<prop key="/notice/insertNotice.src1">insertNotice</prop>
 				<prop key="/notice/updateNotice.src1">updateNotice</prop>
 				<prop key="/notice/deleteNotice.src1">deleteNotice</prop>

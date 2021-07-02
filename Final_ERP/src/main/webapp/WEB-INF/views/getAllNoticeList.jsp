@@ -10,7 +10,6 @@ int size = 0;
 if (noticeAllList != null) {
 	size = noticeAllList.size();
 }
-out.print("size:" + size);
 %>
 <!DOCTYPE html>
 <html>
@@ -31,108 +30,147 @@ out.print("size:" + size);
 <link href="../common/main.css" rel="stylesheet" />
 <link href="../common/css/custom.css" rel="stylesheet" />
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
+<!-- 검색에 필요한 코드 시작  -->
+<script>
+ function search(){
+        if( $("#search").val() == "" ){
+            return;
+        }else{
+            $("input[name=searchFiled]").val($("#searchS").val());
+        }
+        let searchValue = $("#searchI").val();
+        $("input[name=searchValue]").val(searchValue);
+        $("form[name=frm]").attr("method", "post");
+        $("form[name=frm]").attr("action","").submit();
+    }
+</script>
+<!--검색에 필요한 코드 끝 -->
+
 <title>공지사항</title>
 </head>
 <body class="sb-nav-fixed">
 	<nav id="topNav"></nav>
-	<div id="layoutSidenav"></div>
-	<div id="layoutSidenav_nav"></div>
-	<div id="layoutSidenav_content"></div>
-	<main id="input_div"></main>
-	<div id="frame_div" style="border: 1px solid black;"></div>
-	<div id="page_title"
-		style="border-bottom: 2px solid gray; margin: 50px 30px;">
-		<h2>공지사항</h2>
-	</div>
-	<div id="page_contents" style="max-width: 1730px; margin: 10px 100px;"></div>
-	<link rel="stylesheet"
-		href="{{ url_for('static', filename='bootstrap.min.css') }}">
-	<!-- 컨텐츠 들어갈내용 시작-->
-	<!-- 검색버튼 -->
-	<div class=col-xs-2
-		style="text-align: left; padding: 5px; display: inline-block; width: 15%;">
-		<span class="input-group"> <select class="form-control">
-				<option selected disabled>분류</option>
-				<option>공통</option>
-				<option>인사</option>
-				<option>회계</option>
-				<option>개발</option>
-		</select>
-		</span>
+	<div id="layoutSidenav">
+		<div id="layoutSidenav_nav"></div>
+		<div id="layoutSidenav_content">
+			<main id="input_div">
+				<div id="frame_div" style="border: 1px solid black;">
+					<div id="page_title"
+						style="border-bottom: 2px solid gray; margin: 50px 30px;">
+						<h2>공지사항</h2>
+						<h6>분류 : 공통(1) , 인사(2) , 회계(3) , 개발(4)</h6>
+					</div>
+					<div id="page_contents"
+						style="max-width: 1730px; margin: 10px 100px;">
+						<!-- 컨텐츠 들어갈내용 시작-->
+
+
+						<!--테이블 부분 시작  -->
+						<table class="table table-bordered table-striped" id="products">
+							<!-- 공지부분 -->
+							<!--테이블 헤더 시작  -->
+							<thead>
+								<tr class="thead-dark">
+									<th>번호</th>
+									<th>분류</th>
+									<th>공지제목</th>
+									<th>등록일</th>
+								</tr>
+							</thead>
+							<!--테이블 헤더 끝  -->
+							<!--테이블 내용 시작  -->
+							<tbody>
+									<!-- 검색 조회 폼 시작-->
+								<form id="search" action="/notice/getAllNoticeList" method='post'>
+								<!-- 분류 선택부분 시작-->
+								<div
+									style="text-align: left; padding: 5px; display: inline-block; width: 40%;">
+									<span class="input-group "> <select class="form-control">
+											<option selected >분류</option>
+											<option>1(공통)</option>
+											<option>2(인사)</option>
+											<option>3(회계)</option>
+											<option>4(개발)</option>
+									</select> <!-- 분류 선택부분 끝 --> 
+									<!-- 검색 시작 --> 
+									<input type="text"
+										class="form-control float-left " placeholder="검색"> <a
+										class="btn btn-default float-left" href="" role="button"><i
+											class="fas fa-search"></i></a>
+									</span>
+								</div>
+								<!-- 검색 끝 -->
+								<!-- 추가버튼 시작 -->
+								<div
+									style="text-align: right; padding: 5px; display: inline-block; width: 59%">
+									<button class="btn btn-primary"
+										onclick="location.href='/notice/getNewNotice.src1'">
+										공지 추가</button>
+									<!-- 추가버튼 끝 -->
+
+								</div>
+								</form>
+									<!-- 검색 조회 폼 끝-->
+								<%
+								//조회 결과 X
+								if (size == 0) {
+								%>
+								<tr>
+									<td colspan="3">조회결과가 없습니다.</td>
+								</tr>
+								<%
+								} else {//조회 결과 O
+									for (int i = 0; i < size; i++) {
+									Map<String, Object> rmap = noticeAllList.get(i);
+									if (i == size)
+										break;
+								%>
+								<tr
+									onClick="location.href='/notice/getDetailNotice.src1?NOTICE_NO=<%=rmap.get("NOTICE_NO")%>'">
+									<td><%=rmap.get("NOTICE_NO")%></td>
+									<td><%=rmap.get("NOTICE_TYPE")%></td>
+									<td><%=rmap.get("NOTICE_TITLE")%></td>
+									<td><%=rmap.get("NOTICE_DATE")%></td>
+								</tr>
+
+								<!-- 페이징 처리 부분 //반드시 테이블 안에 넣어야됨// -->
+								<form action="" id="setRows">
+									<input type="hidden" name="rowPerPage" value="25"
+										id="rowPerPage">
+								</form>
+								<!-- 페이징 처리부분 끝  -->
+
+
+								<%
+								} /////////////end of for
+								} /////////////////end of else
+								%>
+
+
+							</tbody>
+							<!--테이블 내용 끝  -->
+						</table>
+						<!--테이블 끝  -->
+
+					</div>
+				</div>
+			</main>
 		</div>
-	<div class="col-xs-3">
-		<input type="text" class="form-control " placeholder="검색" style = width:30%;>
 	</div>
-	<a class="btn btn-default" href="" role="button"><i
-		class="fas fa-search"></i></a>
-	<!-- 추가버튼 클릭시 내용 추가 창으로 이동 -->
-	<div
-		style="text-align: right; padding: 5px; display: inline-block; width: 40%">
-		<button class="btn btn-primary btn-sm pull-right"
-			onClick="location.href='notice_insert.jsp'">추가</button>
-	</div>
-	<table class="table table-bordered table-striped" id="products">
-		<!-- 페이징 처리 부분 //반드시 테이블 안에 넣어야됨// -->
-		<form action="" id="setRows">
-			<input type="hidden" name="rowPerPage" value="30" id="rowPerPage">
-		</form>
-		<!-- 공지부분 -->
-		<thead>
-			<tr class="thead-dark">
-				<th>분류</th>
-				<th>공지제목</th>
-				<th>등록일</th>
-				<th>번호</th>
-			</tr>
-		</thead>
-		<tbody>
-	
-
-			<%
-			//조회 결과가 없는 거야?
-			if (size == 0) {
-			%>
-			<tr>
-				<td colspan="3">조회결과가 없습니다.</td>
-			</tr>
-			<%
-			} else {//조회 결과가 있는데....
-			for (int i = 0; i < size; i++) {
-				Map<String, Object> rmap = noticeAllList.get(i);
-				if (i == size)
-					break;
-			%>
-			<tr onClick="location.href='/notice/getDetailNotice.src1?NOTICE_NO=<%=rmap.get("NOTICE_NO")%>'">
-				<td><%=rmap.get("NOTICE_TYPE")%></td>
-				<td><%=rmap.get("NOTICE_TITLE")%></td>
-				<td><%=rmap.get("NOTICE_DATE")%></td>
-				<td><%=rmap.get("NOTICE_NO")%></td>
-			</tr>
-
-
-
-			<%
-			} /////////////end of for
-			} /////////////////end of else
-			%>
-
-		</tbody>
-	</table>
-
-
 	<!-- 컨텐츠 들어갈내용 끝   -->
-	<!-- 페이징 처리 부분  -->
+	<!-- 페이징 처리 할때 필요한 부분  -->
 	<script src="../common/js/paging.js"></script>
 	<!-- 슬라이드바 사용할때 필요 -->
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
 		crossorigin="anonymous"></script>
 	<!-- 탑메뉴 사용 -->
-	<script src="../common/js/topNav_admin.js"></script>
+	<script src="../common/js/topNav.js"></script>
 	<!-- 사이드 메뉴 사용 -->
-	<script src="../common/js/sideNav_admin.js"></script>
+	<script src="../common/js/sideNav.js"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
 		crossorigin="anonymous"></script>
 	<script src="../common/scripts.js"></script>
+	<!-- 버거 메뉴 활성화 -->
 </body>
 </html>
