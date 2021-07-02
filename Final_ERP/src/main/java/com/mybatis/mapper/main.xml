@@ -5,7 +5,7 @@
 <mapper namespace="com.mybatis.mapper.MainMapper">
 
 	<!-- login 시 DB에서 아이디에 해당하는 비번을 불러와서 사용자가 입력한 비번과 일치하면 로그인 -->
-	<select id="getPassword" parameterType="int" resultType="string">
+	<select id="getPassword" parameterType="map" resultType="string">
 		SELECT emp_pw FROM emp 
 		 WHERE emp_no=#{emp_no}
 	</select>
@@ -18,9 +18,12 @@
 	</select>
 
 	<!-- 출근 시간 등록 -->
-	<insert id="insertAttendanceTime" parameterType="map">
-		INSERT INTO attendance (attendance_code, emp_no, attendance_start_work) VALUES(#{seq_attendance}, #{emp_no}, SYSDATE)	<!-- ////////////미해결////////////-->
-	</insert>
+	<insert id="insertAttendanceTime" parameterType="map" useGeneratedKeys="true">
+      <selectKey keyProperty="attendance_no" resultType="int" order="BEFORE">
+          SELECT seq_attendance.NEXTVAL FROM DUAL
+      </selectKey>
+      INSERT INTO attendance (attendance_no, emp_no, attendance_start_work) VALUES(#{attendance_no}, #{emp_no}, TO_CHAR(SYSDATE,'YYYY/MM/DD HH24:MI:SS'))
+   </insert>
 	
 	<!-- 최신 공지 3건 불러오기 -->
 	<select id="getMainNoticeList" resultType="map">

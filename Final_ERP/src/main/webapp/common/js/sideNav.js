@@ -194,12 +194,13 @@ const avatarBoxButtonApi = [
     text: "출근",
     classname: "avatar_button btn btn-info",
     id: "avatarBoxButton_edit",
-    ref: "../myService/empCommute.jsp",
+    ref: "/main/insertAttendanceTime.src1",
   },
   {
     text: "로그아웃",
     classname: "avatar_button btn btn-danger",
     id: "avatarBoxButton_logout",
+    ref: "/main/logout.src1",
   },
 ];
 
