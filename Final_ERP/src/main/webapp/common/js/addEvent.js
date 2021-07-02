@@ -1,5 +1,5 @@
 let eventModal = $('#eventModal');
-
+let editUserName = $('#edit-username');
 let modalTitle = $('.modal-title');
 let editAllDay = $('#edit-allDay');
 let editTitle = $('#edit-title');
@@ -8,6 +8,7 @@ let editEnd = $('#edit-end');
 let editType = $('#edit-type');
 let editColor = $('#edit-color');
 let editDesc = $('#edit-desc');
+let empDept = $('#emp_dept');
 
 let addBtnContainer = $('.modalBtnContainer-addEvent');
 let modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
@@ -43,7 +44,7 @@ let newEvent = function (start, end, eventType) {
             schedule_startdate: editStart.val(),
             schedule_enddate: editEnd.val(),
             schedule_content: editDesc.val(),
-            allDay: false
+            allDay: true
         };
         
 
