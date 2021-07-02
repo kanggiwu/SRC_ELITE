@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.dao.DataAccessException;
 
 public class HumanResourceDao {
 	SqlSessionTemplate sqlSessionTemplate = null;
