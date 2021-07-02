@@ -1,10 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	String emp_name = (String)session.getAttribute("scheduleInfo");
+	String emp_name = (String)session.getAttribute("emp_name");
+	String emp_id = (String)session.getAttribute("emp_id");
+	String emp_deptno = (String)session.getAttribute("emp_dept");
 	if(emp_name==null){
-		emp_name = "이순신";
+		emp_name = "dzuza";//hjdlp
 	}
+	if(emp_id==null){
+		emp_id = "77";//34
+	}
+	if(emp_deptno==null){
+		emp_deptno = "30";//20
+	}
+	
+	
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -20,7 +30,7 @@
     <link rel="stylesheet" href="<%=path.toString() %>common/vendor/css/bootstrap.min2.css?after">
     <link rel="stylesheet" href='<%=path.toString() %>common/vendor/css/select2.min.css' />
     <link rel="stylesheet" href='<%=path.toString() %>common/vendor/css/bootstrap-datetimepicker.min.css' />
-
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -60,13 +70,13 @@
                         <div class="col-lg-6">
                     <label for="calendar_view">분류</label>
                     <div class="input-group">
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="공통"
+                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="1"
                                 checked>공통</label>
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="부서"
+                        <label class="checkbox-inline"><input class='filter' id = "emp_dept" type="checkbox" value="<%=emp_deptno%>"
                                 checked>부서</label>
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="프로젝트"
+                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="2"
                                 checked>프로젝트</label>
-                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="개인"
+                        <label class="checkbox-inline"><input class='filter' type="checkbox" value="3"
                                 checked>개인</label>
                     </div>
                 </div>
@@ -130,12 +140,12 @@
                             </div>
                         </div>
 
-                       <%--   <div class="row">
+                       <div class="row">
                             <div class="col-xs-12">
                                 <label class="col-xs-4" for="edit-username">사원명</label>
                                 <input class="inputModal" type="text" name="edit-username" id="edit-username"  value="<%=emp_name %>" disabled/>
                             </div>
-                        </div>  --%>
+                        </div>  
                         <div class="row">
                             <div class="col-xs-12">
                                 <label class="col-xs-4" for="edit-start">시작</label>
@@ -150,12 +160,28 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <label class="col-xs-4" for="edit-type">일정</label>
+                                <label class="col-xs-4" for="edit-type">분류</label>
                                 <select class="inputModal" type="text" name="edit-type" id="edit-type">
-                                    <option value="공통">공통</option>
-                                    <option value="부서">부서</option>
-                                    <option value="프로젝트">프로젝트</option>
-                                    <option value="개인">개인</option>
+                                    <option value="1">공통</option>
+                                    <option value="<%=emp_deptno%>">부서</option>
+                                    <option value="2">프로젝트</option>
+                                    <option value="3">개인</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-color">색상</label>
+                                <select class="inputModal" name="color" id="edit-color">
+                                    <option value="#D25565" style="color:#D25565;">빨간색</option>
+                                    <option value="#9775fa" style="color:#9775fa;">보라색</option>
+                                    <option value="#ffa94d" style="color:#ffa94d;">주황색</option>
+                                    <option value="#74c0fc" style="color:#74c0fc;">파란색</option>
+                                    <option value="#f06595" style="color:#f06595;">핑크색</option>
+                                    <option value="#63e6be" style="color:#63e6be;">연두색</option>
+                                    <option value="#a9e34b" style="color:#a9e34b;">초록색</option>
+                                    <option value="#4d638c" style="color:#4d638c;">남색</option>
+                                    <option value="#495057" style="color:#495057;">검정색</option>
                                 </select>
                             </div>
                         </div>

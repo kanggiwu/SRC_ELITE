@@ -38,7 +38,7 @@ var calendar = $('#calendar').fullCalendar({
   header                    : {
                                 left   : 'prevYear, today, nextYear',
                                 center : 'prev, title, next',
-                                right  : 'viewWeekends, listWeek'
+                                right  : 'viewWeekends, month, listWeek'
                               },
   views                     : {
                                 month : {
@@ -77,16 +77,17 @@ schedule_type: -1,
     element.popover({
       title: $('<div />', {
         class: 'popoverTitleCalendar',
-        text: event.title
+        text: "[제목] " + event.title
       }).css({
         'background': event.backgroundColor,
         'color': event.textColor
       }),
       content: $('<div />', {
           class: 'popoverInfoCalendar'
-        }).append('<p><strong>구분:</strong> ' + event.username + '</p>')
+        }).append('<p><strong>사원번호:</strong> ' + event.emp_no + '</p>')
+        .append('<p><strong>작성자:</strong> ' + event.username + '</p>')
         .append('<p><strong>시간:</strong> ' + getDisplayEventDate(event) + '</p>')
-        .append('<div class="popoverDescCalendar"><strong>설명:</strong> ' + event.description + '</div>'),
+        .append('<div class="popoverDescCalendar"><strong>내용:</strong> ' + event.description + '</div>'),
       delay: {
         show: "800",
         hide: "50"
@@ -97,37 +98,33 @@ schedule_type: -1,
       container: 'body'
     });
 
-    //return filtering(event);
-	return true;
+    return true;
   },
 
   /* ****************
    *  일정 받아옴 
    * ************** */
   events: function (start, end, timezone, callback) {
-    $.ajax({
+  	  $.ajax({
       type: "get",
       url: "../schedule/getCalendarSchedule.src1",
       data: {
         // 화면이 바뀌면 Date 객체인 start, end 가 들어옴
-       emp_no:1,
-       date:"2010-05",
-       schedule_type:3
+        startDate : moment(start).format('YYYY-MM-DD'),
+        endDate   : moment(end).format('YYYY-MM-DD'),
+       	schedule_type: 20
       },
       success: function (data) {
-      	alert("리턴이랑 데이터 받아오기 성공!"+data);
-/*      	var result = data;
+      	var result = data;
       	console.log(result);
       	var jsonDoc = JSON.parse(result);
       	console.log(jsonDoc.length);
       	for(var i = 0; i<jsonDoc.length; i++){
       		console.log(jsonDoc[i].SCHEDULE_TYPE+" ");
-      	}*/
-        var fixedDate = data.attendanceList.map(function (array) {
-      		alert("response.map 호출"+array.SCHEDULE_TYPE);
-      		alert("response.map 호출"+array.SCHEDULE_TITLE);
-			if (array.SCHEDULE_STARTDATE !== array.SCHEDULE_ENDDATE) {
-            array.SCHEDULE_ENDDATE = moment(array.SCHEDULE_ENDDATE).add(1, 'days'); // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
+      	}
+        var fixedDate = jsonDoc.map(function (array) {
+			if (array.start!== array.end) {
+            array.end = moment(array.end).add(1, 'days'); // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
           	
           }
           return array;
@@ -157,7 +154,7 @@ schedule_type: -1,
       type: "get",
       url: "",
       data: {
-        //id: event._id,
+        //id: event.id,
         //....
       },
       success: function (response) {
@@ -283,13 +280,12 @@ function filtering(event) {
   
   var show_type = true;
 
-  schedule_type = $('input:checkbox.filter:checked').map(function () {
-   alert(schedule_type);
+  var schedule_type = $('input:checkbox.filter:checked').map(function () {
+	  console.log($(this).val());
     return $(this).val();
   }).get();
-  
 
-  show_type = schedule_type.indexOf(event.schedule_type) >= 0;
+  show_type = schedule_type.indexOf(event.type) >= 0;
 
 
 
