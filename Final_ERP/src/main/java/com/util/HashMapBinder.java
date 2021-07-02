@@ -27,10 +27,10 @@ public class HashMapBinder {
 	public HashMapBinder(HttpServletRequest request) {
 		this.request = request;
 //		realFolder = "http:\\localhost:6001\\pds";
-		realFolder = "C:\\SRC_ELITE\\Final_ERP\\src\\main\\webapp\\pds";
-		myFolder = "/pds";
+// 		realFolder = "C:\\SRC_ELITE\\Final_ERP\\src\\main\\webapp\\pds";
 //		realFolder = "C:\\portfolio_kosmo\\lab_spring4\\spring4_1_1\\WebContent\\pds";
-//		realFolder = "C:\\bbigal_programing\\workspace_web\\SRC_ELITE\\Final_ERP\\src\\main\\webapp\\pds";
+		  realFolder = "C:\\bbigal_programing\\workspace_web\\SRC_ELITE\\Final_ERP\\src\\main\\webapp\\pds";
+		myFolder = "/pds";
 	}
 	public void bind(Map<String,Object> target) {
 		Enumeration en = request.getParameterNames();//배열 구조체 묶음
