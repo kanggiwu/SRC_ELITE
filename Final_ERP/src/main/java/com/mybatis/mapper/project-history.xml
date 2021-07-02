@@ -8,7 +8,9 @@
 	<!-- 프로젝트 리스트 조회 -->
 	<select id="getProjectHistoryList" parameterType="map" resultType="map">
     SELECT 
-           p.project_name
+           p.project_no
+        ,  e.emp_no
+        ,  p.project_name
         ,  SUBSTR (p.project_startline, 1, 10) ||'~'|| SUBSTR (p.project_deadline, 1, 10) AS project_period
         ,  e.emp_name
         ,  p.project_type
