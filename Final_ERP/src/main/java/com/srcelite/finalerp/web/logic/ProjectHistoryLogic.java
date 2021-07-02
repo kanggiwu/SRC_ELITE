@@ -38,15 +38,41 @@ public class ProjectHistoryLogic {
 		return detailProjectHistory;
 	}
 	
+	//프로젝트이력관리 인력 조회
+	//public Map<String,Object> getDetailProjectHistory(HttpServletRequest request, HttpServletResponse response)     
+	public List<Map<String,Object>> getProjectParticipation(Map<String, Object> pmap)     
+	{
+		logger.info("getProjectParticipation 호출 성공");
+		List<Map<String,Object>> projectParticipation = null;
+		projectParticipation = projectHistoryDao.getProjectParticipation(pmap);			
+		return projectParticipation;
+	}
+	
 	// 프로젝트이력관리  추가
 	//public void insertProjectHistory(HttpServletRequest request, HttpServletResponse response)                      {}
-	public int insertProjectHistory(Map<String, Object> pmap)             
+	public List<Map<String,Object>> insertProjectHistory(Map<String, Object> pmap)             
 	{
 		logger.info("insertProjectHistory 호출 성공");
 		int result = 0;
 		int bm_no = 0;
-		
-		return result;
+		return null;
+	}
+
+
+	public List<Map<String, Object>> getprojectNameList(Map<String, Object> pmap) {
+		logger.info("getprojectNameList 호출 성공");
+		//로딩시 프로젝트명 가져와서 콤보박스에 넣기
+		List<Map<String,Object>> projectNameList = null;
+		projectNameList = projectHistoryDao.getprojectNameList(pmap);			
+		return projectNameList;		
+	}
+
+
+	public List<Map<String, Object>> getEmpSearchList2(Map<String, Object> pmap) {
+		logger.info("getEmpSearchList2 호출 성공");
+		List<Map<String,Object>> empSearchList2 = null;
+		empSearchList2 = projectHistoryDao.getEmpSearchList2(pmap);			
+		return empSearchList2;	
 	}
 
 

@@ -7,6 +7,7 @@
 	List<Map<String,Object>> projectHistoryList = null;
 	projectHistoryList = (List<Map<String,Object>>)request.getAttribute("projectHistoryList");
 	int size = 0;
+	String pProjectNo = null;
 	if(projectHistoryList!=null){
 		size = projectHistoryList.size();
 	}
@@ -103,7 +104,7 @@ $setRows.submit();
   });
 </script>
 
-<title>프로젝트 이력조회</title>
+<title>프로젝트 이력 조회</title>
 </head>
 <body class="sb-nav-fixed">
 <nav id="topNav"></nav>
@@ -113,16 +114,12 @@ $setRows.submit();
 		<main id="input_div">
 			<div id="frame_div" style="border: 1px solid black;">
 				<div id="page_title" style="border-bottom: 2px solid gray; margin: 50px 30px;">
-				<h2>프로젝트 이력조회</h2></div>
+				<h2>프로젝트 이력 조회</h2></div>
 				<div id="page_contents" style="max-width: 1730px; margin: 10px 100px;">
 <!--
 ******************************************* 컨텐츠 들어갈내용 시작************************************************
 -->
-<script>
-    function openPopup(){
-        window.open("../myService/getDetailProjectHistory.jsp", "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
-    }
-</script>
+
 <!-- -----------------------------------검색부분---------------------------------- -->
 <form class="form-horizontal" role="form">
 <div class="form-inline form-group">
@@ -172,12 +169,14 @@ else{//조회 결과가 있을 때
 	for(int i=0;i<size;i++){
 		Map<String,Object> pmap = projectHistoryList.get(i);
 		if(i==size) break;
+		pProjectNo = pmap.get("PROJECT_NO").toString();
 %>    	
 			<!-- 
 			===============DB에서 데이터 가져와서 뿌려주기======================
 			 -->
-					<!-- <tr onclick="openPopup()"> -->
-					<tr onclick="location.href='getDetailProjectHistory.src1?project_no=<%=pmap.get("PROJECT_NO")%>'">
+				<tr onclick="openPopup()">
+					<%-- <tr onclick="location.href='getDetailProjectHistory.src1?project_no=<%=pmap.get("PROJECT_NO")%>'"> --%>
+					<%-- <tr onclick="location.href='getDetailProjectHistory.src1?project_no=<%=pProjectNo%>'"> --%>
 					<!--<td onclick="openPopup()">부트스트랩</td>  -->
 					<td><%=pmap.get("PROJECT_NAME").toString()%></td>
 					<td><%=pmap.get("PROJECT_PERIOD").toString()%></td>
@@ -210,7 +209,7 @@ else{//조회 결과가 있을 때
 		<hr/>
 	</div>
 	<div class="text-right">
-		<button type="button" class="btn btn-warning btn-lg" onclick="location.href='../myService/insertProjectHistory.jsp'">
+		<button type="button" class="btn btn-warning btn-lg" onclick="location.href='insertProjectHistory.src1'">
 			프로젝트 추가</button>	
 	</div>
 
@@ -225,7 +224,11 @@ else{//조회 결과가 있을 때
 	</div>
 </div>
 
-
+<script>
+    function openPopup(){
+        window.open("getDetailProjectHistory.src1?project_no=<%=pProjectNo%>", "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
+    }
+</script>
 <!-- 슬라이드바 사용할때 필요 -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <!-- 탑메뉴 사용 -->
