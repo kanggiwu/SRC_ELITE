@@ -5,18 +5,16 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 
-public class MainDao {
+public class MyPageDao {
 	SqlSessionTemplate sqlSessionTemplate = null;
-	Logger logger = Logger.getLogger(MainDao.class);
+	Logger logger = Logger.getLogger(MyPageDao.class);
 
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 	
-	public String login(Map<String,Object> pmap) {
-		logger.info("login 호출 성공 : "+pmap);
-		String emp_pw = sqlSessionTemplate.selectOne("getPassword", pmap);
-		return emp_pw;
+	public void login() {
+		
 	}
 	public void logout() {
 		

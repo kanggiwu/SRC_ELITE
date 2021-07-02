@@ -41,6 +41,10 @@
 	<bean id="main-dao" class="com.srcelite.finalerp.web.dao.MainDao">
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
+				<!-- 마이 페이지 내 정보 조회, 내 급여 조회 추가 -->	
+	<bean id="my-page-dao" class="com.srcelite.finalerp.web.dao.MyPageDao">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
 
 	<bean id="notice-dao" class="com.srcelite.finalerp.web.dao.NoticeDao" >
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
