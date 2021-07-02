@@ -25,16 +25,12 @@ String emp_account = null;
 String emp_picture_path = null;
 String licence_no = null;
 String licence_name = null;
-String licence_type = null;
-String licence_level = null;
-String licence_date = null;
-String licence_expire = null;
+String licence_incentive = null;
 if (boardDetail != null) {
 	Map<String, Object> rmap = boardDetail.get(0);
 	emp_no = rmap.get("EMP_NO").toString();
 	emp_name = rmap.get("EMP_NAME").toString();
-	//          emp_year = rmap.get("EMP_YEAR").toString();
-	emp_year = "";
+	emp_year = rmap.get("EMP_YEAR").toString();
 	dept_name = rmap.get("DEPT_NAME").toString();
 	team_name = rmap.get("TEAM_NAME").toString();
 	rank_name = rmap.get("RANK_NAME").toString();
@@ -102,6 +98,9 @@ case "휴직": emp_status_no = 1;
 case "퇴직": emp_status_no = 2; 
 			break;
 }
+
+List<Map<String, Object>> insertLicenceList = null;
+
 %>
 <!DOCTYPE html>
 <html>
@@ -126,38 +125,23 @@ case "퇴직": emp_status_no = 2;
 <script>
 	//자격증 로우 추가
 	function add_row() {
-		console
-				.log("1" + document.getElementById('AddLicenseRow1').value
-						+ "1");
+		console.log(document.getElementById('AddLicenseRow1').value);
 		console.log(document.getElementById('AddLicenseRow2').value);
 		console.log(document.getElementById('AddLicenseRow3').value);
-		console.log(document.getElementById('AddLicenseRow4').value);
-		console.log(document.getElementById('AddLicenseRow5').value);
-		console.log(document.getElementById('AddLicenseRow6').value);
-		if (document.getElementById('AddLicenseRow1').value !== null
-				|| document.getElementById('AddLicenseRow2').value !== null
-				|| document.getElementById('AddLicenseRow3').value !== null
-				|| document.getElementById('AddLicenseRow4').value !== null
-				|| document.getElementById('AddLicenseRow5').value !== null
-				|| document.getElementById('AddLicenseRow6').value !== null) {
 			var my_tbody = document.getElementById('licence-tbody');
 			// var row = my_tbody.insertRow(0); // 상단에 추가
 			var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
 			var cell1 = row.insertCell(0);
 			var cell2 = row.insertCell(1);
 			var cell3 = row.insertCell(2);
-			var cell4 = row.insertCell(3);
-			var cell5 = row.insertCell(4);
-			var cell6 = row.insertCell(5);
 			cell1.innerHTML = document.getElementById('AddLicenseRow1').value;
 			cell2.innerHTML = document.getElementById('AddLicenseRow2').value;
 			cell3.innerHTML = document.getElementById('AddLicenseRow3').value;
-			cell4.innerHTML = document.getElementById('AddLicenseRow4').value;
-			cell5.innerHTML = document.getElementById('AddLicenseRow5').value;
-			cell6.innerHTML = document.getElementById('AddLicenseRow6').value;
-		} else {
-			alert("X");
-		}
+			const map1 = new Map();
+			map1.set('bar', document.getElementById('AddLicenseRow1').value);
+
+			console.log(map1.get('bar'));
+
 	}
 	function delete_row() {
 		var my_tbody = document.getElementById('licence-tbody');
@@ -221,7 +205,7 @@ case "퇴직": emp_status_no = 2;
 		  title: '수정 되었습니다!',
 		  confirmButtonColor: '#17a2b8'})
 		$('#employee_update').submit();
-		// location.href = 'getEmployeeList.src1'
+		
 	}
 </script>
 <title>HR - ERP PROGRAM</title>
@@ -404,32 +388,23 @@ case "퇴직": emp_status_no = 2;
 											data-url="./member.json">
 											<thead>
 												<tr>
-													<th colspan="6">보유 자격증</th>
+													<th colspan="3">보유 자격증</th>
 												</tr>
 												<tr>
 													<th>번호</th>
 													<th>이름</th>
-													<th>분류</th>
-													<th>레벨</th>
-													<th>취득일</th>
-													<th>만기일</th>
+													<th>수당</th>
 												</tr>
 											</thead>
 											<tbody id="licence-tbody">
-												<tr>
+<!-- 												<tr>
 													<td><input type="text" name="licence_no"
 														id="AddLicenseRow1" class="form-control" /></td>
 													<td><input type="text" name="licence_name"
 														id="AddLicenseRow2" class="form-control" /></td>
 													<td><input type="text" name="licence_type"
 														id="AddLicenseRow3" class="form-control" /></td>
-													<td><input type="text" name="licence_level"
-														id="AddLicenseRow4" class="form-control" /></td>
-													<td><input type="text" name="licence_date"
-														id="AddLicenseRow5" class="form-control" /></td>
-													<td><input type="text" name="licence_expire"
-														id="AddLicenseRow6" class="form-control" /></td>
-												</tr>
+												</tr> -->
 												<%
 												if (licenceList != null) {
 													size = licenceList.size();
@@ -440,20 +415,16 @@ case "퇴직": emp_status_no = 2;
 													Map<String, Object> lmap = licenceList.get(i);
 													licence_no = lmap.get("LICENCE_NO").toString();
 													licence_name = lmap.get("LICENCE_NAME").toString();
-													/*            licence_type = lmap.get("LICENCE_TYPE").toString();		
-													            licence_level = lmap.get("LICENCE_LEVEL").toString();		
-													            licence_date = lmap.get("LICENCE_DATE").toString();		
-													            licence_expire = lmap.get("LICENCE_EXPIRE").toString();	 */
+													licence_incentive = lmap.get("LICENCE_INCENTIVE").toString();		
+
 												%>
 												<tr>
 													<td><input type="text" value="<%=licence_no%>"
 														class="form-control" disabled /></td>
 													<td><input type="text" value="<%=licence_name%>"
 														class="form-control" disabled /></td>
-													<td><input type="text" class="form-control" disabled /></td>
-													<td><input type="text" class="form-control" disabled /></td>
-													<td><input type="text" class="form-control" disabled /></td>
-													<td><input type="text" class="form-control" disabled /></td>
+													<td><input type="text" value="<%=licence_incentive%>"
+														class="form-control" disabled /></td>
 												</tr>
 												<%
 												}

@@ -6,6 +6,10 @@
 	 <bean id="main-logic" class="com.srcelite.finalerp.web.logic.MainLogic">
 		<property name="mainDao" ref="main-dao"></property>
 	</bean> 
+	
+	 <bean id="my-page-logic" class="com.srcelite.finalerp.web.logic.MyPageLogic">
+		<property name="myPageDao" ref="my-page-dao"></property>
+	</bean> 
 
 	<bean id="notice-logic" class="com.srcelite.finalerp.web.logic.NoticeLogic" >
 		<property name="noticeDao" ref="notice-dao"></property>

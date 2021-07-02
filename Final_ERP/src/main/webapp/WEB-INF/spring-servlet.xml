@@ -10,6 +10,11 @@
 		<property name="methodNameResolver" ref="erp-resolver"/>
 		<property name="mainLogic" ref="main-logic"/>
 	</bean>
+				<!-- 마이 페이지 내 정보 조회, 내 급여 조회 추가 -->
+	<bean id="my-page-controller" class="com.srcelite.finalerp.web.controller.MyPageController">
+		<property name="methodNameResolver" ref="erp-resolver"/>
+		<property name="myPageLogic" ref="my-page-logic"/>
+	</bean>
 	<bean id="notice-controller" class="com.srcelite.finalerp.web.controller.NoticeController">
 		<property name="methodNameResolver" ref="erp-resolver"/>
 		<property name="noticeLogic" ref="notice-logic"/>
@@ -47,6 +52,13 @@
 				<prop key="/main/login.src1">main-controller</prop>
 				<prop key="/main/logout.src1">main-controller</prop>
 				<prop key="/main/startWork.src1">main-controller</prop>
+				
+				<!-- 마이 페이지 내 정보 조회, 내 급여 조회 추가 -->
+				<prop key="/mypage/getMyInfo.src1">my-page-controller</prop>
+				<prop key="/mypage/updateMyInfo.src1">my-page-controller</prop>
+				<prop key="/mypage/getMonthSalary.src1">my-page-controller</prop>
+				<prop key="/mypage/getYearSalary.src1">my-page-controller</prop>
+				<prop key="/mypage/getRetirementPay.src1">my-page-controller</prop>
 
 				<prop key="/notice/getMainNoticeList.src1">notice-controller</prop>
 				<prop key="/notice/getAllNoticeList.src1">notice-controller</prop>
@@ -108,6 +120,13 @@
 				<prop key="/main/login.src1">login</prop>
 				<prop key="/main/logout.src1">logout</prop>
 				<prop key="/main/startWork.src1">startWork</prop>
+				
+				<!-- 마이 페이지 내 정보 조회, 내 급여 조회 추가 -->
+				<prop key="/mypage/getMyInfo.src1">getMyInfo</prop>
+				<prop key="/mypage/updateMyInfo.src1">updateMyInfo</prop>
+				<prop key="/mypage/getMonthSalary.src1">getMonthSalary</prop>
+				<prop key="/mypage/getYearSalary.src1">getYearSalary</prop>
+				<prop key="/mypage/getRetirementPay.src1">getRetirementPay</prop>
 
 				<prop key="/notice/getMainNoticeList.src1">getMainNoticeList</prop>
 				<prop key="/notice/getAllNoticeList.src1">getAllNoticeList</prop>

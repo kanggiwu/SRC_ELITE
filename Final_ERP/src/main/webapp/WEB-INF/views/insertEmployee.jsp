@@ -205,7 +205,7 @@ out.print(path);
 														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">비밀번호</span> <input
 															type="text" name="emp_pw" class="form-control"
-															aria-describedby="basic-addon1">
+															aria-describedby="basic-addon1" placeholder="휴대폰 뒷자리로 설정" readonly=>
 													</div>
 													<br>
 													<div class="input-group">

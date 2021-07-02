@@ -36,11 +36,11 @@
 	});
 
 	// 이미지 에러 시 미리보기영역 미노출
-	function imgAreaError(){
+/* 	function imgAreaError(){
 		$('#imgViewArea').css({ 'display' : 'none' });
-	}
+	} */
 	
-	$(document).ready(function(){
+/* 	$(document).ready(function(){
 		  $("#fileInput").on('change',function(){
 		    if(window.FileReader){
 		      var filename = $(this)[0].files[0].name;
@@ -52,7 +52,7 @@
 		    //추출한 파일명 삽입
 		    $("#userfile").val(filename);
 		  });
-		});	
+		});	 */
 </script>
 <title>HR - ERP PROGRAM</title>
 </head>

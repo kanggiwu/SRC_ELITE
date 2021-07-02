@@ -5,9 +5,9 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 
-public class MainDao {
+public class MyPageDao {
 	SqlSessionTemplate sqlSessionTemplate = null;
-	Logger logger = Logger.getLogger(MainDao.class);
+	Logger logger = Logger.getLogger(MyPageDao.class);
 
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
