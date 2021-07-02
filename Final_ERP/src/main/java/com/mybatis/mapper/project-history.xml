@@ -52,10 +52,18 @@
 	</select>
 	
 	<!-- 프로젝트 인원 리스트 조회 -->
-	<select id="getProjectParticipation" parameterType="int" resultType="map">
-		SELECT e.emp_name
+	<select id="getProjectParticipation" parameterType="map" resultType="map">
+		<!-- SELECT e.emp_name
   		  FROM emp e, project_emp pe, project p
-		 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = #{project_no}
+		 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = #{project_no} -->
+		 SELECT e.emp_name,
+		       e.DEPT_NO,
+		       E.TEAM_NO,
+		       E.RANK_NO
+		  FROM emp e, project_emp pe
+		 WHERE e.emp_no = pe.emp_no
+		       AND PE.PROJECT_NO = #{project_no}
+		       AND PE.PROJECT_MANAGER = 'N'
 	</select>
 	
 
@@ -92,6 +100,22 @@
 		INSERT INTO project_emp ( project_no, emp_no, project_manager) VALUES(#{project_no}, #{emp_no}, #{project_manager})
 	</insert>
 
+	<!-- 프로젝트 네임 리스트 (프로젝트 추가창) -->
+	<select id="getprojectNameList" parameterType="map" resultType="map">
+		select project_name 
+		from project
+		where project_register = 'N'
+	</select>
+	
+	<!-- 사원리스트를 부서명, 직위명, 사원이름으로 조건검색하여 프로시저 출력 -->
+	<select id="getEmpListProc2" statementType="CALLABLE" parameterType="map">
+		{call PROC_EMP_LIST(        
+          #{dept_name, mode=IN, jdbcType=VARCHAR},
+          #{rank_name, mode=IN, jdbcType=VARCHAR},
+          #{emp_name, mode=IN, jdbcType=VARCHAR},
+          #{e_cursor, mode=OUT, jdbcType=CURSOR, resultMap=empMap}
+       	)}
+	</select>    
 <!-- /////////////////////////////////////////////////////////////////////////////////////////////////// -->	
 	
 </mapper>
