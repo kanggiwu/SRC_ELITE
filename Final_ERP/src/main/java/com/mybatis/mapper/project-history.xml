@@ -8,14 +8,14 @@
 	<!-- 프로젝트 리스트 조회 -->
 	<select id="getProjectHistoryList" parameterType="map" resultType="map">
     SELECT 
-           pro.project_name
-        ,  SUBSTR (PRO.PROJECT_STARTLINE, 1, 10) ||'~'|| SUBSTR (PRO.PROJECT_DEADLINE, 1, 10) AS project_period
+           p.project_name
+        ,  SUBSTR (p.project_startline, 1, 10) ||'~'|| SUBSTR (p.project_deadline, 1, 10) AS project_period
         ,  e.emp_name
-        ,  pro.project_type
-      FROM project pro, project_emp pro_emp, emp e
-     WHERE pro.project_no = pro_emp.project_no
-       AND PRO_EMP.EMP_NO = e.emp_no
-       AND project_manager = 'Y'
+        ,  p.project_type
+      FROM project p, project_emp pe, emp e
+     WHERE p.project_no = pe.project_no
+       AND pe.emp_no = e.emp_no
+       AND pe.project_manager = 'Y'
 	</select>
 
 	<!-- 프로젝트 상세 조회 -->
