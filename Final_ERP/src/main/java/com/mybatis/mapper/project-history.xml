@@ -4,26 +4,57 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.mybatis.mapper.ProjectHistoryMapper">
 	<resultMap id = "rm_project" type="map"></resultMap>
+  
 	<!-- 프로젝트 리스트 조회 -->
 	<select id="getProjectHistoryList" parameterType="map" resultType="map">
-		<!--SELECT p.project_name, p.project_startline || ' ~ ' || p.project_deadline, e.emp_name, p.project_type   -->
-		SELECT p.project_name, p.project_startline, p.project_deadline, e.emp_name, p.project_type 
-		  FROM project p, project_emp pe, emp e
-		 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no
+    SELECT 
+           p.project_no
+        ,  e.emp_no
+        ,  p.project_name
+        ,  SUBSTR (p.project_startline, 1, 10) ||'~'|| SUBSTR (p.project_deadline, 1, 10) AS project_period
+        ,  e.emp_name
+        ,  p.project_type
+      FROM project p, project_emp pe, emp e
+     WHERE p.project_no = pe.project_no
+       AND pe.emp_no = e.emp_no
+       AND pe.project_manager = 'Y'
 	</select>
 
 	<!-- 프로젝트 상세 조회 -->
 	<select id="getDetailProject" parameterType="int" resultType="map">
-		SELECT p.project_name, p.project_client, e.emp_name, p.project_tech, p.project_startline, p.project_deadline, p.project_profit, p.project_type, p.project_content
-		  FROM project p, project_emp pe, emp e
-		 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = #{project_no}
+		SELECT 
+           pro.project_no
+        ,  pro.project_name
+        ,  SUBSTR (PRO.PROJECT_STARTLINE, 1, 10) || '~' || SUBSTR (PRO.PROJECT_DEADLINE, 1, 10) AS project_period
+        ,  pro.project_client
+        ,  pro.project_profit
+        ,  e.emp_name
+        ,  pro.project_type
+        ,  pro.project_tech
+        ,  pro.project_content
+        ,  e.emp_no
+        ,  pro_emp.project_manager
+      FROM project pro, project_emp pro_emp, emp e
+     WHERE pro.project_no = pro_emp.project_no
+       AND PRO_EMP.EMP_NO = e.emp_no
+       AND pro_emp.project_manager = 'Y'
+       AND pro.project_register = 'Y'
+       AND pro.project_no = #{project_no}
 	</select>
 	
 	<!-- 프로젝트 인원 리스트 조회 -->
-	<select id="getProjectParticipation" parameterType="int" resultType="map">
-		SELECT e.emp_name
+	<select id="getProjectParticipation" parameterType="map" resultType="map">
+		<!-- SELECT e.emp_name
   		  FROM emp e, project_emp pe, project p
-		 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = #{project_no}
+		 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = #{project_no} -->
+		 SELECT e.emp_name,
+		       e.DEPT_NO,
+		       E.TEAM_NO,
+		       E.RANK_NO
+		  FROM emp e, project_emp pe
+		 WHERE e.emp_no = pe.emp_no
+		       AND PE.PROJECT_NO = #{project_no}
+		       AND PE.PROJECT_MANAGER = 'N'
 	</select>
 	
 
@@ -34,18 +65,15 @@
 
 
 	<select id="updateProjectInfo" parameterType="map" statementType="CALLABLE" resultType = "map">
-
-		{call 
-				prc_array_test(
+		{ call prc_array_test(
 							#{project_no,mode=IN,jdbcType=NUMERIC} 
-                             ,#{project_profit,mode=IN,jdbcType=NUMERIC}
-                             ,#{project_client,mode=IN,jdbcType=VARCHAR}
-                             ,#{project_type,mode=IN,jdbcType=VARCHAR}
-                             ,#{project_content,mode=IN,jdbcType=VARCHAR}
-                             ,#{project_tech,mode=IN,jdbcType=VARCHAR}
-                             ,#{emp_no,mode=IN,jdbcType=NUMERIC}
-                             ,#{arr_peno,mode=IN,jdbcType=ARRAY}
-                             )
+             ,#{project_profit,mode=IN,jdbcType=NUMERIC}
+             ,#{project_client,mode=IN,jdbcType=VARCHAR}
+             ,#{project_type,mode=IN,jdbcType=VARCHAR}
+             ,#{project_content,mode=IN,jdbcType=VARCHAR}
+             ,#{project_tech,mode=IN,jdbcType=VARCHAR}
+             ,#{emp_no,mode=IN,jdbcType=NUMERIC}
+             ,#{arr_peno,mode=IN,jdbcType=ARRAY} )
 		}
 	</select>  
 
@@ -60,6 +88,22 @@
 		INSERT INTO project_emp ( project_no, emp_no, project_manager) VALUES(#{project_no}, #{emp_no}, #{project_manager})
 	</insert>
 
+	<!-- 프로젝트 네임 리스트 (프로젝트 추가창) -->
+	<select id="getprojectNameList" parameterType="map" resultType="map">
+		select project_name 
+		from project
+		where project_register = 'N'
+	</select>
+	
+	<!-- 사원리스트를 부서명, 직위명, 사원이름으로 조건검색하여 프로시저 출력 -->
+	<select id="getEmpListProc2" statementType="CALLABLE" parameterType="map">
+		{call PROC_EMP_LIST(        
+          #{dept_name, mode=IN, jdbcType=VARCHAR},
+          #{rank_name, mode=IN, jdbcType=VARCHAR},
+          #{emp_name, mode=IN, jdbcType=VARCHAR},
+          #{e_cursor, mode=OUT, jdbcType=CURSOR, resultMap=empMap}
+       	)}
+	</select>    
 <!-- /////////////////////////////////////////////////////////////////////////////////////////////////// -->	
 	
 </mapper>

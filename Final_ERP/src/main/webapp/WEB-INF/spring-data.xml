@@ -27,10 +27,14 @@
 	SqlSessionFactory를 만들어야한다.  -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="WEB-INF/mybatis-config.xml"/>
-		<property name="dataSource" ref="data-source-target"/>		
+		<property name="dataSource" ref="data-source-target"/>
 	</bean>
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory"/>
+	</bean>
+	<!-- transaction처리를 위한 transactionManager Bean 등록 -->	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+  		<property name="dataSource" ref="data-source-target" />
 	</bean>
 	
 	

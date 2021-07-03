@@ -1,5 +1,6 @@
 package com.srcelite.finalerp.web.dao;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -7,7 +8,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.dao.DataAccessException;
-
+  
 public class NoticeDao {
 	Logger logger = Logger.getLogger(NoticeDao.class);
 
@@ -15,51 +16,77 @@ public class NoticeDao {
 
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
+//	공지조회 페이지
 	}
-
-
+	
 	public List<Map<String, Object>> getAllNoticeList(Map<String, Object> pmap) {
 		logger.info("NoticeDao == getAllNoticeList == 호출");
 
 		List<Map<String, Object>> noticeAllList = null;
 		noticeAllList = sqlSessionTemplate.selectList("getNoticeList",pmap);
 		return noticeAllList;
-	}
-
-	public int insertNotice(Map<String, Object> pmap) throws DataAccessException{
-	
-		int result = 0;
-		result = 1;
-		sqlSessionTemplate.insert("noticeInsert",pmap);
-		return result;
-	}
-	public void bmStepUpdate(Map<String, Object> pmap) {
-	
-		sqlSessionTemplate.update("bmStepUpdate",pmap);		
-	}
-	public void hitCount(int bm_no) {
 		
-		sqlSessionTemplate.update("hitCount",bm_no);		
-	}
-	public int getBmGroup() {
-		int result = 0;
-		result = sqlSessionTemplate.selectOne("getBmGroup");		
-		return result;
-	}
-	public int getBmNo() {
-		int result = 0;
-		result = sqlSessionTemplate.selectOne("getBmNo");		
-		return result;
-	}
-	public int updateNotice(Map<String, Object> pmap) {
-		int result = 0;
-		result = sqlSessionTemplate.update("noitceUpdate",pmap);	
-		return result;
-	}
-	public int deleteNotice(Map<String, Object> pmap) {
-				int result = 0;
-				result = sqlSessionTemplate.delete("noticeDelete",pmap);
-		return result;	
-	}
+//	공지 검색기능
+		
+		}
+	public List<Map<String, Object>> searchNotice(Map<String, Object> pmap) {
+		logger.info("NoticeDao == searchNotice == 호출");
 
+		List<Map<String, Object>> searchNotice = null;
+		searchNotice = sqlSessionTemplate.selectList("getNoticeList",pmap);
+		return searchNotice;
+		
+//	공지 상세조회
+	}
+	public List<Map<String, Object>> getDetailNotice(Map<String, Object> pmap) {
+		logger.info("NoticeDao == getDetailNotice == 호출");
+		
+		List<Map<String, Object>> NoticeDetail = null;
+		NoticeDetail = sqlSessionTemplate.selectList("getNoticeList",pmap);
+		logger.info("NoticeDao == getDetailNotice == 호출:"+NoticeDetail);
+		
+		return NoticeDetail;
+//		공지추가 페이지
+	}
+	public List<Map<String, Object>> getNewNotice(Map<String, Object> pmap) {
+		logger.info("NoticeDao == getNewNotice == 호출");
+
+		List<Map<String, Object>> newNotice = null;
+		newNotice = sqlSessionTemplate.selectList("getNoticeList",pmap);
+		return newNotice;
+	}
+//	공지추가
+	public int insertNotice(Map<String, Object> pmap) {
+		logger.info("notice_no:"+pmap.get("notice_no"));
+		logger.info("notice_type:"+pmap.get("notice_type"));
+		logger.info("notice_tltle:"+pmap.get("notice_title"));
+		logger.info("notice_content:"+pmap.get("notice_content"));
+		int result=0;
+		sqlSessionTemplate.insert("insertNotice",pmap);
+		return result;
+	}
+//	공지 수정
+	public int updateNotice(Map<String, Object> pmap) {
+		logger.info("notice_no:"+pmap.get("notice_no"));
+		logger.info("notice_type:"+pmap.get("notice_type"));
+		logger.info("notice_tltle:"+pmap.get("notice_title"));
+		logger.info("notice_content:"+pmap.get("notice_content"));
+		int result = 0;
+		result = sqlSessionTemplate.update("updateNotice",pmap);
+		logger.info("result:"+result);
+		return result;
+	}
+//	공지삭제
+	public int deleteNotice(Map<String, Object> pmap) {
+		logger.info("notice_no:"+pmap.get("dnotice_no"));
+		int result = 0;
+		int inotice_no = 0;
+		inotice_no = Integer.parseInt(pmap.get("dnotice_no").toString());
+		logger.info("notice_no:"+inotice_no);
+		
+		result = sqlSessionTemplate.delete("deleteNotice",inotice_no);
+		//sqlSessionTemplate.commit();
+		logger.info("result:"+result);
+		return result;
+	}
 }

@@ -4,13 +4,27 @@
 <%
 	List<Map<String,Object>> attendanceList = null;
 	attendanceList = (List<Map<String,Object>>) request.getAttribute("attendanceList");
-	int size = 0;
+	int attendanceListSize = 0;
 	if (attendanceList != null && attendanceList.size() > 0) {
-		size = attendanceList.size();
-		out.print(size);
+		attendanceListSize = attendanceList.size();
+		out.print("attendanceListSize"+attendanceListSize);
 		out.print("<br>");
 		for (Map<String, Object> attendance : attendanceList) {
-			out.print(attendance.get("ATTENDANCE_CODE"));
+			out.print(attendance.get("ATTENDANCE_NO"));
+			out.print(attendance.get("ATTENDANCE_START_WORK"));
+			out.print("<br>");
+		}
+	}
+	
+	List<Map<String,Object>> scheduleList = null;
+	scheduleList = (List<Map<String,Object>>) request.getAttribute("scheduleList");
+	int scheduleListSize = 0;
+	if (scheduleList != null && scheduleList.size() > 0) {
+		scheduleListSize = scheduleList.size();
+		out.print(attendanceListSize);
+		out.print("<br>");
+		for (Map<String, Object> schedule : scheduleList) {
+			out.print(schedule.get("SCHEDULE_TITLE"));
 			out.print("<br>");
 		}
 	}

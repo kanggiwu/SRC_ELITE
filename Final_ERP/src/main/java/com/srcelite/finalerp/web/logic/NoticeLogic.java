@@ -23,14 +23,56 @@ public class NoticeLogic {
 		List<Map<String, Object>> noticeAllList = null;
 		noticeAllList = noticeDao.getAllNoticeList(pmap);
 		return noticeAllList;
+		
 	}
 	// 공지 상세조회
-	public List<Map<String,Object>> getDetailNotice(Map<String,Object> pmap)   	 {return null;}
-	// 공지 추가
-	public void insertNotice(Map<String,Object> pmap){}
-	// 공지 수정
-	public void updateNotice(Map<String,Object> pmap){}
-	// 공지 삭제
-	public void deleteNotice(Map<String,Object> pmap){}
+	public List<Map<String,Object>> getDetailNotice(Map<String,Object> pmap) {
+		logger.info("NoticeLogic ==  getDetailNotice == 호출");
+			
+		List<Map<String, Object>> NoticeDetail = null;
+		logger.info("notice_no:"+pmap.get("NOTICE_NO"));
+		int inotice_no = Integer.parseInt(String.valueOf(pmap.get("NOTICE_NO")));
+		pmap.put("NOTICE_NO", inotice_no);
+		NoticeDetail = noticeDao.getDetailNotice(pmap);
+		return NoticeDetail;
 	
+	}
+	// 공지 추가페이지
+	public List<Map<String,Object>> getNewNotice(Map<String,Object> pmap) {
+		logger.info("NoticeLogic ==  getNewNotice == 호출");
+		
+		List<Map<String, Object>> newNotice = null;
+		newNotice = noticeDao.getNewNotice(pmap);
+		return newNotice;
+		
+	}
+	// 공지 추가
+	public int insertNotice(Map<String,Object> pmap){
+		logger.info("insertNotice 호출 성공");
+		int result = 0;
+		noticeDao.insertNotice(pmap);
+		return result;
+		
+		}
+	// 공지 수정
+	public int updateNotice(Map<String,Object> pmap){
+	
+		logger.info("updateNotice 호출 성공");
+		int result = 0;
+		result = noticeDao.updateNotice(pmap);
+		return result;
+		
+	}
+	
+	// 공지 삭제
+	public int deleteNotice(Map<String,Object> pmap) {
+		
+		logger.info("deleteNotice 호출 성공");
+		int result = 0;
+		result = noticeDao.deleteNotice(pmap);
+		return result;
+	}////////////////////////////end of deleteNotice
 }
+	
+
+	

@@ -13,8 +13,10 @@ public class MainDao {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 	
-	public void login() {
-		
+	public String login(Map<String,Object> pmap) {
+		logger.info("login 호출 성공 : "+pmap);
+		String emp_pw = sqlSessionTemplate.selectOne("getPassword", pmap);
+		return emp_pw;
 	}
 	public void logout() {
 		
