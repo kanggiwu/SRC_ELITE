@@ -39,11 +39,14 @@ public class ScheduleDao {
 		return detailSchedule;
 	}
 
-	public int deleteSchedule(Map<String, Object> pMap) {
+	public int deleteSchedule(int schedule_no) {
 		int result = 0;
+		
+		result = sqlSessionTemplate.delete("deleteSchedule", schedule_no);
+		
 		logger.info("dao result: " + result);
 		
-		return 0;
+		return result;
 	}
 
 	public int insertSchedule(Map<String, Object> pMap) {
@@ -61,9 +64,9 @@ public class ScheduleDao {
 	}
 
 
-	public int getEmpDept(int emp_no) {
+	public int getEmpDept(int login_no) {
 		int dept_no = -1;
-		dept_no = sqlSessionTemplate.selectOne("getEmpDept",emp_no);
+		dept_no = sqlSessionTemplate.selectOne("getEmpDept",login_no);
 		
 		return dept_no;
 	}
@@ -75,15 +78,15 @@ public class ScheduleDao {
 		return empId;
 	}
 	//해당 사원의 직책을 받아온다.
-	public String getEmpJob(int emp_no) {
+	public String getEmpJob(int login_no) {
 		String emp_jop = null;
-		emp_jop = sqlSessionTemplate.selectOne("getEmpJob",emp_no);
+		emp_jop = sqlSessionTemplate.selectOne("getEmpJob",login_no);
 		return emp_jop;
 	}
 	//해당 사원의 직위를 받아온다.
-	public String getEmpRank(int emp_no) {
+	public String getEmpRank(int login_no) {
 		String emp_rank = null; 
-		emp_rank = sqlSessionTemplate.selectOne("getEmpRank",emp_no);
+		emp_rank = sqlSessionTemplate.selectOne("getEmpRank",login_no);
 		return emp_rank;
 	}
 

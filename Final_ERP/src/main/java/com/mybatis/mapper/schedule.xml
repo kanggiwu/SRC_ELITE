@@ -19,7 +19,7 @@
 	<select id="getAttendanceThisMonth" parameterType="int" resultType="map">
 		 SELECT attendance_no, emp_no, attendance_start_work
   		   FROM attendance
-		  WHERE emp_no = #{emp_no}
+		  WHERE emp_no = #{login_no}
     		AND attendance_start_work BETWEEN TRUNC(SYSDATE+1)-TO_CHAR(SYSDATE,'DD') AND TRUNC(LAST_DAY(SYSDATE))+0.99999421
 	</select>
 	
@@ -29,7 +29,7 @@
 	<select id="getAttendance" parameterType="map" resultType="map">
 		 SELECT attendance_no, emp_no, attendance_start_work
          FROM attendance
-         WHERE emp_no = #{emp_no}
+         WHERE emp_no = #{login_no}
          AND SUBSTR(attendance_start_work,1,7) = #{date}
 	</select>
 
@@ -44,12 +44,12 @@
         WHERE (SUBSTR(schedule_enddate,1,10) BETWEEN #{startDate} AND #{endDate}
         OR SUBSTR(schedule_enddate,1,10) BETWEEN #{startDate} AND #{endDate})
 		 <if test='schedule_type%10==0'>
-		 	AND schedule_type = (select dept_no from emp where emp_no =#{emp_no})
+		 	AND schedule_type = (select dept_no from emp where emp_no =#{login_no})
 		 </if>
 		 <if test='schedule_type==1'>
 		 	AND schedule_type =#{schedule_type}
 		 	<if test='schedule_type==3'>
-		 		and emp_no = #{emp_no}
+		 		and emp_no = #{login_no}
 		 	</if>
 		 </if>
 	</select>
@@ -61,7 +61,7 @@
 		 </selectKey>
 		INSERT INTO schedule (schedule_no, emp_no, schedule_type
 		, schedule_title, schedule_startdate, schedule_enddate, schedule_content)
-       	VALUES (#{schedule_no}, #{emp_no}, #{schedule_type}, #{schedule_title} , #{schedule_startdate}, #{schedule_enddate}, #{schedule_content})
+       	VALUES (#{schedule_no}, #{login_no}, #{schedule_type}, #{schedule_title} , #{schedule_startdate}, #{schedule_enddate}, #{schedule_content})
 	</insert>
 	
 <!-- ////////////////////////////////// 일정 수정 페이지/////////////////////////////////////////////////// -->
@@ -89,23 +89,23 @@
 
 		<!-- 일정 삭제 -->
 	<delete id="deleteSchedule" parameterType="int">
-		DELETE schedule WHERE schedule_no = #{id}
+		DELETE schedule WHERE schedule_no = #{schedule_no}
 	</delete> 
 	
 	<!-- 사원의 부서번호 받아오기 -->
 	<select id="getEmpDept" parameterType="int" resultType="int">
 		SELECT dept_no
 		FROM emp
-		WHERE emp_no=#{emp_no}
+		WHERE emp_no=#{login_no}
 	</select>
 	
 	<!-- 사원의 직책 받아오기 -->
 	<select id="getEmpJob" parameterType="int" resultType="String">
-		select emp_job from emp where emp_no = #{emp_no}
+		select emp_job from emp where emp_no = #{login_no}
 	</select>
 
 	<!-- 사원의 직위 가져오기 -->
 	<select id="getEmpRank" parameterType="int" resultType="String">
-		SELECT rank_name FROM RANK JOIN emp ON emp.rank_no = rank.rank_no and emp.emp_no=#{emp_no}
+		SELECT rank_name FROM RANK JOIN emp ON emp.rank_no = rank.rank_no and emp.emp_no=#{login_no}
 	</select>
 </mapper>

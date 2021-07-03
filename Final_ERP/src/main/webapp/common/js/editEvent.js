@@ -4,7 +4,9 @@
 var editEvent = function (event, element, view) {
 
     $('#deleteEvent').data('id', event.id); //클릭한 이벤트 ID
-
+    $('#deleteEvent').data('type', event.type); //클릭한 이벤트 TYPE
+    $('#deleteEvent').data('schedule_writer', event.emp_no); //클릭한 이벤트 TYPE
+	alert("게시글 작성자"+event.emp_no);
     $('.popover.fade.top').remove();
     $(element).popover("hide");
 
@@ -126,22 +128,29 @@ var editEvent = function (event, element, view) {
 };
 
 // 삭제버튼
-$('#deleteEvent').on('click', function (event) {
+$('#deleteEvent').on('click', function () {
     
     $('#deleteEvent').unbind();
     $("#calendar").fullCalendar('removeEvents', $(this).data('id'));
     eventModal.modal('hide');
-	alert("삭제2");
+	alert("삭제1");
+	var schedule_no = $(this).data('id');
+	var schedule_type = $(this).data('type');
+	var schedule_writer = $(this).data('schedule_writer');
+	alert(schedule_writer);
+	
     //삭제시
     $.ajax({
         type: "post",
         url: "/schedule/deleteSchedule.src1",
         data: {
-            schedule_no:event.id
+            schedule_no:schedule_no,
+            schedule_type:schedule_type,
+            schedule_writer:schedule_writer
         },
         success: function (response) {
         	if(response == 0){
-        		alert('일정삭제 실패.');
+        		alert('일정삭제 실패');
         	}else if(response == 3){
             		alert(ko_type+' 일정을 삭제할 권한이 없는 사원입니다.');
             }else{
