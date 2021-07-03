@@ -29,7 +29,7 @@
 <link href="../common/css/custom.css" rel="stylesheet" />
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 <script>
-  $(document).ready(function () {
+$(document).ready(function () {
     var $setRows = $('#setRows');
 
 $setRows.submit(function (e) {

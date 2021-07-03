@@ -79,7 +79,7 @@ public class HumanResourceController extends MultiActionController {
 		int result = 0;
 		result = humanResourceLogic.insertEmployee(pmap);
 		if(result == 1) {
-			res.sendRedirect("");
+			res.sendRedirect("getEmployeeList.src1");
 		}
 		else {
 			res.sendRedirect("등록실패 페이지 이동처리");
