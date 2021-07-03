@@ -78,7 +78,7 @@ let newEvent = function (start, end, eventType) {
 
         //새로운 일정 저장
         $.ajax({
-            type: "get",
+            type: "post",
             url: "/schedule/insertSchedule.src1",
             data: {
                 schedule_type: eventData.schedule_type,
@@ -88,9 +88,23 @@ let newEvent = function (start, end, eventType) {
                 schedule_content:eventData.schedule_content
             },
             success: function (response) {
-                //DB연동시 중복이벤트 방지를 위한
-                //$('#calendar').fullCalendar('removeEvents');
-                //$('#calendar').fullCalendar('refetchEvents');
+            	if(response == 0){
+            		alert('일정추가 실패');
+            	}else if(response == 3){
+            	    var ko_type = null;
+					if(event.type%10 === 0){
+						ko_type = '부서';
+					}else if(event.type === 1){
+						ko_type = '공통';
+					}else{
+						ko_type = '프로젝트';
+					}
+            		alert(ko_type+' 일정 추가 권한이 없는 사원입니다.');
+            	}else{
+            		alert('일정이 추가되었습니다.');
+            	}
+                $('#calendar').fullCalendar('removeEvents');
+                $('#calendar').fullCalendar('refetchEvents');
             }
         });
     });

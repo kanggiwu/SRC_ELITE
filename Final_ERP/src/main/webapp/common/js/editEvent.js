@@ -24,18 +24,18 @@ var editEvent = function (event, element, view) {
         editEnd.val(event.end.format('YYYY-MM-DD HH:mm'));
     }
     
-    var dept = null;
+    var ko_type = null;
     if (event.type === 3){
-    	dept = '개인';
+    	ko_type = '개인';
     }else if(event.type%10 === 0){
-    	dept = '부서';
+    	ko_type = '부서';
     }else if(event.type === 1){
-    	dept = '공통';
+    	ko_type = '공통';
     }else{
-    	dept = '프로젝트';
+    	ko_type = '프로젝트';
     }
 	console.log(event.type);
-	console.log(dept);
+	console.log(ko_type);
     
     modalTitle.html('일정 수정');
     editTitle.val(event.title);
@@ -96,7 +96,7 @@ var editEvent = function (event, element, view) {
 
         //일정 업데이트
         $.ajax({
-            type: "get"
+            type: "post"
             ,url: "/schedule/updateSchedule.src1"
             ,data: {
                 schedule_no:event.id,
@@ -106,11 +106,14 @@ var editEvent = function (event, element, view) {
             	schedule_startdate:event.start,
             	schedule_enddate:event.end,
             	schedule_type:event.type,
-            	allDay:event.allDay
+            	allDay:event.allDay,
+            	schedule_writer:event.emp_no
             },
             success: function (response) {
             	if(response == 0){
-            		alert('본인의 일정이 아닙니다.');
+            		alert('일정수정 실패');
+            	}else if(response == 3){
+            		alert(ko_type+' 일정을 수정할 권한이 없는 사원입니다.');
             	}else{
             		alert('수정되었습니다.');
             	}
@@ -123,23 +126,25 @@ var editEvent = function (event, element, view) {
 };
 
 // 삭제버튼
-$('#deleteEvent').on('click', function () {
+$('#deleteEvent').on('click', function (event) {
     
     $('#deleteEvent').unbind();
     $("#calendar").fullCalendar('removeEvents', $(this).data('id'));
     eventModal.modal('hide');
-
+	alert("삭제2");
     //삭제시
     $.ajax({
-        type: "get",
-        url: "/schedule/deleteSchedule.src1?cfr_no="+$(this).data('id'),
-//        data: {
-//            //...
-//        },
+        type: "post",
+        url: "/schedule/deleteSchedule.src1",
+        data: {
+            schedule_no:event.id
+        },
         success: function (response) {
         	if(response == 0){
-        		alert('본인의 일정이 아닙니다.');
-        	}else{
+        		alert('일정삭제 실패.');
+        	}else if(response == 3){
+            		alert(ko_type+' 일정을 삭제할 권한이 없는 사원입니다.');
+            }else{
         		alert('삭제되었습니다.');
         	}
             $('#calendar').fullCalendar('removeEvents');

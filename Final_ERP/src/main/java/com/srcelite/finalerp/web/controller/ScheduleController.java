@@ -38,6 +38,7 @@ public class ScheduleController extends MultiActionController {
 	 */
 	public ModelAndView getCalendarSchedule(HttpServletRequest request, HttpServletResponse response) {
 		HashMapBinder hmb = new HashMapBinder(request);
+		
 		Map<String, Object> pMap = new HashMap<>();
 		hmb.bind(pMap);
 		
@@ -46,8 +47,10 @@ public class ScheduleController extends MultiActionController {
 		 * session = request.getSession(true); String
 		 * emp_no=(String)session.getAttribute("emp_no");
 		 */
-		int emp_no = 77;
+		int emp_no = 30;
+		logger.info("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥로그인한 사원 번호: "+emp_no+"♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥");
 		pMap.put("emp_no", emp_no);
+		/* pMap.put("schedule_type", 3); */
 		// ?emp_no=#{emp_no}&schedule_type=[1,20,3]&date=#{yy/mm}
 
 		logger.info("쿼리스트링: " + pMap);
@@ -73,6 +76,7 @@ public class ScheduleController extends MultiActionController {
 
 	// 일정 추가
 	public void insertSchedule(HttpServletRequest request, HttpServletResponse response) throws  Exception {
+		logger.info("--------------------insertSchedule 메소드 호출 ");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pMap = new HashMap<>();
 		hmb.bind(pMap);
@@ -86,7 +90,7 @@ public class ScheduleController extends MultiActionController {
 		logger.info("쿼리스트링: " + pMap);
 		int result = 0;
 		result = scheduleLogic.insertSchedule(pMap);
-		logger.info("88888888888888888888888********************************************************8result: " + result);
+		logger.info("Controller result: " + result);
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/text");
 		try {
@@ -101,6 +105,7 @@ public class ScheduleController extends MultiActionController {
 
 	// 일정 수정
 	public void updateSchedule(HttpServletRequest request, HttpServletResponse response) {
+		logger.info("%%%%%%%%%%%%%%%%%%%%updateSchedule 메소드 호출 ");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pMap = new HashMap<>();
 		hmb.bind(pMap);
@@ -127,9 +132,25 @@ public class ScheduleController extends MultiActionController {
 
 	// 일정 삭제
 	public void deleteSchedule(HttpServletRequest request, HttpServletResponse response) {
+		logger.info("@*@*@*@*@*@*@*@*@*@*deleteSchedule 메소드 호출 ");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pMap = new HashMap<>();
 		hmb.bind(pMap);
 		logger.info("쿼리스트링: " + pMap);
+		int emp_no = 77;
+		
+		pMap.put("emp_no", emp_no);
+		logger.info("쿼리스트링: " + pMap);
+		int result = 0;
+		result = scheduleLogic.deleteSchedule(pMap);
+		logger.info("result: " +result);
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/text");
+		try {
+			PrintWriter writer= response.getWriter();
+			writer.print(result);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

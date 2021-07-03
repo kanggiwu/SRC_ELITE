@@ -112,7 +112,7 @@ schedule_type: -1,
         // 화면이 바뀌면 Date 객체인 start, end 가 들어옴
         startDate : moment(start).format('YYYY-MM-DD'),
         endDate   : moment(end).format('YYYY-MM-DD'),
-       	schedule_type: 20
+       	schedule_type: 2
       },
       success: function (data) {
       	var result = data;
