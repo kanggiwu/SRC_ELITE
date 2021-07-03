@@ -2,13 +2,13 @@
     pageEncoding="UTF-8"%>
 <%
 	String emp_name = (String)session.getAttribute("emp_name");
-	String emp_id = (String)session.getAttribute("emp_id");
+	String login_no = (String)session.getAttribute("login_no");
 	String emp_deptno = (String)session.getAttribute("emp_dept");
 	if(emp_name==null){
 		emp_name = "dzuza";//hjdlp
 	}
-	if(emp_id==null){
-		emp_id = "77";//34
+	if(login_no==null){
+		login_no = "77";//34
 	}
 	if(emp_deptno==null){
 		emp_deptno = "30";//20
@@ -224,8 +224,8 @@
     <script src="<%=path.toString() %>common/vendor/js/select2.min.js"></script>
     <script src="<%=path.toString() %>common/vendor/js/bootstrap-datetimepicker.min.js"></script>
     <script src="<%=path.toString() %>common/js/main.js"></script>
-    <script src="<%=path.toString() %>common/js/addEvent.js"></script>
-    <script src="<%=path.toString() %>common/js/editEvent.js"></script>
-    <script src="<%=path.toString() %>common/js/etcSetting.js"></script>
+    <script src="<%=path.toString() %>common/js/addEvent.js?ver=4"></script>
+    <script src="<%=path.toString() %>common/js/editEvent.js?ver=12"></script>
+    <script src="<%=path.toString() %>common/js/etcSetting.js?ver=3"></script>
 </body>
 </html>

@@ -38,16 +38,19 @@ public class ScheduleController extends MultiActionController {
 	 */
 	public ModelAndView getCalendarSchedule(HttpServletRequest request, HttpServletResponse response) {
 		HashMapBinder hmb = new HashMapBinder(request);
+		
 		Map<String, Object> pMap = new HashMap<>();
 		hmb.bind(pMap);
 		
 		//로그인 시 session에 사원번호(아이디)를 저장하고 그걸 불러온다.
 		/*
 		 * session = request.getSession(true); String
-		 * emp_no=(String)session.getAttribute("emp_no");
+		 * login_no=(String)session.getAttribute("login_no");
 		 */
-		int emp_no = 77;
-		pMap.put("emp_no", emp_no);
+		int login_no = 77;
+		logger.info("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥로그인한 사원 번호: "+login_no+"♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥");
+		pMap.put("login_no", login_no);
+		/* pMap.put("schedule_type", 3); */
 		// ?emp_no=#{emp_no}&schedule_type=[1,20,3]&date=#{yy/mm}
 
 		logger.info("쿼리스트링: " + pMap);
@@ -73,20 +76,21 @@ public class ScheduleController extends MultiActionController {
 
 	// 일정 추가
 	public void insertSchedule(HttpServletRequest request, HttpServletResponse response) throws  Exception {
+		logger.info("--------------------insertSchedule 메소드 호출 ");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pMap = new HashMap<>();
 		hmb.bind(pMap);
 		/* 로그인 시 session에 사원번호(아이디)를 저장하고 그걸 불러온다. 
 		 * session = request.getSession(true);
-		 * int emp_no=(int)session.getAttribute("emp_no");
+		 * int login_no=(int)session.getAttribute("login_no");
 		 */
-		int emp_no = 77;
+		int login_no = 77;
 		
-		pMap.put("emp_no", emp_no);
+		pMap.put("login_no", login_no);
 		logger.info("쿼리스트링: " + pMap);
 		int result = 0;
 		result = scheduleLogic.insertSchedule(pMap);
-		logger.info("88888888888888888888888********************************************************8result: " + result);
+		logger.info("Controller result: " + result);
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/text");
 		try {
@@ -101,16 +105,17 @@ public class ScheduleController extends MultiActionController {
 
 	// 일정 수정
 	public void updateSchedule(HttpServletRequest request, HttpServletResponse response) {
+		logger.info("%%%%%%%%%%%%%%%%%%%%updateSchedule 메소드 호출 ");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pMap = new HashMap<>();
 		hmb.bind(pMap);
 		/* 로그인 시 세션에 저장된 사원번호를 불러옴
 		 * session = request.getSession(true); 
-		 * int emp_no=(int)session.getAttribute("emp_no"); pMap.put("emp_no", emp_no);
+		 * int login_no=(int)session.getAttribute("login_no");
 		 */
-		int emp_no = 77;
+		int login_no = 77;
 		
-		pMap.put("emp_no", emp_no);
+		pMap.put("login_no", login_no);
 		logger.info("쿼리스트링: " + pMap);
 		int result = 0;
 		result = scheduleLogic.updateSchedule(pMap);
@@ -127,9 +132,32 @@ public class ScheduleController extends MultiActionController {
 
 	// 일정 삭제
 	public void deleteSchedule(HttpServletRequest request, HttpServletResponse response) {
+		logger.info("@*@*@*@*@*@*@*@*@*@*deleteSchedule 메소드 호출 ");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pMap = new HashMap<>();
 		hmb.bind(pMap);
 		logger.info("쿼리스트링: " + pMap);
+
+		/* 로그인 시 세션에 저장된 사원번호를 불러옴
+		 * session = request.getSession(true); 
+		 * int login_no=(int)session.getAttribute("login_no");
+		 */
+		
+		int login_no = 77;
+		
+		pMap.put("login_no", login_no);
+		logger.info("쿼리스트링: " + pMap);
+		int result = 0;
+		result = scheduleLogic.deleteSchedule(pMap);
+		logger.info("result: " +result);
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/text");
+		try {
+			logger.info("result값 출력하기");
+			PrintWriter writer= response.getWriter();
+			writer.print(result);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
