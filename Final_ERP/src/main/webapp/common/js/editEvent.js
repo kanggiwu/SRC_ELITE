@@ -128,12 +128,12 @@ var editEvent = function (event, element, view) {
 };
 
 // 삭제버튼
-$('#deleteEvent').on('click', function () {
+$(document).on('click','#deleteEvent', function () {
     
     $('#deleteEvent').unbind();
     
     eventModal.modal('hide');
-	alert("삭제");
+	alert("삭제11");
 	var schedule_no = $(this).data('id');
 	var schedule_type = $(this).data('type');
 	var schedule_writer = $(this).data('schedule_writer');
