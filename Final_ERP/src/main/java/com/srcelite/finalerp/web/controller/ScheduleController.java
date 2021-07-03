@@ -153,6 +153,7 @@ public class ScheduleController extends MultiActionController {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/text");
 		try {
+			logger.info("result값 출력하기");
 			PrintWriter writer= response.getWriter();
 			writer.print(result);
 		}catch(IOException e) {

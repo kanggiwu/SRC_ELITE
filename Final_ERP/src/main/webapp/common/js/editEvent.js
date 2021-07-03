@@ -131,9 +131,9 @@ var editEvent = function (event, element, view) {
 $('#deleteEvent').on('click', function () {
     
     $('#deleteEvent').unbind();
-    $("#calendar").fullCalendar('removeEvents', $(this).data('id'));
+    
     eventModal.modal('hide');
-	alert("삭제1");
+	alert("삭제");
 	var schedule_no = $(this).data('id');
 	var schedule_type = $(this).data('type');
 	var schedule_writer = $(this).data('schedule_writer');
@@ -150,11 +150,13 @@ $('#deleteEvent').on('click', function () {
         },
         success: function (response) {
         	if(response == 0){
-        		alert('일정삭제 실패');
+        		alert('일정삭제 실패.');
         	}else if(response == 3){
-            		alert(ko_type+' 일정을 삭제할 권한이 없는 사원입니다.');
+            	alert('일정을 삭제할 권한이 없는 사원입니다.');
+            		
             }else{
         		alert('삭제되었습니다.');
+        		$("#calendar").fullCalendar('removeEvents', $(this).data('id'));
         	}
             $('#calendar').fullCalendar('removeEvents');
             $('#calendar').fullCalendar('refetchEvents');
