@@ -129,6 +129,32 @@ public class ScheduleController extends MultiActionController {
 			e.printStackTrace();
 		}
 	}
+	// 일정 수정
+	public void updateDateSchedule(HttpServletRequest request, HttpServletResponse response) {
+		logger.info("%%%%%%%%%%%%%%%%%%%%updateSchedule 메소드 호출 ");
+		HashMapBinder hmb = new HashMapBinder(request);
+		Map<String, Object> pMap = new HashMap<>();
+		hmb.bind(pMap);
+		/* 로그인 시 세션에 저장된 사원번호를 불러옴
+		 * session = request.getSession(true); 
+		 * int login_no=(int)session.getAttribute("login_no");
+		 */
+		int login_no = 77;
+		
+		pMap.put("login_no", login_no);
+		logger.info("쿼리스트링: " + pMap);
+		int result = 0;
+		result = scheduleLogic.updateDateSchedule(pMap);
+		logger.info("result: " +result);
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/text");
+		try {
+			PrintWriter writer= response.getWriter();
+			writer.print(result);
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	// 일정 삭제
 	public void deleteSchedule(HttpServletRequest request, HttpServletResponse response) {

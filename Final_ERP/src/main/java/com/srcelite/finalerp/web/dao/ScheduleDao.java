@@ -62,6 +62,11 @@ public class ScheduleDao {
 		result = sqlSessionTemplate.update("updateSchedule",pMap);
 		return result;
 	}
+	public int updateDateSchedule(Map<String, Object> pMap) {
+		int result = 0;
+		result = sqlSessionTemplate.update("updateDateSchedule",pMap);
+		return result;
+	}
 
 
 	public int getEmpDept(int login_no) {
