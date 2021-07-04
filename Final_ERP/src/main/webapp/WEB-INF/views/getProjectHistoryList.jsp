@@ -5,6 +5,7 @@
 	StringBuilder path = new StringBuilder(request.getContextPath());
 	path.append("/");
 	List<Map<String,Object>> projectHistoryList = null;
+	List<Map<String,Object>> projectListProc = null;
 	projectHistoryList = (List<Map<String,Object>>)request.getAttribute("projectHistoryList");
 	int size = 0;
 	String pProjectNo = null;
@@ -12,6 +13,13 @@
 		size = projectHistoryList.size();
 	}
 	out.print("size:"+size);
+	projectListProc = (List<Map<String,Object>>)request.getAttribute("projectListProc");
+	int size2 = 0;
+	//String empSearch2 = null;
+	if(projectListProc!=null){
+		size2 = projectListProc.size();
+	}
+	out.print("size2:"+size2);
 %> 
 <!DOCTYPE html>
 <html>
@@ -29,82 +37,59 @@
 <link href="../common/css/custom.css" rel="stylesheet" />
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 
-<!--페이징 처리   =================================================================================-->
-<script>
-  $(document).ready(function () {
-    var $setRows = $('#setRows');
-  console.log("dd0");
-
-$setRows.submit(function (e) {
-  console.log("dd1");
-  e.preventDefault();
-  var rowPerPage = $('#rowPerPage').val() * 1;
-  // 1 을  곱하여 문자열을 숫자형로 변환
-  
-  
-  $('#nav').remove();
-  var $products = $('#products');
-  
-  
-  $products.after('<div id="nav">');
-    
-    
-    var $tr = $($products).find('tbody tr');
-    var rowTotals = $tr.length;
-    
-    var pageTotal = Math.ceil(rowTotals / rowPerPage);
-    var i = 0;
-    console.log("dd2");
-    
-    for (; i < pageTotal; i++) {
-      $('<a href="#"></a>')
-      .attr('rel', i)
-      .html(i + 1)
-      .appendTo('#nav');
-  }
-  $tr.addClass('off-screen')
-    .slice(0, rowPerPage)
-    .removeClass('off-screen');
-    
-    console.log("dd3");
-    var $pagingLink = $('#nav a');
-    $pagingLink.on('click', function (evt) {
-      evt.preventDefault();
-    var $this = $(this);
-    if ($this.hasClass('active')) {
-      return;
-    }
-    console.log("dd4");
-    $pagingLink.removeClass('active');
-    $this.addClass('active');
-    // 0 => 0(0*4), 4(0*4+4)
-    // 1 => 4(1*4), 8(1*4+4)
-    // 2 => 8(2*4), 12(2*4+4)
-    // 시작 행 = 페이지 번호 * 페이지당 행수
-    // 끝 행 = 시작 행 + 페이지당 행수
-    console.log("dd5");
-    
-    var currPage = $this.attr('rel');
-    var startItem = currPage * rowPerPage;
-    var endItem = startItem + rowPerPage;
-    $tr.css('opacity', '0.0')
-    .addClass('off-screen')
-    .slice(startItem, endItem)
-    .removeClass('off-screen')
-    .animate({ opacity: 1 }, 300);
-    console.log("5");
-  });
-  
-  console.log("dd6");
-  $pagingLink.filter(':first').addClass('active');
-  
-});
-
-$setRows.submit();
-  });
-</script>
-
 <title>프로젝트 이력 조회</title>
+<script>
+	function projectSearchAction(){
+		//let a ={"d":a,"d1":b};
+		//alert("여기")
+		//var deptTarget = document.getElementById("dept_options")
+		var typeTarget = $("#type_options option:selected").val();
+		var startTarget = $("#start_period").val();
+		var endTarget = $("#end_period").val();
+		var nameTarget = $("#txt_name").val();
+		//alert(companyTarget)
+		console.log("ddddd");
+     	$.ajax({
+  		  type:"post",
+  		  //type:"get"
+  		  data:{"project_type":typeTarget,"project_startline":startTarget
+  			  ,"project_deadline":endTarget,"project_name":nameTarget},
+  		  url: "/projecthistory/getProjectListProc.src1",
+  		  //data:{"dept":개발부} getparameter("dept")
+  		  dataType:"json",
+	          success:function(data){
+	        	  searchResult(data);
+	  	       },
+	          error:function(e){
+	        	  let x = e.responseXML;
+	        	  alert("fail ===> "+e)
+	          }
+  	}); 
+ 
+	}
+	
+function searchResult(data){
+	let a="";
+      //조회 결과가 없는 거야?
+      if(data.size==0){	
+    	  console.log("df");
+    	a+="        <td colspan='5'>조회결과가 없습니다.</td>";
+      }
+      else{//조회 결과가 있을 때
+      	for(let i=0;i<data.length;i++){
+      		console.log(data[i]['RANK_NAME']);
+      				a+="<tr>";
+       				a+="		<td>"+data[i]['PROJECT_NAME']+"</td>";
+      				a+="		<td>"+data[i]['PROJECT_PERIOD']+"</td>";
+      				a+="		<td>"+data[i]['EMP_NAME']+"</td>"; 
+      				a+="		<td>"+data[i]['PROJECT_TYPE']+"</td>";
+      				a+="</tr>";
+      	}///end of for
+      } ///end of if
+      document.querySelector(".aaaa").innerHTML = a;
+}
+
+</script>
 </head>
 <body class="sb-nav-fixed">
 <nav id="topNav"></nav>
@@ -123,22 +108,23 @@ $setRows.submit();
 <!-- -----------------------------------검색부분---------------------------------- -->
 <form class="form-horizontal" role="form">
 <div class="form-inline form-group">
-	<select class="form-control">
-		<option value="none">===종류===</option>
+	<select class="form-control" id="type_options">
+		<option value="===종류===">===종류===</option>
 		<option>SI</option>
 		<option>SM</option>
 	</select>
 	&nbsp;
 	<div class="form-group">
 		<div class="form-inline">
-			<input type="date" class="form-control" id="dat_period">&nbsp; ~ &nbsp;
-			<input type="date" class="form-control" id="dat_period">
+			<input type="date" class="form-control" id="start_period">&nbsp; ~ &nbsp;
+			<input type="date" class="form-control" id="end_period">
 		</div>
 	</div>
 	&nbsp;
-	<input type="text" class="form-control" id="txt_company">
+	<input type="text" class="form-control" id="txt_name">
 	&nbsp;
-	<button type="button" class="btn btn-info">검색</button>
+	<!-- <button type="button" class="btn btn-info" onclick="location.href='getProjectListProc.src1'">검색</button> -->
+	<a href="javascript:void(0)" onclick="projectSearchAction()" class="btn btn-info btn-sm">검색</a>
 	</div>
 <!-- -----------------------------------검색부분 끝----------------------------------- -->
 	<div class='row'>
@@ -155,7 +141,7 @@ $setRows.submit();
 				</tr>
 			</thead>
 
-			<tbody>
+			<tbody class="aaaa">
 <%
 //조회 결과가 없는 거야?
 if(size==0){		

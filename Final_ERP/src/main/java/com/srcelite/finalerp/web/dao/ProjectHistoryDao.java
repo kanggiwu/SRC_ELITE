@@ -43,5 +43,12 @@ public class ProjectHistoryDao {
 	    empSearchList2 = (List<Map<String, Object>>) pmap.get("e_cursor");
 	    return empSearchList2;
 	}
+	//프로젝트 이력 조회 검색
+	public List<Map<String, Object>> getProjectListProc(Map<String, Object> pmap) {
+		List<Map<String, Object>> projectListProc = null;
+	    sqlSessionTemplate.selectList("getProjectListProc",pmap);
+	    projectListProc = (List<Map<String, Object>>) pmap.get("e_cursor");
+	    return projectListProc;
+	}
 	
 }
