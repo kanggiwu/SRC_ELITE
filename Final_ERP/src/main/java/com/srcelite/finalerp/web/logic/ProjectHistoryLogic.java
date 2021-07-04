@@ -75,6 +75,14 @@ public class ProjectHistoryLogic {
 		return empSearchList2;	
 	}
 
+	//프로젝트 이력조회 검색
+	public List<Map<String, Object>> getProjectListProc(Map<String, Object> pmap) {
+		logger.info("getProjectListProc 호출 성공");
+		List<Map<String,Object>> projectListProc = null;
+		projectListProc = projectHistoryDao.getProjectListProc(pmap);			
+		return projectListProc;
+	}
+
 
 
 

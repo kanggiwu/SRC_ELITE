@@ -256,15 +256,15 @@ else{//조회 결과가 있을 때
 			</table>
 			</div>
 			<div class="col text-center">
-				<a href="javascript:void(0)" id="selectBtn" onclick="empAddAction()"  class="btn btn-info btn-sm">추가</a>
-				<!-- <a href="javascript:void(0)" onclick="empAddAction()" class="btn btn-info btn-sm">추가</a> -->
-				<!-- <button  type="button" class="btn btn-info btn-sm">추가</button> -->
-				<!-- <button type="button" class="btn btn-info btn-sm" id="selectBtn">선택</button> -->
-				<button  type="button" class="btn btn-info btn-sm">제거</button>
+				<!-- <a href="javascript:void(0)" id="selectBtn" onclick="empAddAction()"  class="btn btn-info btn-sm">추가</a> -->
+				<a href="javascript:void(0)" id="selectBtn" class="btn btn-info btn-sm">추가</a>
+<!-- 				<a href="javascript:void(0)" id="selectBtn" onclick="deleteBtn()"  class="btn btn-info btn-sm">제거</a> -->
+				<!-- <a href="javascript:void(1)" id="deleteBtn" class="btn btn-info btn-sm">제거</a> -->
+				 <button  type="button" class="btn btn-info btn-sm" onclick="deleteBtn()">제거</button>
 			</div>
 			<div>
 			<div style="overflow:scroll; width:100%; height:300px;">
-			<table class="table table-hover" >
+			<table class="table table-hover" id="sTable">
 				<thead>
 					<tr style="background-color:lightgray">						
 						<th style="width: 10%">선택</th>
@@ -274,9 +274,9 @@ else{//조회 결과가 있을 때
 						<th style="width: 20%">사원명</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody class="bbbb">
 				<!-- ==============위에서 선택된 데이터 가져와서 뿌려주기======================-->
-					<tr>						
+<!-- 					<tr>						
 						<td>
         					<input type="checkbox" class="styled" id="singleCheckbox1" value="option1" aria-label="Single checkbox One">
         				</td>
@@ -284,14 +284,14 @@ else{//조회 결과가 있을 때
 						<td>개발부</td>
 						<td>팀장</td>
 						<td>유재석</td>
-					</tr>
+					</tr> -->
 				<!-- ==============위에서 선택된 데이터 가져와서 뿌려주기 끝======================-->
 				</tbody>
 			</table>
 			</div>
 			<br>
 			<div class="text-right">
-				<button type="button" class="btn btn-warning btn-lg">프로젝트 추가</button>
+				<button type="button" class="btn btn-warning btn-lg" onclick="location.href='updateProjectHistory.src1'">프로젝트 추가</button>
 			</div>
 			</div>
 		</form>	
@@ -301,9 +301,9 @@ else{//조회 결과가 있을 때
 </div>
 <script>
 $("#selectBtn").click(function(){ 
-	alert("click");
+	//alert("click");
 	var rowData = new Array();
-	var tdArr = new Array();
+	let tdArr = new Array();
 	var checkbox = $("input[name=chkList]:checked");
 	
 	// 체크된 체크박스 값을 가져온다
@@ -321,23 +321,63 @@ $("#selectBtn").click(function(){
 		var EMP_NO = td.eq(1).text();
 		var DEPT_NAME = td.eq(2).text();
 		var RANK_NAME = td.eq(3).text();
-		var EMP_NAME = td.eq(4).text();
+		var EMP_NAME = td.eq(4).text(); 
+		/* alert(EMP_NO); */
+	/* 	var EmpInfo = function (EMP_NO,DEPT_NAME,RANK_NAME,EMP_NAME){
+		//var EmpInfo = function (td.eq(1).text(),td.eq(2).text(),td.eq(3).text(),td.eq(4).text()){
+			empNo = EMP_NO;
+			deptName = DEPT_NAME;
+			rankName = RANK_NAME;
+			empName = EMP_NAME;
+		}	 */	
 		
 		// 가져온 값을 배열에 담는다.
 		tdArr.push(EMP_NO);
 		tdArr.push(DEPT_NAME);
 		tdArr.push(RANK_NAME);
 		tdArr.push(EMP_NAME);
-		
-		//console.log("no : " + no);
-		//console.log("userid : " + userid);
-		//console.log("name : " + name);
-		//console.log("email : " + email);
+		result2(tdArr);	
+		tdArr = new Array();
 	});
 	
-	alert(rowData);	
-	alert(tdArr);	
 });
+function result2(data){
+	//alert("result2 호출성공")
+	let b="";
+	let size=0;
+      		b+="<tr>";
+      		b+="		<td>";
+      		b+="			<input type='checkbox' name='chkList2' class='styled' id='singleCheckbox1'  aria-label='Single checkbox One'>";
+      		b+="		</td>";
+      		//console.log(data[i]['RANK_NAME']);
+      		//size = $("input:checkbox[]").length;
+      		//alert(data.length);
+      		for(let i=0;i<data.length;i++){
+       			b+="		<td data-td_value='"+(i+1)+"'>"+data[i]+"</td>";
+			}
+      		/* b+="		<td>"+data[1]+"</td>";
+      		b+="		<td>"+data[2]+"</td>";
+      		b+="		<td>"+data[3]+"</td>";  */
+      		b+="</tr>"; 
+
+      document.querySelector(".bbbb").innerHTML += b;
+}
+</script>
+<script>
+/* $("#deleteBtn").click(function(){ 
+	alert("삭제버튼 클릭1");
+	
+} */
+function deleteBtn(){
+	alert("삭제버튼 클릭");
+	 $("input[name=chkList2]:checked").each(function(){
+         var td_value =$(this).val();
+         console.log(td_value);
+         var tr=$("td[data-td_value='"+td_value+"']");
+         td.remove();
+     });
+
+}
 </script>
 <!-- 슬라이드바 사용할때 필요 -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
