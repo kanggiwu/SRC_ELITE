@@ -20,49 +20,46 @@ out.print(path);
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous" ></script>
 <link href="../common/main.css" rel="stylesheet" />
 <link href="../common/css/custom.css" rel="stylesheet" />
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 <script>
+
+			 let myMap = new Map();
 	//자격증 로우 추가
 	function add_row() {
-		console
-				.log("1" + document.getElementById('AddLicenseRow1').value
-						+ "1");
-		console.log(document.getElementById('AddLicenseRow2').value);
-		console.log(document.getElementById('AddLicenseRow3').value);
-		console.log(document.getElementById('AddLicenseRow4').value);
-		console.log(document.getElementById('AddLicenseRow5').value);
-		console.log(document.getElementById('AddLicenseRow6').value);
-		if (document.getElementById('AddLicenseRow1').value !== null
-				|| document.getElementById('AddLicenseRow2').value !== null
-				|| document.getElementById('AddLicenseRow3').value !== null
-				|| document.getElementById('AddLicenseRow4').value !== null
-				|| document.getElementById('AddLicenseRow5').value !== null
-				|| document.getElementById('AddLicenseRow6').value !== null) {
-			var my_tbody = document.getElementById('licence-tbody');
-			// var row = my_tbody.insertRow(0); // 상단에 추가
-			var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
-			var cell1 = row.insertCell(0);
-			var cell2 = row.insertCell(1);
-			var cell3 = row.insertCell(2);
-			var cell4 = row.insertCell(3);
-			var cell5 = row.insertCell(4);
-			var cell6 = row.insertCell(5);
-			cell1.innerHTML = document.getElementById('AddLicenseRow1').value;
-			cell2.innerHTML = document.getElementById('AddLicenseRow2').value;
-			cell3.innerHTML = document.getElementById('AddLicenseRow3').value;
-			cell4.innerHTML = document.getElementById('AddLicenseRow4').value;
-			cell5.innerHTML = document.getElementById('AddLicenseRow5').value;
-			cell6.innerHTML = document.getElementById('AddLicenseRow6').value;
-		} else {
-			alert("X");
-		}
+			var a="";
+			let my_tbody = $('#licence-tbody');
+			var selected = $("#licence-select option:selected").val();
+				console.log(myMap.get(selected));
+  			if(myMap.get(selected) !== undefined || selected==="선택")
+				return; 
+			myMap.set(selected,selected) 
+			console.log(myMap.get(selected));
+			let selectedText = document.querySelector("#licence-select");
+			let licenceText = selectedText[selectedText.selectedIndex].text
+		    /* let test = $('.test1').attr('class');  */
+		   var a="";
+                a+="<tr id='licence_"+selected+"'>";
+                 a+="     <td><input name='licence_no' value='"+licenceText+"' type='hidden'/>"+licenceText+"</td>";
+                a+="</tr>";
+                document.querySelector("#licence-tbody").innerHTML += a;
+		
 	}
 	function delete_row() {
-		var my_tbody = document.getElementById('licence-tbody');
-		if (my_tbody.rows.length < 1)
+			var my_tbody = document.getElementById('licence-tbody');
+			var selected = $("#licence-select option:selected").val();
+			var lname = "#licence_"+selected;
+			if (my_tbody.rows.length < 1)
 			return;
+			console.log(lname);
+			$(lname).remove();
+			myMap.delete(selected); 
+		
 		// my_tbody.deleteRow(0); // 상단부터 삭제
-		my_tbody.deleteRow(my_tbody.rows.length - 1); // 하단부터 삭제
+/* 			var selected = $("#licence-select option:selected");
+			selected.parentNode.removeChild(selected); */
+		/* my_tbody.deleteRow(my_tbody.rows.length - 1); // 하단부터 삭제 */
+			
 	}
 
 
@@ -72,10 +69,11 @@ out.print(path);
 		const value = e.value;
 		console.log(value);
 		if (value != "20") {
-			document.getElementById('team_options').disabled = true;
+			$('#team_options').prop("disabled", true);
 			$("#team_options").val("").prop("selected", true);
 		} else {
-			document.getElementById('team_options').disabled = false;
+			
+			$('#team_options').prop("disabled", false);
 			$("#team_options").val("1").prop("selected", true);
 		}
 	}
@@ -102,14 +100,19 @@ out.print(path);
 	/* function imgAreaError(){
 	 $('#imgViewArea').css({ 'display' : 'none' });
 	 } */
+	 
+	 //사원 추가 이벤트
 	function empInsertAction() {
-		console.log("입력 액션 호출");
+		//추가 확인 모달창
 		Swal.fire({
-			  title: '추가 되었습니다!',
-			  confirmButtonColor: '#17a2b8'
-		})
-		$('#employee_insert').submit();
-		location.href = 'getEmployeeList.src1'
+			  title: '추가 하시겠습니까?',
+			  confirmButtonColor: '#17a2b8',
+			  confirmButtonText: '응 확인'
+			}).then((result) => {
+			  if (result.isConfirmed) {
+				$('#employee_insert').submit();
+			  }
+			})
 	}
 </script>
 <title>HR - ERP PROGRAM</title>
@@ -269,9 +272,31 @@ out.print(path);
 												</div>
 											</div>
 											</div>
-									</form>
-									<form id="licence_add" method="post"
-										enctype="multipart/form-data" action="updateEmployee.src1">
+											<div class="col-lg-12">
+													<div class="input-group">
+													<span class="input-group-addon" id="basic-addon1"
+															style="display: inline-block; width: 33%">
+													<h5>보유 자격증</h5>
+													</span>
+													<select	class="form-control"  id="licence-select">
+															<option selected disabled>선택</option>
+															<option value=1>정보처리산업기사</option>
+															<option value=2>정보처리기사</option>
+															<option value=3>정보보안산업기사</option>
+															<option value=4>정보보안기사</option>
+															<option value=5>리눅스마스터1급</option>
+															<option value=6>리눅스마스터2급</option>
+															<option value=7>데이터분석준전문가</option>
+															<option value=8>데이터분석가</option>
+															<option value=9>네트워크관리사2급</option>
+															<option value=10>네트워크관리사1급</option>
+															<option value=11>OCA</option>
+															<option value=12>OCM</option>
+														</select>
+														<button class="btn btn-light" type="button" onclick="add_row()">추가</button>
+														<button class="btn btn-light" type="button" onclick="delete_row()">삭제</button>
+													</div>													
+									
 										<table class="table table-bordered table-hover" id="testTable"
 											id="table" data-toggle="table" data-height="650"
 											data-search="true" data-show-columns="true"
@@ -279,43 +304,16 @@ out.print(path);
 											data-url="./member.json">
 											<thead>
 												<tr>
-													<th colspan="6">보유 자격증</th>
-												</tr>
-												<tr>
-													<th>번호</th>
-													<th>이름</th>
-													<th>분류</th>
-													<th>레벨</th>
-													<th>취득일</th>
-													<th>만기일</th>
+													<th><h6>이름</h6></th>
 												</tr>
 											</thead>
 											<tbody id="licence-tbody">
-												<tr>
-													<td><input type="text" name="licence_no"
-														id="AddLicenseRow1" class="form-control" /></td>
-													<td><input type="text" name="licence_name"
-														id="AddLicenseRow2" class="form-control" /></td>
-													<td><input type="text" name="licence_type"
-														id="AddLicenseRow3" class="form-control" /></td>
-													<td><input type="text" name="licence_level"
-														id="AddLicenseRow4" class="form-control" /></td>
-													<td><input type="text" name="licence_date"
-														id="AddLicenseRow5" class="form-control" /></td>
-													<td><input type="text" name="licence_expire"
-														id="AddLicenseRow6" class="form-control" /></td>
-												</tr>
 											</tbody>
-										</table>
+									</table>
+								</div>
 									</form>
-							</div>
-							<div style="text-align: right; padding: 5px;">
-								<button class="btn btn-light" onclick="add_row()">자격증
-									추가</button>
-								<button class="btn btn-light" onclick="delete_row()">자격증
-									삭제</button>
-							</div>
 							</fieldset>			
+							</div>
 				<!-- 컨텐츠 들어갈내용 끝   -->
      			</div>
 			</div>

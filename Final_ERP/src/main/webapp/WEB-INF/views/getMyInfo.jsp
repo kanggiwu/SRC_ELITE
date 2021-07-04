@@ -12,6 +12,7 @@ licenceList = (List<Map<String, Object>>) request.getAttribute("licenceList");
 int size = 0;
 String emp_no = null;
 String emp_name = null;
+String emp_pw = null;
 String emp_year = null;
 String dept_name = null;
 String team_name = null;
@@ -30,6 +31,7 @@ if (boardDetail != null) {
 	Map<String, Object> rmap = boardDetail.get(0);
 	emp_no = rmap.get("EMP_NO").toString();
 	emp_name = rmap.get("EMP_NAME").toString();
+	emp_pw = rmap.get("EMP_PW").toString();
 	emp_year = rmap.get("EMP_YEAR").toString();
 	dept_name = rmap.get("DEPT_NAME").toString();
 	team_name = rmap.get("TEAM_NAME").toString();
@@ -161,6 +163,7 @@ List<Map<String, Object>> insertLicenceList = null;
 		 document.getElementById('team_options').disabled = true;	  
 		 } */
 		document.getElementById('EmpUpdSubmit').style.display = ''
+		document.getElementById('InfoUpdCancel').style.display = ''
 
 	}
 
@@ -200,15 +203,15 @@ List<Map<String, Object>> insertLicenceList = null;
 	/* function imgAreaError(){
 	 $('#imgViewArea').css({ 'display' : 'none' });
 	 } */
-	function empUpdateAction() {
+	function infoUpdateAction() {
 		Swal.fire({
-		  title: '수정 되었습니다!',
+		  title: '변경 되었습니다!',
 		  confirmButtonColor: '#17a2b8'})
 		$('#employee_update').submit();
 		
 	}
 </script>
-<title>HR - ERP PROGRAM</title>
+<title>MYPAGE - ERP PROGRAM</title>
 </head>
 <body class="sb-nav-fixed">
 	<nav id="topNav"></nav>
@@ -227,17 +230,17 @@ List<Map<String, Object>> insertLicenceList = null;
 						<div class="container">
 							<div class="col">
 								<div style="text-align: right; padding: 5px;">
-									<button class="btn btn-warning" id="EmpUpdReady"
-										onclick="fieldsetDisable()">수정</button>
-									<button class="btn btn-warning" id="EmpUpdSubmit"
-										onclick="empUpdateAction();" style="display: none;">수정
+									<button class="btn btn-warning" id="InfoUpdReady"
+										onclick="fieldsetDisable()">내 정보 변경</button>
+									<button class="btn btn-warning" id="InfoUpdSubmit"
+										onclick="infoUpdateAction();" style="display: none;">변경
 										완료</button>
-									<button class="btn btn-danger"
-										onclick="location.href='getEmployeeList.src1'">취소</button>
+									<button class="btn btn-danger" id="InfoUpdCancel"
+										onclick="location.href='getMyInfo.src1'" style="display: none;" >취소</button>
 								</div>
 								<fieldset id='btn_fieldset' disabled>
-									<form id="employee_update" method="post"
-										enctype="multipart/form-data" action="updateEmployee.src1">
+									<form id="myInfo_update" method="post"
+										enctype="multipart/form-data" action="updateMyInfo.src1">
 										<div class="row">
 											<div class="col-lg-6">
 												<div id="imgViewArea" style="width: 100%; height: 250px;">
@@ -260,21 +263,21 @@ List<Map<String, Object>> insertLicenceList = null;
 													<div class="input-group">
 														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">이름</span> <input
-															type="text" name="emp_name" class="form-control"
+															type="text" class="form-control"
 															value="<%=emp_name%>" aria-describedby="basic-addon1">
 													</div>
 													<br>
 													<div class="input-group">
 														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">부서</span> <select
-															class="form-control" name="dept_no" id="dept_options"
+															class="form-control" id="dept_options"
 															onchange="handleOnChange(this)">
 															<option value=<%=dept_no%> hidden><%=dept_name%></option>
 															<option value=20>개발부</option>
 															<option value=30>인사부</option>
 															<option value=40>회계부</option>
 															<option value=10>임원</option>
-														</select> <select class="form-control" name="team_no"
+														</select> <select class="form-control"
 															id="team_options">
 															<option value=<%=team_no%> hidden><%=team_name%></option>
 															<option value=1>개발1팀</option>
@@ -310,9 +313,16 @@ List<Map<String, Object>> insertLicenceList = null;
 													<br>
 													<div class="input-group">
 														<span class="input-group-addon" id="basic-addon1"
+															style="display: inline-block; width: 25%">비밀번호</span> <input
+															type="text" name="emp_pw" class="form-control"
+															value="<%=emp_pw%>" aria-describedby="basic-addon1" readonly>
+													</div>
+													<br>
+													<div class="input-group">
+														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">사원번호</span> <input
-															type="text" name="emp_no" class="form-control"
-															value="<%=emp_no%>" aria-describedby="basic-addon1" readonly>
+															type="text" class="form-control" value="<%=emp_no%>"
+															aria-describedby="basic-addon1">
 													</div>
 													<br>
 													<div class="input-group">
@@ -325,15 +335,8 @@ List<Map<String, Object>> insertLicenceList = null;
 													<div class="input-group">
 														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">입사일자</span> <input
-															type="date" name="emp_hiredate" class="form-control"
-															value="<%=emp_hiredate%>" aria-describedby="basic-addon1">
-													</div>
-													<br>
-													<div class="input-group">
-														<span class="input-group-addon" id="basic-addon1"
-															style="display: inline-block; width: 25%">퇴사일자</span> <input
-															type="date" name="emp_retiredate" class="form-control"
-															value="<%=emp_retiredate%>"
+															type="date" class="form-control"
+															value="<%=emp_hiredate%>"
 															aria-describedby="basic-addon1">
 													</div>
 												</div>
@@ -372,7 +375,7 @@ List<Map<String, Object>> insertLicenceList = null;
 															style="display: inline-block; width: 25%">급여계좌</span> <input
 															type="text" class="form-control" placeholder="국민은행"
 															aria-describedby="basic-addon1" disabled> <input
-															type="text" name="emp_account" class="form-control"
+															type="text" class="form-control"
 															value="<%=emp_account%>" aria-describedby="basic-addon1">
 													</div>
 												</div>
@@ -380,31 +383,6 @@ List<Map<String, Object>> insertLicenceList = null;
 											</div>
 									</form>
 									<div class="col-lg-12">
-													<div class="input-group">
-													<span class="input-group-addon" id="basic-addon1"
-															style="display: inline-block; width: 33%">
-													<h5>보유 자격증</h5>
-													</span>
-													<select	class="form-control" name="licence_name" id="licence-select">
-															<option selected disabled>선택</option>
-															<option value=1>정보처리산업기사</option>
-															<option value=2>정보처리기사</option>
-															<option value=3>정보보안산업기사</option>
-															<option value=4>정보보안기사</option>
-															<option value=5>리눅스마스터1급</option>
-															<option value=6>리눅스마스터2급</option>
-															<option value=7>데이터분석준전문가</option>
-															<option value=8>데이터분석가</option>
-															<option value=9>네트워크관리사2급</option>
-															<option value=10>네트워크관리사1급</option>
-															<option value=11>OCA</option>
-															<option value=12>OCM</option>
-														</select>
-														<button class="btn btn-light" onclick="add_row()">추가</button>
-														<button class="btn btn-light" onclick="delete_row()">삭제</button>
-													</div>													
-									<form id="licence_add" method="post"
-										enctype="multipart/form-data" action="updateEmployee.src1">
 										<table class="table table-bordered table-hover" id="testTable"
 											id="table" data-toggle="table" data-height="650"
 											data-search="true" data-show-columns="true"
@@ -412,9 +390,7 @@ List<Map<String, Object>> insertLicenceList = null;
 											data-url="./member.json">
 											<thead>
 												<tr>
-													<th><h6>번호</h6></th>
 													<th><h6>이름</h6></th>
-													<th><h6>수당</h6></th>
 												</tr>
 											</thead>
 											<tbody id="licence-tbody">
@@ -426,15 +402,10 @@ List<Map<String, Object>> insertLicenceList = null;
 													if (i == size)
 														break;
 													Map<String, Object> lmap = licenceList.get(i);
-													licence_no = lmap.get("LICENCE_NO").toString();
-													licence_name = lmap.get("LICENCE_NAME").toString();
-													licence_incentive = lmap.get("LICENCE_INCENTIVE").toString();		
-
+													licence_name = lmap.get("LICENCE_NAME").toString();		
 												%>
-												<tr id='licence_<%=licence_no%>'>
-													<td value="<%=licence_no%>"><%=licence_no%></td>
+												<tr>
 													<td value="<%=licence_name%>"><%=licence_name%></td>
-													<td value="<%=licence_incentive%>"><%=licence_incentive%></td>
 												</tr>
 												<%
 												} ///end of for
@@ -443,7 +414,6 @@ List<Map<String, Object>> insertLicenceList = null;
 												%>											
 											</tbody>
 										</table>
-									</form>
 								</div>
 
 							</fieldset>

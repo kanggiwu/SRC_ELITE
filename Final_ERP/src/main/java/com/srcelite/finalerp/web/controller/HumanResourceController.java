@@ -73,16 +73,17 @@ public class HumanResourceController extends MultiActionController {
 	public void insertEmployee(HttpServletRequest req, HttpServletResponse res)
 			throws Exception
 	{
+		logger.info("insert 시작");
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
 		hmb.multiBind(pmap);
 		int result = 0;
-		result = humanResourceLogic.insertEmployee(pmap);
+		/* result = humanResourceLogic.insertEmployee(pmap); */
 		if(result == 1) {
 			res.sendRedirect("getEmployeeList.src1");
 		}
 		else {
-			res.sendRedirect("등록실패 페이지 이동처리");
+			res.sendRedirect("../index.jsp ");
 		}
 	}	
 	public ModelAndView getOrganizationChart(HttpServletRequest req, HttpServletResponse res)
