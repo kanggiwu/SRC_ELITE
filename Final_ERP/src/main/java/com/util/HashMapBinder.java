@@ -50,6 +50,13 @@ public class HashMapBinder {
 		}
 		Enumeration en = multi.getParameterNames();//배열 구조체 묶음
 		//<input type="text" name="mem_id"
+		if(multi.getParameterValues("licence_no") != null) {
+			String[] licences = multi.getParameterValues("licence_no");
+			logger.info("자격증이 있습니다. 개수는 = "+licences.length);
+			target.put("licences", licences);
+			String[] a = (String[]) target.get("licences");
+			logger.info(a[1]);
+		}
 		while(en.hasMoreElements()) {
 			String key = (String)en.nextElement();
 			logger.info("value:"+multi.getParameter(key));
