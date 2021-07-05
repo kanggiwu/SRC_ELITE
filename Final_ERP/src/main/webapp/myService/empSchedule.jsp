@@ -35,9 +35,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="<%=path.toString() %>common/css/main1.css">
-
+	
 </head>
-<body>
+<body id="body">
 <nav id="topNav"></nav>
 <div id="layoutSidenav">
    <div id="layoutSidenav_nav"></div>
@@ -225,7 +225,7 @@
     <script src="<%=path.toString() %>common/vendor/js/ko.js"></script>
     <script src="<%=path.toString() %>common/vendor/js/select2.min.js"></script>
     <script src="<%=path.toString() %>common/vendor/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="<%=path.toString() %>common/js/main.js?ver=2"></script>
+    <script src="<%=path.toString() %>common/js/main.js?ver=3"></script>
     <script src="<%=path.toString() %>common/js/addEvent.js?ver=4"></script>
     <script src="<%=path.toString() %>common/js/editEvent.js?ver=12"></script>
     <script src="<%=path.toString() %>common/js/etcSetting.js?ver=3"></script>

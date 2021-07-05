@@ -219,11 +219,25 @@ schedule_type: -1,
 	console.log("e.pageX: "+e.pageX+", e.pageY: "+e.pageY);
       $("#contextMenu")
         .addClass("contextOpened")
-        .css({
+     
+     if($(window).width() <991) {
+      $("#contextMenu").css({
           display: "block",
           left: e.pageX,
-          top: e.pageY
+          top: e.pageY-73
         });
+      }
+      else{
+        $("#contextMenu").css({
+          display: "block",
+          left: e.pageX-220,
+          top: e.pageY-73
+        });
+      
+      }
+      
+      
+      
       return false;
     });
 
