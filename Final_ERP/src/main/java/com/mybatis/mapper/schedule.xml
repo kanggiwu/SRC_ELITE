@@ -85,6 +85,13 @@
             
         WHERE  schedule_no = #{schedule_no}
     </update>
+	<!-- 일정 수정 -->
+	<update id="updateDateSchedule" parameterType="map">
+		UPDATE schedule
+        SET schedule_startdate = #{schedule_startdate},
+            schedule_enddate = #{schedule_enddate}
+        WHERE  schedule_no = #{schedule_no}
+    </update>
 <!-- /////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
 		<!-- 일정 삭제 -->
