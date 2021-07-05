@@ -1,5 +1,5 @@
 let eventModal = $('#eventModal');
-
+let editUserName = $('#edit-username');
 let modalTitle = $('.modal-title');
 let editAllDay = $('#edit-allDay');
 let editTitle = $('#edit-title');
@@ -8,6 +8,7 @@ let editEnd = $('#edit-end');
 let editType = $('#edit-type');
 let editColor = $('#edit-color');
 let editDesc = $('#edit-desc');
+let empDept = $('#emp_dept');
 
 let addBtnContainer = $('.modalBtnContainer-addEvent');
 let modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
@@ -43,7 +44,7 @@ let newEvent = function (start, end, eventType) {
             schedule_startdate: editStart.val(),
             schedule_enddate: editEnd.val(),
             schedule_content: editDesc.val(),
-            allDay: false
+            allDay: true
         };
         
 
@@ -54,6 +55,10 @@ let newEvent = function (start, end, eventType) {
 		
 		
         if (eventData.title === '') {
+            alert('일정명은 필수입니다.');
+            return false;
+        }
+        if (eventData.type === '') {
             alert('일정명은 필수입니다.');
             return false;
         }
@@ -77,7 +82,7 @@ let newEvent = function (start, end, eventType) {
 
         //새로운 일정 저장
         $.ajax({
-            type: "get",
+            type: "post",
             url: "/schedule/insertSchedule.src1",
             data: {
                 schedule_type: eventData.schedule_type,
@@ -87,9 +92,23 @@ let newEvent = function (start, end, eventType) {
                 schedule_content:eventData.schedule_content
             },
             success: function (response) {
-                //DB연동시 중복이벤트 방지를 위한
-                //$('#calendar').fullCalendar('removeEvents');
-                //$('#calendar').fullCalendar('refetchEvents');
+            	if(response == 0){
+            		alert('일정추가 실패');
+            	}else if(response == 3){
+            	    var ko_type = null;
+					if(event.type%10 === 0){
+						ko_type = '부서';
+					}else if(event.type === 1){
+						ko_type = '공통';
+					}else{
+						ko_type = '프로젝트';
+					}
+            		alert(ko_type+' 일정 추가 권한이 없는 사원입니다.');
+            	}else{
+            		alert('일정이 추가되었습니다.');
+            	}
+                $('#calendar').fullCalendar('removeEvents');
+                $('#calendar').fullCalendar('refetchEvents');
             }
         });
     });

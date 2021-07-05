@@ -40,7 +40,7 @@ out.print(path);
 		    /* let test = $('.test1').attr('class');  */
 		   var a="";
                 a+="<tr id='licence_"+selected+"'>";
-                 a+="     <td><input name='licence_no' value='"+licenceText+"' type='hidden'/>"+licenceText+"</td>";
+                 a+="     <td><input name='licence_no' value='"+selected+"' type='hidden'/>"+licenceText+"</td>";
                 a+="</tr>";
                 document.querySelector("#licence-tbody").innerHTML += a;
 		

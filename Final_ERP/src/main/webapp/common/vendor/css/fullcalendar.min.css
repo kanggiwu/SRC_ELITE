@@ -129,7 +129,8 @@
 }
 
 .fc-button-group {
-	display: inline-block
+	display: inline-block;
+	padding: 0 10px 0 0;
 }
 
 .fc .fc-button-group>* {

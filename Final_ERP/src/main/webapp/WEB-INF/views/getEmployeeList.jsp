@@ -153,20 +153,13 @@ $setRows.submit();
 	</div>     			
 
    <div>
-     <table class="table table-bordered table-hover" id="products" 
-              data-toggle="table"
-              data-height="650"
-              data-search="true"
-              data-show-columns="true"
-             data-method="post"
-              data-pagination="true"
-                  data-url="./member.json">
+     <table class="table table-bordered table-hover table-striped" id="products">
 
                   <form action="" id="setRows">
                     <input type="hidden" name="rowPerPage" value="10" id="rowPerPage">
                   </form>
     <thead>
-      <tr>
+      <tr class="thead-dark">
         <th>사원번호</th>
         <th>이름</th>
         <th>부서</th>

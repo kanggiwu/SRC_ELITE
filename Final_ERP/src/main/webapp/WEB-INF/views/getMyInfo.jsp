@@ -5,9 +5,9 @@
 StringBuilder path = new StringBuilder(request.getContextPath());
 path.append("/");
 out.print(path);
-List<Map<String, Object>> boardDetail = null;
+List<Map<String, Object>> infoList = null;
 List<Map<String, Object>> licenceList = null;
-boardDetail = (List<Map<String, Object>>) request.getAttribute("boardDetail");
+infoList = (List<Map<String, Object>>) request.getAttribute("infoList");
 licenceList = (List<Map<String, Object>>) request.getAttribute("licenceList");
 int size = 0;
 String emp_no = null;
@@ -18,7 +18,6 @@ String dept_name = null;
 String team_name = null;
 String rank_name = null;
 String emp_hiredate = null;
-String emp_retiredate = null;
 String emp_tel = null;
 String emp_email = null;
 String emp_status = null;
@@ -26,9 +25,8 @@ String emp_account = null;
 String emp_picture_path = null;
 String licence_no = null;
 String licence_name = null;
-String licence_incentive = null;
-if (boardDetail != null) {
-	Map<String, Object> rmap = boardDetail.get(0);
+if (infoList != null) {
+	Map<String, Object> rmap = infoList.get(0);
 	emp_no = rmap.get("EMP_NO").toString();
 	emp_name = rmap.get("EMP_NAME").toString();
 	emp_pw = rmap.get("EMP_PW").toString();
@@ -37,69 +35,17 @@ if (boardDetail != null) {
 	team_name = rmap.get("TEAM_NAME").toString();
 	rank_name = rmap.get("RANK_NAME").toString();
 	emp_hiredate = rmap.get("EMP_HIREDATE").toString();
-	if (rmap.get("EMP_RETIREDATE") != null) {
-		emp_retiredate = rmap.get("EMP_RETIREDATE").toString();
-	} else {
-		emp_retiredate = "";
-	}
 	emp_tel = rmap.get("EMP_TEL").toString();
 	emp_email = rmap.get("EMP_EMAIL").toString();
 	emp_status = rmap.get("EMP_STATUS").toString();
 	emp_account = rmap.get("EMP_ACCOUNT").toString();
 	emp_picture_path = rmap.get("EMP_PICTURE_PATH").toString();
-
 }
-
 int dept_no = 0;
 int team_no = 0;
 int rank_no = 0;
 int emp_status_no = 0;
-switch(dept_name){
-case "개발부": dept_no = 20; 
-			break;
-case "인사부": dept_no = 30; 
-			break;
-case "회계부": dept_no = 40; 
-			break;
-case "임원": dept_no = 10; 
-			break;
-}
-switch(team_name){
-case "개발1팀": team_no = 1; 
-			break;
-case "개발2팀": team_no = 2; 
-			break;
-case "개발3팀": team_no = 3; 
-			break;
-case "개발4팀": team_no = 4; 
-			break;
-}
-switch(rank_name){
-case "사원": rank_no = 8; 
-			break;
-case "대리": rank_no = 7; 
-			break;
-case "과장": rank_no = 6; 
-			break;
-case "차장": rank_no = 5; 
-			break;
-case "부장": rank_no = 4; 
-			break;
-case "이사": rank_no = 3; 
-			break;
-case "부사장": rank_no = 2; 
-			break;
-case "대표": rank_no = 1; 
-			break;
-}
-switch(emp_status){
-case "재직": emp_status_no = 0; 
-			break;
-case "휴직": emp_status_no = 1; 
-			break;
-case "퇴직": emp_status_no = 2; 
-			break;
-}
+
 
 List<Map<String, Object>> insertLicenceList = null;
 
@@ -125,33 +71,6 @@ List<Map<String, Object>> insertLicenceList = null;
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 <script>
-	//자격증 로우 추가
-	function add_row() {
-		console.log(document.getElementById('AddLicenseRow1').value);
-		console.log(document.getElementById('AddLicenseRow2').value);
-		console.log(document.getElementById('AddLicenseRow3').value);
-			var my_tbody = document.getElementById('licence-tbody');
-			// var row = my_tbody.insertRow(0); // 상단에 추가
-			var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
-			var cell1 = row.insertCell(0);
-			var cell2 = row.insertCell(1);
-			var cell3 = row.insertCell(2);
-			cell1.innerHTML = document.getElementById('AddLicenseRow1').value;
-			cell2.innerHTML = document.getElementById('AddLicenseRow2').value;
-			cell3.innerHTML = document.getElementById('AddLicenseRow3').value;
-			const map1 = new Map();
-			map1.set('bar', document.getElementById('AddLicenseRow1').value);
-
-			console.log(map1.get('bar'));
-
-	}
-	function delete_row() {
-		var my_tbody = document.getElementById('licence-tbody');
-		if (my_tbody.rows.length < 1)
-			return;
-		// my_tbody.deleteRow(0); // 상단부터 삭제
-		my_tbody.deleteRow(my_tbody.rows.length - 1); // 하단부터 삭제
-	}
 
 	//사원 수정을 위한 활성화
 	function fieldsetDisable() {
@@ -247,13 +166,7 @@ List<Map<String, Object>> insertLicenceList = null;
 													<img id="imgArea" src="../<%=emp_picture_path%>"
 														style="width: 200px; left: 20%; position: relative;"
 														alt="profile" onerror="imgAreaError()">
-													<div class="form-group"
-														style="left: 20%; position: relative;">
-														<input type="file" id="u_file" onchange="readURL(this);"
-															name="emp_picture_path" accept="image/*">
-														<input type="text" value="<%=emp_picture_path%>" 
-															name="previous_emp_picture_path" readonly hidden>
-													</div>
+
 												</div>
 												<hr>
 											</div>
@@ -264,43 +177,26 @@ List<Map<String, Object>> insertLicenceList = null;
 														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">이름</span> <input
 															type="text" class="form-control"
-															value="<%=emp_name%>" aria-describedby="basic-addon1">
+															value="<%=emp_name%>" aria-describedby="basic-addon1" disabled>
 													</div>
 													<br>
 													<div class="input-group">
 														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">부서</span> <select
 															class="form-control" id="dept_options"
-															onchange="handleOnChange(this)">
-															<option value=<%=dept_no%> hidden><%=dept_name%></option>
-															<option value=20>개발부</option>
-															<option value=30>인사부</option>
-															<option value=40>회계부</option>
-															<option value=10>임원</option>
+															onchange="handleOnChange(this)" disabled>
+															<option ><%=dept_name%></option>
 														</select> <select class="form-control"
-															id="team_options">
-															<option value=<%=team_no%> hidden><%=team_name%></option>
-															<option value=1>개발1팀</option>
-															<option value=2>개발2팀</option>
-															<option value=3>개발3팀</option>
-															<option value=4>개발4팀</option>
-															<option value= hidden>없음</option>
+															id="team_options" disabled>
+															<option ><%=team_name%></option>
 														</select>
 													</div>
 													<br>
 													<div class="input-group">
 														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">직위</span> <select
-															class="form-control" name="rank_no">
-															<option value=<%=rank_no%> hidden><%=rank_name%></option>
-															<option value=8>사원</option>
-															<option value=7>대리</option>
-															<option value=6>과장</option>
-															<option value=5>차장</option>
-															<option value=4>부장</option>
-															<option value=3>이사</option>
-															<option value=2>부사장</option>
-															<option value=1>대표</option>
+															class="form-control" name="rank_no" disabled>
+															<option><%=rank_name%></option>
 														</select>
 													</div>
 												</div>
@@ -314,22 +210,22 @@ List<Map<String, Object>> insertLicenceList = null;
 													<div class="input-group">
 														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">비밀번호</span> <input
-															type="text" name="emp_pw" class="form-control"
-															value="<%=emp_pw%>" aria-describedby="basic-addon1" readonly>
+															type="password" name="emp_pw" class="form-control"
+															value="<%=emp_pw%>" aria-describedby="basic-addon1">
 													</div>
 													<br>
 													<div class="input-group">
 														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">사원번호</span> <input
 															type="text" class="form-control" value="<%=emp_no%>"
-															aria-describedby="basic-addon1">
+															aria-describedby="basic-addon1" disabled>
 													</div>
 													<br>
 													<div class="input-group">
 														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">연차</span> <input
 															type="text" class="form-control" value="<%=emp_year%>"
-															aria-describedby="basic-addon1">
+															aria-describedby="basic-addon1" disabled>
 													</div>
 													<br>
 													<div class="input-group">
@@ -337,7 +233,7 @@ List<Map<String, Object>> insertLicenceList = null;
 															style="display: inline-block; width: 25%">입사일자</span> <input
 															type="date" class="form-control"
 															value="<%=emp_hiredate%>"
-															aria-describedby="basic-addon1">
+															aria-describedby="basic-addon1" disabled>
 													</div>
 												</div>
 											</div>
@@ -356,17 +252,14 @@ List<Map<String, Object>> insertLicenceList = null;
 														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">이메일</span> <input
 															type="text" name="emp_email" class="form-control"
-															value="<%=emp_email%>" aria-describedby="basic-addon1">
+															value="<%=emp_email%>" aria-describedby="basic-addon1" disabled>
 													</div>
 													<br>
 													<div class="input-group">
 														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">고용상태</span> <select
-															name="emp_status" class="form-control">
-															<option value=<%=emp_status_no%> hidden><%=emp_status%></option>
-															<option value=0>재직</option>
-															<option value=1>휴직</option>
-															<option value=2>퇴직</option>
+															name="emp_status" class="form-control" disabled>
+															<option><%=emp_status%></option>
 														</select>
 													</div>
 													<br>
@@ -375,19 +268,21 @@ List<Map<String, Object>> insertLicenceList = null;
 															style="display: inline-block; width: 25%">급여계좌</span> <input
 															type="text" class="form-control" placeholder="국민은행"
 															aria-describedby="basic-addon1" disabled> <input
-															type="text" class="form-control"
-															value="<%=emp_account%>" aria-describedby="basic-addon1">
+															type="text" class="form-control" 
+															value="<%=emp_account%>" aria-describedby="basic-addon1" disabled>
 													</div>
 												</div>
 											</div>
 											</div>
 									</form>
 									<div class="col-lg-12">
-										<table class="table table-bordered table-hover" id="testTable"
-											id="table" data-toggle="table" data-height="650"
-											data-search="true" data-show-columns="true"
-											data-method="post" data-pagination="true"
-											data-url="./member.json">
+													<div class="input-group">
+													<span class="input-group-addon" id="basic-addon1"
+															style="display: inline-block; width: 33%">
+													<h5>보유 자격증</h5>
+													</span>
+													</div>									
+										<table class="table table-bordered table-hover" id="testTable">
 											<thead>
 												<tr>
 													<th><h6>이름</h6></th>
@@ -405,7 +300,7 @@ List<Map<String, Object>> insertLicenceList = null;
 													licence_name = lmap.get("LICENCE_NAME").toString();		
 												%>
 												<tr>
-													<td value="<%=licence_name%>"><%=licence_name%></td>
+													<td><%=licence_name%></td>
 												</tr>
 												<%
 												} ///end of for

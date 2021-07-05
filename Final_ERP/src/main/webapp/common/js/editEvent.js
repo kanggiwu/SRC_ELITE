@@ -3,8 +3,10 @@
  * ************** */
 var editEvent = function (event, element, view) {
 
-    $('#deleteEvent').data('id', event._id); //클릭한 이벤트 ID
-
+    $('#deleteEvent').data('id', event.id); //클릭한 이벤트 ID
+    $('#deleteEvent').data('type', event.type); //클릭한 이벤트 TYPE
+    $('#deleteEvent').data('schedule_writer', event.emp_no); //클릭한 이벤트 TYPE
+	alert("게시글 작성자"+event.emp_no);
     $('.popover.fade.top').remove();
     $(element).popover("hide");
 
@@ -23,14 +25,29 @@ var editEvent = function (event, element, view) {
     } else {
         editEnd.val(event.end.format('YYYY-MM-DD HH:mm'));
     }
-
+    
+    var ko_type = null;
+    if (event.type === 3){
+    	ko_type = '개인';
+    }else if(event.type%10 === 0){
+    	ko_type = '부서';
+    }else if(event.type === 1){
+    	ko_type = '공통';
+    }else{
+    	ko_type = '프로젝트';
+    }
+	console.log(event.type);
+	console.log(ko_type);
+    
     modalTitle.html('일정 수정');
     editTitle.val(event.title);
-    //editUserName.val(event.username);
+    editUserName.val(event.username);
     editStart.val(event.start.format('YYYY-MM-DD HH:mm'));
+    
+    
     editType.val(event.type);
     editDesc.val(event.description);
-    editColor.val("#"+event.backgroundColor).css('color',"#"+event.backgroundColor);
+    editColor.val(event.backgroundColor).css('color',event.backgroundColor);
 
     addBtnContainer.hide();
     modifyBtnContainer.show();
@@ -71,28 +88,34 @@ var editEvent = function (event, element, view) {
 
         event.allDay = statusAllDay;
         event.title = editTitle.val();
-        event.username = editUserName.val();
         event.start = startDate;
         event.end = displayDate;
         event.type = editType.val();
         event.backgroundColor = editColor.val();
         event.description = editDesc.val();
-
+		alert(event.backgroundColor);
         $("#calendar").fullCalendar('updateEvent', event);
 
         //일정 업데이트
         $.ajax({
-            type: "get",
-            url: "/schedule/updateSchedule.src1?&cfr_no="+event._id+"&cfr_title="+event.title+"&cfr_memo="+event.description+
-            "&cfr_sdate="+event.start+"&cfr_edate="+event.end+
-            "&cfr_type="+event.type+"&cfr_allday="+event.allDay+
-            "&cfr_bgcolor="+event.backgroundColor,
-//            data: {
-//                //...
-//            },
+            type: "post"
+            ,url: "/schedule/updateSchedule.src1"
+            ,data: {
+                schedule_no:event.id,
+				schedule_title:event.title,
+            	schedule_content:event.description,
+            	backgroundcolor:event.backgroundColor,
+            	schedule_startdate:event.start,
+            	schedule_enddate:event.end,
+            	schedule_type:event.type,
+            	allDay:event.allDay,
+            	schedule_writer:event.emp_no
+            },
             success: function (response) {
             	if(response == 0){
-            		alert('본인의 일정이 아닙니다.');
+            		alert('일정수정 실패');
+            	}else if(response == 3){
+            		alert(ko_type+' 일정을 수정할 권한이 없는 사원입니다.');
             	}else{
             		alert('수정되었습니다.');
             	}
@@ -105,24 +128,35 @@ var editEvent = function (event, element, view) {
 };
 
 // 삭제버튼
-$('#deleteEvent').on('click', function () {
+$(document).on('click','#deleteEvent', function () {
     
     $('#deleteEvent').unbind();
-    $("#calendar").fullCalendar('removeEvents', $(this).data('id'));
+    
     eventModal.modal('hide');
-
+	alert("삭제11");
+	var schedule_no = $(this).data('id');
+	var schedule_type = $(this).data('type');
+	var schedule_writer = $(this).data('schedule_writer');
+	alert(schedule_writer);
+	
     //삭제시
     $.ajax({
-        type: "get",
-        url: "/schedule/deleteSchedule.src1?cfr_no="+$(this).data('id'),
-//        data: {
-//            //...
-//        },
+        type: "post",
+        url: "/schedule/deleteSchedule.src1",
+        data: {
+            schedule_no:schedule_no,
+            schedule_type:schedule_type,
+            schedule_writer:schedule_writer
+        },
         success: function (response) {
         	if(response == 0){
-        		alert('본인의 일정이 아닙니다.');
-        	}else{
+        		alert('일정삭제 실패.');
+        	}else if(response == 3){
+            	alert('일정을 삭제할 권한이 없는 사원입니다.');
+            		
+            }else{
         		alert('삭제되었습니다.');
+        		$("#calendar").fullCalendar('removeEvents', $(this).data('id'));
         	}
             $('#calendar').fullCalendar('removeEvents');
             $('#calendar').fullCalendar('refetchEvents');

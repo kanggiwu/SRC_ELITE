@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
-<%
+<% 
 	List<Map<String,Object>> attendanceList = null;
 	attendanceList = (List<Map<String,Object>>) request.getAttribute("attendanceList");
 	int attendanceListSize = 0;
@@ -21,20 +21,29 @@
 	int scheduleListSize = 0;
 	if (scheduleList != null && scheduleList.size() > 0) {
 		scheduleListSize = scheduleList.size();
-		out.print(attendanceListSize);
+		out.print("scheduleList: "+scheduleListSize);
+		out.print("<br>");
+		out.print("일정 출력");
 		out.print("<br>");
 		for (Map<String, Object> schedule : scheduleList) {
-			out.print(schedule.get("SCHEDULE_TITLE"));
+			out.print("일정번호: " +schedule.get("SCHEDULE_NO"));
+		out.print("<br>");
+			out.print("일정타입: " +schedule.get("SCHEDULE_TYPE"));
+			out.print("<br>");
+			out.print("일정내용: " +schedule.get("SCHEDULE_CONTENT"));
+			out.print("<br>");
+			out.print("====================================");
 			out.print("<br>");
 		}
 	}
 	
 %>
+	
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ERP 테스트</title>
+<title>ERP 테스트[WEB-INF]</title>
 </head>
 <body>
 	 final project ERP 테스트 화면
