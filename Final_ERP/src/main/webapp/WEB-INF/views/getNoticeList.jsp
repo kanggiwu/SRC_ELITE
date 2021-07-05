@@ -1,14 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
+<%! 
+String whatNameIs(Object obj) {
+	int type = Integer.parseInt(obj.toString());
+	if(type == 1) { return "공통"; } else
+	if(type == 2) { return "인사"; } else
+	if(type == 3) { return "회계"; } else
+	if(type == 4) { return "개발"; }
+	return "";
+}
+%>
 <%
 StringBuilder path = new StringBuilder(request.getContextPath());
 path.append("/");
-List<Map<String, Object>> noticeAllList = null;
-noticeAllList = (List<Map<String, Object>>) request.getAttribute("noticeAllList");
+List<Map<String, Object>> noticeList = null;
+noticeList = (List<Map<String, Object>>) request.getAttribute("noticeList");
 int size = 0;
-if (noticeAllList != null) {
-	size = noticeAllList.size();
+if (noticeList != null) {
+	size = noticeList.size();
 }
 %>
 <!DOCTYPE html>
@@ -32,17 +42,9 @@ if (noticeAllList != null) {
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 <!-- 검색에 필요한 코드 시작  -->
 <script>
- function search(){
-        if( $("#search").val() == "" ){
-            return;
-        }else{
-            $("input[name=searchFiled]").val($("#searchS").val());
-        }
-        let searchValue = $("#searchI").val();
-        $("input[name=searchValue]").val(searchValue);
-        $("form[name=frm]").attr("method", "post");
-        $("form[name=frm]").attr("action","").submit();
-    }
+function search() {
+	$('#search_form').submit();
+} 
 </script>
 <!--검색에 필요한 코드 끝 -->
 
@@ -58,7 +60,6 @@ if (noticeAllList != null) {
 					<div id="page_title"
 						style="border-bottom: 2px solid gray; margin: 50px 30px;">
 						<h2>공지사항</h2>
-						<h6>분류 : 공통(1) , 인사(2) , 회계(3) , 개발(4)</h6>
 					</div>
 					<div id="page_contents"
 						style="max-width: 1730px; margin: 10px 100px;">
@@ -81,25 +82,26 @@ if (noticeAllList != null) {
 							<!--테이블 내용 시작  -->
 							<tbody>
 									<!-- 검색 조회 폼 시작-->
-								<form id="search" action="/notice/getAllNoticeList" method='post'>
+								<form id="search_form" enctype="multipart/form-data" action="/notice/searchNotice.src1" method='post' accept-charset="utf-8">
 								<!-- 분류 선택부분 시작-->
 								<div
 									style="text-align: left; padding: 5px; display: inline-block; width: 40%;">
-									<span class="input-group "> <select class="form-control">
-											<option selected >분류</option>
-											<option>1(공통)</option>
-											<option>2(인사)</option>
-											<option>3(회계)</option>
-											<option>4(개발)</option>
+									<span class="input-group "> <select name="p_notice_type" class="form-control">
+											<option>번호</option>
+											<option>분류</option>
+											<option selected >제목</option>
+											<option>날짜</option>
 									</select> <!-- 분류 선택부분 끝 --> 
 									<!-- 검색 시작 --> 
-									<input type="text"
+									<input type="text" name="p_string" value=""
 										class="form-control float-left " placeholder="검색"> <a
-										class="btn btn-default float-left" href="" role="button"><i
+										class="btn btn-default float-left" href="javascript:search()" role="button"><i
 											class="fas fa-search"></i></a>
 									</span>
 								</div>
 								<!-- 검색 끝 -->
+								</form>
+									<!-- 검색 조회 폼 끝-->
 								<!-- 추가버튼 시작 -->
 								<div
 									style="text-align: right; padding: 5px; display: inline-block; width: 59%">
@@ -107,10 +109,8 @@ if (noticeAllList != null) {
 										onclick="location.href='/notice/getNewNotice.src1'">
 										공지 추가</button>
 									<!-- 추가버튼 끝 -->
-
 								</div>
-								</form>
-									<!-- 검색 조회 폼 끝-->
+								
 								<%
 								//조회 결과 X
 								if (size == 0) {
@@ -121,14 +121,14 @@ if (noticeAllList != null) {
 								<%
 								} else {//조회 결과 O
 									for (int i = 0; i < size; i++) {
-									Map<String, Object> rmap = noticeAllList.get(i);
+									Map<String, Object> rmap = noticeList.get(i);
 									if (i == size)
 										break;
 								%>
 								<tr
 									onClick="location.href='/notice/getDetailNotice.src1?NOTICE_NO=<%=rmap.get("NOTICE_NO")%>'">
 									<td><%=rmap.get("NOTICE_NO")%></td>
-									<td><%=rmap.get("NOTICE_TYPE")%></td>
+									<td><%=whatNameIs(rmap.get("NOTICE_TYPE"))%></td>
 									<td><%=rmap.get("NOTICE_TITLE")%></td>
 									<td><%=rmap.get("NOTICE_DATE")%></td>
 								</tr>

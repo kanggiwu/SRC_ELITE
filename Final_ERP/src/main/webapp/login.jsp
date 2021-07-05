@@ -18,13 +18,13 @@
 	crossorigin="anonymous"></script>
 <link href="../common/main.css" rel="stylesheet" />
 <link href="../common/css/custom.css" rel="stylesheet" />
-</head>
-<!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 <title>로그인</title>
-
+<!--관리자 로그에 필요한 코드 끝   =================================================================================-->
+</head>
 <!-- 컨텐츠 들어갈내용 시작-->
 <body class="text-center">
-	<form class="form-signin">
+
+	<form class="form-signin" action="/main/login.src1" method="get">
 		<div class="container row col-md-3 form-signin-heading"
 			style="position: absolute; top: 25%; left: 55%; transform: translate(-50%, -50%);">
 			<h2>소스정예</h2>
@@ -33,30 +33,39 @@
 		<div class="container row col-md-5"
 			style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
 			
-			<!-- 일반, 관리자 탭 이동 시작-->
+			<!-- 일반, 관리자 탭 이동 시작 -->
 			<ul class="nav nav-tabs">
 				<!-- 일반 로그인  -->
-				<li class="nav-item class"><a class="nav-link" data-toggle="tab" href="#일반">일반</a></li>
+				<li class="nav-item class"><a class="nav-link" data-toggle="tab" href="">일반</a></li>
 				<!-- 관리자 로그인 -->
-				<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#관리자">관리자</a></li>
+				<li class="nav-item"><a class="nav-link" data-toggle="tab" href="">관리자</a></li>
 			</ul>
-			<!-- 일반, 관리자 탭 이동 끝-->
-			<!--  아이디 확인 시작-->
-			<label for="inputID" class="sr-only">아이디</label> <input type="ID="
-				inputID" class="form-control" placeholder="ID" required autofocus>
-			<!--  아이디 확인 끝 --!>
-            <!--  비밀번호 확인 시작-->
-			<label for="inputPassword" class="sr-only">비밀번호</label> <input
-				type="password" id="inputPassword" class="form-control"
+			<!-- 일반, 관리자 탭 이동 끝 -->
+			<!--  아이디 확인 시작 -->
+			<label for="inputID" class="sr-only">아이디</label> 
+			<input type="text" name="login_no" class="form-control" placeholder="ID" required autofocus>
+			<!-- 아이디 확인 끝 -->
+            <!--  비밀번호 확인 시작 -->
+			<label for="inputPassword" class="sr-only">비밀번호</label>
+			<input
+				type="password" name="emp_pw" class="form-control"
 				placeholder="Password" required>
 			<!-- 로그인 시작 -->
 			<div class="checkbox mb-3"></div>
-			<!--  아이디 확인 끝-->
-			<!--  비밀번호 확인 끝-->
+			 <!-- 아이디 확인 끝 -->
+			<!--  비밀번호 확인 끝 -->
 			<button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
-		</div>
-		<!-- 로그인 끝 -->
+		</div> 
+		
 	</form>
+		<!-- 로그인 끝 -->
+		
+		
+<!-- 		<form action="/main/login.src1" method="POST">
+			<label>ID : </label><input type="text" name="login_no" />
+			<label>PW : </label><input type="password" name="emp_pw" />
+			<button type="submit">로그인</button>
+		</form> -->
 </body>
 
 <!-- 컨텐츠 들어갈내용 끝   -->
