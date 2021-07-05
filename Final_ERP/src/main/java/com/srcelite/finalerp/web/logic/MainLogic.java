@@ -3,7 +3,6 @@ package com.srcelite.finalerp.web.logic;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.srcelite.finalerp.web.dao.MainDao;
 
@@ -15,10 +14,10 @@ public class MainLogic {
 		this.mainDao = mainDao;
 	}
 	
-	public int login(Map<String,Object> pmap) {
+	public int login(Map<String,Object> pmap) throws Exception {
 		logger.info("login 호출 성공");
 		int inputedEmpNo = 0;
-		inputedEmpNo = (int) pmap.get("emp_no");
+		inputedEmpNo = Integer.parseInt(pmap.get("login_no").toString());
 		String inputedPw = (String) pmap.get("emp_pw");
 		String loadedPw = mainDao.login(pmap);
 		if(inputedEmpNo == 0) {

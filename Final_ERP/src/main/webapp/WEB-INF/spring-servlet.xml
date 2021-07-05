@@ -60,6 +60,7 @@
 				<prop key="/mypage/getRetirementPay.src1">my-page-controller</prop>
 
 				<prop key="/notice/getMainNoticeList.src1">notice-controller</prop>
+				<prop key="/notice/searchNotice.src1">notice-controller</prop>
 				<prop key="/notice/getAllNoticeList.src1">notice-controller</prop>
 				<prop key="/notice/getDetailNotice.src1">notice-controller</prop>
 				<prop key="/notice/getNewNotice.src1">notice-controller</prop>
@@ -130,6 +131,7 @@
 				<prop key="/mypage/getRetirementPay.src1">getRetirementPay</prop>
 
 				<prop key="/notice/getMainNoticeList.src1">getMainNoticeList</prop>
+				<prop key="/notice/searchNotice.src1">searchNotice</prop>
 				<prop key="/notice/getAllNoticeList.src1">getAllNoticeList</prop>
 				<prop key="/notice/getDetailNotice.src1">getDetailNotice</prop>
 				<prop key="/notice/getNewNotice.src1">getNewNotice</prop>

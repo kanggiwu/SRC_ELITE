@@ -25,6 +25,13 @@ public class NoticeLogic {
 		return noticeAllList;
 		
 	}
+	//공지 검색
+	public List<Map<String, Object>> searchNotice(Map<String, Object> pmap) {
+		logger.info("searchNotice 호출");
+		List<Map<String, Object>> foundNoticeList = null;
+		foundNoticeList = noticeDao.searchNotice(pmap);
+		return foundNoticeList;
+	}
 	// 공지 상세조회
 	public List<Map<String,Object>> getDetailNotice(Map<String,Object> pmap) {
 		logger.info("NoticeLogic ==  getDetailNotice == 호출");
@@ -55,7 +62,7 @@ public class NoticeLogic {
 		
 		}
 	// 공지 수정
-	public int updateNotice(Map<String,Object> pmap){
+	public int updateNotice(Map<String,Object> pmap) throws Exception {
 	
 		logger.info("updateNotice 호출 성공");
 		int result = 0;

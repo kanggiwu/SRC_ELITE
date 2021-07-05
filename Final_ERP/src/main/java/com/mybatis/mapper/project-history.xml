@@ -18,6 +18,18 @@
      WHERE p.project_no = pe.project_no
        AND pe.emp_no = e.emp_no
        AND pe.project_manager = 'Y'
+    <if test='project_type != null'>
+	   AND p.project_type = #{project_type}
+	</if>	
+	<if test='project_startline != null'>
+	   AND p.project_startline <![CDATA[>=]]> #{project_startline}
+	</if>
+	<if test='project_deadline != null'>
+	   AND p.project_deadline <![CDATA[<=]]> #{project_deadline}
+	</if>
+	<if test='project_name != null'>
+	   AND p.project_name LIKE %#{project_name}%
+	</if>	
 	</select>
 
 	<!-- 프로젝트 상세 조회 -->

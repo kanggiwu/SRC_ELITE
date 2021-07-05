@@ -18,9 +18,8 @@ public class MainDao {
 		String emp_pw = sqlSessionTemplate.selectOne("getPassword", pmap);
 		return emp_pw;
 	}
-	public void logout() {
-		
-	}
+	public void logout() {}
+	
 	public int insertAttendanceTime(Map<String,Object> pmap) {
 		logger.info("insertAttendanceTime 호출 성공 : "+pmap);
 		int result = 0;

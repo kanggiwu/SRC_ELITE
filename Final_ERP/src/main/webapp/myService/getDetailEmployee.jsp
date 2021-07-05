@@ -113,7 +113,7 @@ function imgAreaError(){
                   <button class="btn btn-danger" onclick="location.href='getEmployeeList.jsp'">취소</button>
                 </div>
                 <fieldset id='btn_fieldset' disabled>
-                <form id="emp_ins" method="post" enctype="multipart/form-data" action="updateEmployee.src1">
+                <form id="emp_ins" method="post" action="updateEmployee.src1">
 			   			<div class="row">
 						    <div class="col-lg-6">
 								<div id="imgViewArea" style="width:100%; height:250px;">
