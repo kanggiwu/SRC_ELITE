@@ -47,8 +47,18 @@ public class MyPageController extends MultiActionController{
 	public void updateMyInfo(HttpServletRequest request, HttpServletResponse response) {
 		
 	}
-	public void getMonthSalary(HttpServletRequest request, HttpServletResponse response) {
-		
+	public ModelAndView getSalary(HttpServletRequest request, HttpServletResponse response) {
+		logger.info("getSalary 호출 성공");
+		HashMapBinder hmb = new HashMapBinder(request);
+		Map<String, Object> target = new HashMap<>();
+		hmb.bind(target);
+		Map<String, Object> mySalary = null;
+		mySalary = myPageLogic.getSalary(target);
+		logger.info("mySalary:"+mySalary);//
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("getSalary");
+		mav.addObject("mySalary", mySalary);
+		return mav;
 	}
 	public void getYearSalary(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -56,7 +66,5 @@ public class MyPageController extends MultiActionController{
 	public void getRetirementPay(HttpServletRequest request, HttpServletResponse response) {
 		
 	}
-	
-	// 출근
 
 }
