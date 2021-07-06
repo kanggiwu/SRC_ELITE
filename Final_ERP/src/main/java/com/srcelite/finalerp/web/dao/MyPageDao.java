@@ -3,6 +3,9 @@ package com.srcelite.finalerp.web.dao;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -49,4 +52,11 @@ public class MyPageDao {
 
 
 
+	public Map<String, Object> getSalary(Map<String, Object> pmap) {
+		Map<String, Object> mySalary = null;
+		sqlSessionTemplate.selectOne("getMySalaryProc",pmap);
+		logger.info("sal_curser: "+ pmap.get("sal_cursor"));
+		mySalary = (Map<String, Object>) pmap.get("sal_cursor");
+		return mySalary;
+	}
 }
