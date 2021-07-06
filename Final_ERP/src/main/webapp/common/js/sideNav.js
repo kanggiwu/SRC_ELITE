@@ -33,7 +33,7 @@ const sideNavMainTitleApi = [
         id: "salary",
         title: "급여조회",
         className: "",
-        ref: "#",
+        ref: "../mypage/getMonthSalary.src1",
         onClick: "",
         collapsed: false,
       },
@@ -115,7 +115,7 @@ const sideNavMainTitleApi = [
         id: "group",
         title: "조직도 수정",
         className: "",
-        ref: "/humanresource/updateOrganizationChart.src1",
+        ref: "../humanresource/getOrganizationChart.src1",
         onClick: "",
       },
       {

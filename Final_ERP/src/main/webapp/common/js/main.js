@@ -21,7 +21,6 @@ var calendar = $('#calendar').fullCalendar({
                                 month : { eventLimit : 12 } // 한 날짜에 최대 이벤트 12개, 나머지는 + 처리됨
                               },
   eventLimitClick           : 'week', //popover
-  defaultDate               : moment('2021-06'),
   navLinks                  : true,
   timeFormat                : 'HH:mm',
   defaultTimedEventDuration : '01:00:00',
@@ -114,6 +113,7 @@ schedule_type: -1,
         endDate   : moment(end).format('YYYY-MM-DD'),
        	schedule_type: 2
       },
+      processData: true,
       success: function (data) {
       	var result = data;
       	console.log(result);
@@ -183,16 +183,28 @@ schedule_type: -1,
 
     // 드랍시 수정된 날짜반영
     var newDates = calDateWhenDragnDrop(event);
-
     //드롭한 일정 업데이트
     $.ajax({
-      type: "get",
-      url: "",
-      data: {
-        //...
+      	type: "post",
+		url: "/schedule/updateDateSchedule.src1",
+    	data: {
+    		  schedule_no:event.id,
+           	schedule_startdate:newDates.startDate,
+            	schedule_enddate:newDates.endDate,
+            	schedule_writer:event.emp_no,
+            	schedule_type:event.type
       },
       success: function (response) {
         alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
+        if(response == 0){
+            		alert('일정수정 실패');
+            	}else if(response == 3){
+            		alert('해당 일정을 수정할 권한이 없는 사원입니다.');
+            	}else{
+            		alert('수정되었습니다.');
+            	}
+            	$('#calendar').fullCalendar('removeEvents');
+                $('#calendar').fullCalendar('refetchEvents');
       }
     });
 
@@ -203,6 +215,8 @@ schedule_type: -1,
     $(".fc-body").unbind('click');
     $(".fc-body").on('click', 'td', function (e) {
 
+
+	console.log("e.pageX: "+e.pageX+", e.pageY: "+e.pageY);
       $("#contextMenu")
         .addClass("contextOpened")
         .css({
@@ -296,7 +310,6 @@ function filtering(event) {
 function calDateWhenResize(event) {
 
   var newDates = {
-    startDate: '',
     endDate: ''
   };
 
@@ -314,9 +327,10 @@ function calDateWhenResize(event) {
 function calDateWhenDragnDrop(event) {
   // 드랍시 수정된 날짜반영
   var newDates = {
-    startDate: '',
-    endDate: ''
+    startDate: moment(event.start._d).format('YYYY-MM-DD'),
+    endDate: moment(event.end._d).format('YYYY-MM-DD')
   }
+   
 
   // 날짜 & 시간이 모두 같은 경우
   if(!event.end) {
@@ -338,8 +352,8 @@ function calDateWhenDragnDrop(event) {
 
   //all day가 아님
   else if (!event.allDay) {
-    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD HH:mm');
-    newDates.endDate = moment(event.end._d).format('YYYY-MM-DD HH:mm');
+    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
+    newDates.endDate = moment(event.end._d).format('YYYY-MM-DD');
   }
 
   return newDates;

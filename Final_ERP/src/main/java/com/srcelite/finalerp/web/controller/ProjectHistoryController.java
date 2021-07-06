@@ -41,6 +41,20 @@ public class ProjectHistoryController extends MultiActionController {
 		return mav;
 	}
 	
+	//프로젝트이력 검색
+	/*
+	 * public ModelAndView getProjectListProc(HttpServletRequest request,
+	 * HttpServletResponse response) throws Exception {
+	 * logger.info("getProjectListProc 호출 성공"); HashMapBinder hmb = new
+	 * HashMapBinder(request); Map<String,Object> target = new HashMap<>();
+	 * hmb.bind(target); List<Map<String,Object>> projectListProc = null;
+	 * projectListProc=projectHistoryLogic.getProjectListProc(target);
+	 * logger.info("getProjectListProc:"+projectListProc);// ModelAndView mav = new
+	 * ModelAndView(); mav.setViewName("getProjectHistoryList");
+	 * mav.addObject("getProjectListProc", projectListProc); return mav; }
+	 */
+
+	
 	//프로젝트이력관리 상세 조회
 	public ModelAndView getDetailProjectHistory(HttpServletRequest request, HttpServletResponse response)
 	throws Exception
@@ -84,6 +98,23 @@ public class ProjectHistoryController extends MultiActionController {
 		return mav;
 	}
 	
+	//프로젝트 이력 추가(내용 업데이트)
+	public ModelAndView updateProjectHistory(HttpServletRequest request, HttpServletResponse response) 
+	throws Exception
+	{
+		logger.info("updateProjectHistory 호출 성공");
+		HashMapBinder hmb = new HashMapBinder(request);
+		Map<String,Object> target = new HashMap<>();
+		hmb.bind(target);
+		List<Map<String,Object>> projectNameList = null;
+		//projectNameList=projectHistoryLogic.getprojectNameList(target);
+		//logger.info("projectNameList:"+projectNameList);//
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("insertProjectHistory");
+		mav.addObject("target", target);
+		return mav;
+	}
+	
 	//사원검색
 	/*
 	 * public ModelAndView getEmpSearchList2(HttpServletRequest request,
@@ -112,6 +143,26 @@ public class ProjectHistoryController extends MultiActionController {
 				 * mav.setViewName("insertProjectHistory"); mav.addObject("empSearchList2",
 				 * empSearchList2); return mav;
 				 */
+			}
+	
+	public void  getProjectListProc(HttpServletRequest request, HttpServletResponse response) 
+			throws Exception
+			{
+				logger.info("getProjectListProc 호출 성공");
+				HashMapBinder hmb = new HashMapBinder(request);
+				Map<String,Object> target = new HashMap<>();
+				hmb.bind(target);
+				//hmb.multiBind(target);
+				List<Map<String,Object>> projectListProc = null;
+				projectListProc=projectHistoryLogic.getProjectListProc(target);
+				logger.info("projectListProc:"+projectListProc);//
+				Gson g = new Gson();
+				String imsi = g.toJson(projectListProc);
+				response.setContentType("application/json;charset=utf-8");
+				PrintWriter out = response.getWriter();
+				System.out.println("여기야");
+				System.out.println(imsi);
+				out.print(imsi);
 			}
 
 }
