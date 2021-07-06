@@ -1,6 +1,7 @@
 package com.srcelite.finalerp.web.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +28,12 @@ public class MainController extends MultiActionController{
 		Map<String,Object> pmap = new HashMap<>();
 		hmb.bind(pmap);
 		logger.info("emp_no:"+pmap.get("login_no"));
-		int result = mainLogic.login(pmap);
-		if(result == 1) { //로그인 성공
-			session.setAttribute("login_no", Integer.parseInt(pmap.get("login_no").toString()));
+		Map<String, Object> rmap = null;
+		rmap = mainLogic.login(pmap);
+		if(1 == Integer.parseInt(rmap.get("result").toString())) { //로그인 성공
+			session.setAttribute("login_no", pmap.get("login_no").toString());
+			session.setAttribute("login_name", rmap.get("EMP_NAME"));
+			session.setAttribute("login_dept", rmap.get("DEPT_NAME"));
 			response.sendRedirect("login_success.jsp");
 		} else { //로그인 실패 처리
 			response.sendRedirect("login_failed.jsp");
@@ -40,7 +44,9 @@ public class MainController extends MultiActionController{
 	public void logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("logout호출 성공");
 		HttpSession session=request.getSession();
-		session.removeAttribute("emp_no");
+		session.removeAttribute("login_no");
+		session.removeAttribute("login_name");
+		session.removeAttribute("login_dept");
 		session.invalidate();
 		response.sendRedirect("logout.jsp");
 	}

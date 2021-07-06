@@ -23,7 +23,7 @@ $(document).ready(function(){
     confirmButtonColor: '#17a2b8',
     timer: 2000
     })
-    setTimeout(() => location.href="/erp_lab/main_content.jsp", 1500);
+    setTimeout(() => location.href="/erp_lab/main_content.jsp", 1000);
   
     });
 </script>

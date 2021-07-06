@@ -45,9 +45,9 @@ pageEncoding="UTF-8"%>
 <div id="layoutSidenav">
    <div id="layoutSidenav_nav"></div>
    <div id="layoutSidenav_content">
-		<main id="input_div">
      			<!-- 컨텐츠 들어갈내용 시작-->
-			<!--<div id="frame_div" style="border: 1px solid black;">
+		<!--<main id="input_div">
+			<div id="frame_div" style="border: 1px solid black;">
 				<div id="page_title" style="border: 1px solid #C82333; margin: 10px 30px;"><h2>Main Page</h2></div>
 				<div id="page_contents" style="max-width: 1730px; border: 1px solid #5C80AB; margin: 50px 50px;">
 			 <div>
