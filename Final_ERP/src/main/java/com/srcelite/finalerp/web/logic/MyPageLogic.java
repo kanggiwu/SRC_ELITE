@@ -32,5 +32,10 @@ public class MyPageLogic {
 		licenceList = myPageDao.getMyLicenceList(pmap);
 		return licenceList;
 	}
+	public int updateMyInfo(Map<String, Object> pmap) {
+		int result = 0;
+			result = myPageDao.updateMyInfo(pmap);
+			return result;
+	}
 
 }

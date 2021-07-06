@@ -40,6 +40,13 @@ public class MyPageDao {
 		return licenceList;
 	}
 
+	public int updateMyInfo(Map<String, Object> pmap) {
+		int result = 0;
+		sqlSessionTemplate.update("updatePassword",pmap);
+		result = 1;
+		return result;
+	}
+
 
 
 }

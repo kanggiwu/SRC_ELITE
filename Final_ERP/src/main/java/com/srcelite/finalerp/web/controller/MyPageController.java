@@ -44,8 +44,20 @@ public class MyPageController extends MultiActionController{
 		return mav;
 		
 	}
-	public void updateMyInfo(HttpServletRequest request, HttpServletResponse response) {
-		
+	public void updateMyInfo(HttpServletRequest req, HttpServletResponse res) 
+	throws Exception
+	{
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String,Object> pmap = new HashMap<>();
+		hmb.multiBind(pmap);
+		int result = 0;
+		result = myPageLogic.updateMyInfo(pmap);
+		if(result == 1) {
+			res.sendRedirect("getMyInfo.src1");
+		}
+		else {
+			res.sendRedirect("../index.jsp");
+		}
 	}
 	public void getMonthSalary(HttpServletRequest request, HttpServletResponse response) {
 		

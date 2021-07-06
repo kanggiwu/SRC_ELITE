@@ -139,7 +139,7 @@ public class HumanResourceController extends MultiActionController {
 			res.sendRedirect("getEmployeeList.src1");
 		}
 		else {
-			res.sendRedirect("등록실패 페이지 이동처리");
+			res.sendRedirect("../index.jsp");
 		}
 	}	
 }
