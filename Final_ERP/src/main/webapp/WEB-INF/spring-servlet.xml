@@ -56,8 +56,6 @@
 				<prop key="/mypage/getMyInfo.src1">my-page-controller</prop>
 				<prop key="/mypage/updateMyInfo.src1">my-page-controller</prop>
 				<prop key="/mypage/getMonthSalary.src1">my-page-controller</prop>
-				<!-- 내 급여 검색 기능 추가 -->
-				<prop key="/mypage/searchMonthSalary.src1">my-page-controller</prop>
 				<prop key="/mypage/getYearSalary.src1">my-page-controller</prop>
 				<prop key="/mypage/getRetirementPay.src1">my-page-controller</prop>
 
@@ -131,9 +129,7 @@
 				
 				<prop key="/mypage/getMyInfo.src1">getMyInfo</prop>
 				<prop key="/mypage/updateMyInfo.src1">updateMyInfo</prop>
-				<prop key="/mypage/getMonthSalary.src1">getMonthSalary</prop>
-				<!-- 내 급여 검색 기능 추가 -->
-				<prop key="/mypage/searchMonthSalary.src1">searchMonthSalary</prop>
+				<prop key="/mypage/getMonthSalary.src1">getSalary</prop>
 				<prop key="/mypage/getYearSalary.src1">getYearSalary</prop>
 				<prop key="/mypage/getRetirementPay.src1">getRetirementPay</prop>
 

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,11 +24,12 @@ public class MyPageController extends MultiActionController{
 	public void setMyPageLogic(MyPageLogic myPageLogic) {
 		this.myPageLogic = myPageLogic;
 	}
-	public ModelAndView getMyInfo(HttpServletRequest req, HttpServletResponse res) {
-		HashMapBinder hmb = new HashMapBinder(req);
+	public ModelAndView getMyInfo(HttpServletRequest request, HttpServletResponse response) {
+		HashMapBinder hmb = new HashMapBinder(request);
+		HttpSession session = request.getSession();
 		Map<String,Object> pmap = new HashMap<>();
 		hmb.bind(pmap);
-		pmap.put("emp_no", 5);
+		pmap.put("emp_no", session.getAttribute("login_no"));
 		List<Map<String,Object>> infoList = null;
 		ModelAndView mav = new ModelAndView();
 		infoList = myPageLogic.getMyInfo(pmap);
@@ -49,7 +51,7 @@ public class MyPageController extends MultiActionController{
 	{
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
-		hmb.multiBind(pmap);
+		hmb.bind(pmap);
 		int result = 0;
 		result = myPageLogic.updateMyInfo(pmap);
 		if(result == 1) {
@@ -61,14 +63,16 @@ public class MyPageController extends MultiActionController{
 	}
 	public ModelAndView getSalary(HttpServletRequest request, HttpServletResponse response) {
 		logger.info("getSalary 호출 성공");
+		HttpSession session = request.getSession();
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
 		Map<String, Object> mySalary = null;
+		target.put("emp_no", session.getAttribute("login_no"));
 		mySalary = myPageLogic.getSalary(target);
 		logger.info("mySalary:"+mySalary);//
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("getSalary");
+		mav.setViewName("getMonthSalary");
 		mav.addObject("mySalary", mySalary);
 		return mav;
 	}

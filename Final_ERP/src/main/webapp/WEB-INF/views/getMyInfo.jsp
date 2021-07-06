@@ -108,12 +108,15 @@ List<Map<String, Object>> insertLicenceList = null;
 			  confirmButtonText: '확인',
 			  confirmButtonColor: '#28a745'
 			})
-			$('#myInfo_update').submit();
-		}else{
+			setTimeout(() => $('#myInfo_update').submit() , 1500);
+/* 			$('#myInfo_update').submit();
+ */		}else{
 		  Swal.fire({
 			  title: '비밀번호가 맞지 않습니다',
 			  confirmButtonText: '확인',
-			  confirmButtonColor: '#dc3545'
+			  confirmButtonColor: '#dc3545',
+			  timer: 1500
+			  
 			})
 		}// if else 끝
 		})()// async 끝
@@ -147,15 +150,14 @@ List<Map<String, Object>> insertLicenceList = null;
 										onclick="location.href='getMyInfo.src1'" style="display: none;" >취소</button>
 								</div>
 								<fieldset id='btn_fieldset' disabled>
-									<form id="myInfo_update" method="post"
-										enctype="multipart/form-data" action="updateMyInfo.src1">
+									<form id="myInfo_update" method="post" action="updateMyInfo.src1">
 										<div class="row">
 											<div class="col-lg-6">
 												<div id="imgViewArea" style="width: 100%; height: 250px;">
 													<img id="imgArea" src="../<%=emp_picture_path%>"
 														style="width: 200px; left: 20%; position: relative;"
 														alt="profile" onerror="imgAreaError()">
-
+													<input value="<%=emp_no%>" name="emp_no" hidden>
 												</div>
 												<hr>
 											</div>
