@@ -76,61 +76,53 @@ List<Map<String, Object>> insertLicenceList = null;
 	function fieldsetDisable() {
 		const fieldset = document.getElementById('btn_fieldset');
 		fieldset.disabled = false;
-		var empUpdReady = document.getElementById('EmpUpdReady');
+		var empUpdReady = document.getElementById('InfoUpdReady');
 		empUpdReady.style.visibility = 'hidden';
-		/*   if(document.getElementById('dept_options') != "개발부"){
-		 document.getElementById('team_options').disabled = true;	  
-		 } */
-		document.getElementById('EmpUpdSubmit').style.display = ''
+		document.getElementById('InfoUpdSubmit').style.display = ''
 		document.getElementById('InfoUpdCancel').style.display = ''
 
 	}
-
-	/// 콤보박스 중분류 비활성화하기
-	function handleOnChange(e) {
-		// 선택된 데이터 가져오기
-		const value = e.value;
-		console.log(value);
-		if (value != "20") {
-			document.getElementById('team_options').disabled = true;
-			$("#team_options").val().prop("selected", true);
-		} else {
-			document.getElementById('team_options').disabled = false;
-			$("#team_options").val("1").prop("selected", true);
-		}
-	}
-	// 콘텐츠 수정 :: 사진 수정 시 이미지 미리보기
-	function readURL(input) {
-		if (input.files && input.files[0]) {
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				$('#imgArea').attr('src', e.target.result);
-			}
-			reader.readAsDataURL(input.files[0]);
-		}
-	}
-
-	/* $(":input[name='u_file']").change(function() {
-	 if( $(":input[name='u_file']").val() == '' ) {
-	 $('#imgArea').attr('src' , '');  
-	 }
-	 $('#imgViewArea').css({ 'display' : '' });
-	 readURL(this);
-	 }); */
-
-	// 이미지 에러 시 미리보기영역 미노출
-	/* function imgAreaError(){
-	 $('#imgViewArea').css({ 'display' : 'none' });
-	 } */
+	//비밀번호 변경 확인 모달창
 	function infoUpdateAction() {
-		Swal.fire({
+/* 		Swal.fire({
 		  title: '변경 되었습니다!',
 		  confirmButtonColor: '#17a2b8'})
-		$('#employee_update').submit();
-		
+		$('#myInfo_update').submit(); */
+		let emp_pw = $('#emp_pw').val();
+		(async () => {	
+	 const { value: password } = await Swal.fire({
+		  title: '새 비밀번호를 다시 입력해주세요',
+		  input: 'password',
+		  confirmButtonColor: '#28a745',
+		  confirmButtonText: '확인',
+		  inputPlaceholder: 'Enter your password',
+		  inputAttributes: {
+		    maxlength: 10,
+		    autocapitalize: 'off',
+		    autocorrect: 'off'
+		  }
+		})
+		if (password == emp_pw) {
+		  Swal.fire({
+			  title: '비밀번호가 확인되었습니다',
+			  confirmButtonText: '확인',
+			  confirmButtonColor: '#28a745'
+			})
+			setTimeout(() => $('#myInfo_update').submit() , 1500);
+/* 			$('#myInfo_update').submit();
+ */		}else{
+		  Swal.fire({
+			  title: '비밀번호가 맞지 않습니다',
+			  confirmButtonText: '확인',
+			  confirmButtonColor: '#dc3545',
+			  timer: 1500
+			  
+			})
+		}// if else 끝
+		})()// async 끝
 	}
 </script>
-<title>MYPAGE - ERP PROGRAM</title>
+<title>MyPage - ERP PROGRAM</title>
 </head>
 <body class="sb-nav-fixed">
 	<nav id="topNav"></nav>
@@ -141,7 +133,7 @@ List<Map<String, Object>> insertLicenceList = null;
 				<div id="frame_div" style="border: 1px solid black;">
 					<div id="page_title"
 						style="border-bottom: 2px solid gray; margin: 50px 30px;">
-						<h2>사원 상세 조회</h2>
+						<h2>내 정보 조회</h2>
 					</div>
 					<div id="page_contents"
 						style="max-width: 1730px; margin: 10px 100px;">
@@ -158,15 +150,14 @@ List<Map<String, Object>> insertLicenceList = null;
 										onclick="location.href='getMyInfo.src1'" style="display: none;" >취소</button>
 								</div>
 								<fieldset id='btn_fieldset' disabled>
-									<form id="myInfo_update" method="post"
-										enctype="multipart/form-data" action="updateMyInfo.src1">
+									<form id="myInfo_update" method="post" action="updateMyInfo.src1">
 										<div class="row">
 											<div class="col-lg-6">
 												<div id="imgViewArea" style="width: 100%; height: 250px;">
 													<img id="imgArea" src="../<%=emp_picture_path%>"
 														style="width: 200px; left: 20%; position: relative;"
 														alt="profile" onerror="imgAreaError()">
-
+													<input value="<%=emp_no%>" name="emp_no" hidden>
 												</div>
 												<hr>
 											</div>
@@ -208,9 +199,9 @@ List<Map<String, Object>> insertLicenceList = null;
 												<div id="emp_table" style="width: 100%; height: 300px;">
 													<br>
 													<div class="input-group">
-														<span class="input-group-addon" id="basic-addon1"
+														<span class="input-group-addon" 
 															style="display: inline-block; width: 25%">비밀번호</span> <input
-															type="password" name="emp_pw" class="form-control"
+															type="password" name="emp_pw" class="form-control" id="emp_pw"
 															value="<%=emp_pw%>" aria-describedby="basic-addon1">
 													</div>
 													<br>
@@ -282,12 +273,12 @@ List<Map<String, Object>> insertLicenceList = null;
 													<h5>보유 자격증</h5>
 													</span>
 													</div>									
-										<table class="table table-bordered table-hover" id="testTable">
-											<thead>
-												<tr>
+										<table class="table table-bordered table-hover table-striped" id="testTable">
+<!-- 											<thead>
+												<tr style="background-color: #FFECB1">
 													<th><h6>이름</h6></th>
 												</tr>
-											</thead>
+											</thead> -->
 											<tbody id="licence-tbody">
 												<%
 												if (licenceList != null) {
@@ -299,7 +290,7 @@ List<Map<String, Object>> insertLicenceList = null;
 													Map<String, Object> lmap = licenceList.get(i);
 													licence_name = lmap.get("LICENCE_NAME").toString();		
 												%>
-												<tr>
+												<tr >
 													<td><%=licence_name%></td>
 												</tr>
 												<%

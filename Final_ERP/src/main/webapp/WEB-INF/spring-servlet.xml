@@ -55,7 +55,8 @@
 				
 				<prop key="/mypage/getMyInfo.src1">my-page-controller</prop>
 				<prop key="/mypage/updateMyInfo.src1">my-page-controller</prop>
-				<prop key="/mypage/getMonthSalary.src1">my-page-controller</prop>
+				<prop key="/mypage/getMySalary.src1">my-page-controller</prop>
+
 				<prop key="/mypage/getYearSalary.src1">my-page-controller</prop>
 				<prop key="/mypage/getRetirementPay.src1">my-page-controller</prop>
 
@@ -131,7 +132,7 @@
 				
 				<prop key="/mypage/getMyInfo.src1">getMyInfo</prop>
 				<prop key="/mypage/updateMyInfo.src1">updateMyInfo</prop>
-				<prop key="/mypage/getMonthSalary.src1">getMonthSalary</prop>
+				<prop key="/mypage/getMySalary.src1">getMySalary</prop>
 				<prop key="/mypage/getYearSalary.src1">getYearSalary</prop>
 				<prop key="/mypage/getRetirementPay.src1">getRetirementPay</prop>
 

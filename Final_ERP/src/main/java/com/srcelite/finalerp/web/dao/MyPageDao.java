@@ -3,6 +3,9 @@ package com.srcelite.finalerp.web.dao;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -14,12 +17,6 @@ public class MyPageDao {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 	
-	public void login() {
-		
-	}
-	public void logout() {
-		
-	}
 	public int insertAttendanceTime(Map<String,Object> pmap) {
 		logger.info("insertAttendanceTime 호출 성공 : "+pmap);
 		int result = 0;
@@ -40,6 +37,22 @@ public class MyPageDao {
 		return licenceList;
 	}
 
+	public int updateMyInfo(Map<String, Object> pmap) {
+		int result = 0;
+		sqlSessionTemplate.update("updatePassword",pmap);
+		result = 1;
+		return result;
+	}
 
-
+	public List<Map<String, Object>> getMySalary(Map<String, Object> pmap) {
+		List<Map<String, Object>> mySalaryList = null;
+		mySalaryList = sqlSessionTemplate.selectList("getSalary",pmap);
+		return mySalaryList;
+	}
+	
+	/*
+	 * public Map<String, Object> getRetirementPay(Map<String, Object> pmap) {
+	 * 
+	 * }
+	 */
 }

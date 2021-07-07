@@ -107,7 +107,7 @@ out.print(path);
 		Swal.fire({
 			  title: '추가 하시겠습니까?',
 			  confirmButtonColor: '#17a2b8',
-			  confirmButtonText: '응 확인'
+			  confirmButtonText: '확인'
 			}).then((result) => {
 			  if (result.isConfirmed) {
 				$('#employee_insert').submit();

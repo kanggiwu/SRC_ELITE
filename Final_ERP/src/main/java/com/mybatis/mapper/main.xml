@@ -5,9 +5,9 @@
 <mapper namespace="com.mybatis.mapper.MainMapper">
 
 	<!-- login 시 DB에서 아이디에 해당하는 비번을 불러와서 사용자가 입력한 비번과 일치하면 로그인 -->
-	<select id="getPassword" parameterType="map" resultType="string">
-		SELECT emp_pw FROM emp 
-		 WHERE emp_no=#{login_no}
+	<select id="getLoginInfo" parameterType="map" resultType="map">
+		SELECT emp_pw, emp_name, d.dept_name as dept_name FROM emp e, dept d 
+		 WHERE e.dept_no = d.dept_no AND emp_no=#{login_no}
 	</select>
 
 	<!-- 사원의 이름, 직위, 부서명 가져오기 -->

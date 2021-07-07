@@ -33,7 +33,7 @@ const sideNavMainTitleApi = [
         id: "salary",
         title: "급여조회",
         className: "",
-        ref: "../mypage/getMonthSalary.src1",
+        ref: "../mypage/getMySalary.src1",
         onClick: "",
         collapsed: false,
       },
