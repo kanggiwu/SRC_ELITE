@@ -51,6 +51,7 @@ public class ScheduleDao {
 
 	public int insertSchedule(Map<String, Object> pMap) {
 		int result = 0;
+		logger.info("다오에서 출력하기: " +pMap.get("schedule_startdate"));
 		result = sqlSessionTemplate.insert("insertSchedule",pMap);
 		logger.info("dao result: " + result);
 		
