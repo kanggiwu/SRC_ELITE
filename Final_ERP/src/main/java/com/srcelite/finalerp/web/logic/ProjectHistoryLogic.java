@@ -84,6 +84,15 @@ public class ProjectHistoryLogic {
 	}
 
 
+	public int updateProjectInfo(Map<String, Object> pmap) {
+		logger.info("updateProjectInfo 호출 성공");
+		int result = 0;
+		//List<Map<String,Object>> updateProjectInfo = null;
+		result = projectHistoryDao.updateProjectInfo(pmap);			
+		return result;
+	}
+
+
 
 
 

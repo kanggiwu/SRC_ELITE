@@ -7,6 +7,10 @@
 	List<Map<String,Object>> projectNameList = null;
 	List<Map<String,Object>> empSearchList2 = null;
 	projectNameList = (List<Map<String,Object>>)request.getAttribute("projectNameList");
+	
+	Map<String,Object> rmap = projectNameList.get(0);
+	String project_no = "";
+	project_no = rmap.get("PROJECT_NO").toString();
 	int size = 0;
 	String pProjectName = null;
 	if(projectNameList!=null){
@@ -21,34 +25,7 @@
 	}
 	out.print("size2:"+size2);
 %> 
-<%-- <%
-//조회 결과가 없는 거야?
-if(size2==0){		
-%>    
-   
-            <td colspan="5">조회결과가 없습니다.</td>
-        
-<%
-}
-else{//조회 결과가 있을 때
-	for(int i=0;i<size2;i++){
-		Map<String,Object> pmap2 = empSearchList2.get(i);
-		if(i==size2) break;
-		//pProjectNo = pmap.get("PROJECT_NO").toString();
-%>    	
-											
-						<td>
-        					<input type="checkbox" class="styled" id="singleCheckbox1" value="option1" aria-label="Single checkbox One">
-        				</td>
-        				<td><%=pmap2.get("EMP_NO").toString()%></td>
-						<td><%=pmap2.get("DEPT_NAME").toString()%></td>
-						<td><%=pmap2.get("RANK_NAME").toString()%></td>
-						<td><%=pmap2.get("EMP_NAME").toString()%></td>
-					
-<% 
-	}///end of for
-} ///end of if
-%>  --%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,14 +42,16 @@ else{//조회 결과가 있을 때
 <link href="../common/css/custom.css" rel="stylesheet" />
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 <title>프로젝트 이력 추가</title>
+
+
 <script>
 	function empSearchAction(){
 		//let a ={"d":a,"d1":b};
 		//alert("여기")
 		//var deptTarget = document.getElementById("dept_options")
-		var deptTarget = $("#dept_options option:selected").val();
-		var rankTarget = $("#rank_options option:selected").val();
-		var companyTarget = $("#txt_company").val();
+		let deptTarget = $("#dept_options option:selected").val();
+		let rankTarget = $("#rank_options option:selected").val();
+		let companyTarget = $("#txt_company").val();
 		//alert(companyTarget)
 		console.log("ddddd");
      	$.ajax({
@@ -117,13 +96,6 @@ function resultt(data){
       document.querySelector(".aaaa").innerHTML = a;
 }
 
-/* function empAddAction(){
-	$("input:checkbox[name=chkList]:checked").each(function() {
-		var checkVal = $(this).val()[1];
-		alert(checkVal);
-	});
-} */
-
 
 
 </script>
@@ -134,6 +106,7 @@ function resultt(data){
    <div id="layoutSidenav_nav"></div>
    <div id="layoutSidenav_content">
 		<main id="input_div">
+<form id="project_ins" method="post" action="updateProjectInfo.src1"> 
 			<div id="frame_div" style="border: 1px solid black;">
 				<div id="page_title" style="border-bottom: 2px solid gray; margin: 50px 30px;">
 				<h2>프로젝트 이력 추가</h2></div>
@@ -142,7 +115,6 @@ function resultt(data){
  <!-- ====================================================================================================== --> 
    <div class="row">
    <div class='col-sm-6'>
-		<form class="form-horizontal" role="form">
 			<div class="form-group">
 <!-- =========프로젝트명 DB에서 가져와서 뿌려주기 ========================== -->
 				<label for="txt_proName">프로젝트명</label>
@@ -155,13 +127,14 @@ if(size==0){
 <%
 }
 else{//조회 결과가 있을 때
+	Map<String,Object> pmap = null;
 	for(int i=0;i<size;i++){
-		Map<String,Object> pmap = projectNameList.get(i);
+		pmap = projectNameList.get(i);
 		if(i==size) break;
 		pProjectName = pmap.get("PROJECT_NAME").toString();
 %>    	
 				  <%-- <option><%=pmap.get("PROJECT_NAME").toString()%></option> --%>
-				  <option><%=pProjectName%></option>
+				  <option name="projectName_options" value="<%=pProjectName%>"><%=pProjectName%></option>
 <!-- =========프로젝트명 DB에서 가져와서 뿌려주기끝 ========================== -->				  
 <% 
 	}///end of for
@@ -169,39 +142,40 @@ else{//조회 결과가 있을 때
 %>
 				</select>
 			</div>
-			
+			<input type="hidden" name="project_no" value="<%=project_no%>"></input>
 			<div class="form-group">
 				<label for="dat_period">기간</label>
 				<div class="form-inline">
-					<input type="date" class="form-control" id="dat_period2">&nbsp; ~ &nbsp;
-					<input type="date" class="form-control" id="dat_period3">
+					<input type="date" class="form-control" id="dat_period2" name="dat_period2">&nbsp; ~ &nbsp;
+					<input type="date" class="form-control" id="dat_period3" name="dat_period3">
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="txt_company">발주사</label>
-				<input type="text" class="form-control" id="txt_company1">
+				<input type="text" class="form-control" id="txt_company1" name="tproject_client">
 			</div>
 			<div class="form-group">
 				<label for="txt_emp">담당자</label>
-				<input type="text" class="form-control" id="txt_emp">
+				<input type="text" class="form-control" id="txt_emp" name="txt_emp">
 			</div>
 			<div class="form-group">
 				<label for="txt_prodeeds">수익금</label>
-				<input type="text" class="form-control" id="txt_prodeeds">
+				<input type="text" class="form-control" id="txt_prodeeds" name="project_profit">
 			</div>
 			<div class="form-group">
 				<label for="txt_kind">종류</label>
-				<input type="text" class="form-control" id="txt_kind">
+				<input type="text" class="form-control" id="txt_kind" name="project_type">
 			</div>
 			<div class="form-group">
 				<label for="txt_skills">기술</label>
-				<textarea class="form-control" id="txt_skills" rows="3" cols="50"></textarea>					
+				<textarea class="form-control" id="txt_skills" rows="3" cols="50" name="project_tech">
+				</textarea>					
 			</div>
 			<div class="form-group">
 				<label for="txt_content">개발내용</label>
-				<textarea class="form-control" id="txt_content" rows="3" cols="50"></textarea>					
+				<textarea class="form-control" id="txt_content" rows="3" cols="50" name="project_content">
+				</textarea>					
 			</div>
-		</form>
 		</div>
 <!-- ********************************우측 인력검색부분************************************* -->	
 		<div class='col-sm-6'>
@@ -255,13 +229,17 @@ else{//조회 결과가 있을 때
 				</tbody>	
 			</table>
 			</div>
+			</form>
 			<div class="col text-center">
 				<!-- <a href="javascript:void(0)" id="selectBtn" onclick="empAddAction()"  class="btn btn-info btn-sm">추가</a> -->
 				<a href="javascript:void(0)" id="selectBtn" class="btn btn-info btn-sm">추가</a>
 <!-- 				<a href="javascript:void(0)" id="selectBtn" onclick="deleteBtn()"  class="btn btn-info btn-sm">제거</a> -->
 				<!-- <a href="javascript:void(1)" id="deleteBtn" class="btn btn-info btn-sm">제거</a> -->
-				 <button  type="button" class="btn btn-info btn-sm" onclick="deleteBtn()">제거</button>
+				<button  type="button" id="deletB" class="btn btn-info btn-sm" onclick="deleteBtn()">제거</button>
+<!-- 				<input type="button" value="제거" onclick="deleteBtn();" name="deletB"  /><br/> -->
 			</div>
+			
+			<form>
 			<div>
 			<div style="overflow:scroll; width:100%; height:300px;">
 			<table class="table table-hover" id="sTable">
@@ -276,60 +254,57 @@ else{//조회 결과가 있을 때
 				</thead>
 				<tbody class="bbbb">
 				<!-- ==============위에서 선택된 데이터 가져와서 뿌려주기======================-->
-<!-- 					<tr>						
-						<td>
-        					<input type="checkbox" class="styled" id="singleCheckbox1" value="option1" aria-label="Single checkbox One">
-        				</td>
-						<td>123456</td>
-						<td>개발부</td>
-						<td>팀장</td>
-						<td>유재석</td>
-					</tr> -->
+
 				<!-- ==============위에서 선택된 데이터 가져와서 뿌려주기 끝======================-->
 				</tbody>
 			</table>
 			</div>
+</form>
 			<br>
 			<div class="text-right">
-				<button type="button" class="btn btn-warning btn-lg" onclick="location.href='updateProjectHistory.src1'">프로젝트 추가</button>
+				<!-- <button type="button" id="addProject" class="btn btn-warning btn-lg" onclick="addProjectAction()">프로젝트 추가</button> -->
+				<button type="submit" id="addProject" class="btn btn-warning btn-lg" onclick="addProjectAction()">프로젝트 추가</button>
+	
 			</div>
 			</div>
-		</form>	
 		</div>
+<!-- </form> -->
 		</main>
 	</div>
 </div>
 <script>
+let myMap = new Map();
+		let EMP_NO = 0;
 $("#selectBtn").click(function(){ 
 	//alert("click");
-	var rowData = new Array();
+	let rowData = new Array();
 	let tdArr = new Array();
-	var checkbox = $("input[name=chkList]:checked");
+	let checkbox = $("input[name=chkList]:checked");
 	
 	// 체크된 체크박스 값을 가져온다
 	checkbox.each(function(i) {
 
 		// checkbox.parent() : checkbox의 부모는 <td>이다.
 		// checkbox.parent().parent() : <td>의 부모이므로 <tr>이다.
-		var tr = checkbox.parent().parent().eq(i);
-		var td = tr.children();
+		let tr = checkbox.parent().parent().eq(i);
+		let td = tr.children();
 		
 		// 체크된 row의 모든 값을 배열에 담는다.
 		rowData.push(tr.text());
 		
 		// td.eq(0)은 체크박스 이므로  td.eq(1)의 값부터 가져온다.
-		var EMP_NO = td.eq(1).text();
-		var DEPT_NAME = td.eq(2).text();
-		var RANK_NAME = td.eq(3).text();
-		var EMP_NAME = td.eq(4).text(); 
-		/* alert(EMP_NO); */
-	/* 	var EmpInfo = function (EMP_NO,DEPT_NAME,RANK_NAME,EMP_NAME){
-		//var EmpInfo = function (td.eq(1).text(),td.eq(2).text(),td.eq(3).text(),td.eq(4).text()){
-			empNo = EMP_NO;
-			deptName = DEPT_NAME;
-			rankName = RANK_NAME;
-			empName = EMP_NAME;
-		}	 */	
+		EMP_NO = td.eq(1).text();
+		let DEPT_NAME = td.eq(2).text();
+		let RANK_NAME = td.eq(3).text();
+		let EMP_NAME = td.eq(4).text(); 
+		if(myMap.get(EMP_NO) == undefined){   
+  			//alert("아니야");
+			myMap.set(EMP_NO,EMP_NO);
+  		}else {
+  			//alert("맞아");
+        	return;   			
+  		}
+		//alert (myMap.set(EMP_NO,EMP_NO));
 		
 		// 가져온 값을 배열에 담는다.
 		tdArr.push(EMP_NO);
@@ -345,39 +320,70 @@ function result2(data){
 	//alert("result2 호출성공")
 	let b="";
 	let size=0;
-      		b+="<tr>";
+      		b+="<tr id='empno' value='"+EMP_NO+"'>";
       		b+="		<td>";
-      		b+="			<input type='checkbox' name='chkList2' class='styled' id='singleCheckbox1'  aria-label='Single checkbox One'>";
+      		b+="			<input type='checkbox' name='chkList2' class='styled' id='"+EMP_NO+"'  aria-label='Single checkbox One'>";
+       		b+="			<input name = 'emp_no' value='"+EMP_NO+"' hidden>";
       		b+="		</td>";
-      		//console.log(data[i]['RANK_NAME']);
-      		//size = $("input:checkbox[]").length;
-      		//alert(data.length);
-      		for(let i=0;i<data.length;i++){
-       			b+="		<td data-td_value='"+(i+1)+"'>"+data[i]+"</td>";
+
+	      	for(let i=0;i<data.length;i++){
+	       		b+="		<td value='empno_"+EMP_NO+"'>"+data[i]+"</td>";
 			}
-      		/* b+="		<td>"+data[1]+"</td>";
-      		b+="		<td>"+data[2]+"</td>";
-      		b+="		<td>"+data[3]+"</td>";  */
       		b+="</tr>"; 
 
       document.querySelector(".bbbb").innerHTML += b;
 }
 </script>
 <script>
-/* $("#deleteBtn").click(function(){ 
-	alert("삭제버튼 클릭1");
-	
-} */
+
+//$("#deleteBtn").click(function(){
 function deleteBtn(){
-	alert("삭제버튼 클릭");
+	//window.deleteBtn = function()
+	//alert("삭제버튼 클릭");
 	 $("input[name=chkList2]:checked").each(function(){
-         var td_value =$(this).val();
-         console.log(td_value);
-         var tr=$("td[data-td_value='"+td_value+"']");
-         td.remove();
+		 if(this.checked== true){
+			 	console.log($(this).attr('id'));
+				this.parentNode.parentNode.remove();
+				myMap.delete($(this).attr('id'));
+	     	};
      });
 
 }
+//프로젝트 추가 버튼 클릭
+/* function addProjectAction(){
+	alert("addProjectAction 호출 성공");
+	let pNameTarget = $("#projectName_options option:selected").val();
+	let date2Target = $("#dat_period2").val();
+	let date3Target = $("#dat_period3").val();
+	let companyTarget = $("#txt_company1").val();
+	let empTarget = $("#txt_emp").val();
+	let prodeedsTarget = $("#txt_prodeeds").val();
+	let typeTarget = $("#txt_kind").val();
+	let skillsTarget = $("#txt_skills").val();
+	let contentTarget = $("#txt_content").val();
+	let empArr = new Array();
+	empArr = $("#empno").val();
+	console.log(empArr[0]);
+ 	$.ajax({
+		  type:"post",
+		  //type:"get"
+		  data:{"dept_name":pNameTarget,"rank_name":date2Target,"emp_name":date3Target
+			  ,"emp_name":companyTarget,"emp_name":empTarget,"emp_name":prodeedsTarget
+			  ,"emp_name":typeTarget,"emp_name":skillsTarget,"emp_name":contentTarget},
+		  
+		  url: "/projecthistory/getProjectHistoryList.src1",
+		  //data:{"dept":개발부} getparameter("dept")
+		  dataType:"json",
+          /* success:function(data){
+        	  resultt(data);
+  	       },
+          error:function(e){
+        	  let x = e.responseXML;
+        	  alert("fail ===> "+e)
+          } 
+	}); */
+
+          
 </script>
 <!-- 슬라이드바 사용할때 필요 -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

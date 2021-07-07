@@ -77,7 +77,8 @@
 	<!-- 인력추가시 사원번호는 integer배열로 받아야 합니다 -->
 
 
-	<select id="updateProjectInfo" parameterType="map" statementType="CALLABLE" resultType = "map">
+	<!-- <select id="updateProjectInfo" parameterType="map" statementType="CALLABLE" resultType = "map"> -->
+	<select id="updateProjectInfo2" parameterType="map" statementType="CALLABLE">
 		{ call prc_array_test(
 							#{project_no,mode=IN,jdbcType=NUMERIC} 
              ,#{project_profit,mode=IN,jdbcType=NUMERIC}
@@ -89,7 +90,15 @@
              ,#{arr_peno,mode=IN,jdbcType=ARRAY} )
 		}
 	</select>  
-
+	<insert id="updateProjectInfo" parameterType="list">
+     INSERT ALL
+         <foreach collection="list" item="item" index="index" separator=" ">
+               INTO item_photo(photo_name, item_code) 
+               VALUES (#{item.photo_name}, #{item.item_code})
+      </foreach>
+  SELECT * FROM DUAL
+   </insert>
+   
 	<!-- 프로젝트 이력추가 -->
 	<insert id="insertProjectInfo" parameterType="map">
 		INSERT INTO project (project_no, project_name, project_profit, project_client, project_startline, project_deadline, project_type, project_content, project_register, project_tech)
@@ -119,8 +128,8 @@
 	</select>    
 	
 	<!-- 프로젝트 이력 검색 -->
-	<select id="getProjectListProc" statementType="CALLABLE" parameterType="map">
-      {call PROC_PROJECT_LIST(        
+	<select id="getProjectListProc2" statementType="CALLABLE" parameterType="map">
+      {call PROC_PROJECT_LIST2(        
           #{project_type, mode=IN, jdbcType=VARCHAR},
           #{project_startline, mode=IN, jdbcType=VARCHAR},
           #{project_deadline, mode=IN, jdbcType=VARCHAR},
