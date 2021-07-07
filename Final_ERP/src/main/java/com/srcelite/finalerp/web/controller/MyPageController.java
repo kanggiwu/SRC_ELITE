@@ -24,11 +24,12 @@ public class MyPageController extends MultiActionController{
 	public void setMyPageLogic(MyPageLogic myPageLogic) {
 		this.myPageLogic = myPageLogic;
 	}
-	public ModelAndView getMyInfo(HttpServletRequest req, HttpServletResponse res) {
-		HashMapBinder hmb = new HashMapBinder(req);
+	public ModelAndView getMyInfo(HttpServletRequest request, HttpServletResponse response) {
+		HashMapBinder hmb = new HashMapBinder(request);
+		HttpSession session = request.getSession();
 		Map<String,Object> pmap = new HashMap<>();
 		hmb.bind(pmap);
-		pmap.put("emp_no", 5);
+		pmap.put("emp_no", session.getAttribute("login_no"));
 		List<Map<String,Object>> infoList = null;
 		ModelAndView mav = new ModelAndView();
 		infoList = myPageLogic.getMyInfo(pmap);
@@ -50,7 +51,7 @@ public class MyPageController extends MultiActionController{
 	{
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
-		hmb.multiBind(pmap);
+		hmb.bind(pmap);
 		int result = 0;
 		result = myPageLogic.updateMyInfo(pmap);
 		if(result == 1) {
@@ -66,13 +67,13 @@ public class MyPageController extends MultiActionController{
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
-		Map<String, Object> mySalary = null;
-		target.put("log_no", session.getAttribute("log_no"));
-		if(target.get("sal_date")==null) {
-			target.put("sal_date", "");
-		}
+		List<Map<String, Object>> mySalary = null;
+		target.put("login_no", session.getAttribute("login_no"));
+		logger.info("login_no : " + session.getAttribute("login_no"));
+		target.put("sal_date", "2021-06-05");
+		logger.info("target : " + target);
 		mySalary = myPageLogic.getMySalary(target);
-		logger.info("mySalary:"+mySalary);//
+		logger.info("mySalary:"+mySalary);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("getMySalary");
 		mav.addObject("mySalary", mySalary);

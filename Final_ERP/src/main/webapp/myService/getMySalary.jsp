@@ -4,15 +4,8 @@
 <%
 StringBuilder path = new StringBuilder(request.getContextPath());
 path.append("/");
-List<Map<String, Object>> mySalary = null;
-mySalary = (List<Map<String, Object>>) request.getAttribute("mySalary");
-int size = 0;
-String emp_no = null;
-String emp_name = null;
-String dept_name = null;
-String rank_name = null;
-String emp_account = null;
-String emp_hiredate = null;
+Map<String, Object> mySalary = null;
+mySalary = (Map<String, Object>) request.getAttribute("mySalary");
 int sal_no = 0;
 int sal_date = 0;
 int sal_base = 0;
@@ -33,13 +26,24 @@ int sal_deduction_etc = 0;
 int sal_deductions = 0;
 int sal_total = 0;
 if (mySalary != null) {
-	Map<String, Object> rmap = mySalary.get(0);
-	emp_no = rmap.get("EMP_NO").toString();
-	emp_name = rmap.get("EMP_NAME").toString();
-	dept_name = rmap.get("DEPT_NAME").toString();
-	rank_name = rmap.get("RANK_NAME").toString();
-	emp_account = rmap.get("EMP_ACCOUNT").toString();
-	emp_hiredate = rmap.get("EMP_HIREDATE").toString();
+	sal_no = Integer.parseInt(mySalary.get("sal_no").toString());
+	sal_date = Integer.parseInt(mySalary.get("sal_date").toString());
+	sal_incentive = Integer.parseInt(mySalary.get("sal_incentive").toString());
+	sal_position = Integer.parseInt(mySalary.get("sal_position").toString());
+	sal_tech = Integer.parseInt(mySalary.get("sal_tech").toString());
+	sal_etc = Integer.parseInt(mySalary.get("sal_etc").toString());
+	sal_meal = Integer.parseInt(mySalary.get("sal_meal").toString());
+	sal_commu = Integer.parseInt(mySalary.get("sal_commu").toString());
+	sal_payment = Integer.parseInt(mySalary.get("sal_payment").toString());
+	sal_nation_pension = Integer.parseInt(mySalary.get("sal_nation_pension").toString());
+	sal_health = Integer.parseInt(mySalary.get("sal_health").toString());
+	sal_industrial_insurance = Integer.parseInt(mySalary.get("sal_industrial_insurance").toString());
+	sal_employ_insurance = Integer.parseInt(mySalary.get("sal_employ_insurance").toString());
+	sal_income_tax = Integer.parseInt(mySalary.get("sal_income_tax").toString());
+	sal_local_tax = Integer.parseInt(mySalary.get("sal_local_tax").toString());
+	sal_deduction_etc = Integer.parseInt(mySalary.get("sal_deduction_etc").toString());
+	sal_deductions = Integer.parseInt(mySalary.get("sal_deductions").toString());
+	sal_total = Integer.parseInt(mySalary.get("sal_total").toString());
 }
 %>
 <!DOCTYPE html>
@@ -79,6 +83,10 @@ $.ajax({
       	  alert("fail ===> "+e)
         }
 }); 
+
+function searchMySalary() {
+	$('#input-group').submit();
+};
 </script>
 <title>MyPage - ERP PROGRAM</title>
 </head>
@@ -109,17 +117,18 @@ $.ajax({
 									<div class="col-lg-12">
 										<br>
 										<div class="input-group">
+										<form id="search_form" action="/mypage/getMySalary.src1" method='post' accept-charset="utf-8">
 											<span class="input-group-addon" id="basic-addon1"
 												style="display: inline-block; width: 50%">
 												<h5>급여 상세 내역</h5>
-											</span> <select class="form-control" name="yearSalary"
+											</span> <select class="form-control" name="year"
 												id="yearSearch">
-												<option selected disabled>2021년</option>
-											</select> <select class="form-control" name="monthSalary"
+												<option selected>2021</option>
+											</select> <select class="form-control" name="month"
 												id="monthSearch">
-												<option selected disabled>7월</option>
+												<option selected>07</option>
 											</select>
-											<button class="btn btn-light" onclick="searchMonthSalary()">검색</button>
+											<button class="btn btn-light" onclick="javascript:searchMySalary()">검색</button>
 										</div>
 										<table class="table table-bordered table-hover table-striped"
 											id="testTable" id="table" data-toggle="table"
@@ -209,7 +218,7 @@ $.ajax({
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1"
 								style="display: inline-block; width: 40%">입사날짜</span> <input
-								type="text" class="form-control" id="txt_company" value="<%=emp_hiredate%>"readonly>
+								type="text" class="form-control" id="txt_company" value=""readonly>
 						</div>
 						<br>
 						<div class="input-group">
@@ -221,13 +230,13 @@ $.ajax({
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1"
 								style="display: inline-block; width: 40%">재직일</span> <input
-								type="text" class="form-control" id="txt_company" value="<%=emp_hiredate%>" readonly>
+								type="text" class="form-control" id="txt_company" value="" readonly>
 						</div>
 						<br>
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1"
 								style="display: inline-block; width: 40%">3개월 평균 급여</span> <input
-								type="text" class="form-control" id="txt_company" value="<%=emp_hiredate%>" readonly>
+								type="text" class="form-control" id="txt_company" value="" readonly>
 						</div>
 						<br>
 						<h6>예상퇴직금은 직근 3개월 급여 평균 X 재직일수 / 365입니다</h6>

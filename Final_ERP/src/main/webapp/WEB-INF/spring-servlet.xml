@@ -56,6 +56,7 @@
 				<prop key="/mypage/getMyInfo.src1">my-page-controller</prop>
 				<prop key="/mypage/updateMyInfo.src1">my-page-controller</prop>
 				<prop key="/mypage/getMySalary.src1">my-page-controller</prop>
+
 				<prop key="/mypage/getYearSalary.src1">my-page-controller</prop>
 				<prop key="/mypage/getRetirementPay.src1">my-page-controller</prop>
 

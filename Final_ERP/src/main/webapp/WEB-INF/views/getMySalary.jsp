@@ -4,8 +4,9 @@
 <%
 StringBuilder path = new StringBuilder(request.getContextPath());
 path.append("/");
-Map<String, Object> mySalary = null;
-mySalary = (Map<String, Object>) request.getAttribute("mySalary");
+List<Map<String, Object>> mySalaryList = null;
+mySalaryList = (List<Map<String, Object>>) request.getAttribute("mySalary");
+Map<String, Object> mySalary = mySalaryList.get(1);
 int sal_no = 0;
 int sal_date = 0;
 int sal_base = 0;
@@ -26,24 +27,24 @@ int sal_deduction_etc = 0;
 int sal_deductions = 0;
 int sal_total = 0;
 if (mySalary != null) {
-	sal_no = Integer.parseInt(mySalary.get("sal_no").toString());
-	sal_date = Integer.parseInt(mySalary.get("sal_date").toString());
-	sal_incentive = Integer.parseInt(mySalary.get("sal_incentive").toString());
-	sal_position = Integer.parseInt(mySalary.get("sal_position").toString());
-	sal_tech = Integer.parseInt(mySalary.get("sal_tech").toString());
-	sal_etc = Integer.parseInt(mySalary.get("sal_etc").toString());
-	sal_meal = Integer.parseInt(mySalary.get("sal_meal").toString());
-	sal_commu = Integer.parseInt(mySalary.get("sal_commu").toString());
-	sal_payment = Integer.parseInt(mySalary.get("sal_payment").toString());
-	sal_nation_pension = Integer.parseInt(mySalary.get("sal_nation_pension").toString());
-	sal_health = Integer.parseInt(mySalary.get("sal_health").toString());
-	sal_industrial_insurance = Integer.parseInt(mySalary.get("sal_industrial_insurance").toString());
-	sal_employ_insurance = Integer.parseInt(mySalary.get("sal_employ_insurance").toString());
-	sal_income_tax = Integer.parseInt(mySalary.get("sal_income_tax").toString());
-	sal_local_tax = Integer.parseInt(mySalary.get("sal_local_tax").toString());
-	sal_deduction_etc = Integer.parseInt(mySalary.get("sal_deduction_etc").toString());
-	sal_deductions = Integer.parseInt(mySalary.get("sal_deductions").toString());
-	sal_total = Integer.parseInt(mySalary.get("sal_total").toString());
+	if(mySalary.get("SAL_NO") != null) sal_no = Integer.parseInt(mySalary.get("SAL_NO").toString());
+	if(mySalary.get("SAL_BASE") != null) sal_base = Integer.parseInt(mySalary.get("SAL_BASE").toString());
+	if(mySalary.get("SAL_INCENTIVE") != null) sal_incentive = Integer.parseInt(mySalary.get("SAL_INCENTIVE").toString());
+	if(mySalary.get("SAL_POSITION") != null)sal_position = Integer.parseInt(mySalary.get("SAL_POSITION").toString());
+	if(mySalary.get("SAL_TECH") != null)sal_tech = Integer.parseInt(mySalary.get("SAL_TECH").toString());
+	if(mySalary.get("SAL_ETC") != null)sal_etc = Integer.parseInt(mySalary.get("SAL_ETC").toString());
+	if(mySalary.get("SAL_MEAL") != null)sal_meal = Integer.parseInt(mySalary.get("SAL_MEAL").toString());
+	if(mySalary.get("SAL_COMMU") != null)sal_commu = Integer.parseInt(mySalary.get("SAL_COMMU").toString());
+	if(mySalary.get("SAL_PAYMENT") != null)sal_payment = Integer.parseInt(mySalary.get("SAL_PAYMENT").toString());
+	if(mySalary.get("SAL_NATION_PENSION") != null)sal_nation_pension = Integer.parseInt(mySalary.get("SAL_NATION_PENSION").toString());
+	if(mySalary.get("SAL_HEALTH") != null)sal_health = Integer.parseInt(mySalary.get("SAL_HEALTH").toString());
+	if(mySalary.get("SAL_INDUSTRIAL_INSURANCE") != null)sal_industrial_insurance = Integer.parseInt(mySalary.get("SAL_INDUSTRIAL_INSURANCE").toString());
+	if(mySalary.get("SAL_EMPLOY_INSURANCE") != null)sal_employ_insurance = Integer.parseInt(mySalary.get("SAL_EMPLOY_INSURANCE").toString());
+	if(mySalary.get("SAL_INCOME_TAX") != null)sal_income_tax = Integer.parseInt(mySalary.get("SAL_INCOME_TAX").toString());
+	if(mySalary.get("SAL_LOCAL_TAX") != null)sal_local_tax = Integer.parseInt(mySalary.get("SAL_LOCAL_TAX").toString());
+	if(mySalary.get("SAL_DEDUCTION_ETC") != null)sal_deduction_etc = Integer.parseInt(mySalary.get("SAL_DEDUCTION_ETC").toString());
+	if(mySalary.get("SAL_DEDUCTIONS") != null)sal_deductions = Integer.parseInt(mySalary.get("SAL_DEDUCTIONS").toString());
+	if(mySalary.get("SAL_TOTAL") != null)sal_total = Integer.parseInt(mySalary.get("SAL_TOTAL").toString());
 }
 %>
 <!DOCTYPE html>
@@ -83,6 +84,10 @@ $.ajax({
       	  alert("fail ===> "+e)
         }
 }); 
+
+function searchMySalary() {
+	$('#input-group').submit();
+};
 </script>
 <title>MyPage - ERP PROGRAM</title>
 </head>
@@ -113,17 +118,18 @@ $.ajax({
 									<div class="col-lg-12">
 										<br>
 										<div class="input-group">
+										<form id="search_form" action="/mypage/getMySalary.src1" method='post' accept-charset="utf-8">
 											<span class="input-group-addon" id="basic-addon1"
 												style="display: inline-block; width: 50%">
 												<h5>급여 상세 내역</h5>
 											</span> <select class="form-control" name="year"
 												id="yearSearch">
-												<option selected disabled>2021년</option>
+												<option selected>2021</option>
 											</select> <select class="form-control" name="month"
 												id="monthSearch">
-												<option selected disabled>7월</option>
+												<option selected>06</option>
 											</select>
-											<button class="btn btn-light" onclick="searchMonthSalary()">검색</button>
+											<button class="btn btn-light" onclick="javascript:searchMySalary()">검색</button>
 										</div>
 										<table class="table table-bordered table-hover table-striped"
 											id="testTable" id="table" data-toggle="table"
@@ -143,7 +149,7 @@ $.ajax({
 													<th>기본급</th>
 													<th><%=sal_base%></th>
 													<th>국민연금</th>
-													<th><%=sal_base%></th>
+													<th><%=sal_nation_pension%></th>
 												</tr>
 												<tr>
 													<th>성과금</th>
