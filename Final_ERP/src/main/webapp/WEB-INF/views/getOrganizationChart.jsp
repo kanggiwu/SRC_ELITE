@@ -1,5 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*"%>
+<%
+StringBuilder path = new StringBuilder(request.getContextPath());
+path.append("/");
+out.print(path);
+List<Map<String, Object>> organizationChartPath = null;
+organizationChartPath = (List<Map<String, Object>>) request.getAttribute("organizationChartPath");
+Map<String, Object> rmap = organizationChartPath.get(0);
+String emp_no = "";
+String oc_path = rmap.get("OC_PATH").toString();
+/* emp_no = rmap.get("EMP_NO").toString(); */
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +52,7 @@
 		$('#imgViewArea').css({ 'display' : 'none' });
 	} */
 	
-/* 	$(document).ready(function(){
+ 	$(document).ready(function(){
 		  $("#fileInput").on('change',function(){
 		    if(window.FileReader){
 		      var filename = $(this)[0].files[0].name;
@@ -52,7 +64,7 @@
 		    //추출한 파일명 삽입
 		    $("#userfile").val(filename);
 		  });
-		});	 */
+		});	 
 </script>
 <title>HR - ERP PROGRAM</title>
 </head>
@@ -64,11 +76,12 @@
 		<main id="input_div">
 			<div id="frame_div" style="border: 1px solid black;">
 				<div id="page_title" style="border-bottom: 2px solid gray; margin: 50px 30px;">
-				<h2>조직도 조회</h2></div>
+				<h2>조직도</h2></div>
 				<div id="page_contents" style="max-width: 1730px; margin: 10px 100px;">
      			<!-- 컨텐츠 들어갈내용 시작-->
             <div id="imgViewArea" style=" width:100%; height:500px;">
-              <img id="OrganizationChartImg" style="width: 90%; height: 90%;" alt="Organization chart" onerror="imgAreaError()">
+              <img id="OrganizationChartImg" src="../<%=oc_path%>" style="width: 90%; height: 90%;" alt="Organization chart" onerror="imgAreaError()">
+              <input name="emp_no" value="<%=emp_no%>" hidden>
           </div>
           <div class="form-group">
             <label for="InputSubject1">파일첨부</label>
@@ -81,7 +94,7 @@
                 <label for="fileInput" class="btn btn-default">
                   <span class="glyphicon fa fa-upload"></span>
                 </label>
-                <button class="btn btn-info" onclick="location.href='insertEmployee.jsp'">
+                <button class="btn btn-info" onclick="location.href='updateOrganizationChart.src1'">
                   수정</button>
               </span>
             </div>

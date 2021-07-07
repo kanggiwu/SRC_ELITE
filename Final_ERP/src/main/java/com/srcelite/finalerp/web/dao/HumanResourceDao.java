@@ -49,4 +49,15 @@ public class HumanResourceDao {
 		boardList = (List<Map<String, Object>>) pmap.get("e_cursor");
 		return boardList;
 	}
+	public List<Map<String, Object>> getOrganizationChart(Map<String, Object> pmap) {
+		List<Map<String, Object>> organizationChartPath = null;
+		organizationChartPath = sqlSessionTemplate.selectList("getOrganizationChart",pmap);
+		return organizationChartPath;
+	}
+	public int updateOrganizationChart(Map<String, Object> pmap) {
+		int result = 0;
+		sqlSessionTemplate.update("updateOrganizationChart",pmap);
+		result = 1;
+		return result;
+	}
 }

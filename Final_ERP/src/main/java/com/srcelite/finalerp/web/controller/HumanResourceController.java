@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
@@ -89,27 +90,36 @@ public class HumanResourceController extends MultiActionController {
 	public ModelAndView getOrganizationChart(HttpServletRequest req, HttpServletResponse res)
 	throws Exception
 	{
-
+		HashMapBinder hmb = new HashMapBinder(req);
+		HttpSession session = req.getSession();
+		Map<String,Object> pmap = new HashMap<>();
+		pmap.put("EMP_NO", session.getAttribute("login_no"));
+		logger.info(session.getAttribute("login_no"));
+		logger.info(pmap.get("EMP_NO"));
+		List<Map<String,Object>> organizationChartPath = null;
 		ModelAndView mav = new ModelAndView();
+		organizationChartPath = humanResourceLogic.getOrganizationChart(pmap);
+		logger.info(pmap.get("EMP_NO"));
+		mav.addObject("organizationChartPath", organizationChartPath);
 		mav.setViewName("getOrganizationChart");
 		return mav;
 		
 	}
-//	public void updateOrganizationChart(HttpServletRequest req, HttpServletResponse res)
-//			throws Exception
-//	{
-//		HashMapBinder hmb = new HashMapBinder(req);
-//		Map<String,Object> pmap = new HashMap<>();
-//		hmb.bind(pmap);
-//		int result = 0;
-//		result = humanResourceLogic.insertEmployee(pmap);
-//		if(result == 1) {
-//			res.sendRedirect("");
-//		}
-//		else {
-//			res.sendRedirect("등록실패 페이지 이동처리");
-//		}
-//	}
+	public void updateOrganizationChart(HttpServletRequest req, HttpServletResponse res)
+			throws Exception
+	{
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String,Object> pmap = new HashMap<>();
+		hmb.bind(pmap);
+		int result = 0;
+		result = humanResourceLogic.updateOrganizationChart(pmap);
+		if(result == 1) {
+			res.sendRedirect("getOrganizationChart.src1");
+		}
+		else {
+			res.sendRedirect("../index.jsp");
+		}
+	}
 	public ModelAndView getEmpSearchList(HttpServletRequest req, HttpServletResponse res)
 	throws Exception
 	{
@@ -120,7 +130,7 @@ public class HumanResourceController extends MultiActionController {
 		logger.info("emp_name value: "+pmap.get("emp_name"));
 		logger.info("dept_name value: "+pmap.get("dept_name"));
 		logger.info("rank_name value: "+pmap.get("rank_name"));
-			boardList = humanResourceLogic.getEmpSearchList(pmap);
+		boardList = humanResourceLogic.getEmpSearchList(pmap);
 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("getEmployeeList");

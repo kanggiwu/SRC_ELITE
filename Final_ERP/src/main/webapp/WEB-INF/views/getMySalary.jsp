@@ -181,16 +181,20 @@ function searchMySalary() {
 													<th><%=sal_local_tax%></th>
 												</tr>
 												<tr>
-													<th></th>
-													<th></th>
-													<th>공제</th>
+													<th>기타수당</th>
+													<th><%=sal_etc%></th>
+													<th>기타공제</th>
 													<th><%=sal_deduction_etc%></th>
 												</tr>
 												<tr>
-													<th>지급계</th>
+													<th>지급액</th>
 													<th><%=sal_payment%></th>
-													<th>공제계</th>
+													<th>공제액</th>
 													<th><%=sal_deductions%></th>
+												</tr>
+												<tr>
+													<th colspan="3">총지급액</th>
+													<th><%=sal_total%></th>
 												</tr>
 											</tbody>
 										</table>
@@ -218,25 +222,25 @@ function searchMySalary() {
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1"
 								style="display: inline-block; width: 40%">입사날짜</span> <input
-								type="text" class="form-control" id="txt_company" value=""readonly>
+								type="text" class="form-control" id="emp_hiredte" value="" readonly>
 						</div>
 						<br>
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1"
 								style="display: inline-block; width: 40%">희망 퇴직날짜</span> <input
-								type="date" class="form-control" id="txt_company" value="">
-						</div>
-						<br>
-						<div class="input-group">
-							<span class="input-group-addon" id="basic-addon1"
-								style="display: inline-block; width: 40%">재직일</span> <input
-								type="text" class="form-control" id="txt_company" value="" readonly>
+								type="date" class="form-control" id="emp_retiredate" value="">
 						</div>
 						<br>
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1"
 								style="display: inline-block; width: 40%">3개월 평균 급여</span> <input
-								type="text" class="form-control" id="txt_company" value="" readonly>
+								type="text" class="form-control" id="averageSalary" value="" readonly>
+						</div>
+						<br>
+						<div class="input-group">
+							<span class="input-group-addon" id="basic-addon1"
+								style="display: inline-block; width: 40%">재직일</span> <input
+								type="text" class="form-control" id="workDay" value="" readonly>
 						</div>
 						<br>
 						<h6>예상퇴직금은 직근 3개월 급여 평균 X 재직일수 / 365입니다</h6>
@@ -245,13 +249,13 @@ function searchMySalary() {
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1"
 								style="display: inline-block; width: 40%">예상 퇴직금</span> <input
-								type="text" class="form-control" id="txt_company" value="" readonly>
+								type="text" class="form-control" id="retirementPay" value="" readonly>
 						</div>
 						<br>
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success">계산</button>
+					<button type="button" class="btn btn-success" onclick="calculateSalary()">계산</button>
 					<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 				</div>
 			</div>
@@ -272,6 +276,10 @@ function openPopup(){
  // 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
  var popupY= (window.screen.height /2) - (300 / 2);
  // 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
+ 
+ function calculateSalary(){
+	 
+ }
 </script>
 	<!----------------사원검색 Modal 끝 ----------------------------------------------->
 	<!-- 슬라이드바 사용할때 필요 -->

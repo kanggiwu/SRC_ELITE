@@ -12,13 +12,17 @@ public class HumanResourceLogic {
 		this.humanResourceDao = humanResourceDao;
 	}
 	//조직도 조회
-	public Map<String,Object> getOrganizationChart(Map<String,Object> pmap) {
-		return null;
+	public List<Map<String,Object>> getOrganizationChart(Map<String,Object> pmap) {
+		List<Map<String,Object>> getOrganizationChart = null;
+		getOrganizationChart = humanResourceDao.getOrganizationChart(pmap);
+		return getOrganizationChart;
 	}
 	//조직도 수정
-	public void updateOrganizationChart(Map<String,Object> pmap) {
+	public int updateOrganizationChart(Map<String,Object> pmap) {
+		int result = 0;
 		try {
-			
+			result = humanResourceDao.updateOrganizationChart(pmap);
+			return result;
 		} catch (Exception e) {
 			throw e;
 		}
