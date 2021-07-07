@@ -172,8 +172,8 @@ $.ajax({
 													<th><%=sal_local_tax%></th>
 												</tr>
 												<tr>
-													<th></th>
-													<th></th>
+													<th>기타수당</th>
+													<th><%=sal_etc%></th>
 													<th>공제</th>
 													<th><%=sal_deduction_etc%></th>
 												</tr>
