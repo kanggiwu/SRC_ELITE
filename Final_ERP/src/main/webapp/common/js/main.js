@@ -85,7 +85,8 @@ schedule_type: -1,
           class: 'popoverInfoCalendar'
         }).append('<p><strong>사원번호:</strong> ' + event.emp_no + '</p>')
         .append('<p><strong>작성자:</strong> ' + event.username + '</p>')
-        .append('<p><strong>시간:</strong> ' + getDisplayEventDate(event) + '</p>')
+        .append('<p><strong>시간:</strong> ' + moment(event.start).format('YYYY-MM-DD HH:mm') + '</p>')
+        .append('<p><strong>시간:</strong> ' + moment(event.end).format('YYYY-MM-DD HH:mm') + '</p>')
         .append('<div class="popoverDescCalendar"><strong>내용:</strong> ' + event.description + '</div>'),
       delay: {
         show: "800",
@@ -97,7 +98,7 @@ schedule_type: -1,
       container: 'body'
     });
 
-    return true;
+    return filtering(event);
   },
 
   /* ****************
@@ -111,19 +112,13 @@ schedule_type: -1,
         // 화면이 바뀌면 Date 객체인 start, end 가 들어옴
         startDate : moment(start).format('YYYY-MM-DD'),
         endDate   : moment(end).format('YYYY-MM-DD'),
-       	schedule_type: 2
       },
       processData: true,
       success: function (data) {
       	var result = data;
-      	console.log(result);
       	var jsonDoc = JSON.parse(result);
-      	console.log(jsonDoc.length);
-      	for(var i = 0; i<jsonDoc.length; i++){
-      		console.log(jsonDoc[i].SCHEDULE_TYPE+" ");
-      	}
         var fixedDate = jsonDoc.map(function (array) {
-			if (array.start!== array.end) {
+			if (array.allDay && array.start!== array.end) {
             array.end = moment(array.end).add(1, 'days'); // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
           	
           }
@@ -216,14 +211,27 @@ schedule_type: -1,
     $(".fc-body").on('click', 'td', function (e) {
 
 
-	console.log("e.pageX: "+e.pageX+", e.pageY: "+e.pageY);
       $("#contextMenu")
         .addClass("contextOpened")
-        .css({
+     
+     if($(window).width() <991) {
+      $("#contextMenu").css({
           display: "block",
           left: e.pageX,
-          top: e.pageY
+          top: e.pageY-73
         });
+      }
+      else{
+        $("#contextMenu").css({
+          display: "block",
+          left: e.pageX-220,
+          top: e.pageY-73
+        });
+      
+      }
+      
+      
+      
       return false;
     });
 
@@ -296,13 +304,10 @@ function filtering(event) {
   var show_type = true;
 
   var schedule_type = $('input:checkbox.filter:checked').map(function () {
-	  console.log($(this).val());
     return $(this).val();
   }).get();
 
-  show_type = schedule_type.indexOf(event.type) >= 0;
-
-
+  show_type = schedule_type.indexOf(String(event.type)) >= 0;
 
   return  show_type;
 }
@@ -339,7 +344,6 @@ function calDateWhenDragnDrop(event) {
 
   //하루짜리 all day
   if (event.allDay && event.end === event.start) {
-    console.log('1111')
     newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
     newDates.endDate = newDates.startDate;
   }

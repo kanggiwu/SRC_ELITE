@@ -36,7 +36,7 @@ let newEvent = function (start, end, eventType) {
 
     //새로운 일정 저장버튼 클릭
     $('#save-event').unbind();
-    $('#save-event').on('click', function () {
+    $(document).on('click','#save-event', function () {
 
         var eventData = {
             schedule_title: editTitle.val(),
@@ -44,10 +44,14 @@ let newEvent = function (start, end, eventType) {
             schedule_startdate: editStart.val(),
             schedule_enddate: editEnd.val(),
             schedule_content: editDesc.val(),
-            allDay: true
+            backgroundcolor: editColor.val(),
+            allDay: false
         };
-        
-
+		
+		
+		console.log(eventData.schedule_enddate+"일정 마가일");
+		console.log(eventData.backgroundcolor+"색을 넣어본다");
+		
         if (eventData.start > eventData.end) {
             alert('끝나는 날짜가 앞설 수 없습니다.');
             return false;
@@ -59,7 +63,7 @@ let newEvent = function (start, end, eventType) {
             return false;
         }
         if (eventData.type === '') {
-            alert('일정명은 필수입니다.');
+            alert('분류는 필수입니다.');
             return false;
         }
 
@@ -79,17 +83,28 @@ let newEvent = function (start, end, eventType) {
         eventModal.find('input, textarea').val('');
         editAllDay.prop('checked', false);
         eventModal.modal('hide');
-
+		
+		var schedule_type 		=	eventData.schedule_type;
+		var schedule_title 	=	eventData.schedule_title;
+		var schedule_startdate =	eventData.schedule_startdate;
+		var schedule_enddate 	=	eventData.schedule_enddate;
+		var schedule_content	=	eventData.schedule_content;
+		var color 	=	eventData.backgroundcolor;
+		var all_Day 			=	eventData.allDay;
+		console.log("끝나는 날"+schedule_enddate);
+		alert ( color +"색");
         //새로운 일정 저장
         $.ajax({
             type: "post",
             url: "/schedule/insertSchedule.src1",
             data: {
-                schedule_type: eventData.schedule_type,
-                schedule_title: eventData.schedule_title,
-                schedule_startdate: eventData.schedule_startdate,
-                schedule_enddate: eventData.schedule_enddate,
-                schedule_content:eventData.schedule_content
+                schedule_type: 			schedule_type, 		
+                schedule_title: 		schedule_title, 		
+                schedule_startdate: 	schedule_startdate, 
+                schedule_enddate: 		schedule_enddate, 	
+                backgroundcolor: 		color, 	
+                allDay: 				all_Day, 				
+                schedule_content:		schedule_content	
             },
             success: function (response) {
             	if(response == 0){

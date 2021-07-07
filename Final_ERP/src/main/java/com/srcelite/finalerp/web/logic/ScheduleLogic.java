@@ -98,9 +98,8 @@ public class ScheduleLogic {
 		}
 		case 3: {// 개인
 			logger.info("개인 호출");
-			pMap.put("schedule_type", 3);
 			logger.info("logic schedule_type 변환 후: " + pMap.get("schedule_type"));
-
+			logger.info("쿼리스트링 로직: " + pMap);
 			result = scheduleDao.insertSchedule(pMap);
 			break;
 		}
