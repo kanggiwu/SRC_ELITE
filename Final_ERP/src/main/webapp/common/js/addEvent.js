@@ -36,7 +36,7 @@ let newEvent = function (start, end, eventType) {
 
     //새로운 일정 저장버튼 클릭
     $('#save-event').unbind();
-    $('#save-event').on('click', function () {
+    $(document).on('click','#save-event', function () {
 
         var eventData = {
             schedule_title: editTitle.val(),
@@ -49,6 +49,7 @@ let newEvent = function (start, end, eventType) {
         };
 		
 		
+		console.log(eventData.schedule_enddate+"일정 마가일");
 		console.log(eventData.backgroundcolor+"색을 넣어본다");
 		
         if (eventData.start > eventData.end) {
@@ -90,7 +91,7 @@ let newEvent = function (start, end, eventType) {
 		var schedule_content	=	eventData.schedule_content;
 		var color 	=	eventData.backgroundcolor;
 		var all_Day 			=	eventData.allDay;
-
+		console.log("끝나는 날"+schedule_enddate);
 		alert ( color +"색");
         //새로운 일정 저장
         $.ajax({

@@ -85,7 +85,8 @@ schedule_type: -1,
           class: 'popoverInfoCalendar'
         }).append('<p><strong>사원번호:</strong> ' + event.emp_no + '</p>')
         .append('<p><strong>작성자:</strong> ' + event.username + '</p>')
-        .append('<p><strong>시간:</strong> ' + getDisplayEventDate(event) + '</p>')
+        .append('<p><strong>시간:</strong> ' + moment(event.start).format('YYYY-MM-DD HH:mm') + '</p>')
+        .append('<p><strong>시간:</strong> ' + moment(event.end).format('YYYY-MM-DD HH:mm') + '</p>')
         .append('<div class="popoverDescCalendar"><strong>내용:</strong> ' + event.description + '</div>'),
       delay: {
         show: "800",
@@ -117,7 +118,7 @@ schedule_type: -1,
       	var result = data;
       	var jsonDoc = JSON.parse(result);
         var fixedDate = jsonDoc.map(function (array) {
-			if (array.start!== array.end) {
+			if (array.allDay && array.start!== array.end) {
             array.end = moment(array.end).add(1, 'days'); // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
           	
           }
