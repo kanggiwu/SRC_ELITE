@@ -61,18 +61,21 @@ public class MyPageController extends MultiActionController{
 			res.sendRedirect("../index.jsp");
 		}
 	}
-	public ModelAndView getSalary(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView getMySalary(HttpServletRequest request, HttpServletResponse response) {
 		logger.info("getSalary 호출 성공");
 		HttpSession session = request.getSession();
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
-		Map<String, Object> mySalary = null;
-		target.put("emp_no", session.getAttribute("login_no"));
-		mySalary = myPageLogic.getSalary(target);
-		logger.info("mySalary:"+mySalary);//
+		List<Map<String, Object>> mySalary = null;
+		target.put("login_no", session.getAttribute("login_no"));
+		logger.info("login_no : " + session.getAttribute("login_no"));
+		target.put("sal_date", "2021-06-05");
+		logger.info("target : " + target);
+		mySalary = myPageLogic.getMySalary(target);
+		logger.info("mySalary:"+mySalary);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("getMonthSalary");
+		mav.setViewName("getMySalary");
 		mav.addObject("mySalary", mySalary);
 		return mav;
 	}

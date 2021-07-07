@@ -14,12 +14,6 @@ public class MyPageDao {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 	
-	public void login() {
-		
-	}
-	public void logout() {
-		
-	}
 	public int insertAttendanceTime(Map<String,Object> pmap) {
 		logger.info("insertAttendanceTime 호출 성공 : "+pmap);
 		int result = 0;
@@ -47,13 +41,9 @@ public class MyPageDao {
 		return result;
 	}
 
-
-
-	public Map<String, Object> getSalary(Map<String, Object> pmap) {
-		List<Map<String, Object>> mySalary = null;
-		sqlSessionTemplate.selectOne("getMySalaryProc",pmap);
-		logger.info("sal_curser: "+ pmap.get("sal_cursor"));
-		mySalary = (List<Map<String, Object>>) pmap.get("sal_cursor");
-		return mySalary.get(0);
+	public List<Map<String, Object>> getMySalary(Map<String, Object> pmap) {
+		List<Map<String, Object>> mySalaryList = null;
+		mySalaryList = sqlSessionTemplate.selectList("getSalary",pmap);
+		return mySalaryList;
 	}
 }

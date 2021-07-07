@@ -34,6 +34,9 @@ public class MainController extends MultiActionController{
 			session.setAttribute("login_no", pmap.get("login_no").toString());
 			session.setAttribute("login_name", rmap.get("EMP_NAME"));
 			session.setAttribute("login_dept", rmap.get("DEPT_NAME"));
+			logger.info("session login_no: " + session.getAttribute("login_no"));
+			logger.info("session login_name: " + session.getAttribute("login_name"));
+			logger.info("session login_dept: " + session.getAttribute("login_dept"));
 			response.sendRedirect("login_success.jsp");
 		} else { //로그인 실패 처리
 			response.sendRedirect("login_failed.jsp");
