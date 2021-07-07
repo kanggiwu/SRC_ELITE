@@ -19,12 +19,7 @@ public class MyPageLogic {
 	public void setMyPageDao(MyPageDao myPageDao) {
 		this.myPageDao = myPageDao;
 	}
-	public void login(Map<String,Object> pmap){
-		
-	}
-	public void logout(Map<String,Object> pmap){
-		
-	}
+
 	public List<Map<String, Object>> getMyInfo(Map<String, Object> pmap) {
 		List<Map<String,Object>> infoList = null;
 		infoList = myPageDao.getMyInfo(pmap);
@@ -41,10 +36,10 @@ public class MyPageLogic {
 			return result;
 	}
 
-	public Map<String, Object> getSalary(Map<String, Object> pmap) {
+	public Map<String, Object> getMySalary(Map<String, Object> pmap) {
 		logger.info("getSalary 호출");
 		Map<String, Object> mySalary = null;
-		mySalary = myPageDao.getSalary(pmap);
+		mySalary = myPageDao.getMySalary(pmap);
 		return mySalary;
 	}
 }

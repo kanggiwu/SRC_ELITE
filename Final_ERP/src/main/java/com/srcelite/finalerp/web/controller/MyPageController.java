@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
@@ -59,16 +60,21 @@ public class MyPageController extends MultiActionController{
 			res.sendRedirect("../index.jsp");
 		}
 	}
-	public ModelAndView getSalary(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView getMySalary(HttpServletRequest request, HttpServletResponse response) {
 		logger.info("getSalary 호출 성공");
+		HttpSession session = request.getSession();
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
 		Map<String, Object> mySalary = null;
-		mySalary = myPageLogic.getSalary(target);
+		target.put("log_no", session.getAttribute("log_no"));
+		if(target.get("sal_date")==null) {
+			target.put("sal_date", "");
+		}
+		mySalary = myPageLogic.getMySalary(target);
 		logger.info("mySalary:"+mySalary);//
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("getSalary");
+		mav.setViewName("getMySalary");
 		mav.addObject("mySalary", mySalary);
 		return mav;
 	}
