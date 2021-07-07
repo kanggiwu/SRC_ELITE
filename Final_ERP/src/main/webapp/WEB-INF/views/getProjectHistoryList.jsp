@@ -78,7 +78,7 @@ function searchResult(data){
       else{//조회 결과가 있을 때
       	for(let i=0;i<data.length;i++){
       		console.log(data[i]['RANK_NAME']);
-      				a+="<tr>";
+      				a+="<tr onclick='openPopup()'>";
        				a+="		<td>"+data[i]['PROJECT_NAME']+"</td>";
       				a+="		<td>"+data[i]['PROJECT_PERIOD']+"</td>";
       				a+="		<td>"+data[i]['EMP_NAME']+"</td>"; 
@@ -124,7 +124,9 @@ function searchResult(data){
 	<input type="text" class="form-control" id="txt_name">
 	&nbsp;
 	<!-- <button type="button" class="btn btn-info" onclick="location.href='getProjectListProc.src1'">검색</button> -->
-	<a href="javascript:void(0)" onclick="projectSearchAction()" class="btn btn-info btn-sm">검색</a>
+	<!-- <button type="button" name="btn_sel" class="btn btn-info" onclick="projectSearchAction()">검색</button> -->
+	
+	<a type="button" href="javascript:void(0)" onclick="projectSearchAction()" class="btn btn-info btn-sm">검색</a>
 	</div>
 <!-- -----------------------------------검색부분 끝----------------------------------- -->
 	<div class='row'>

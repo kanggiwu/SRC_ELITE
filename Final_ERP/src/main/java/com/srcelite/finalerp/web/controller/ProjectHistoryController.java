@@ -164,5 +164,26 @@ public class ProjectHistoryController extends MultiActionController {
 				System.out.println(imsi);
 				out.print(imsi);
 			}
+	
 
-}
+	//프로젝트 이력 추가
+	public void  updateProjectInfo(HttpServletRequest request, HttpServletResponse response) 
+		throws Exception
+		{
+			logger.info("updateProjectInfo 호출 성공");
+			HashMapBinder hmb = new HashMapBinder(request);
+			Map<String,Object> target = new HashMap<>();
+			hmb.bind(target);
+			//hmb.multiBind(target);
+			List<Map<String,Object>> updateProjectInfo = null;
+			logger.info("updateProjectInfo:"+updateProjectInfo);
+			int result = 0;
+			result = projectHistoryLogic.updateProjectInfo(target);
+			if(result == 1) {
+				response.sendRedirect("./getProjectHistoryList.src1");
+			}
+			else {
+				response.sendRedirect("등록실패 페이지 이동처리");
+			}
+		}
+	}
