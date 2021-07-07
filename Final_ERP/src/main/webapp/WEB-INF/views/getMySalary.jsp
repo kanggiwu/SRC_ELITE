@@ -118,7 +118,6 @@ function searchMySalary() {
 									<div class="col-lg-12">
 										<br>
 										<div class="input-group">
-										<form id="search_form" action="/mypage/getMySalary.src1" method='post' accept-charset="utf-8">
 											<span class="input-group-addon" id="basic-addon1"
 												style="display: inline-block; width: 50%">
 												<h5>급여 상세 내역</h5>

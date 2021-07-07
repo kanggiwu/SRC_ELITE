@@ -26,7 +26,14 @@
                     , sal_nation_pension, sal_health, sal_industrial_insurance, sal_employ_insurance, sal_income_tax, sal_local_tax, sal_deduction_etc
                     , sal_deductions, sal_total
           FROM salary
-        WHERE emp_no = #{login_no}
+        WHERE emp_no = #{login_no} AND rownum <![CDATA[<=]]> 12 AND TO_DATE(sal_date) <![CDATA[<=]]> TO_DATE(#{sal_date})
+        ORDER BY to_date(sal_date) DESC
+	</select>
+	
+	<select id="getRetirePay" parameterType="map" resultType="map">
+	 	SELECT 
+          FROM salary
+        WHERE emp_no = #{login_no} AND rownum <![CDATA[<=]]> 12 AND TO_DATE(sal_date) <![CDATA[<=]]> TO_DATE(#{sal_date})
         ORDER BY to_date(sal_date) DESC
 	</select>
         

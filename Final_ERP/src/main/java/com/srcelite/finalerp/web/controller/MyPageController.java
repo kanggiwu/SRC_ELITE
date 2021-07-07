@@ -44,7 +44,6 @@ public class MyPageController extends MultiActionController{
 		mav.setViewName("getMyInfo");
 		mav.addObject("infoList", infoList);
 		return mav;
-		
 	}
 	public void updateMyInfo(HttpServletRequest req, HttpServletResponse res) 
 	throws Exception

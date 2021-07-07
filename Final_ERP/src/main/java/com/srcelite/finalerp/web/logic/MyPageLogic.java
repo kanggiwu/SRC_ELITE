@@ -3,6 +3,9 @@ package com.srcelite.finalerp.web.logic;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 
 import com.srcelite.finalerp.web.dao.MyPageDao;
@@ -39,4 +42,10 @@ public class MyPageLogic {
 		mySalary = myPageDao.getMySalary(pmap);
 		return mySalary;
 	}
+	
+	/*
+	 * public Map<String, Object> getRetirementPay(Map<String, Object> pmap) {
+	 * 
+	 * }
+	 */
 }

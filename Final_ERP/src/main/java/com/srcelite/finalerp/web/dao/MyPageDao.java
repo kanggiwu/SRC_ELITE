@@ -3,6 +3,9 @@ package com.srcelite.finalerp.web.dao;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -46,4 +49,10 @@ public class MyPageDao {
 		mySalaryList = sqlSessionTemplate.selectList("getSalary",pmap);
 		return mySalaryList;
 	}
+	
+	/*
+	 * public Map<String, Object> getRetirementPay(Map<String, Object> pmap) {
+	 * 
+	 * }
+	 */
 }
