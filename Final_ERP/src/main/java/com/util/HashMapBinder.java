@@ -27,8 +27,8 @@ public class HashMapBinder {
 	public HashMapBinder(HttpServletRequest request) {
 		this.request = request;
 //		realFolder = "http:\\localhost:6001\\pds";
-		realFolder = "D:\\workspace\\SRC_ELITE\\Final_ERP\\src\\main\\webapp\\pds";
-// 		realFolder = "C:\\SRC_ELITE\\Final_ERP\\src\\main\\webapp\\pds";
+//		realFolder = "D:\\workspace\\SRC_ELITE\\Final_ERP\\src\\main\\webapp\\pds";
+ 		realFolder = "C:\\SRC_ELITE\\Final_ERP\\src\\main\\webapp\\pds";
 //		realFolder = "C:\\portfolio_kosmo\\lab_spring4\\spring4_1_1\\WebContent\\pds";
 //		  realFolder = "C:\\bbigal_programing\\workspace_web\\SRC_ELITE\\Final_ERP\\src\\main\\webapp\\pds";
 		myFolder = "/pds";
@@ -42,7 +42,7 @@ public class HashMapBinder {
 			logger.info("value:"+request.getParameter(key));
 			target.put(key, HangulConversion.toUTF(request.getParameter(key)));
 		}
-		target.put("arr_peno", arr_peno);
+//		target.put("arr_peno", arr_peno);
 	}////////end of bind
 	public void multiBind(Map<String,Object> target) {
 		target.clear();
@@ -53,8 +53,8 @@ public class HashMapBinder {
 		}
 		Enumeration en = multi.getParameterNames();//배열 구조체 묶음
 //		String[] arr_peno = multi.getParameterValues("emp_no");
-		int arr_peno = Integer.parseUnsignedInt(multi.getContentType("emp_no"));
-		target.put("arr_peno", arr_peno);
+//		int arr_peno = Integer.parseUnsignedInt(multi.getContentType("emp_no"));
+//		target.put("arr_peno", arr_peno);
 		//<input type="text" name="mem_id"
 		if(multi.getParameterValues("licence_no") != null) {
 			String[] licences = multi.getParameterValues("licence_no");

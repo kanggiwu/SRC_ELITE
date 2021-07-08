@@ -62,7 +62,7 @@ public class NoticeDao {
 		logger.info("notice_tltle:"+pmap.get("notice_title"));
 		logger.info("notice_content:"+pmap.get("notice_content"));
 		int result=0;
-		sqlSessionTemplate.insert("insertNotice",pmap);
+		result = sqlSessionTemplate.insert("insertNotice",pmap);
 		return result;
 	}
 //	공지 수정

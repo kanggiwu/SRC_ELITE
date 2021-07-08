@@ -171,7 +171,7 @@ List<Map<String, Object>> insertLicenceList = null;
 		console.log(value);
 		if (value != "20") {
 			document.getElementById('team_options').disabled = true;
-			$("#team_options").val("").prop("selected", true);
+			$("#team_options").val().prop("selected", true);
 		} else {
 			document.getElementById('team_options').disabled = false;
 			$("#team_options").val("1").prop("selected", true);
@@ -281,19 +281,9 @@ List<Map<String, Object>> insertLicenceList = null;
 															<option value=2>개발2팀</option>
 															<option value=3>개발3팀</option>
 															<option value=4>개발4팀</option>
-															<option value="" hidden>없음</option>
+															<option value=hidden>없음</option>
 														</select>
 													</div>
-													<div class="input-group">
-														<span class="input-group-addon" id="basic-addon1"
-															style="display: inline-block; width: 25%"></span> 
-														<lable>&nbsp;팀장&nbsp;
-														<%
-														String aa = "";
-														%>
-														<input type="checkbox" name="emp_job" value="T" <%=aa%>>
-														</lable>
-													</div>														
 													<br>
 													<div class="input-group">
 														<span class="input-group-addon" id="basic-addon1"
@@ -461,7 +451,6 @@ List<Map<String, Object>> insertLicenceList = null;
 								<!-- 컨텐츠 들어갈내용 끝   -->
 							</div>
 						</div>
-					</div>
 					</div>
 			</main>
 		</div>

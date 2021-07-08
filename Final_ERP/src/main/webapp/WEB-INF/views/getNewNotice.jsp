@@ -66,7 +66,7 @@ if (newNotice != null) {
 						style="max-width: 1730px; margin: 10px 100px;">
 						<!-- 컨텐츠 들어갈내용 시작-->
 						<div>
-						<form id="notice_ins" enctype="multipart/form-data" accept-charset="utf-8">
+						<form id="notice_ins" accept-charset="utf-8">
 						<!-- 테이블 시작  -->
 							<table>
 								<tr>

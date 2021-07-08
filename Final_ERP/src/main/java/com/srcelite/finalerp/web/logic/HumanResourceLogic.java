@@ -28,16 +28,17 @@ public class HumanResourceLogic {
 		}
 	}
 	//사원정보 리스트조회
-	public List<Map<String,Object>>  getEmployeeList(Map<String,Object> pmap)      {
+	public List<Map<String,Object>>  getEmployeeList(Map<String,Object> pmap) {
 		List<Map<String,Object>> boardList = null;
 		boardList = humanResourceDao.getEmployeeList(pmap);
 		return boardList;
 		}
 	//사원정보 상세조회
-	public List<Map<String,Object>>  getDetailEmployee(Map<String,Object> pmap)          {
+	public List<Map<String,Object>>  getDetailEmployee(Map<String,Object> pmap) {
 		List<Map<String,Object>> boardDetail = null;
 		boardDetail = humanResourceDao.getEmployeeDetail(pmap);
-		return boardDetail;}
+		return boardDetail;
+		}
 	//사원정보 수정
 	public int updateEmployee(Map<String,Object> pmap) {
 		int result = 0;

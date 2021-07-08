@@ -28,7 +28,7 @@ public class HumanResourceDao {
 	public int insertEmployee(Map<String, Object> pmap) 
 			throws DataAccessException{
 		int result = 0;
-		sqlSessionTemplate.insert("insertEmpInfo",pmap);
+		result = sqlSessionTemplate.insert("insertEmpInfo",pmap);
 		return result;
 	}
 	public int updateEmployee(Map<String, Object> pmap) {
