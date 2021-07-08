@@ -59,7 +59,7 @@ let newEvent = function (start, end, eventType) {
 		
 		
         if (eventData.title === '') {
-            alert('일정명은 필수입니다.');
+            alert('일정명은 필수입니다.');//안고쳐도됨
             return false;
         }
         if (eventData.type === '') {
@@ -91,8 +91,6 @@ let newEvent = function (start, end, eventType) {
 		var schedule_content	=	eventData.schedule_content;
 		var color 	=	eventData.backgroundcolor;
 		var all_Day 			=	eventData.allDay;
-		console.log("끝나는 날"+schedule_enddate);
-		alert ( color +"색");
         //새로운 일정 저장
         $.ajax({
             type: "post",

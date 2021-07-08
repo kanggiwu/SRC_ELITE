@@ -203,7 +203,8 @@ List<Map<String, Object>> insertLicenceList = null;
 	function empUpdateAction() {
 		Swal.fire({
 		  title: '수정 되었습니다!',
-		  confirmButtonColor: '#17a2b8'})
+		  confirmButtonColor: '#17a2b8'
+		  })
 		$('#employee_update').submit();
 		
 	}

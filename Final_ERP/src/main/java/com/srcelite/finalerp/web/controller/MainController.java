@@ -60,7 +60,6 @@ public class MainController extends MultiActionController{
 		HttpSession session = request.getSession();
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String,Object> pmap = new HashMap<>();
-		pmap.put("emp_no", 1);
 		hmb.bind(pmap);
 		if(session.getAttribute("attandanced") == null) {
 			int result = 0; 

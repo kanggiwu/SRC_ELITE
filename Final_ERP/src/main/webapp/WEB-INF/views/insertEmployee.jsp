@@ -24,7 +24,7 @@ out.print(path);
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 <script>
 
-			 let myMap = new Map();
+	let myMap = new Map();
 	//자격증 로우 추가
 	function add_row() {
 			var a="";

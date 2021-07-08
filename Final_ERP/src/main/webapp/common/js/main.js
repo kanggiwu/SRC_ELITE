@@ -132,33 +132,7 @@ schedule_type: -1,
     });
   },
 
-  eventAfterAllRender: function (view) {
-    if (view.name == "month") $(".fc-content").css('height', 'auto');
-  },
-
-  //일정 리사이즈
-  eventResize: function (event, delta, revertFunc, jsEvent, ui, view) {
-    $('.popover.fade.top').remove();
-
-    /** 리사이즈시 수정된 날짜반영
-     * 하루를 빼야 정상적으로 반영됨. */
-    var newDates = calDateWhenResize(event);
-
-    //리사이즈한 일정 업데이트
-    $.ajax({
-      type: "get",
-      url: "",
-      data: {
-        //id: event.id,
-        //....
-      },
-      success: function (response) {
-        alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
-      }
-    });
-
-  },
-
+ 
   eventDragStart: function (event, jsEvent, ui, view) {
     draggedEventIsAllDay = event.allDay;
   },
@@ -170,7 +144,6 @@ schedule_type: -1,
     //주,일 view일때 종일 <-> 시간 변경불가
     if (view.type === 'agendaWeek' || view.type === 'agendaDay') {
       if (draggedEventIsAllDay !== event.allDay) {
-        alert('드래그앤드롭으로 종일<->시간 변경은 불가합니다.');
         location.reload();
         return false;
       }
@@ -190,7 +163,6 @@ schedule_type: -1,
             	schedule_type:event.type
       },
       success: function (response) {
-        alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
         if(response == 0){
             		alert('일정수정 실패');
             	}else if(response == 3){

@@ -79,7 +79,7 @@ public class ScheduleController extends MultiActionController {
 		logger.info("--------------------insertSchedule 메소드 호출 ");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pMap = new HashMap<>();
-		hmb.bind(pMap);
+		hmb.bindAjax(pMap);
 		/* 로그인 시 session에 사원번호(아이디)를 저장하고 그걸 불러온다. 
 		 * session = request.getSession(true);
 		 * int login_no=(int)session.getAttribute("login_no");
@@ -108,7 +108,7 @@ public class ScheduleController extends MultiActionController {
 		logger.info("%%%%%%%%%%%%%%%%%%%%updateSchedule 메소드 호출 ");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pMap = new HashMap<>();
-		hmb.bind(pMap);
+		hmb.bindAjax(pMap);
 		/* 로그인 시 세션에 저장된 사원번호를 불러옴
 		 * session = request.getSession(true); 
 		 * int login_no=(int)session.getAttribute("login_no");
@@ -134,7 +134,7 @@ public class ScheduleController extends MultiActionController {
 		logger.info("%%%%%%%%%%%%%%%%%%%%updateSchedule 메소드 호출 ");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pMap = new HashMap<>();
-		hmb.bind(pMap);
+		hmb.bindAjax(pMap);
 		/* 로그인 시 세션에 저장된 사원번호를 불러옴
 		 * session = request.getSession(true); 
 		 * int login_no=(int)session.getAttribute("login_no");
@@ -161,7 +161,7 @@ public class ScheduleController extends MultiActionController {
 		logger.info("@*@*@*@*@*@*@*@*@*@*deleteSchedule 메소드 호출 ");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pMap = new HashMap<>();
-		hmb.bind(pMap);
+		hmb.bindAjax(pMap);
 		logger.info("쿼리스트링: " + pMap);
 
 		/* 로그인 시 세션에 저장된 사원번호를 불러옴

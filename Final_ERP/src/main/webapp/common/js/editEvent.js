@@ -6,7 +6,6 @@ var editEvent = function (event, element, view) {
     $('#deleteEvent').data('id', event.id); //클릭한 이벤트 ID
     $('#deleteEvent').data('type', event.type); //클릭한 이벤트 TYPE
     $('#deleteEvent').data('schedule_writer', event.emp_no); //클릭한 이벤트 TYPE
-	alert("게시글 작성자"+event.emp_no);
     $('.popover.fade.top').remove();
     $(element).popover("hide");
 
@@ -36,8 +35,6 @@ var editEvent = function (event, element, view) {
     }else{
     	ko_type = '프로젝트';
     }
-	console.log(event.type);
-	console.log(ko_type);
     
     modalTitle.html('일정 수정');
     editTitle.val(event.title);
@@ -93,7 +90,7 @@ var editEvent = function (event, element, view) {
         event.type = editType.val();
         event.backgroundColor = editColor.val();
         event.description = editDesc.val();
-		alert(event.backgroundColor);
+		/*alert(event.backgroundColor);*/
         $("#calendar").fullCalendar('updateEvent', event);
 
         //일정 업데이트
@@ -133,7 +130,6 @@ $(document).on('click','#deleteEvent', function () {
     $('#deleteEvent').unbind();
     
     eventModal.modal('hide');
-	alert("삭제11");
 	var schedule_no = $(this).data('id');
 	var schedule_type = $(this).data('type');
 	var schedule_writer = $(this).data('schedule_writer');

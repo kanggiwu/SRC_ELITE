@@ -42,7 +42,7 @@ if (newNotice != null) {
 <!-- 삭제에 필요한 코드 시작 -->
 <script type="text/javascript">
 	function insertNotice(){
-		alert("추가확인 호출");
+		/* alert(""); */
 		$("#notice_ins").attr("method","post");
 		$("#notice_ins").attr("action","/notice/insertNotice.src1");
 		$("#notice_ins").submit();	

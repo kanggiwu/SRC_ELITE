@@ -44,6 +44,17 @@ public class HashMapBinder {
 			target.put(key, HangulConversion.toUTF(request.getParameter(key)));
 		}
 	}////////end of bind
+	public void bindAjax(Map<String,Object> target) {
+		target.clear();
+		Enumeration en = request.getParameterNames();//배열 구조체 묶음
+		String[] arr_peno = request.getParameterValues("emp_no");
+		while(en.hasMoreElements()) {
+			String key = (String)en.nextElement();
+			logger.info("key:"+key);
+			logger.info("value:"+request.getParameter(key));
+			target.put(key, HangulConversion.toUTF4Ajax(request.getParameter(key)));
+		}
+	}////////end of bind
 	
 	public void multiBind(Map<String,Object> target) {
 		try {
