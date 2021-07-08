@@ -114,7 +114,7 @@ public class NoticeController extends MultiActionController {
 		Map<String,Object> pmap = new HashMap<>();
 		//사용자가 입력한 값이나 서버에서 클라이언트에게 요청한 값 넘김.
 		//hmb.bindPost(pmap);
-		hmb.multiBind(pmap);
+		hmb.bind(pmap);
 		int result = 0;
 		result = noticeLogic.insertNotice(pmap);
 		if(result == 1) {
@@ -132,11 +132,11 @@ public class NoticeController extends MultiActionController {
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pmap = new HashMap<>();
 		// 사용자가 입력한 값이나 서버에서 클라이언트에게 요청한 값 넘김.
-		hmb.multiBind(pmap);
+		hmb.bind(pmap);
 		logger.info("pmap: "+pmap);
 		int result = 0;
 		result = noticeLogic.updateNotice(pmap);
-		logger.info("result: "+result);
+		logger.info("ctrl result : " + result);
 		if(result == 1) {
 			response.sendRedirect("/notice/getAllNoticeList.src1");
 		}

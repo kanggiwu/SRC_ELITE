@@ -34,6 +34,7 @@ public class HashMapBinder {
 		myFolder = "/pds";
 	}
 	public void bind(Map<String,Object> target) {
+		target.clear();
 		Enumeration en = request.getParameterNames();//배열 구조체 묶음
 		String[] arr_peno = request.getParameterValues("emp_no");
 		while(en.hasMoreElements()) {
@@ -42,19 +43,15 @@ public class HashMapBinder {
 			logger.info("value:"+request.getParameter(key));
 			target.put(key, HangulConversion.toUTF(request.getParameter(key)));
 		}
-		target.put("arr_peno", arr_peno);
 	}////////end of bind
+	
 	public void multiBind(Map<String,Object> target) {
-		target.clear();
 		try {
 			multi = new MultipartRequest(request, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
 		} catch (Exception e) {
 			logger.info("Exception : "+e.toString());
 		}
 		Enumeration en = multi.getParameterNames();//배열 구조체 묶음
-//		String[] arr_peno = multi.getParameterValues("emp_no");
-		int arr_peno = Integer.parseUnsignedInt(multi.getContentType("emp_no"));
-		target.put("arr_peno", arr_peno);
 		//<input type="text" name="mem_id"
 		if(multi.getParameterValues("licence_no") != null) {
 			String[] licences = multi.getParameterValues("licence_no");

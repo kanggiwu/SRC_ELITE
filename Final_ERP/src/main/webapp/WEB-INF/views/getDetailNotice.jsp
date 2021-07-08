@@ -88,7 +88,7 @@ if (NoticeDetail != null) {
 					<!-- 컨텐츠 들어갈내용 시작-->
 					<div style="padding-left: 20%; padding-right: 20%;">
 						<!-- 수정 시작-->
-						<form id="notice_upd" enctype="multipart/form-data" >
+						<form id="notice_upd">
 										<table>
 									<tr>
 

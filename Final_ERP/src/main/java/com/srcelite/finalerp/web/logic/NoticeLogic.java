@@ -57,7 +57,8 @@ public class NoticeLogic {
 	public int insertNotice(Map<String,Object> pmap){
 		logger.info("insertNotice 호출 성공");
 		int result = 0;
-		noticeDao.insertNotice(pmap);
+		result = noticeDao.insertNotice(pmap);
+		logger.info("logic result : " + result);
 		return result;
 		
 		}
@@ -68,7 +69,6 @@ public class NoticeLogic {
 		int result = 0;
 		result = noticeDao.updateNotice(pmap);
 		return result;
-		
 	}
 	
 	// 공지 삭제

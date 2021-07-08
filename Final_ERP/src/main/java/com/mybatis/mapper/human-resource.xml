@@ -24,11 +24,8 @@
 		
 	<!-- 사원 정보 등록 -->
 	<insert id="insertEmpInfo" parameterType="map"  useGeneratedKeys="true">
-	<selectKey keyProperty="emp_no" resultType="int" order="BEFORE">
-		SELECT seq_emp.NEXTVAL FROM DUAL
-        </selectKey>
 		INSERT INTO emp (emp_no, emp_name, emp_pw, emp_status, dept_no, rank_no, team_no, emp_hiredate, emp_retiredate, emp_email, emp_tel, emp_account, emp_picture_path)
-            VALUES(#{emp_no}, #{emp_name}, #{emp_pw}, #{emp_status}, #{dept_no}, #{rank_no}, #{team_no}, #{emp_hiredate}, #{emp_retiredate}, #{emp_email}, #{emp_tel}, #{emp_account}, #{emp_picture_path})
+            VALUES(seq_notice.NEXTVAL, #{emp_name}, #{emp_pw}, #{emp_status}, #{dept_no}, #{rank_no}, #{team_no}, #{emp_hiredate}, #{emp_retiredate}, #{emp_email}, #{emp_tel}, #{emp_account}, #{emp_picture_path})
 	</insert>
 
 	<!-- 자격증 소유자 등록 -->
