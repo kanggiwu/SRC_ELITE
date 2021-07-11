@@ -33,12 +33,12 @@ let newEvent = function (start, end, eventType) {
     eventModal.modal('show');
 
 
-
     //새로운 일정 저장버튼 클릭
     $('#save-event').unbind();
-    $(document).on('click','#save-event', function () {
+    $(document).off('click').on('click','#save-event', function () {
+	alert("새로운 js 파일인지 테스트22");
 
-        var eventData = {
+        let eventData = {
             schedule_title: editTitle.val(),
             schedule_type: editType.val(),
             schedule_startdate: editStart.val(),
@@ -49,20 +49,20 @@ let newEvent = function (start, end, eventType) {
         };
 		
 		
-		console.log(eventData.schedule_enddate+"일정 마가일");
+		console.log(eventData.schedule_enddate+"일정 마감일");
 		console.log(eventData.backgroundcolor+"색을 넣어본다");
 		
         if (eventData.start > eventData.end) {
             alert('끝나는 날짜가 앞설 수 없습니다.');
             return false;
         }
+		alert("스케줄 타입"+eventData.schedule_type);
 		
-		
-        if (eventData.title === '') {
+        if (eventData.schedule_title === '') {
             alert('일정명은 필수입니다.');
             return false;
         }
-        if (eventData.type === '') {
+        if (eventData.schedule_type === null ) {
             alert('분류는 필수입니다.');
             return false;
         }
@@ -84,13 +84,13 @@ let newEvent = function (start, end, eventType) {
         editAllDay.prop('checked', false);
         eventModal.modal('hide');
 		
-		var schedule_type 		=	eventData.schedule_type;
-		var schedule_title 	=	eventData.schedule_title;
-		var schedule_startdate =	eventData.schedule_startdate;
-		var schedule_enddate 	=	eventData.schedule_enddate;
-		var schedule_content	=	eventData.schedule_content;
-		var color 	=	eventData.backgroundcolor;
-		var all_Day 			=	eventData.allDay;
+		let schedule_type 		=	eventData.schedule_type;
+		let schedule_title 	=	eventData.schedule_title;
+		let schedule_startdate =	eventData.schedule_startdate;
+		let schedule_enddate 	=	eventData.schedule_enddate;
+		let schedule_content	=	eventData.schedule_content;
+		let color 	=	eventData.backgroundcolor;
+		let all_Day 			=	eventData.allDay;
 		console.log("끝나는 날"+schedule_enddate);
 		alert ( color +"색");
         //새로운 일정 저장
@@ -110,7 +110,7 @@ let newEvent = function (start, end, eventType) {
             	if(response == 0){
             		alert('일정추가 실패');
             	}else if(response == 3){
-            	    var ko_type = null;
+            	    let ko_type = null;
 					if(event.type%10 === 0){
 						ko_type = '부서';
 					}else if(event.type === 1){
