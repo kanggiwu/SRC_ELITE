@@ -54,7 +54,7 @@ let editEvent = function (event, element, view) {
 
     //업데이트 버튼 클릭시
     $('#updateEvent').unbind();
-    $('#updateEvent').on('click', function () {
+    $('#updateEvent').off('click').on('click', function () {
 
         if (editStart.val() > editEnd.val()) {
             alert('끝나는 날짜가 앞설 수 없습니다.');
@@ -127,7 +127,7 @@ let editEvent = function (event, element, view) {
 };
 
 // 삭제버튼
-$(document).on('click','#deleteEvent', function () {
+$(document).off('click').on('click','#deleteEvent', function () {
     
     $('#deleteEvent').unbind();
     

@@ -136,27 +136,7 @@ schedule_type: -1,
     if (view.name == "month") $(".fc-content").css('height', 'auto');
   },
 
-  //일정 리사이즈
-  eventResize: function (event, delta, revertFunc, jsEvent, ui, view) {
-    $('.popover.fade.top').remove();
 
-    /** 리사이즈시 수정된 날짜반영
-     * 하루를 빼야 정상적으로 반영됨. */
-    let newDates = calDateWhenResize(event);
-
-    //리사이즈한 일정 업데이트
-    $.ajax({
-      type: "get",
-      url: "",
-      data: {
-        //id: event.id,
-        //....
-      },
-      success: function (response) {
-      }
-    });
-
-  },
 
   eventDragStart: function (event, jsEvent, ui, view) {
     draggedEventIsAllDay = event.allDay;
@@ -227,8 +207,6 @@ schedule_type: -1,
         });
       
       }
-      
-      
       
       return false;
     });
@@ -308,23 +286,6 @@ function filtering(event) {
   show_type = schedule_type.indexOf(String(event.type)) >= 0;
 
   return  show_type;
-}
-
-function calDateWhenResize(event) {
-
-  let newDates = {
-    endDate: ''
-  };
-
-  if (event.allDay) {
-    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
-    newDates.endDate = moment(event.end._d).subtract(1, 'days').format('YYYY-MM-DD');
-  } else {
-    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD HH:mm');
-    newDates.endDate = moment(event.end._d).format('YYYY-MM-DD HH:mm');
-  }
-
-  return newDates;
 }
 
 function calDateWhenDragnDrop(event) {

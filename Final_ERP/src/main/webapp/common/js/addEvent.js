@@ -55,7 +55,6 @@ let newEvent = function (start, end, eventType) {
             alert('끝나는 날짜가 앞설 수 없습니다.');
             return false;
         }
-		alert("스케줄 타입"+eventData.schedule_type);
 		
         if (eventData.schedule_title === '') {
             alert('일정명은 필수입니다.');
