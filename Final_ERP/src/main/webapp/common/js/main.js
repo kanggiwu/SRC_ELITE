@@ -153,7 +153,6 @@ schedule_type: -1,
         //....
       },
       success: function (response) {
-        alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
       }
     });
 
@@ -190,7 +189,6 @@ schedule_type: -1,
             	schedule_type:event.type
       },
       success: function (response) {
-        alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
         if(response == 0){
             		alert('일정수정 실패');
             	}else if(response == 3){

@@ -36,7 +36,6 @@ let newEvent = function (start, end, eventType) {
     //새로운 일정 저장버튼 클릭
     $('#save-event').unbind();
     $(document).off('click').on('click','#save-event', function () {
-	alert("새로운 js 파일인지 테스트22");
 
         let eventData = {
             schedule_title: editTitle.val(),
@@ -92,7 +91,6 @@ let newEvent = function (start, end, eventType) {
 		let color 	=	eventData.backgroundcolor;
 		let all_Day 			=	eventData.allDay;
 		console.log("끝나는 날"+schedule_enddate);
-		alert ( color +"색");
         //새로운 일정 저장
         $.ajax({
             type: "post",

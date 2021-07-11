@@ -6,7 +6,6 @@ let editEvent = function (event, element, view) {
     $('#deleteEvent').data('id', event.id); //클릭한 이벤트 ID
     $('#deleteEvent').data('type', event.type); //클릭한 이벤트 TYPE
     $('#deleteEvent').data('schedule_writer', event.emp_no); //클릭한 이벤트 TYPE
-	alert("게시글 작성자"+event.emp_no);
     $('.popover.fade.top').remove();
     $(element).popover("hide");
 
@@ -93,7 +92,6 @@ let editEvent = function (event, element, view) {
         event.type = editType.val();
         event.backgroundColor = editColor.val();
         event.description = editDesc.val();
-		alert(event.backgroundColor);
         $("#calendar").fullCalendar('updateEvent', event);
 
 		
@@ -129,7 +127,7 @@ let editEvent = function (event, element, view) {
 };
 
 // 삭제버튼
-$(document).off('click').on('click','#deleteEvent', function () {
+$(document).on('click','#deleteEvent', function () {
     
     $('#deleteEvent').unbind();
     
@@ -137,7 +135,6 @@ $(document).off('click').on('click','#deleteEvent', function () {
 	let schedule_no = $(this).data('id');
 	let schedule_type = $(this).data('type');
 	let schedule_writer = $(this).data('schedule_writer');
-	alert(schedule_writer);
 	
     //삭제시
     $.ajax({
