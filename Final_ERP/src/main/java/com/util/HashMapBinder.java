@@ -27,7 +27,7 @@ public class HashMapBinder {
 	public HashMapBinder(HttpServletRequest request) {
 		this.request = request;
 //		realFolder = "http:\\localhost:6001\\pds";
-		realFolder = "C:\\souceElite\\SRC_ELITE\\Final_ERP\\src\\main\\webapp\\pds";
+		realFolder = "D:\\workspace\\SRC_ELITE\\Final_ERP\\src\\main\\webapp\\pds";
 // 		realFolder = "C:\\SRC_ELITE\\Final_ERP\\src\\main\\webapp\\pds";
 //		realFolder = "C:\\portfolio_kosmo\\lab_spring4\\spring4_1_1\\WebContent\\pds";
 //		  realFolder = "C:\\bbigal_programing\\workspace_web\\SRC_ELITE\\Final_ERP\\src\\main\\webapp\\pds";
@@ -56,6 +56,13 @@ public class HashMapBinder {
 		int arr_peno = Integer.parseUnsignedInt(multi.getContentType("emp_no"));
 		target.put("arr_peno", arr_peno);
 		//<input type="text" name="mem_id"
+		if(multi.getParameterValues("licence_no") != null) {
+			String[] licences = multi.getParameterValues("licence_no");
+			logger.info("자격증이 있습니다. 개수는 = "+licences.length);
+			target.put("licences", licences);
+			String[] a = (String[]) target.get("licences");
+			logger.info(a[1]);
+		}
 		while(en.hasMoreElements()) {
 			String key = (String)en.nextElement();
 			logger.info("value:"+multi.getParameter(key));

@@ -100,6 +100,7 @@
 				<prop key="/humanresource/deleteLIcenceInfo.src1">human-resource-controller</prop>
 
 				<prop key="/approval/getApprovalForm.src1">approval-controller</prop>
+				<prop key="/approval/getApprovalFormList.src1">approval-controller</prop>
 				<prop key="/approval/submitApproval.src1">approval-controller</prop>
 				<prop key="/approval/getSendApproval.src1">approval-controller</prop>
 				<prop key="/approval/getDetailSendApproval.src1">approval-controller</prop>
@@ -174,6 +175,7 @@
 				<prop key="/humanresource/deleteLIcenceInfo.src1">deleteLIcenceInfo</prop>
 
 				<prop key="/approval/getApprovalForm.src1">getApprovalForm</prop>
+				<prop key="/approval/getApprovalFormList.src1">getApprovalForm</prop>
 				<prop key="/approval/submitApproval.src1">submitApproval</prop>
 				<prop key="/approval/getSendApproval.src1">getSendApproval</prop>
 				<prop key="/approval/getDetailSendApproval.src1">getDetailSendApproval</prop>
