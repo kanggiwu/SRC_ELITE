@@ -32,12 +32,12 @@
 		<table id="appSend" class="table table-hover">
 			<thead>
 				<tr style="background-color:lightgray">					
-					<th style="width: 15%">결제번호</th>
+					<th style="width: 15%">결재번호</th>
 					<th style="width: 20%">작성일</th>
 					<th style="width: 25%">문서제목</th>
 					<th style="width: 20%">결재상태</th>
-					<th style="width: 10%">결재자조회</th>
-					<th style="width: 10%">상세조회</th>
+					<th style="width: 10%"></th>
+					<th style="width: 10%"></th>
 				</tr>
 			</thead>
 			<tbody class="sendBody" id="recievePlan">
@@ -47,9 +47,9 @@
 					<td>휴가계획서</td>
 					<td>결재완료</td>
 					<td><button type="button" class="btn btn-info btn-sm" id="btn_sel2"
-						onclick="openModal2()">조회</button></td>
+						onclick="openModal2()">결재자조회</button></td>
 					<td><button type="button" class="btn btn-info btn-sm" id="btn_detail"
-						onclick="openPop2()">상세조회</button></td>
+						onclick="openPop2()">결재문서조회</button></td>
 				</tr>
 				<tr>
 					<td>12346</td>
@@ -57,9 +57,9 @@
 					<td>휴가계획서</td>
 					<td>결재완료</td>
 					<td><button type="button" class="btn btn-info btn-sm" id="btn_sel2"
-						onclick="openModal2()">조회</button></td>
+						onclick="openModal2()">결재자조회</button></td>
 					<td><button type="button" class="btn btn-info btn-sm" id="btn_detail"
-						onclick="openPop2()">상세조회</button></td>
+						onclick="openPop2()">결재문서조회</button></td>
 				</tr>
 				<tr>
 					<td>12347</td>
@@ -67,9 +67,9 @@
 					<td>프로젝트 계약확정서</td>
 					<td>결재완료</td>
 					<td><button type="button" class="btn btn-info btn-sm" id="btn_sel2"
-						onclick="openModal2()">조회</button></td>
+						onclick="openModal2()">결재자조회</button></td>
 					<td><button type="button" class="btn btn-info btn-sm" id="btn_detail"
-						onclick="openPop2()">상세조회</button></td>
+						onclick="openPop2()">결재문서조회</button></td>
 					<!-- <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" 
 						data-target="#mod_appLine">조회</button></td> -->
 				</tr>
@@ -87,9 +87,12 @@
 			<table class="table table-hover" >
 				<thead>
 					<tr style="background-color:lightgray">						
-						<th style="width: 30%">결재자</th>
-						<th style="width: 40%">결재인</th>
-						<th style="width: 30%">결재상태</th>
+						<th style="width: 20%">결재순서</th>
+						<th style="width: 20%">부서</th>
+						<th style="width: 20%">직위</th>
+						<th style="width: 20%">사원명</th>
+						<th style="width: 20%">결재상태</th>
+					</tr>
 					</tr>
 				</thead>
 				<tbody>
@@ -98,17 +101,23 @@
 				 -->
 					<tr>						
 						<td>1차 결재자</td>
-						<td>개발1팀 팀장 김현진</td>
+						<td>개발1팀</td>
+						<td>팀장</td>
+						<td>김현진</td>
 						<td>승인완료</td>
 					</tr>
 					<tr>						
-						<td>2차 결재자</td>
-						<td>개발1팀 팀장 김현진</td>
+						<td>1차 결재자</td>
+						<td>개발1팀</td>
+						<td>팀장</td>
+						<td>김현진</td>
 						<td>승인완료</td>
 					</tr>
 					<tr>						
-						<td>3차 결재자</td>
-						<td>개발1팀 팀장 김현진</td>
+						<td>1차 결재자</td>
+						<td>개발1팀</td>
+						<td>팀장</td>
+						<td>김현진</td>
 						<td>승인완료</td>
 					</tr>
 				</tbody>	
@@ -129,7 +138,7 @@
 		</main>
 	</div>
 </div>
-<!-- 결제창 -->
+<!-- 결재창 -->
 <script type="text/javascript">
 	//$("#approvalPlan").on("click", "btn_app", function(){
 	let appPlan2 = "";
