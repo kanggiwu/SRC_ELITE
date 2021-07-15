@@ -29,27 +29,45 @@ public class NoticeController extends MultiActionController {
 
 	
 	// 중요 공지 사항 조회
-	public ModelAndView  getMainNoticeList(HttpServletRequest request, HttpServletResponse response){return null;}
+	public ModelAndView  getMainNoticeList(HttpServletRequest request, HttpServletResponse response) {
+		
+		return null;
+	}
 	// 모든 공지 리스트 조회
 	public ModelAndView getAllNoticeList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("NoticeController == getAllNoticeList == 호출");
 		
-logger.info("NoticeController == getAllNoticeList == 호출");
+		logger.info("NoticeController == getAllNoticeList == 호출");
 		
 		HashMapBinder hmb = new  HashMapBinder(request);
 
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
-		List<Map<String, Object>> noticeAllList = null;
-		noticeAllList = noticeLogic.getAllNoticeList(target);
+		List<Map<String, Object>> noticeList = null;
+		noticeList = noticeLogic.getAllNoticeList(target);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("getAllNoticeList");
-		mav.addObject("noticeAllList", noticeAllList);
-		return mav;  
-			
-		
+		mav.setViewName("getNoticeList");
+		mav.addObject("noticeList", noticeList);
+		return mav;
 	}
 		
+	//공지 검색
+	public ModelAndView searchNotice(HttpServletRequest request, HttpServletResponse response) throws Exception
+	{
+		logger.info("searchNotice 호출");
+		HashMapBinder hmb = new HashMapBinder(request);
+		Map<String, Object> target = new HashMap<>();
+		hmb.multiBind(target);
+		logger.info("target: "+target);
+		List<Map<String, Object>> noticeList = null;
+		noticeList = noticeLogic.searchNotice(target);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("getNoticeList");
+		mav.addObject("noticeList", noticeList);
+		// RequestDispatcher view = req.getRequestDispatcher("getDetailNotice.jsp");
+		// view.forward(request, res);
+		return mav;
+	}
 
 	// 공지 상세조회
 	public ModelAndView getDetailNotice(HttpServletRequest request, HttpServletResponse response) throws Exception
@@ -96,7 +114,7 @@ logger.info("NoticeController == getAllNoticeList == 호출");
 		Map<String,Object> pmap = new HashMap<>();
 		//사용자가 입력한 값이나 서버에서 클라이언트에게 요청한 값 넘김.
 		//hmb.bindPost(pmap);
-		hmb.bind(pmap);
+		hmb.multiBind(pmap);
 		int result = 0;
 		result = noticeLogic.insertNotice(pmap);
 		if(result == 1) {
@@ -114,9 +132,11 @@ logger.info("NoticeController == getAllNoticeList == 호출");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pmap = new HashMap<>();
 		// 사용자가 입력한 값이나 서버에서 클라이언트에게 요청한 값 넘김.
-		hmb.bind(pmap);
+		hmb.multiBind(pmap);
+		logger.info("pmap: "+pmap);
 		int result = 0;
 		result = noticeLogic.updateNotice(pmap);
+		logger.info("result: "+result);
 		if(result == 1) {
 			response.sendRedirect("/notice/getAllNoticeList.src1");
 		}

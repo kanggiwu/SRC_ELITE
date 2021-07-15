@@ -55,11 +55,13 @@
 				
 				<prop key="/mypage/getMyInfo.src1">my-page-controller</prop>
 				<prop key="/mypage/updateMyInfo.src1">my-page-controller</prop>
-				<prop key="/mypage/getMonthSalary.src1">my-page-controller</prop>
+				<prop key="/mypage/getMySalary.src1">my-page-controller</prop>
+
 				<prop key="/mypage/getYearSalary.src1">my-page-controller</prop>
 				<prop key="/mypage/getRetirementPay.src1">my-page-controller</prop>
 
 				<prop key="/notice/getMainNoticeList.src1">notice-controller</prop>
+				<prop key="/notice/searchNotice.src1">notice-controller</prop>
 				<prop key="/notice/getAllNoticeList.src1">notice-controller</prop>
 				<prop key="/notice/getDetailNotice.src1">notice-controller</prop>
 				<prop key="/notice/getNewNotice.src1">notice-controller</prop>
@@ -72,6 +74,7 @@
 				<prop key="/schedule/getDetailSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/insertSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/updateSchedule.src1">schedule-controller</prop>
+				<prop key="/schedule/updateDateSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/deleteSchedule.src1">schedule-controller</prop>
 
 				<prop key="/useraccount/getMonthSalary.src1">account-user-controller</prop>
@@ -130,11 +133,12 @@
 				
 				<prop key="/mypage/getMyInfo.src1">getMyInfo</prop>
 				<prop key="/mypage/updateMyInfo.src1">updateMyInfo</prop>
-				<prop key="/mypage/getMonthSalary.src1">getMonthSalary</prop>
+				<prop key="/mypage/getMySalary.src1">getMySalary</prop>
 				<prop key="/mypage/getYearSalary.src1">getYearSalary</prop>
 				<prop key="/mypage/getRetirementPay.src1">getRetirementPay</prop>
 
 				<prop key="/notice/getMainNoticeList.src1">getMainNoticeList</prop>
+				<prop key="/notice/searchNotice.src1">searchNotice</prop>
 				<prop key="/notice/getAllNoticeList.src1">getAllNoticeList</prop>
 				<prop key="/notice/getDetailNotice.src1">getDetailNotice</prop>
 				<prop key="/notice/getNewNotice.src1">getNewNotice</prop>
@@ -147,6 +151,7 @@
 				<prop key="/schedule/getDetailSchedule.src1">getDetailSchedule</prop>
 				<prop key="/schedule/insertSchedule.src1">insertSchedule</prop>
 				<prop key="/schedule/updateSchedule.src1">updateSchedule</prop>
+				<prop key="/schedule/updateDateSchedule.src1">updateDateSchedule</prop>
 				<prop key="/schedule/deleteSchedule.src1">deleteSchedule</prop>
 
 				<prop key="/useraccount/getMonthSalary.src1">getMonthSalary</prop>

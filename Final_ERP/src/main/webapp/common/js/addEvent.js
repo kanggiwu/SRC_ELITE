@@ -33,33 +33,35 @@ let newEvent = function (start, end, eventType) {
     eventModal.modal('show');
 
 
-
     //새로운 일정 저장버튼 클릭
     $('#save-event').unbind();
-    $('#save-event').on('click', function () {
+    $(document).off('click').on('click','#save-event', function () {
 
-        var eventData = {
+        let eventData = {
             schedule_title: editTitle.val(),
             schedule_type: editType.val(),
             schedule_startdate: editStart.val(),
             schedule_enddate: editEnd.val(),
             schedule_content: editDesc.val(),
-            allDay: true
+            backgroundcolor: editColor.val(),
+            allDay: false
         };
-        
-
+		
+		
+		console.log(eventData.schedule_enddate+"일정 마감일");
+		console.log(eventData.backgroundcolor+"색을 넣어본다");
+		
         if (eventData.start > eventData.end) {
             alert('끝나는 날짜가 앞설 수 없습니다.');
             return false;
         }
 		
-		
-        if (eventData.title === '') {
+        if (eventData.schedule_title === '') {
             alert('일정명은 필수입니다.');
             return false;
         }
-        if (eventData.type === '') {
-            alert('일정명은 필수입니다.');
+        if (eventData.schedule_type === null ) {
+            alert('분류는 필수입니다.');
             return false;
         }
 
@@ -79,23 +81,33 @@ let newEvent = function (start, end, eventType) {
         eventModal.find('input, textarea').val('');
         editAllDay.prop('checked', false);
         eventModal.modal('hide');
-
+		
+		let schedule_type 		=	eventData.schedule_type;
+		let schedule_title 	=	eventData.schedule_title;
+		let schedule_startdate =	eventData.schedule_startdate;
+		let schedule_enddate 	=	eventData.schedule_enddate;
+		let schedule_content	=	eventData.schedule_content;
+		let color 	=	eventData.backgroundcolor;
+		let all_Day 			=	eventData.allDay;
+		console.log("끝나는 날"+schedule_enddate);
         //새로운 일정 저장
         $.ajax({
             type: "post",
             url: "/schedule/insertSchedule.src1",
             data: {
-                schedule_type: eventData.schedule_type,
-                schedule_title: eventData.schedule_title,
-                schedule_startdate: eventData.schedule_startdate,
-                schedule_enddate: eventData.schedule_enddate,
-                schedule_content:eventData.schedule_content
+                schedule_type: 			schedule_type, 		
+                schedule_title: 		schedule_title, 		
+                schedule_startdate: 	schedule_startdate, 
+                schedule_enddate: 		schedule_enddate, 	
+                backgroundcolor: 		color, 	
+                allDay: 				all_Day, 				
+                schedule_content:		schedule_content	
             },
             success: function (response) {
             	if(response == 0){
             		alert('일정추가 실패');
             	}else if(response == 3){
-            	    var ko_type = null;
+            	    let ko_type = null;
 					if(event.type%10 === 0){
 						ko_type = '부서';
 					}else if(event.type === 1){

@@ -29,7 +29,7 @@
 <link href="../common/css/custom.css" rel="stylesheet" />
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 <script>
-  $(document).ready(function () {
+$(document).ready(function () {
     var $setRows = $('#setRows');
 
 $setRows.submit(function (e) {
@@ -140,7 +140,7 @@ $setRows.submit();
 	          <option value="이사">이사</option>
 	          <option value="대표">대표</option>
 	         </select>           
-	        <input name="emp_name" type="text" class="form-control float-left " placeholder="검색">
+	        <input name="emp_name" type="text" class="form-control float-left " placeholder="이름">
 	        <a href="javascript:empSearchAction()" class="btn btn-default float-left" role="button"><i class="fas fa-search"></i></a>
 	      </span>
       	</form>  
@@ -151,22 +151,14 @@ $setRows.submit();
 		
 		</div>
 	</div>     			
-
    <div>
-     <table class="table table-bordered table-hover" id="products" 
-              data-toggle="table"
-              data-height="650"
-              data-search="true"
-              data-show-columns="true"
-             data-method="post"
-              data-pagination="true"
-                  data-url="./member.json">
+     <table class="table table-bordered table-hover table-striped" id="products">
 
                   <form action="" id="setRows">
                     <input type="hidden" name="rowPerPage" value="10" id="rowPerPage">
                   </form>
     <thead>
-      <tr>
+      <tr class="thead-dark">
         <th>사원번호</th>
         <th>이름</th>
         <th>부서</th>

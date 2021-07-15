@@ -247,8 +247,8 @@ List<Map<String, Object>> insertLicenceList = null;
 													<div class="form-group"
 														style="left: 20%; position: relative;">
 														<input type="file" id="u_file" onchange="readURL(this);"
-															name="emp_picture_path" accept="image/*">
-														<input type="text" value="<%=emp_picture_path%>" 
+															name="emp_picture_path" accept="image/*"> <input
+															type="text" value="<%=emp_picture_path%>"
 															name="previous_emp_picture_path" readonly hidden>
 													</div>
 												</div>
@@ -281,7 +281,7 @@ List<Map<String, Object>> insertLicenceList = null;
 															<option value=2>개발2팀</option>
 															<option value=3>개발3팀</option>
 															<option value=4>개발4팀</option>
-															<option value= hidden>없음</option>
+															<option value=hidden>없음</option>
 														</select>
 													</div>
 													<br>
@@ -312,7 +312,8 @@ List<Map<String, Object>> insertLicenceList = null;
 														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">사원번호</span> <input
 															type="text" name="emp_no" class="form-control"
-															value="<%=emp_no%>" aria-describedby="basic-addon1" readonly>
+															value="<%=emp_no%>" aria-describedby="basic-addon1"
+															readonly>
 													</div>
 													<br>
 													<div class="input-group">
@@ -377,35 +378,48 @@ List<Map<String, Object>> insertLicenceList = null;
 													</div>
 												</div>
 											</div>
-											</div>
+										</div>
 									</form>
-									<form id="licence_add" method="post"
-										enctype="multipart/form-data" action="updateEmployee.src1">
-										<table class="table table-bordered table-hover" id="testTable"
-											id="table" data-toggle="table" data-height="650"
-											data-search="true" data-show-columns="true"
-											data-method="post" data-pagination="true"
-											data-url="./member.json">
-											<thead>
-												<tr>
-													<th colspan="3">보유 자격증</th>
-												</tr>
-												<tr>
-													<th>번호</th>
-													<th>이름</th>
-													<th>수당</th>
-												</tr>
-											</thead>
-											<tbody id="licence-tbody">
-<!-- 												<tr>
-													<td><input type="text" name="licence_no"
-														id="AddLicenseRow1" class="form-control" /></td>
-													<td><input type="text" name="licence_name"
-														id="AddLicenseRow2" class="form-control" /></td>
-													<td><input type="text" name="licence_type"
-														id="AddLicenseRow3" class="form-control" /></td>
-												</tr> -->
-												<%
+									<div class="col-lg-12">
+										<div class="input-group">
+											<span class="input-group-addon" id="basic-addon1"
+												style="display: inline-block; width: 33%">
+												<h5>보유 자격증</h5>
+											</span> <select class="form-control" name="licence_name"
+												id="licence-select">
+												<option selected disabled>선택</option>
+												<option value=1>정보처리산업기사</option>
+												<option value=2>정보처리기사</option>
+												<option value=3>정보보안산업기사</option>
+												<option value=4>정보보안기사</option>
+												<option value=5>리눅스마스터1급</option>
+												<option value=6>리눅스마스터2급</option>
+												<option value=7>데이터분석준전문가</option>
+												<option value=8>데이터분석가</option>
+												<option value=9>네트워크관리사2급</option>
+												<option value=10>네트워크관리사1급</option>
+												<option value=11>OCA</option>
+												<option value=12>OCM</option>
+											</select>
+											<button class="btn btn-light" onclick="add_row()">추가</button>
+											<button class="btn btn-light" onclick="delete_row()">삭제</button>
+										</div>
+										<form id="licence_add" method="post"
+											enctype="multipart/form-data" action="updateEmployee.src1">
+											<table class="table table-bordered table-hover"
+												id="testTable" id="table" data-toggle="table"
+												data-height="650" data-search="true"
+												data-show-columns="true" data-method="post"
+												data-pagination="true" data-url="./member.json">
+												<thead>
+													<tr>
+														<th><h6>번호</h6></th>
+														<th><h6>이름</h6></th>
+														<th><h6>수당</h6></th>
+													</tr>
+												</thead>
+												<tbody id="licence-tbody">
+													<%
 												if (licenceList != null) {
 													size = licenceList.size();
 													if (size > 0) {
@@ -418,33 +432,25 @@ List<Map<String, Object>> insertLicenceList = null;
 													licence_incentive = lmap.get("LICENCE_INCENTIVE").toString();		
 
 												%>
-												<tr>
-													<td><input type="text" value="<%=licence_no%>"
-														class="form-control" disabled /></td>
-													<td><input type="text" value="<%=licence_name%>"
-														class="form-control" disabled /></td>
-													<td><input type="text" value="<%=licence_incentive%>"
-														class="form-control" disabled /></td>
-												</tr>
-												<%
-												}
+													<tr id='licence_<%=licence_no%>'>
+														<td value="<%=licence_no%>"><%=licence_no%></td>
+														<td value="<%=licence_name%>"><%=licence_name%></td>
+														<td value="<%=licence_incentive%>"><%=licence_incentive%></td>
+													</tr>
+													<%
 												} ///end of for
-												} ///end of if
+												} ///end of licenceList size check if
+												} ///end of licenceList null check if
 												%>
-											</tbody>
-										</table>
-									</form>
+												</tbody>
+											</table>
+										</form>
+									</div>
+
+								</fieldset>
+								<!-- 컨텐츠 들어갈내용 끝   -->
 							</div>
-							<div style="text-align: right; padding: 5px;">
-								<button class="btn btn-light" onclick="add_row()">자격증
-									추가</button>
-								<button class="btn btn-light" onclick="delete_row()">자격증
-									삭제</button>
-							</div>
-							</fieldset>
-							<!-- 컨텐츠 들어갈내용 끝   -->
 						</div>
-					</div>
 					</div>
 			</main>
 		</div>

@@ -1,12 +1,11 @@
 /* ****************
  *  일정 편집
  * ************** */
-var editEvent = function (event, element, view) {
+let editEvent = function (event, element, view) {
 
     $('#deleteEvent').data('id', event.id); //클릭한 이벤트 ID
     $('#deleteEvent').data('type', event.type); //클릭한 이벤트 TYPE
     $('#deleteEvent').data('schedule_writer', event.emp_no); //클릭한 이벤트 TYPE
-	alert("게시글 작성자"+event.emp_no);
     $('.popover.fade.top').remove();
     $(element).popover("hide");
 
@@ -26,7 +25,7 @@ var editEvent = function (event, element, view) {
         editEnd.val(event.end.format('YYYY-MM-DD HH:mm'));
     }
     
-    var ko_type = null;
+    let ko_type = null;
     if (event.type === 3){
     	ko_type = '개인';
     }else if(event.type%10 === 0){
@@ -55,7 +54,7 @@ var editEvent = function (event, element, view) {
 
     //업데이트 버튼 클릭시
     $('#updateEvent').unbind();
-    $('#updateEvent').on('click', function () {
+    $('#updateEvent').off('click').on('click', function () {
 
         if (editStart.val() > editEnd.val()) {
             alert('끝나는 날짜가 앞설 수 없습니다.');
@@ -67,10 +66,10 @@ var editEvent = function (event, element, view) {
             return false;
         }
 
-        var statusAllDay;
-        var startDate;
-        var endDate;
-        var displayDate;
+        let statusAllDay;
+        let startDate;
+        let endDate;
+        let displayDate;
 
         if (editAllDay.is(':checked')) {
             statusAllDay = true;
@@ -93,9 +92,9 @@ var editEvent = function (event, element, view) {
         event.type = editType.val();
         event.backgroundColor = editColor.val();
         event.description = editDesc.val();
-		alert(event.backgroundColor);
         $("#calendar").fullCalendar('updateEvent', event);
 
+		
         //일정 업데이트
         $.ajax({
             type: "post"
@@ -128,16 +127,14 @@ var editEvent = function (event, element, view) {
 };
 
 // 삭제버튼
-$(document).on('click','#deleteEvent', function () {
+$(document).off('click').on('click','#deleteEvent', function () {
     
     $('#deleteEvent').unbind();
     
     eventModal.modal('hide');
-	alert("삭제11");
-	var schedule_no = $(this).data('id');
-	var schedule_type = $(this).data('type');
-	var schedule_writer = $(this).data('schedule_writer');
-	alert(schedule_writer);
+	let schedule_no = $(this).data('id');
+	let schedule_type = $(this).data('type');
+	let schedule_writer = $(this).data('schedule_writer');
 	
     //삭제시
     $.ajax({

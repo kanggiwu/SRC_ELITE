@@ -1,5 +1,6 @@
 package com.srcelite.finalerp.web.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -13,14 +14,14 @@ public class MainDao {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 	
-	public String login(Map<String,Object> pmap) {
+	public Map<String, Object> login(Map<String,Object> pmap) {
 		logger.info("login 호출 성공 : "+pmap);
-		String emp_pw = sqlSessionTemplate.selectOne("getPassword", pmap);
-		return emp_pw;
+		Map<String, Object> emp_info = null;
+		emp_info = sqlSessionTemplate.selectOne("getLoginInfo", pmap);
+		return emp_info;
 	}
-	public void logout() {
-		
-	}
+	public void logout() {}
+	
 	public int insertAttendanceTime(Map<String,Object> pmap) {
 		logger.info("insertAttendanceTime 호출 성공 : "+pmap);
 		int result = 0;

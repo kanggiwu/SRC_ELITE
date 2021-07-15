@@ -1,22 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
- "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mapper.MyPageMapper">
+	<resultMap  type="map" id="salaryMap"/>
 
 	<!-- 사원 상세 정보 가져오기 -->
 	<select id="getDetailEmp" parameterType="map" resultType="map">
-		SELECT e.emp_name, TRUNC(MONTHS_BETWEEN(SYSDATE, emp_hiredate)/12)||'년차', d.dept_name, r.rank_name, e.emp_hiredate, emp_status, e.emp_pw, e.emp_tel, e.emp_email
-  		  FROM emp e, dept d, rank r
-  		 WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no AND emp_no = #{emp_no}
+		SELECT
+		e.emp_name, e.emp_no, TRUNC(MONTHS_BETWEEN(SYSDATE, 
+		to_date(substr(emp_hiredate,1,10)))/12)||'년차' emp_year, d.dept_name,
+		nvl((t.team_name),'없음') team_name, 	r.rank_name, e.emp_pw, e.emp_tel, e.emp_email, e.emp_account, e.emp_picture_path, 
+		substr(e.emp_hiredate,1,10) EMP_HIREDATE, decode(e.emp_status,0,'재직',1,'휴직',2,'퇴직') emp_status,
+		to_char((select count(licence_no)
+		from licence_emp le, emp e
+		where le.emp_no = e.emp_no and e.emp_No = #{emp_no})) as licences
+		FROM emp e, dept d, rank r , team t
+		WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no and E.TEAM_NO = T.TEAM_NO(+)
+		AND emp_no = #{emp_no}
+	</select>
+
+	<!-- 급여 리스트 가져오기-->
+	<select id="getSalary" parameterType="map" resultType="map">
+	 	SELECT sal_no, emp_no, sal_date, sal_base, sal_incentive, sal_position, sal_tech, sal_etc, sal_meal, sal_commu, sal_payment
+                    , sal_nation_pension, sal_health, sal_industrial_insurance, sal_employ_insurance, sal_income_tax, sal_local_tax, sal_deduction_etc
+                    , sal_deductions, sal_total
+          FROM salary
+        WHERE emp_no = #{login_no} AND rownum <![CDATA[<=]]> 12 AND TO_DATE(sal_date) <![CDATA[<=]]> TO_DATE(#{sal_date})
+        ORDER BY to_date(sal_date) DESC
 	</select>
 	
-	<!-- 비밀번호 변경 --> <!-- 지금버전에서는 프로시저를 사용하지 않으므로 자바단에서 패스워드와 패스워드확인이 일치하는 지 확인후 일차히면 비밀번호를 업데이트 -->
+	<select id="getRetirePay" parameterType="map" resultType="map">
+	 	SELECT 
+          FROM salary
+        WHERE emp_no = #{login_no} AND rownum <![CDATA[<=]]> 12 AND TO_DATE(sal_date) <![CDATA[<=]]> TO_DATE(#{sal_date})
+        ORDER BY to_date(sal_date) DESC
+	</select>
+        
+    
+	<!-- 급여 출력 프로시저-->
+	<select id="getMySalaryProc" statementType="CALLABLE" parameterType="map">
+		{call PROC_SET_TOTAL_SALARY(        
+          #{login_no, mode=IN, jdbcType=NUMERIC},
+          #{sal_date, mode=IN, jdbcType=VARCHAR},
+          #{sal_cursor, mode=OUT, jdbcType=CURSOR, resultMap=salaryMap}
+       	)}
+	</select>    
+
+	<!-- 비밀번호 변경 -->
 	<update id="updatePassword" parameterType="map">
 		UPDATE emp
-		   SET
-			emp_pw = #{emp_pw}
-		 WHERE emp_no = #{emp_no}
+		SET
+		emp_pw =
+		#{emp_pw}
+		WHERE emp_no = #{emp_no}
 	</update>
 
 </mapper>
