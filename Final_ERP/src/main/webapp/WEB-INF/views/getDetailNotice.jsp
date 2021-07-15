@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
+<%! 
+String whatNameIs(int type) {
+	if(type == 1) { return "공통"; } else
+	if(type == 2) { return "인사"; } else
+	if(type == 3) { return "회계"; } else
+	if(type == 4) { return "개발"; }
+	return "";
+}
+%>
 <%
 StringBuilder path = new StringBuilder(request.getContextPath());
 path.append("/");
@@ -46,7 +55,7 @@ if (NoticeDetail != null) {
 <script type="text/javascript">
 	function updateNotice(){
 		alert("updateNotice호출");
-		$("#notice_upd").attr("method","get");
+		$("#notice_upd").attr("method","post");
 		$("#notice_upd").attr("action","/notice/updateNotice.src1");
 		$("#notice_upd").submit();
 	}
@@ -73,35 +82,50 @@ if (NoticeDetail != null) {
 						style="border-bottom: 2px solid gray; margin: 50px 30px;">
 						<h2>공지 상세조회</h2>
 					</div>
-					<div id="page_contents"
+					<div id="page_contents""
 						style="max-width: 1730px; margin: 10px 100px;"></div>
 
 					<!-- 컨텐츠 들어갈내용 시작-->
-					<div>
+					<div style="padding-left: 20%; padding-right: 20%;">
 						<!-- 수정 시작-->
-						<form id="notice_upd">
+						<form id="notice_upd" enctype="multipart/form-data" >
 										<table>
 									<tr>
-										<input type="hidden" name="notice_no" id="notice_no" />
 
-										<td>분류 <select id="notice_type" name="notice_type">
-												<option selected disabled>분류</option>
-												<%
-												int i = 0;
-												for (i = 1; i < 5; i++) {
-													//if("1".equals(notice_type)){
-												%>
-												<option <%if (i == inotice_type) {%> selected <%}%>><%=i%></option>
-												<%
-												//}
-												}
-												%>
+										<td>분류 <select id="notice_type" name="notice_type"
+													style="text-align: left;">
+									<%
+										String sel = "selected";
+										switch(inotice_type) {
+											case 1:
+									%>
+											<option <%=sel%> value="1">공통</option>
+									<%
+											break;
+											case 2:
+									%>
+											<option <%=sel%> value="2">인사</option>
+									<%
+											break;
+											case 3:
+									%>
+											<option <%=sel%> value="3">회계</option>
+									<%
+											break;
+											case 4:
+									%>
+											<option <%=sel%> value="4">개발</option>
+									<%
+											break;
+										}
+									%>
 										</select>
 										</td>
 									</tr>
 									<tr>
 										<td>제목<input id="notice_title" value="<%=notice_title%>"
-											name="notice_title" style="width: 480px;"></td>
+											name="notice_title" 
+													style="text-align: left; width: 500px;"></td>
 									</tr>
 									<tr>
 										<th>내용</th>
@@ -112,19 +136,9 @@ if (NoticeDetail != null) {
 										</td>
 									</tr>
 								</table>
+								<input type="hidden" name="notice_no" id="notice_no" value="<%=notice_no%>"/>
 							</form>
-							</div>
-					<!-- 내용 상세끝  -->
-					<!-- 삭제 시작-->
-					<form id="notice_del">
-						<input type="hidden" name="dnotice_no" value="<%=notice_no%>">
-					</form>
-					<!-- 삭제  끝-->
-					
-					<div>
-					</div>
-					
-					<!-- 목록이동 버튼 시작 -->
+					<div style="text-align: right; padding: 10px;">
 					<button type="button" class="btn btn-primary pull-right"
 						onclick="location.href='/notice/getAllNoticeList.src1'">목록</button>
 					<!-- 목록이동 버튼  끝-->
@@ -137,6 +151,19 @@ if (NoticeDetail != null) {
 					<button type="button" class="btn btn-primary pull-right"
 						onclick="location.href='javascript:deleteNotice();'">삭제</button>
 					<!-- 삭제 버튼 끝-->
+					</div>
+							</div>
+					<!-- 내용 상세끝  -->
+					<!-- 삭제 시작-->
+					<form id="notice_del">
+						<input type="hidden" name="dnotice_no" value="<%=notice_no%>">
+					</form>
+					<!-- 삭제  끝-->
+					
+					<div>
+					</div>
+					
+					<!-- 목록이동 버튼 시작 -->
 
 
 					<%

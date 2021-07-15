@@ -31,9 +31,9 @@ public class NoticeDao {
 		}
 	public List<Map<String, Object>> searchNotice(Map<String, Object> pmap) {
 		logger.info("NoticeDao == searchNotice == 호출");
-
 		List<Map<String, Object>> searchNotice = null;
-		searchNotice = sqlSessionTemplate.selectList("getNoticeList",pmap);
+		sqlSessionTemplate.selectList("getNoticeListProc",pmap);
+		searchNotice = (List<Map<String, Object>>) pmap.get("n_cursor");
 		return searchNotice;
 		
 //	공지 상세조회

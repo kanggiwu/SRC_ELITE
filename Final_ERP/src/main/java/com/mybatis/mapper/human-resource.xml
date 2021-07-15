@@ -3,7 +3,7 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.mybatis.mapper.HumanResourceMapper">
-
+	<resultMap  type="java.util.Map" id="empMap"></resultMap>
 	<!-- 사원 리스트 출력 -->
 	<select id="getEmpList" resultType="map">
 		SELECT e.emp_no, e.emp_name, d.dept_name, r.rank_name, e.emp_status
@@ -13,19 +13,23 @@
 	</select>
 	
 	<!-- 사원리스트를 부서명, 직위명, 사원이름으로 조건검색하여 프로시저 출력 -->
-	<select id="getEmpListProc" statementType="CALLABLE" parameterType="map"  resultType="map">
+	<select id="getEmpListProc" statementType="CALLABLE" parameterType="map">
 		{call PROC_EMP_LIST(        
-          #{dept_name},
-          #{rank_name},
-          #{emp_name},
-          #{e_cursor}
+          #{dept_name, mode=IN, jdbcType=VARCHAR},
+          #{rank_name, mode=IN, jdbcType=VARCHAR},
+          #{emp_name, mode=IN, jdbcType=VARCHAR},
+          #{e_cursor, mode=OUT, jdbcType=CURSOR, resultMap=empMap}
        	)}
 	</select>    
 		
 	<!-- 사원 정보 등록 -->
-	<insert id="insertEmpInfo" parameterType="map">
-		INSERT INTO emp (emp_no, emp_name, emp_pw, emp_status, dept_no, rank_no, emp_job, emp_hiredate, emp_retiredate, emp_email, emp_tel, emp_auth, emp_picture_path)
-            VALUES(#{seq_emp}, #{emp_name}, #{emp_pw}, #{emp_status}, #{dept_no}, #{rank_no}, #{emp_job}, #{emp_hiredate}, #{emp_retiredate}, #{emp_email}, #{emp_tel}, #{emp_auth}. #{emp_picture_path})
+	<insert id="insertEmpInfo" parameterType="map"  useGeneratedKeys="true">
+	<!-- 팀, 계좌일자 추가하고 시퀀스 수정하였습니다 -->
+	<selectKey keyProperty="emp_no" resultType="int" order="BEFORE">
+		SELECT seq_emp.NEXTVAL FROM DUAL
+        </selectKey>
+		INSERT INTO emp (emp_no, emp_name, emp_pw, emp_status, dept_no, rank_no, team_no, emp_hiredate, emp_retiredate, emp_email, emp_tel, emp_account, emp_picture_path)
+            VALUES(#{emp_no}, #{emp_name}, #{emp_pw}, #{emp_status}, #{dept_no}, #{rank_no}, #{team_no}, #{emp_hiredate}, #{emp_retiredate}, #{emp_email}, #{emp_tel}, #{emp_account}, #{emp_picture_path})
 	</insert>
 
 	<!-- 자격증 소유자 등록 -->
@@ -35,19 +39,43 @@
 
 	<!-- 사원 정보 수정 -->
 	<update id="updateEmpInfo" parameterType="map">
+	<!-- 팀과 입사일자, 계좌번호, 사진을 추가하였습니다 -->
 		UPDATE EMP
 		SET
     		emp_name = #{emp_name}
     		,emp_status = #{emp_status}
     		,dept_no = #{dept_no}
     		,rank_no = #{rank_no}
-    		,emp_job = #{emp_job}
+    		,team_no = #{team_no}
+    		,emp_hiredate = #{emp_hiredate}
     		,emp_retiredate = #{emp_retiredate}
     		,emp_email = #{emp_email}
     		,emp_tel = #{emp_tel}
-    		,emp_auth = #{emp_auth}
+    		,emp_account = #{emp_account}
     		,emp_picture_path = #{emp_picture_path}
 		WHERE emp_no =#{emp_no}
 	</update>
-
+	
+		<!-- 사원 상세 정보 가져오기 -->
+	<select id="getDetailEmpInfo" parameterType="map" resultType="map">
+	SELECT  e.emp_no, e.emp_name, 
+		d.dept_name, nvl((t.team_name),'없음') team_name, r.rank_name, substr(emp_hiredate,1,10) EMP_HIREDATE, 
+		substr(emp_retiredate,1,10) EMP_RETIREDATE,  e.emp_tel, e.emp_email,
+		decode(e.emp_status,0,'재직',1,'휴직',2,'퇴직') emp_status, e.emp_account, e.emp_picture_path, 
+		to_char((select count(licence_no)
+		from licence_emp le, emp e
+		where le.emp_no = e.emp_no and e.emp_No = #{emp_no})) as licences, 
+		TRUNC(MONTHS_BETWEEN(SYSDATE, to_date(substr(emp_hiredate,1,10)))/12)||'년차' emp_year
+    FROM emp e, dept d, rank r, team t
+   WHERE e.dept_no = d.dept_no AND e.rank_no = r.rank_no and E.TEAM_NO = T.TEAM_NO(+)  
+    	and e.emp_no = #{emp_no}
+	</select>
+	
+	<!-- 사원의 자격증 정보 가져오기 -->
+	<select id="getLicenceInfo" parameterType="map" resultType="map">
+	<!-- 자격증 테이블의 컬럼 변경으로 수정되었습니다 -->
+	select	l.licence_no, l.licence_name,l.licence_incentive
+	from licence_emp le, licence l
+	where le.licence_no = l.licence_no and le.emp_no = #{emp_no}
+	</select>
 </mapper>

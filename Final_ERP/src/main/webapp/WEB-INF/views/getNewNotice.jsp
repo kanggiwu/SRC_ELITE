@@ -43,7 +43,7 @@ if (newNotice != null) {
 <script type="text/javascript">
 	function insertNotice(){
 		alert("추가확인 호출");
-		$("#notice_ins").attr("method","get");
+		$("#notice_ins").attr("method","post");
 		$("#notice_ins").attr("action","/notice/insertNotice.src1");
 		$("#notice_ins").submit();	
 	}	
@@ -66,17 +66,17 @@ if (newNotice != null) {
 						style="max-width: 1730px; margin: 10px 100px;">
 						<!-- 컨텐츠 들어갈내용 시작-->
 						<div>
-						<form id="notice_ins">
+						<form id="notice_ins" enctype="multipart/form-data" accept-charset="utf-8">
 						<!-- 테이블 시작  -->
 							<table>
 								<tr>
 							
 									<td>분류 <select name="notice_type">
-											<option selected disabled>분류</option>
-											<option value="1">1(공통)</option>
-											<option value="2">2(인사)</option>
-											<option value="3">3(회계)</option>
-											<option value="4">4(개발)</option>
+											<option value="1" selected readonly >분류</option>
+											<option value="1">공통</option>
+											<option value="2">인사</option>
+											<option value="3">회계</option>
+											<option value="4">개발</option>
 									</select>
 									</td>
 								</tr>

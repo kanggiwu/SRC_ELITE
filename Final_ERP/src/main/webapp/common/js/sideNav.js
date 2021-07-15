@@ -8,13 +8,14 @@ const sideNavMainTitleApi = [
     id: "group",
     title: "공지사항",
     className: "",
-    ref: "../../notice/getAllNoticeList.src1",
+    ref: "/notice/getAllNoticeList.src1",
     onClick: "#",
     collapsed: false,
   },
   {
     id: "myservice",
     title: "마이 페이지",
+    
     icon: "fa-user",
     collapsed: true,
     subMenu: false,
@@ -24,7 +25,7 @@ const sideNavMainTitleApi = [
         id: "goto",
         title: "내 정보 조회",
         className: "",
-        ref: "#",
+        ref: "/mypage/getMyInfo.src1",
         onClick: "",
         collapsed: false,
       },
@@ -32,7 +33,7 @@ const sideNavMainTitleApi = [
         id: "salary",
         title: "급여조회",
         className: "",
-        ref: "../myService/empSal.jsp",
+        ref: "../mypage/getMonthSalary.src1",
         onClick: "",
         collapsed: false,
       },
@@ -42,7 +43,7 @@ const sideNavMainTitleApi = [
     id: "group",
     title: "조직도",
     className: "",
-    ref: "../myService/getOrganizationChart.jsp",
+    ref: "/humanresource/getOrganizationChart.src1",
     onClick: "",
     collapsed: false,
   },
@@ -50,7 +51,7 @@ const sideNavMainTitleApi = [
     id: "personal",
     title: "일정",
     className: "",
-    ref: "../myService/empSchedule.jsp",
+    ref: "/myService/empSchedule.jsp",
     onClick: "",
     collapsed: false,
   },
@@ -114,14 +115,14 @@ const sideNavMainTitleApi = [
         id: "group",
         title: "조직도 수정",
         className: "",
-        ref: "../myService/updateOrganizationChart.jsp",
+        ref: "../humanresource/getOrganizationChart.src1",
         onClick: "",
       },
       {
         id: "management",
         title: "사원관리",
         className: "",
-        ref: "../myService/getEmployeeList.jsp",
+        ref: "/humanresource/getEmployeeList.src1",
         onClick: "",
       },
     ],
@@ -162,29 +163,8 @@ const sideNavMainTitleApi = [
     id: "chat",
     title: "프로젝트 관리",//"Chat",
     icon: "fas fa-comments",
-    ref: "#",
-    collapsed: true,
-    collapseData: [
-      {
-        id: "conference",
-        title: "프로젝트 조회", //conference
-        icon: "fas fa-calendar",
-        ref: "#",
-        className: "",
-        onClick: "",
-        collapsed: false,
-        
-      },
-      {
-        id: "department",
-        title: "프로젝트 추가",//"부서일정",
-        className: "",
-        ref: "#",
-        onClick: "",
-        collapsed: false,
-        
-      },
-    ]
+    ref: "/projecthistory/getProjectHistoryList.src1",
+    collapsed: false,
   },
 ];
 
@@ -194,12 +174,13 @@ const avatarBoxButtonApi = [
     text: "출근",
     classname: "avatar_button btn btn-info",
     id: "avatarBoxButton_edit",
-    ref: "../myService/empCommute.jsp",
+    ref: "/main/insertAttendanceTime.src1",
   },
   {
     text: "로그아웃",
     classname: "avatar_button btn btn-danger",
     id: "avatarBoxButton_logout",
+    ref: "/main/logout.src1",
   },
 ];
 

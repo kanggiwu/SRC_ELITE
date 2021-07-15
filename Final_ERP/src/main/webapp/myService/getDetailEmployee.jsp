@@ -62,45 +62,108 @@ out.print(path);
 		document.getElementById('EmpUpdSubmit').style.display = ''
 	}
 
-	function insAction() {
-		console.log("입력 액션 호출");
-		$('#board_ins').submit();
-		location.href = 'getEmployeeList.jsp'
+function insAction() {
+			console.log("입력 액션 호출");
+			$('#board_ins').submit();
+      location.href = 'getEmployeeList.jsp'
+		}
+		
+// 콘텐츠 수정 :: 사진 수정 시 이미지 미리보기
+function readURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			$('#imgArea').attr('src', e.target.result); 
+		}
+		reader.readAsDataURL(input.files[0]);
 	}
+}
+
+$(":input[name='u_file']").change(function() {
+	if( $(":input[name='u_file']").val() == '' ) {
+		$('#imgArea').attr('src' , '');  
+	}
+	$('#imgViewArea').css({ 'display' : '' });
+	readURL(this);
+});
+
+// 이미지 에러 시 미리보기영역 미노출
+function imgAreaError(){
+	$('#imgViewArea').css({ 'display' : 'none' });
+}		
 </script>
 <title>HR - ERP PROGRAM</title>
 </head>
 <body class="sb-nav-fixed">
-	<nav id="topNav"></nav>
-	<div id="layoutSidenav">
-		<div id="layoutSidenav_nav"></div>
-		<div id="layoutSidenav_content">
-			<main id="input_div">
-				"frame_div" style="border: 1px solid black;"> id="page_title"
-				style="border-bottom: 2px solid gray; margin: 50px 30px;"> 사원 상세 조회
-				</h2>
-		</div>
-		id="page_contents" style="max-width: 1730px; margin: 10px 100px;"> 컨텐츠
-		들어갈내용 시작--> class="container"> class="col" > v style="text-align:
-		right; padding: 5px;"> utton class="btn btn-info" id="EmpUpdReady"
-		onclick="fieldsetDisable()">수정
-		</button>
-		utton class="btn btn-info" id="EmpUpdSubmit" onclick="insAction();"
-		style="display:none;">수정 완료
-		</button>
-		utton class="btn btn-danger"
-		onclick="location.href='getEmployeeList.jsp'">취소
-		</button>
-		v> ldset id='btn_fieldset' disabled> m id="emp_ins" method="post"
-		enctype="multipart/form-data" action="updateEmployee.src1">
-		<div class="row">
-			<div class="col-lg-6">
-				<div id="emp_table" style="width: 100%; height: 250px;">
-					<img id="men" src="../erp_lab/img/img_avatar.png"
-						style="width: 200px; left: 20%; position: relative;">
-					<div class="form-group" style="left: 20%; position: relative;">
-						<label for="exampleInputFile"></label> <input type="file"
-							id="exampleInputFile">
+<nav id="topNav"></nav>
+<div id="layoutSidenav">
+   <div id="layoutSidenav_nav"></div>
+   <div id="layoutSidenav_content">
+		<main id="input_div">
+			<div id="frame_div" style="border: 1px solid black;">
+				<div id="page_title" style="border-bottom: 2px solid gray; margin: 50px 30px;">
+				<h2>사원 상세 조회</h2></div>
+				<div id="page_contents" style="max-width: 1730px; margin: 10px 100px;">
+     			<!-- 컨텐츠 들어갈내용 시작-->
+         		<div class="container">
+               <div class="col" >
+                 <div style="text-align: right; padding: 5px;">
+                  <button class="btn btn-info" id="EmpUpdReady" onclick="fieldsetDisable()">수정</button>
+                  <button class="btn btn-info" id="EmpUpdSubmit" onclick="insAction();" style="display:none;">수정 완료</button>
+                  <button class="btn btn-danger" onclick="location.href='getEmployeeList.jsp'">취소</button>
+                </div>
+                <fieldset id='btn_fieldset' disabled>
+                <form id="emp_ins" method="post" action="updateEmployee.src1">
+			   			<div class="row">
+						    <div class="col-lg-6">
+								<div id="imgViewArea" style="width:100%; height:250px;">
+									<img id="imgArea" style="width: 200px; left: 20%; position: relative;" onerror="imgAreaError()">
+								 <div class="form-group" style="left: 20%; position: relative;">
+								    <label for="u_file"></label>
+								    <input type="file" id="u_file" name="u_file">
+								  </div>
+								</div>
+								<hr>
+		    				</div>		    
+						    <div class="col-lg-6">
+							  <div id="emp_table" style="width:100%; height:250px;">
+								<br>
+								<div class="input-group">
+								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">이름</span>
+								  <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" >
+								</div>
+								<br>				
+								<div class="input-group">
+								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">부서</span>
+						          <select class="form-control">
+                        <option value="" selected disabled hidden >부서</option>
+						              <option>인사</option>
+						              <option>회계</option>
+						              <option>개발</option>
+						              <option>임원</option>
+						          </select>
+						          <select class="form-control">
+                        <option value="" selected disabled hidden >팀</option>
+						              <option>개발1팀</option>
+						              <option>개발2팀</option>
+						              <option>개발3팀</option>
+						              <option>SM팀</option>
+						          </select>
+								</div>
+								<br>						
+								<div class="input-group">
+								  <span class="input-group-addon" id="basic-addon1" style="display: inline-block; width: 25%">직위</span>
+								  <select class="form-control">
+						            <option>사원</option>
+						            <option>대리</option>
+						            <option>과장</option>
+						            <option>부장</option>
+						            <option>사장</option>
+					       	   </select>
+								</div>						
+							</div>	
+							<hr>
+						</div>
 					</div>
 				</div>
 				<hr>

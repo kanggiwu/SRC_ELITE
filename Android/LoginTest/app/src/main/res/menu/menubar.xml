@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+       <item android:id="@+id/home"
+        android:title="Home"/>
+    <item android:id="@+id/notice"
+        android:title="공지사항"/>
+    <item android:id="@+id/mypage"
+        android:title="마이페이지"
+         />
+    <item android:id="@+id/emp_sal"
+        android:title="조직도 조회"/>
+    <item android:id="@+id/calender"
+         android:title="일정"/>
+    <item android:id="@+id/cash"
+        android:title="급여"/>
+    <item android:id="@+id/emp"
+         android:title="인사"/>
+    <item android:id="@+id/signer"
+         android:title="전자결재"/>
+    <item android:id="@+id/project"
+        android:title="프로젝트 이력 관리"/>
+</menu>

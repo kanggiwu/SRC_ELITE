@@ -5,12 +5,21 @@
 	StringBuilder path = new StringBuilder(request.getContextPath());
 	path.append("/");
 	List<Map<String,Object>> projectHistoryList = null;
+	List<Map<String,Object>> projectListProc = null;
 	projectHistoryList = (List<Map<String,Object>>)request.getAttribute("projectHistoryList");
 	int size = 0;
+	String pProjectNo = null;
 	if(projectHistoryList!=null){
 		size = projectHistoryList.size();
 	}
 	out.print("size:"+size);
+	projectListProc = (List<Map<String,Object>>)request.getAttribute("projectListProc");
+	int size2 = 0;
+	//String empSearch2 = null;
+	if(projectListProc!=null){
+		size2 = projectListProc.size();
+	}
+	out.print("size2:"+size2);
 %> 
 <!DOCTYPE html>
 <html>
@@ -28,82 +37,59 @@
 <link href="../common/css/custom.css" rel="stylesheet" />
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 
-<!--페이징 처리   =================================================================================-->
+<title>프로젝트 이력 조회</title>
 <script>
-  $(document).ready(function () {
-    var $setRows = $('#setRows');
-  console.log("dd0");
+	function projectSearchAction(){
+		//let a ={"d":a,"d1":b};
+		//alert("여기")
+		//var deptTarget = document.getElementById("dept_options")
+		var typeTarget = $("#type_options option:selected").val();
+		var startTarget = $("#start_period").val();
+		var endTarget = $("#end_period").val();
+		var nameTarget = $("#txt_name").val();
+		//alert(companyTarget)
+		console.log("ddddd");
+     	$.ajax({
+  		  type:"post",
+  		  //type:"get"
+  		  data:{"project_type":typeTarget,"project_startline":startTarget
+  			  ,"project_deadline":endTarget,"project_name":nameTarget},
+  		  url: "/projecthistory/getProjectListProc.src1",
+  		  //data:{"dept":개발부} getparameter("dept")
+  		  dataType:"json",
+	          success:function(data){
+	        	  searchResult(data);
+	  	       },
+	          error:function(e){
+	        	  let x = e.responseXML;
+	        	  alert("fail ===> "+e)
+	          }
+  	}); 
+ 
+	}
+	
+function searchResult(data){
+	let a="";
+      //조회 결과가 없는 거야?
+      if(data.size==0){	
+    	  console.log("df");
+    	a+="        <td colspan='5'>조회결과가 없습니다.</td>";
+      }
+      else{//조회 결과가 있을 때
+      	for(let i=0;i<data.length;i++){
+      		console.log(data[i]['RANK_NAME']);
+      				a+="<tr>";
+       				a+="		<td>"+data[i]['PROJECT_NAME']+"</td>";
+      				a+="		<td>"+data[i]['PROJECT_PERIOD']+"</td>";
+      				a+="		<td>"+data[i]['EMP_NAME']+"</td>"; 
+      				a+="		<td>"+data[i]['PROJECT_TYPE']+"</td>";
+      				a+="</tr>";
+      	}///end of for
+      } ///end of if
+      document.querySelector(".aaaa").innerHTML = a;
+}
 
-$setRows.submit(function (e) {
-  console.log("dd1");
-  e.preventDefault();
-  var rowPerPage = $('#rowPerPage').val() * 1;
-  // 1 을  곱하여 문자열을 숫자형로 변환
-  
-  
-  $('#nav').remove();
-  var $products = $('#products');
-  
-  
-  $products.after('<div id="nav">');
-    
-    
-    var $tr = $($products).find('tbody tr');
-    var rowTotals = $tr.length;
-    
-    var pageTotal = Math.ceil(rowTotals / rowPerPage);
-    var i = 0;
-    console.log("dd2");
-    
-    for (; i < pageTotal; i++) {
-      $('<a href="#"></a>')
-      .attr('rel', i)
-      .html(i + 1)
-      .appendTo('#nav');
-  }
-  $tr.addClass('off-screen')
-    .slice(0, rowPerPage)
-    .removeClass('off-screen');
-    
-    console.log("dd3");
-    var $pagingLink = $('#nav a');
-    $pagingLink.on('click', function (evt) {
-      evt.preventDefault();
-    var $this = $(this);
-    if ($this.hasClass('active')) {
-      return;
-    }
-    console.log("dd4");
-    $pagingLink.removeClass('active');
-    $this.addClass('active');
-    // 0 => 0(0*4), 4(0*4+4)
-    // 1 => 4(1*4), 8(1*4+4)
-    // 2 => 8(2*4), 12(2*4+4)
-    // 시작 행 = 페이지 번호 * 페이지당 행수
-    // 끝 행 = 시작 행 + 페이지당 행수
-    console.log("dd5");
-    
-    var currPage = $this.attr('rel');
-    var startItem = currPage * rowPerPage;
-    var endItem = startItem + rowPerPage;
-    $tr.css('opacity', '0.0')
-    .addClass('off-screen')
-    .slice(startItem, endItem)
-    .removeClass('off-screen')
-    .animate({ opacity: 1 }, 300);
-    console.log("5");
-  });
-  
-  console.log("dd6");
-  $pagingLink.filter(':first').addClass('active');
-  
-});
-
-$setRows.submit();
-  });
 </script>
-
-<title>프로젝트 이력조회</title>
 </head>
 <body class="sb-nav-fixed">
 <nav id="topNav"></nav>
@@ -113,35 +99,32 @@ $setRows.submit();
 		<main id="input_div">
 			<div id="frame_div" style="border: 1px solid black;">
 				<div id="page_title" style="border-bottom: 2px solid gray; margin: 50px 30px;">
-				<h2>프로젝트 이력조회</h2></div>
+				<h2>프로젝트 이력 조회</h2></div>
 				<div id="page_contents" style="max-width: 1730px; margin: 10px 100px;">
 <!--
 ******************************************* 컨텐츠 들어갈내용 시작************************************************
 -->
-<script>
-    function openPopup(){
-        window.open("projectDetail.jsp", "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
-    }
-</script>
+
 <!-- -----------------------------------검색부분---------------------------------- -->
 <form class="form-horizontal" role="form">
 <div class="form-inline form-group">
-	<select class="form-control">
-		<option value="none">===종류===</option>
+	<select class="form-control" id="type_options">
+		<option value="===종류===">===종류===</option>
 		<option>SI</option>
 		<option>SM</option>
 	</select>
 	&nbsp;
 	<div class="form-group">
 		<div class="form-inline">
-			<input type="date" class="form-control" id="dat_period">&nbsp; ~ &nbsp;
-			<input type="date" class="form-control" id="dat_period">
+			<input type="date" class="form-control" id="start_period">&nbsp; ~ &nbsp;
+			<input type="date" class="form-control" id="end_period">
 		</div>
 	</div>
 	&nbsp;
-	<input type="text" class="form-control" id="txt_company">
+	<input type="text" class="form-control" id="txt_name">
 	&nbsp;
-	<button type="button" class="btn btn-info">검색</button>
+	<!-- <button type="button" class="btn btn-info" onclick="location.href='getProjectListProc.src1'">검색</button> -->
+	<a href="javascript:void(0)" onclick="projectSearchAction()" class="btn btn-info btn-sm">검색</a>
 	</div>
 <!-- -----------------------------------검색부분 끝----------------------------------- -->
 	<div class='row'>
@@ -158,7 +141,7 @@ $setRows.submit();
 				</tr>
 			</thead>
 
-			<tbody>
+			<tbody class="aaaa">
 <%
 //조회 결과가 없는 거야?
 if(size==0){		
@@ -172,34 +155,24 @@ else{//조회 결과가 있을 때
 	for(int i=0;i<size;i++){
 		Map<String,Object> pmap = projectHistoryList.get(i);
 		if(i==size) break;
+		pProjectNo = pmap.get("PROJECT_NO").toString();
 %>    	
 			<!-- 
 			===============DB에서 데이터 가져와서 뿌려주기======================
 			 -->
-				<tr>
+				<tr onclick="openPopup()">
+					<%-- <tr onclick="location.href='getDetailProjectHistory.src1?project_no=<%=pmap.get("PROJECT_NO")%>'"> --%>
+					<%-- <tr onclick="location.href='getDetailProjectHistory.src1?project_no=<%=pProjectNo%>'"> --%>
 					<!--<td onclick="openPopup()">부트스트랩</td>  -->
-					<td onclick="openPopup()"><%=pmap.get("project_name").toString()%></td>
-					<td><%=pmap.get("project_startline").toString()%>&nbsp;~&nbsp;
-						<%=pmap.get("project_deadline").toString()%></td>
-					<td><%=pmap.get("emp_name").toString()%></td>
-					<td><%=pmap.get("project_type").toString()%></td>
+					<td><%=pmap.get("PROJECT_NAME").toString()%></td>
+					<td><%=pmap.get("PROJECT_PERIOD").toString()%></td>
+					<td><%=pmap.get("EMP_NAME").toString()%></td>
+					<td><%=pmap.get("PROJECT_TYPE").toString()%></td>
 				</tr>
 <% 
 	}///end of for
 } ///end of if
 %>
-				<tr>
-					<td onclick="openPopup()">부트스트랩2</td>
-					<td>7월8일</td>
-					<td>유재석</td>
-					<td>SI</td>
-				</tr>
-				<tr>
-					<td onclick="openPopup()">부트스트랩2</td>
-					<td>7월8일</td>
-					<td>유재석</td>
-					<td>SI</td>
-				</tr>
 			</tbody>
 			
 		</table> 
@@ -222,7 +195,7 @@ else{//조회 결과가 있을 때
 		<hr/>
 	</div>
 	<div class="text-right">
-		<button type="button" class="btn btn-warning btn-lg" onclick="location.href='addProManager.jsp'">
+		<button type="button" class="btn btn-warning btn-lg" onclick="location.href='insertProjectHistory.src1'">
 			프로젝트 추가</button>	
 	</div>
 
@@ -237,7 +210,11 @@ else{//조회 결과가 있을 때
 	</div>
 </div>
 
-
+<script>
+    function openPopup(){
+        window.open("getDetailProjectHistory.src1?project_no=<%=pProjectNo%>", "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
+    }
+</script>
 <!-- 슬라이드바 사용할때 필요 -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <!-- 탑메뉴 사용 -->
