@@ -17,13 +17,16 @@
 		  WHERE r.rank_no=e.rank_no AND e.dept_no=d.dept_no AND e.emp_no=#{emp_no}
 	</select>
 
-	<!-- 출근 시간 등록 -->
-	<insert id="insertAttendanceTime" parameterType="map" useGeneratedKeys="true">
-      <selectKey keyProperty="attendance_no" resultType="int" order="BEFORE">
-          SELECT seq_attendance.NEXTVAL FROM DUAL
-      </selectKey>
-      INSERT INTO attendance (attendance_no, emp_no, attendance_start_work) VALUES(#{attendance_no}, #{emp_no}, TO_CHAR(SYSDATE,'YYYY/MM/DD HH24:MI:SS'))
+	<!-- 출근 등록 -->
+	<insert id="insertAttendanceTime" parameterType="map">
+      INSERT INTO attendance (attendance_no, emp_no, attendance_start_work) VALUES(seq_attendance.NEXTVAL, #{emp_no}, SYSDATE)
    </insert>
+   
+	<!-- 출근 체크 -->
+   <select id="checkAttendance" parameterType="string" resultType="int">
+   		SELECT emp_no FROM attendance
+   		where emp_no = #{emp_no} AND attendance_start_work = TO_CHAR(SYSDATE)
+   </select>
 	
 	<!-- 최신 공지 3건 불러오기 -->
 	<select id="getMainNoticeList" resultType="map">

@@ -54,11 +54,7 @@
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>	
 
-	<bean id="account-user-dao" class="com.srcelite.finalerp.web.dao.AccountUserDao">
-		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
-	</bean>
-
-	<bean id="account-manager-dao" class="com.srcelite.finalerp.web.dao.AccountManagerDao">
+	<bean id="account-dao" class="com.srcelite.finalerp.web.dao.AccountDao">
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
 

@@ -17,6 +17,7 @@ public class MainLogic {
 	
 	public Map<String, Object> login(Map<String,Object> pmap) throws Exception {
 		logger.info("login 호출 성공");
+		logger.info("pmap : " + pmap);
 		int inputedEmpNo = 0;
 		inputedEmpNo = Integer.parseInt(pmap.get("login_no").toString());
 		logger.info("pmap.get(emp_pw) : " + pmap.get("emp_pw"));
@@ -37,8 +38,16 @@ public class MainLogic {
 
 	public int insertAttendanceTime(Map<String,Object> pmap){
 		logger.info("insertAttendanceTime 호출 성공");
-		int result = 0;
-		result = mainDao.insertAttendanceTime(pmap);
-		return result;
+		int checkResult = 0;
+		int insertResult = 0;
+		checkResult = mainDao.checkAttendance(pmap);
+		logger.info("checkResult : " + checkResult);
+		if(checkResult == 0) { //출근정보가 없으면 출근정보를 등록
+			insertResult = mainDao.insertAttendanceTime(pmap);
+			logger.info("insertResult : " + insertResult);
+			return insertResult;
+		} else {
+			return 0; //출근정보가 있으면 0을 반환
+		}
 	}
 }

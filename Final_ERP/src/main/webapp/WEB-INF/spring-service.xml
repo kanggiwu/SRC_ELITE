@@ -39,13 +39,8 @@
 		
 	</bean>	
 
-	<bean id="account-user-logic" class="com.srcelite.finalerp.web.logic.AccountUserLogic">
-		<property name="accountUserDao" ref="account-user-dao"></property>
-
-	</bean>
-
-	<bean id="account-manager-logic" class="com.srcelite.finalerp.web.logic.AccountManagerLogic">
-		<property name="accountManagerDao" ref="account-manager-dao"></property>
+	<bean id="account-logic" class="com.srcelite.finalerp.web.logic.AccountLogic">
+		<property name="accountDao" ref="account-dao"></property>
 		
 	</bean>
 
