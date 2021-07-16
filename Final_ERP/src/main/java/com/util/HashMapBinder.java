@@ -61,7 +61,6 @@ public class HashMapBinder {
 			logger.info("자격증이 있습니다. 개수는 = "+licences.length);
 			target.put("licences", licences);
 			String[] a = (String[]) target.get("licences");
-			logger.info(a[1]);
 		}
 		while(en.hasMoreElements()) {
 			String key = (String)en.nextElement();

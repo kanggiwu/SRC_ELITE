@@ -19,6 +19,9 @@ public class AccountManagerLogic {
 		this.accountManagerDao = accountManagerDao;
 	}
 	
+	// 급여 정보 조회
+	public void getAccountInfo(Map<String,Object> pmap){}
+	
 	// 급여 정보 변경
 	public void updateAccountInfo(Map<String,Object> pmap){}
 	

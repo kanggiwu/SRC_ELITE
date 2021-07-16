@@ -45,7 +45,7 @@
     		,dept_no = #{dept_no}
     		,rank_no = #{rank_no}
     		,team_no = #{team_no}
-    		,emp_job =  nvl(#{emp_job},'F')
+    		,emp_job =  #{emp_job}
     		,emp_hiredate = #{emp_hiredate}
     		,emp_retiredate = #{emp_retiredate}
     		,emp_email = #{emp_email}
@@ -59,7 +59,7 @@
 	<select id="getDetailEmpInfo" parameterType="map" resultType="map">
 	SELECT  e.emp_no, e.emp_name, 
 		d.dept_name, nvl((t.team_name),'없음') team_name, r.rank_name, substr(emp_hiredate,1,10) EMP_HIREDATE, 
-		substr(emp_retiredate,1,10) EMP_RETIREDATE,  e.emp_tel, e.emp_email,
+		substr(emp_retiredate,1,10) EMP_RETIREDATE,  e.emp_tel, e.emp_email, e.emp_job,
 		decode(e.emp_status,0,'재직',1,'휴직',2,'퇴직') emp_status, e.emp_account, e.emp_picture_path, 
 		to_char((select count(licence_no)
 		from licence_emp le, emp e
