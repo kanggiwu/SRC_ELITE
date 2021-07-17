@@ -23,7 +23,7 @@ public class AccountController extends MultiActionController {
 	}
 
 	// 급여 정보 변경
-	public void updateSalary(HttpServletRequest request, HttpServletResponse response) {
+	public void updateSalary(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("updateAccountInfo호출 성공");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pmap = new HashMap<>();
@@ -41,7 +41,7 @@ public class AccountController extends MultiActionController {
 	}
 	
 	// 급여 정보 추가
-	public void insertSalary(HttpServletRequest request, HttpServletResponse response) {
+	public void insertSalary(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("insertMonthSalary호출 성공");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String,Object> pmap = new HashMap<>();
@@ -73,7 +73,7 @@ public class AccountController extends MultiActionController {
 		return mav;
 	}
 	// 수익 관리 수정
-	public void updateProfit(HttpServletRequest request, HttpServletResponse response) {
+	public void updateProfit(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("updateProfit호출 성공");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pmap = new HashMap<>();
@@ -91,7 +91,7 @@ public class AccountController extends MultiActionController {
 	}
 	
 	// 수익 관리 추가
-	public void insertProfit(HttpServletRequest request, HttpServletResponse response) {
+	public void insertProfit(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("insertProfit호출 성공");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String,Object> pmap = new HashMap<>();
@@ -122,7 +122,7 @@ public class AccountController extends MultiActionController {
 		return mav;
 	}
 	// 지출 관리 수정
-	public void updateExpense(HttpServletRequest request, HttpServletResponse response) {
+	public void updateExpense(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("updateExpense호출 성공");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pmap = new HashMap<>();
@@ -140,7 +140,7 @@ public class AccountController extends MultiActionController {
 	}
 	
 	// 지출 관리 추가
-	public void insertExpense(HttpServletRequest request, HttpServletResponse response) {
+	public void insertExpense(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("insertExpense호출 성공");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String,Object> pmap = new HashMap<>();
