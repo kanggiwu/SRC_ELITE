@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+    <item android:id="@+id/notice"
+        android:title="공지사항"/>
+    </group>
+
+          <item android:id="@+id/mypage"
+                  android:title="마이페이지">
+    <menu>
+            <item android:id="@+id/myemp"
+                  android:title="내정보 조회"/>
+        <item android:id="@+id/mysalary"
+                  android:title="내급여 조회"/>
+    </menu>
+</item>
+
+
+    <group android:checkableBehavior="single">
+    <item android:id="@+id/emp_sal"
+        android:title="조직도 조회">
+    </item>
+    </group>
+
+
+    <group android:checkableBehavior="single">
+    <item android:id="@+id/schedule"
+        android:title="일정">
+        </item>
+    </group>
+
+     <item android:id="@+id/salary"
+        android:title="급여">
+    <menu>
+           <item android:id="@+id/salary_check"
+        android:title="급여조회"/>
+    </menu>
+</item>
+
+       <item android:id="@+id/emp"
+        android:title="인사">
+    <menu>
+        <item android:id="@+id/emp_check"
+            android:title="사원정보  조회"/>
+    </menu>
+       </item>
+
+       <item android:id="@+id/signer"
+        android:title="전자결재">
+           <menu>
+        <item android:id="@+id/signer_to"
+            android:title="수신함"/>
+        <item android:id="@+id/signer_from"
+            android:title="발신함"/>
+           </menu>
+       </item>
+
+    <group android:checkableBehavior="single">
+    <item android:id="@+id/project"
+        android:title="프로젝트 이력관리"/>
+    </group>
+
+</menu>
