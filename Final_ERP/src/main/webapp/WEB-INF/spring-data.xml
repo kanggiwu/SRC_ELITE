@@ -7,16 +7,13 @@
 			<value>oracle.jdbc.driver.OracleDriver</value>
 		</property>
 	<!-- 외부 ip 연결 시 사용 부분  -->
-
 <!--
 		<property name="url">
 			<value>jdbc:oracle:thin:115.91.81.108:15210:orcl11</value>
 			-->
 	<!-- 로컬 DB 사용 부분  -->
-
 		<property name="url">
 			<value>jdbc:oracle:thin:@115.91.81.108:15210:orcl11</value> 
-
 		</property>
 		<property name="username">
 			<value>SRC_FINAL</value>
@@ -30,14 +27,17 @@
 	SqlSessionFactory를 만들어야한다.  -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="WEB-INF/mybatis-config.xml"/>
-		<property name="dataSource" ref="data-source-target"/>		
+		<property name="dataSource" ref="data-source-target"/>
 	</bean>
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory"/>
 	</bean>
 	
-	
 	<bean id="main-dao" class="com.srcelite.finalerp.web.dao.MainDao">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
+				<!-- 마이 페이지 내 정보 조회, 내 급여 조회 추가 -->	
+	<bean id="my-page-dao" class="com.srcelite.finalerp.web.dao.MyPageDao">
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
 
@@ -49,11 +49,7 @@
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>	
 
-	<bean id="account-user-dao" class="com.srcelite.finalerp.web.dao.AccountUserDao">
-		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
-	</bean>
-
-	<bean id="account-manager-dao" class="com.srcelite.finalerp.web.dao.AccountManagerDao">
+	<bean id="account-dao" class="com.srcelite.finalerp.web.dao.AccountDao">
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
 

@@ -4,63 +4,131 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.mybatis.mapper.ScheduleMapper">
 	
-	<!-- 처음 화면에 들어왔을 때의 현재 월의 일정 가져오기 -->
+	<resultMap type="map" id = "scheduleJSON">
+		<result property="id" column="schedule_no"/> 
+		<result property="username" column="emp_name"/> 
+		<result property="start" column="schedule_startdate"/>
+		<result property="end" column="schedule_enddate"/>
+		<result property="title" column="schedule_title"/>
+		<result property="type" column="schedule_type"/>
+		<result property="description" column="schedule_content"/>
+		<result property="emp_no" column="emp_no"/>
+		<result property="backgroundColor" column="backgroundcolor"/>
+	</resultMap>
+	<!-- 	 처음 화면에 들어왔을 때의 현재 월의 일정 가져오기 -->
 	<select id="getAttendanceThisMonth" parameterType="int" resultType="map">
 		 SELECT attendance_no, emp_no, attendance_start_work
   		   FROM attendance
-		  WHERE emp_no = #{emp_no}
+		  WHERE emp_no = #{login_no}
     		AND attendance_start_work BETWEEN TRUNC(SYSDATE+1)-TO_CHAR(SYSDATE,'DD') AND TRUNC(LAST_DAY(SYSDATE))+0.99999421
 	</select>
 	
-	<!-- 사용자가 선택한 월의 일정 리스트 가져오기 --> <!-- 해당 월의 날짜스트링 부분은 Dao 작성시 자바 변수명을 확인하여 추가 
+		<!-- 사용자가 선택한 월의 일정 리스트 가져오기 --> <!-- 해당 월의 날짜스트링 부분은 Dao 작성시 자바 변수명을 확인하여 추가 
 	쿼리문 수정했습니다.attendance_start_work를 그대로 받아와야 DB에 있는 값으로 비교가 가능합니다.
 	-->
-	<select id="getAttendance" parameterType="string" resultType="map">
-		    SELECT attendance_no, emp_no, attendance_start_work
-                FROM attendance
-              WHERE emp_no = #{emp_no}
-                   AND SUBSTR(TO_CHAR(attendance_start_work),1,5)
-                   = #{yy/mm}
+	<select id="getAttendance" parameterType="map" resultType="map">
+		 SELECT attendance_no, emp_no, attendance_start_work
+         FROM attendance
+         WHERE emp_no = #{login_no}
+         AND SUBSTR(attendance_start_work,1,7) = #{date}
 	</select>
 
-	<!-- 일정 조회  1:공통 2:인사부 3:회계부 4:개발부 5:프로젝트 6개인 -->
-	<select id="getScheduleList" parameterType="int" resultType="map">
-		SELECT schedule_code, emp_no, schedule_type, schedule_title, schedule_startdate, schedule_enddate, schedule_content
- 		  FROM schedule
-		 WHERE schedule_type = #{schedule_type}
+<!-- 
+	일정 조회  1:공통 2:프로젝트 3:개인 부서번호:부서 
+	<select id="getScheduleList" parameterType="int" resultMap="scheduleJSON">
+		SELECT  schedule_no,emp_no, schedule_type, schedule_title, schedule_startdate, schedule_enddate, schedule_content, emp_name, backgroundcolor
+          FROM (SELECT s.schedule_no AS schedule_no, s.emp_no AS emp_no, s.schedule_type AS schedule_type, s.schedule_title AS schedule_title,
+               s.schedule_startdate AS schedule_startdate,s.schedule_enddate AS schedule_enddate, s.schedule_content AS schedule_content,
+               s.backgroundcolor as backgroundcolor, e.emp_name AS emp_name
+                  FROM schedule s JOIN emp e ON s.emp_no = e.emp_no)
+        WHERE (SUBSTR(schedule_enddate,1,10) BETWEEN #{startDate} AND #{endDate}
+        OR SUBSTR(schedule_enddate,1,10) BETWEEN #{startDate} AND #{endDate})
+		 <if test='schedule_type%10==0'>
+		 	AND schedule_type = (select dept_no from emp where emp_no =#{login_no})
+		 </if>
+		 <if test='schedule_type==1'>
+		 	AND schedule_type =#{schedule_type}
+		 	<if test='schedule_type==3'>
+		 		and emp_no = #{login_no}
+		 	</if>
+		 </if>
+	</select>
+ -->
+	<!-- 일정 조회  1:공통 2:프로젝트 3:개인 부서번호:부서 -->
+	<select id="getScheduleList" parameterType="map" resultMap="scheduleJSON">
+        SELECT schedule_no,emp_no, schedule_type, schedule_title, schedule_startdate, schedule_enddate, schedule_content, emp_name, backgroundcolor
+        FROM (SELECT s.schedule_no AS schedule_no, s.emp_no AS emp_no, s.schedule_type AS schedule_type, s.schedule_title AS schedule_title,
+               s.schedule_startdate AS schedule_startdate,s.schedule_enddate AS schedule_enddate, s.schedule_content AS schedule_content,
+               s.backgroundcolor as backgroundcolor, e.emp_name AS emp_name
+                  FROM schedule s JOIN emp e ON s.emp_no = e.emp_no)
+        WHERE (schedule_type = 3 AND emp_no = #{login_no})
+        OR (schedule_type != 3 and mod(schedule_type,10)!=0)
+        OR (schedule_type = (SELECT dept_no
+                                FROM emp
+                                WHERE emp_no = #{login_no}))
+        AND (SUBSTR(schedule_enddate,1,10) BETWEEN #{startDate} AND #{endDate}
+        OR SUBSTR(schedule_enddate,1,10) BETWEEN #{startDate} AND #{endDate})
 	</select>
 	
 	<!-- 스케쥴 정보 입력 -->
 	<insert id="insertSchedule" parameterType="map">
-		INSERT INTO schedule (schedule_code, emp_no, schedule_type, schedule_title, schedule_startdate, schedule_enddate, schedule_content)
-        	 VALUES (#{schedule_code}, #{emp_no}, #{schedule_type}, #{schedule_title} , #{schedule_startdate}, #{schedule_enddate}, #{schedule_content})
+		<selectKey keyProperty="schedule_no" resultType="int" order="BEFORE">
+		 	SELECT SEQ_SCHEDULE.NEXTVAL FROM DUAL 
+		 </selectKey>
+		INSERT INTO schedule (schedule_no, emp_no, schedule_type
+		, schedule_title, schedule_startdate, schedule_enddate, schedule_content, backgroundcolor, allDay)
+       	VALUES (#{schedule_no}, #{login_no}, #{schedule_type}, #{schedule_title} , #{schedule_startdate}, #{schedule_enddate},#{schedule_content}, #{backgroundcolor}, #{allDay})
 	</insert>
-	
 	
 <!-- ////////////////////////////////// 일정 수정 페이지/////////////////////////////////////////////////// -->
 
-	<!-- 일정의 작성자가 맞는지 확인하기 위해 일정작성시 저장된 사원번호 불러오기 -->
+<!-- 	데이터를 불러올 때, 게시글 작성자 정보도 불러오기 때문에 해당 쿼리가 필요 없다. 
+		일정의 작성자가 맞는지 확인하기 위해 일정작성시 저장된 사원번호 불러오기 
 	<select id="getScheduleWriter" parameterType="int" resultType="int">
-		SELECT emp_no FROM schedule WHERE schedule_code = #{schedule_code};
-	</select>
+		SELECT emp_no FROM schedule WHERE schedule_no = #{schedule_no}
+	</select> -->
 	
 	<!-- 일정 수정 -->
-	<update id="getBmNo" parameterType="map">
+	<update id="updateSchedule" parameterType="map">
 		UPDATE schedule
-		SET 
-    		emp_no = #{emp_no},
-    		schedule_type = #{schedule_type},
-    		schedule_title = #{schedule_title},
-   			schedule_startdate = #{schedule_startdate},
-			schedule_enddate = #{schedule_enddate},
-		    schedule_content = #{schedule_content}
-		WHERE  schedule_code = #{schedule_code};
-	</update>
+        SET schedule_type = #{schedule_type},
+            schedule_title = #{schedule_title},
+            schedule_startdate = #{schedule_startdate},
+            schedule_enddate = #{schedule_enddate},
+            schedule_content = #{schedule_content},
+            backgroundcolor = #{backgroundcolor},
+            allDay = #{allDay}
+            
+        WHERE  schedule_no = #{schedule_no}
+    </update>
+	<!-- 일정 수정 -->
+	<update id="updateDateSchedule" parameterType="map">
+		UPDATE schedule
+        SET schedule_startdate = #{schedule_startdate},
+            schedule_enddate = #{schedule_enddate}
+        WHERE  schedule_no = #{schedule_no}
+    </update>
 <!-- /////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-	<!-- 일정 삭제 -->
+		<!-- 일정 삭제 -->
 	<delete id="deleteSchedule" parameterType="int">
-		DELETE schedule WHERE schedule_code = #{schedule_code};
-	</delete>
+		DELETE schedule WHERE schedule_no = #{schedule_no}
+	</delete> 
+	
+	<!-- 사원의 부서번호 받아오기 -->
+	<select id="getEmpDept" parameterType="int" resultType="int">
+		SELECT dept_no
+		FROM emp
+		WHERE emp_no=#{login_no}
+	</select>
+	
+	<!-- 사원의 직책 받아오기 -->
+	<select id="getEmpJob" parameterType="int" resultType="String">
+		select emp_job from emp where emp_no = #{login_no}
+	</select>
 
+	<!-- 사원의 직위 가져오기 -->
+	<select id="getEmpRank" parameterType="int" resultType="String">
+		SELECT rank_name FROM RANK JOIN emp ON emp.rank_no = rank.rank_no and emp.emp_no=#{login_no}
+	</select>
 </mapper>

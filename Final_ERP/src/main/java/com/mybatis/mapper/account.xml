@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.mybatis.mapper.AccountManagerMapper">
+
+	<!-- 급여 정보 수정 -->
+	<update id="updateSalary" parameterType="map">
+		UPDATE salary
+		SET
+    		sal_base = NVL(#{sal_base}, 0),
+    		sal_incentive = NVL(#{sal_incentive}, 0),
+   			sal_position = NVL(#{sal_position}, 0),
+    		sal_tech = NVL(#{sal_tech}, 0),
+    		sal_etc = NVL(#{sal_etc}, 0),
+    		sal_meal = NVL(#{sal_meal}, 0),
+    		sal_commu = NVL(#{sal_commu}, 0),
+		WHERE sal_no = #{sal_no} AND emp_no = #{emp_no}
+	</update>
+	
+	<!-- 급여 세금과 합계 계산하여 데이터를 삽입하는 프로시저-->  
+	<select id="setSalaryProc" statementType="CALLABLE" parameterType="map">
+		{call proc_set_salary(        
+          #{p_emp_no, mode=IN, jdbcType=NUMERIC},
+          #{p_sal_no, mode=IN, jdbcType=NUMERIC}
+       	)}
+	</select>
+	
+	<!-- 급여 총계 계산하여 반환하는 프로시저-->  
+	<select id="getSalaryProc" statementType="CALLABLE" parameterType="map">
+		{call proc_get_salary(        
+          #{p_emp_no, mode=IN, jdbcType=NUMERIC},
+          #{p_sal_date, mode=IN, jdbcType=VARCHAR},
+          #{sal_cursor, mode=OUT, jdbcType=CURSOR, resultMap=salaryMap}
+       	)}
+	</select>
+	
+	<!-- 급여 정보 추가 -->
+	<insert id="insertSalary" parameterType="map">
+		INSERT INTO salary (sal_no, emp_no, sal_date, sal_base, sal_incentive, sal_position, sal_tech, sal_etc, sal_meal, sal_commu)
+                  VALUES (seq_salary,  #{emp_no}, #{sal_date}, #{sal_base}, #{sal_incentive}, #{sal_position}, #{sal_tech}, #{sal_etc}, #{sal_meal}, #{sal_commu})
+    </insert>
+    
+    <!-- 수익 리스트 가져오기 -->  
+	<select id="getProfitList" resultType="map"> 
+	SELECT project_name, project_startline, project_deadline, project_type, project_profit
+  	  FROM project
+  		<where>
+  		<if test="PROJECT_NAME != null">
+  		AND poject_name LIKE '%'||#{PROJECT_NAME}||'%'
+  		</if>
+ 		<if test="PROJECT_STARTLINE != null">
+ 		AND project_startline <![CDATA[>=]]> #{PROJECT_STARTLINE}
+ 		</if>
+ 		<if test="PROJECT_DEADLINE != null">
+ 		AND project_deadline <![CDATA[<=]]> #{PROJECT_DEADLINE}
+ 		</if>
+ 		<if test="PROJECT_TYPE != null">
+ 		AND project_type = #{PROJECT_TYPE}
+ 		</if>
+ 		</where>
+ 	ORDER BY project_deadline DESC;
+	</select>
+	
+	<!-- 수익 관리 수정 -->
+	<update id="updateProfit" parameterType="map">
+		UPDATE profit
+		SET
+    	project_no = #{project_no},
+    	profit_price = #{profit_price},
+    	profit_date = #{profit_date}
+		WHERE profit_no = #{profit_no}
+	</update>
+	
+	<!-- 수익 관리 추가 -->
+	<insert id="insertProfit" parameterType="map">
+		INSERT INTO profit (profit_no, project_no, profit_price, profit_date)
+                 VALUES (#{profit_no}, #{project_no}, #{profit_price}, #{profit_date})
+    </insert>
+	
+
+	<!-- 지출 관리 조회 -->
+	<select id="getExpenseList" resultType="map"> 
+	SELECT expense_no, dept_no, expense_name, expanse_price, expense_detail, expense_company, expanse_date
+  	  FROM expanse
+ 	<if test=" != null">
+ 	WHERE project_startline
+ 	</if>
+ 	ORDER BY expense_date DESC
+	</select>
+	
+	<!-- 지출 관리 수정 -->
+	<update id="updateExpense" parameterType="map">
+		UPDATE salary
+		SET
+    		dept_no = #{dept_no},
+   			expense_name = #{expense_name},
+    		expanse_price = NVL(#{expanse_price}, 0),
+    		expense_detail = #{expense_detail},
+    		expense_company = #{expense_company},
+    		expanse_date = #{expanse_date},
+		WHERE expense_no = #{expense_no}
+	</update>
+	
+	<!-- 지출 관리 추가 -->
+	<insert id="insertExpense" parameterType="map">
+		INSERT INTO expense (expense_no, dept_no, expense_name, expanse_price, expense_detail, expense_company, expanse_date)
+                  VALUES (#{expense_no}, #{dept_no}, #{expense_name}, #{expanse_price}, #{expense_detail}, #{expense_company}, #{expanse_date})
+    </insert>
+	<!-- 손익 조회 -->
+	
+	<!-- 월말 결산 -->
+    
+</mapper>

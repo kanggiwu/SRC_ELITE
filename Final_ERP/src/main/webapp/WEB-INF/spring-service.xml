@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:aop="http://www.springframework.org/schema/aop" 
+       xmlns:tx="http://www.springframework.org/schema/tx" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+       ">
+	
 
-	<bean id="main-logic" class="com.srcelite.finalerp.web.logic.MainLogic">
+	 <bean id="main-logic" class="com.srcelite.finalerp.web.logic.MainLogic">
 		<property name="mainDao" ref="main-dao"></property>
-	</bean>
+	</bean> 
+	
+	 <bean id="my-page-logic" class="com.srcelite.finalerp.web.logic.MyPageLogic">
+		<property name="myPageDao" ref="my-page-dao"></property>
+	</bean> 
 
 	<bean id="notice-logic" class="com.srcelite.finalerp.web.logic.NoticeLogic" >
 		<property name="noticeDao" ref="notice-dao"></property>
@@ -17,13 +27,8 @@
 		
 	</bean>	
 
-	<bean id="account-user-logic" class="com.srcelite.finalerp.web.logic.AccountUserLogic">
-		<property name="accountUserDao" ref="account-user-dao"></property>
-
-	</bean>
-
-	<bean id="account-manager-logic" class="com.srcelite.finalerp.web.logic.AccountManagerLogic">
-		<property name="accountManagerDao" ref="account-manager-dao"></property>
+	<bean id="account-logic" class="com.srcelite.finalerp.web.logic.AccountLogic">
+		<property name="accountDao" ref="account-dao"></property>
 		
 	</bean>
 

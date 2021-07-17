@@ -5,9 +5,9 @@
 <mapper namespace="com.mybatis.mapper.MainMapper">
 
 	<!-- login 시 DB에서 아이디에 해당하는 비번을 불러와서 사용자가 입력한 비번과 일치하면 로그인 -->
-	<select id="getPassword" parameterType="int" resultType="string">
-		SELECT emp_pw FROM emp 
-		 WHERE emp_no=#{emp_no}
+	<select id="getLoginInfo" parameterType="map" resultType="map">
+		SELECT emp_pw, emp_name, d.dept_name as dept_name FROM emp e, dept d 
+		 WHERE e.dept_no = d.dept_no AND emp_no=#{login_no}
 	</select>
 
 	<!-- 사원의 이름, 직위, 부서명 가져오기 -->
@@ -17,10 +17,16 @@
 		  WHERE r.rank_no=e.rank_no AND e.dept_no=d.dept_no AND e.emp_no=#{emp_no}
 	</select>
 
-	<!-- 출근 시간 등록 -->
+	<!-- 출근 등록 -->
 	<insert id="insertAttendanceTime" parameterType="map">
-		INSERT INTO attendance (attendance_code, emp_no, attendance_start_work) VALUES(#{seq_attendance}, #{emp_no}, SYSDATE)	<!-- ////////////미해결////////////-->
-	</insert>
+      INSERT INTO attendance (attendance_no, emp_no, attendance_start_work) VALUES(seq_attendance.NEXTVAL, #{emp_no}, SYSDATE)
+   </insert>
+   
+	<!-- 출근 체크 -->
+   <select id="checkAttendance" parameterType="string" resultType="int">
+   		SELECT emp_no FROM attendance
+   		where emp_no = #{emp_no} AND attendance_start_work = TO_CHAR(SYSDATE)
+   </select>
 	
 	<!-- 최신 공지 3건 불러오기 -->
 	<select id="getMainNoticeList" resultType="map">

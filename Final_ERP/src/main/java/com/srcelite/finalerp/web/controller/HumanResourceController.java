@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,31 +28,18 @@ public class HumanResourceController extends MultiActionController {
 	{
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String, Object> pmap = new HashMap<String, Object>();
+		logger.info(req.getParameter("emp_name"));
 		hmb.bind(pmap);
 		List<Map<String,Object>> boardList = null;
+		logger.info("emp_name value: "+pmap.get("emp_name"));
+		logger.info("dept_name value: "+pmap.get("dept_name"));
+		logger.info("rank_name value: "+pmap.get("rank_name"));
+		if(pmap.get("dept_name") != null) {
+			boardList = humanResourceLogic.getEmpSearchList(pmap);
+		}else {
 		boardList = humanResourceLogic.getEmployeeList(pmap);
+		}
 		ModelAndView mav = new ModelAndView();
-//		List<Map<String,Object>> boardList = new ArrayList<Map<String,Object>>();
-//		pmap.put("emp_no", "1111");
-//		pmap.put("emp_name", "개구리");
-//		pmap.put("dept_name", "인사부");
-//		pmap.put("rank_name", "사장");
-//		pmap.put("emp_status", "재직");
-//		boardList.add(pmap);
-//		pmap = new HashMap<String, Object>();
-//		pmap.put("emp_no", "1112");
-//		pmap.put("emp_name", "왕눈이");
-//		pmap.put("dept_name", "회계부");
-//		pmap.put("rank_name", "사원");
-//		pmap.put("emp_status", "휴직");
-//		boardList.add(pmap);
-//		pmap = new HashMap<String, Object>();
-//		pmap.put("emp_no", "1113");
-//		pmap.put("emp_name", "투투");
-//		pmap.put("dept_name", "개발부");
-//		pmap.put("rank_name", "과장");
-//		pmap.put("emp_status", "퇴직");
-//		boardList.add(pmap);
 		mav.setViewName("getEmployeeList");
 		mav.addObject("boardList", boardList);
 		return mav;
@@ -64,14 +52,15 @@ public class HumanResourceController extends MultiActionController {
 		hmb.bind(pmap);
 		List<Map<String,Object>> boardDetail = null;
 		ModelAndView mav = new ModelAndView();
-		
 		logger.info("emp_no value: "+pmap.get("emp_no"));
-		if(pmap.get("emp_no") != "0") {
+		if(pmap.get("emp_no") != null) {
 			boardDetail = humanResourceLogic.getDetailEmployee(pmap);
 			logger.info("licences value: "+boardDetail.get(0).get("LICENCES"));
-			if(boardDetail.get(0).get("LICENCES") != "0") {
+			if( Integer.parseInt(String.valueOf(boardDetail.get(0).get("LICENCES"))) > 0) {
+				logger.info("자격증 보유 중");
 				List<Map<String,Object>> licenceList = null;
 				licenceList = humanResourceLogic.getEmpLicenceList(pmap);
+				logger.info(licenceList);
 				mav.addObject("licenceList", licenceList);
 			}
 			mav.setViewName("getDetailEmployee");
@@ -85,17 +74,86 @@ public class HumanResourceController extends MultiActionController {
 	public void insertEmployee(HttpServletRequest req, HttpServletResponse res)
 			throws Exception
 	{
+		logger.info("insert 시작");
 		HashMapBinder hmb = new HashMapBinder(req);
 		Map<String,Object> pmap = new HashMap<>();
 		hmb.multiBind(pmap);
 		int result = 0;
+		if(pmap.get("team_no") == null) {
+			logger.info("팀이 소속되지 않았다");
+			pmap.put("team_no", "");
+		}
 		result = humanResourceLogic.insertEmployee(pmap);
 		if(result == 1) {
-			res.sendRedirect("");
+			res.sendRedirect("getEmployeeList.src1");
 		}
 		else {
-			res.sendRedirect("등록실패 페이지 이동처리");
+			res.sendRedirect("../index.jsp ");
 		}
 	}	
+	public ModelAndView getOrganizationChart(HttpServletRequest req, HttpServletResponse res)
+	throws Exception
+	{
+		HashMapBinder hmb = new HashMapBinder(req);
+		HttpSession session = req.getSession();
+		Map<String,Object> pmap = new HashMap<>();
+		pmap.put("EMP_NO", session.getAttribute("login_no"));
+		logger.info(session.getAttribute("login_no"));
+		logger.info(pmap.get("EMP_NO"));
+		List<Map<String,Object>> organizationChartPath = null;
+		ModelAndView mav = new ModelAndView();
+		organizationChartPath = humanResourceLogic.getOrganizationChart(pmap);
+		logger.info(pmap.get("EMP_NO"));
+		mav.addObject("organizationChartPath", organizationChartPath);
+		mav.setViewName("getOrganizationChart");
+		return mav;
+		
+	}
+	public void updateOrganizationChart(HttpServletRequest req, HttpServletResponse res)
+			throws Exception
+	{
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String,Object> pmap = new HashMap<>();
+		hmb.bind(pmap);
+		int result = 0;
+		result = humanResourceLogic.updateOrganizationChart(pmap);
+		if(result == 1) {
+			res.sendRedirect("getOrganizationChart.src1");
+		}
+		else {
+			res.sendRedirect("../index.jsp");
+		}
+	}
+	public ModelAndView getEmpSearchList(HttpServletRequest req, HttpServletResponse res)
+	throws Exception
+	{
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		hmb.multiBind(pmap);
+		List<Map<String,Object>> boardList = null;
+		logger.info("emp_name value: "+pmap.get("emp_name"));
+		logger.info("dept_name value: "+pmap.get("dept_name"));
+		logger.info("rank_name value: "+pmap.get("rank_name"));
+		boardList = humanResourceLogic.getEmpSearchList(pmap);
 
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("getEmployeeList");
+		mav.addObject("boardList", boardList);
+		return mav;
+	}
+	public void updateEmployee(HttpServletRequest req, HttpServletResponse res)
+			throws Exception
+	{
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String,Object> pmap = new HashMap<>();
+		hmb.multiBind(pmap);
+		int result = 0;
+		result = humanResourceLogic.updateEmployee(pmap);
+		if(result == 1) {
+			res.sendRedirect("getEmployeeList.src1");
+		}
+		else {
+			res.sendRedirect("../index.jsp");
+		}
+	}	
 }

@@ -10,6 +10,11 @@
 		<property name="methodNameResolver" ref="erp-resolver"/>
 		<property name="mainLogic" ref="main-logic"/>
 	</bean>
+				<!-- 마이 페이지 내 정보 조회, 내 급여 조회 추가 -->
+	<bean id="my-page-controller" class="com.srcelite.finalerp.web.controller.MyPageController">
+		<property name="methodNameResolver" ref="erp-resolver"/>
+		<property name="myPageLogic" ref="my-page-logic"/>
+	</bean>
 	<bean id="notice-controller" class="com.srcelite.finalerp.web.controller.NoticeController">
 		<property name="methodNameResolver" ref="erp-resolver"/>
 		<property name="noticeLogic" ref="notice-logic"/>
@@ -18,13 +23,9 @@
 		<property name="methodNameResolver" ref="erp-resolver"/>
 		<property name="scheduleLogic" ref="schedule-logic"/>
 	</bean>
-	<bean id="account-user-controller" class="com.srcelite.finalerp.web.controller.AccountUserController">
+	<bean id="account-controller" class="com.srcelite.finalerp.web.controller.AccountController">
 		<property name="methodNameResolver" ref="erp-resolver"/>
-		<property name="accountUserLogic" ref="account-user-logic"/>
-	</bean>
-	<bean id="account-manager-controller" class="com.srcelite.finalerp.web.controller.AccountManagerController">
-		<property name="methodNameResolver" ref="erp-resolver"/>
-		<property name="accountManagerLogic" ref="account-manager-logic"/>
+		<property name="accountLogic" ref="account-logic"/>
 	</bean>
 	<bean id="human-resource-controller" class="com.srcelite.finalerp.web.controller.HumanResourceController">
 		<property name="methodNameResolver" ref="erp-resolver"/>
@@ -46,44 +47,53 @@
 			<props>
 				<prop key="/main/login.src1">main-controller</prop>
 				<prop key="/main/logout.src1">main-controller</prop>
-				<prop key="/main/startWork.src1">main-controller</prop>
+				<prop key="/main/insertAttendanceTime.src1">main-controller</prop>
+				
+				<prop key="/mypage/getMyInfo.src1">my-page-controller</prop>
+				<prop key="/mypage/updateMyInfo.src1">my-page-controller</prop>
+				<prop key="/mypage/getMySalary.src1">my-page-controller</prop>
+
+				<prop key="/mypage/getYearSalary.src1">my-page-controller</prop>
+				<prop key="/mypage/getRetirementPay.src1">my-page-controller</prop>
 
 				<prop key="/notice/getMainNoticeList.src1">notice-controller</prop>
+				<prop key="/notice/searchNotice.src1">notice-controller</prop>
 				<prop key="/notice/getAllNoticeList.src1">notice-controller</prop>
 				<prop key="/notice/getDetailNotice.src1">notice-controller</prop>
+				<prop key="/notice/getNewNotice.src1">notice-controller</prop>
 				<prop key="/notice/insertNotice.src1">notice-controller</prop>
 				<prop key="/notice/updateNotice.src1">notice-controller</prop>
 				<prop key="/notice/deleteNotice.src1">notice-controller</prop>
 
-				<prop key="/schedule/getStartWorktime.src1">schedule-controller</prop>
 				<prop key="/schedule/getCalendarSchedule.src1">schedule-controller</prop>
-				<prop key="/schedule/getDetailSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/insertSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/updateSchedule.src1">schedule-controller</prop>
+				<prop key="/schedule/updateDateSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/deleteSchedule.src1">schedule-controller</prop>
 
-				<prop key="/useraccount/getMonthSalary.src1">account-user-controller</prop>
-				<prop key="/useraccount/getYearSalary.src1">account-user-controller</prop>
-				<prop key="/useraccount/getReirementPay.src1">account-user-controller</prop>
+				<prop key="/account/updateSalary.src1">account-controller</prop>
+				<prop key="/account/insertSalary.src1">account-controller</prop>
+				<prop key="/account/getProfitList.src1">account-controller</prop>
+				<prop key="/account/updateProfit.src1">account-controller</prop>
+				<prop key="/account/insertProfit.src1">account-controller</prop>
+				<prop key="/account/getExpenseList.src1">account-controller</prop>
+				<prop key="/account/updateExpense.src1">account-controller</prop>
+				<prop key="/account/insertExpense.src1">account-controller</prop>
+				<prop key="/account/getBalanceLIst.src1">account-controller</prop>
 
-				<prop key="/manageraccount/updateAccountInfo.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/insertMonthSalary.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/getProfitList.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/updateProfit.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/insertProfit.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/getExpenseList.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/updateExpense.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/insertExpense.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/getBalanceLIst.src1">account-manager-controller</prop>
-
-				<prop key="/humanresource/getBalanceLIst.src1">human-resource-controller</prop>
+				<prop key="/humanresource/getOrganizationChart.src1">human-resource-controller</prop>
 				<prop key="/humanresource/updateOrganizationChart.src1">human-resource-controller</prop>
 				<prop key="/humanresource/getEmployeeList.src1">human-resource-controller</prop>
 				<prop key="/humanresource/getDetailEmployee.src1">human-resource-controller</prop>
 				<prop key="/humanresource/insertEmployee.src1">human-resource-controller</prop>
 				<prop key="/humanresource/updateEmployee.src1">human-resource-controller</prop>
+				
+				<prop key="/humanresource/getEmpSearchList.src1">human-resource-controller</prop>
+				<prop key="/humanresource/insertLIcenceInfo.src1">human-resource-controller</prop>
+				<prop key="/humanresource/deleteLIcenceInfo.src1">human-resource-controller</prop>
 
 				<prop key="/approval/getApprovalForm.src1">approval-controller</prop>
+				<prop key="/approval/getApprovalFormList.src1">approval-controller</prop>
 				<prop key="/approval/submitApproval.src1">approval-controller</prop>
 				<prop key="/approval/getSendApproval.src1">approval-controller</prop>
 				<prop key="/approval/getDetailSendApproval.src1">approval-controller</prop>
@@ -91,10 +101,20 @@
 				<prop key="/approval/getDetailReceiveApproval.src1">approval-controller</prop>
 				<prop key="/approval/getNumUnsignedApproval.src1">approval-controller</prop>
 				<prop key="/approval/getLineApproval.src1">approval-controller</prop>
+				<!-- 결재자조회 getApproverEmp-->
+				<prop key="/approval/getApproverEmp.src1">approval-controller</prop>
+				<!-- 결재문서조회 getApproverEmp-->
+				<!-- <prop key="/approval/getDetailApproval.src1">approval-controller</prop> -->
 
 				<prop key="/projecthistory/getProjectHistoryList.src1">project-history-controller</prop>
 				<prop key="/projecthistory/getDetailProjectHistory.src1">project-history-controller</prop>
 				<prop key="/projecthistory/insertProjectHistory.src1">project-history-controller</prop>
+				<!-- 인력추가 검색을 위한 것들 -->
+				<prop key="/projecthistory/getEmpSearchList2.src1">project-history-controller</prop>
+				<!-- 이력조회 검색을 위한 것들 -->
+				<prop key="/projecthistory/getProjectListProc.src1">project-history-controller</prop>
+				<!-- 프로젝트 추가 -->
+				<prop key="/projecthistory/updateProjectInfo.src1">project-history-controller</prop>
 			</props>
 		</property>
 	</bean>
@@ -103,11 +123,19 @@
 			<props>
 				<prop key="/main/login.src1">login</prop>
 				<prop key="/main/logout.src1">logout</prop>
-				<prop key="/main/startWork.src1">startWork</prop>
+				<prop key="/main/insertAttendanceTime.src1">insertAttendanceTime</prop>
+				
+				<prop key="/mypage/getMyInfo.src1">getMyInfo</prop>
+				<prop key="/mypage/updateMyInfo.src1">updateMyInfo</prop>
+				<prop key="/mypage/getMySalary.src1">getMySalary</prop>
+				<prop key="/mypage/getYearSalary.src1">getYearSalary</prop>
+				<prop key="/mypage/getRetirementPay.src1">getRetirementPay</prop>
 
 				<prop key="/notice/getMainNoticeList.src1">getMainNoticeList</prop>
+				<prop key="/notice/searchNotice.src1">searchNotice</prop>
 				<prop key="/notice/getAllNoticeList.src1">getAllNoticeList</prop>
 				<prop key="/notice/getDetailNotice.src1">getDetailNotice</prop>
+				<prop key="/notice/getNewNotice.src1">getNewNotice</prop>
 				<prop key="/notice/insertNotice.src1">insertNotice</prop>
 				<prop key="/notice/updateNotice.src1">updateNotice</prop>
 				<prop key="/notice/deleteNotice.src1">deleteNotice</prop>
@@ -117,30 +145,32 @@
 				<prop key="/schedule/getDetailSchedule.src1">getDetailSchedule</prop>
 				<prop key="/schedule/insertSchedule.src1">insertSchedule</prop>
 				<prop key="/schedule/updateSchedule.src1">updateSchedule</prop>
+				<prop key="/schedule/updateDateSchedule.src1">updateDateSchedule</prop>
 				<prop key="/schedule/deleteSchedule.src1">deleteSchedule</prop>
 
-				<prop key="/useraccount/getMonthSalary.src1">getMonthSalary</prop>
-				<prop key="/useraccount/getYearSalary.src1">getYearSalary</prop>
-				<prop key="/useraccount/getReirementPay.src1">getReirementPay</prop>
+				<prop key="/account/updateSalary.src1">updateSalary</prop>
+				<prop key="/account/insertSalary.src1">insertSalary</prop>
+				<prop key="/account/getProfitList.src1">getProfitList</prop>
+				<prop key="/account/updateProfit.src1">updateProfit</prop>
+				<prop key="/account/insertProfit.src1">insertProfit</prop>
+				<prop key="/account/getExpenseList.src1">getExpenseList</prop>
+				<prop key="/account/updateExpense.src1">updateExpense</prop>
+				<prop key="/account/insertExpense.src1">insertExpense</prop>
+				<prop key="/account/getBalanceLIst.src1">getBalanceLIst</prop>
 
-				<prop key="/manageraccount/updateAccountInfo.src1">updateAccountInfo</prop>
-				<prop key="/manageraccount/insertMonthSalary.src1">insertMonthSalary</prop>
-				<prop key="/manageraccount/getProfitList.src1">getProfitList</prop>
-				<prop key="/manageraccount/updateProfit.src1">updateProfit</prop>
-				<prop key="/manageraccount/insertProfit.src1">insertProfit</prop>
-				<prop key="/manageraccount/getExpenseList.src1">getExpenseList</prop>
-				<prop key="/manageraccount/updateExpense.src1">updateExpense</prop>
-				<prop key="/manageraccount/insertExpense.src1">insertExpense</prop>
-				<prop key="/manageraccount/getBalanceLIst.src1">getBalanceLIst</prop>
-
-				<prop key="/humanresource/getBalanceLIst.src1">getBalanceLIst</prop>
+				<prop key="/humanresource/getOrganizationChart.src1">getOrganizationChart</prop>
 				<prop key="/humanresource/updateOrganizationChart.src1">updateOrganizationChart</prop>
 				<prop key="/humanresource/getEmployeeList.src1">getEmployeeList</prop>
 				<prop key="/humanresource/getDetailEmployee.src1">getDetailEmployee</prop>
 				<prop key="/humanresource/insertEmployee.src1">insertEmployee</prop>
 				<prop key="/humanresource/updateEmployee.src1">updateEmployee</prop>
+				
+				<prop key="/humanresource/getEmpSearchList.src1">getEmpSearchList</prop>
+				<prop key="/humanresource/insertLIcenceInfo.src1">insertLIcenceInfo</prop>
+				<prop key="/humanresource/deleteLIcenceInfo.src1">deleteLIcenceInfo</prop>
 
 				<prop key="/approval/getApprovalForm.src1">getApprovalForm</prop>
+				<prop key="/approval/getApprovalFormList.src1">getApprovalForm</prop>
 				<prop key="/approval/submitApproval.src1">submitApproval</prop>
 				<prop key="/approval/getSendApproval.src1">getSendApproval</prop>
 				<prop key="/approval/getDetailSendApproval.src1">getDetailSendApproval</prop>
@@ -148,10 +178,24 @@
 				<prop key="/approval/getDetailReceiveApproval.src1">getDetailReceiveApproval</prop>
 				<prop key="/approval/getNumUnsignedApproval.src1">getNumUnsignedApproval</prop>
 				<prop key="/approval/getLineApproval.src1">getLineApproval</prop>
+				<!-- 결재자조회 getApproverEmp-->
+				<prop key="/approval/getApproverEmp.src1">getApproverEmp</prop>
+				<!-- 결재문서조회 getApproverEmp-->
+				<!-- <prop key="/approval/getDetailApproval.src1">getDetailApproval</prop> -->
+				
 
 				<prop key="/projecthistory/getProjectHistoryList.src1">getProjectHistoryList</prop>
 				<prop key="/projecthistory/getDetailProjectHistory.src1">getDetailProjectHistory</prop>
-				<prop key="/projecthistory/insertProjectHistory.src1">insertProjectHistory</prop>
+				<prop key="/projecthistory/insertProjectHistory.src1">insertProjectHistory</prop>				
+				<!-- 인력추가 검색을 위한 것들 -->
+				<prop key="/projecthistory/getEmpSearchList2.src1">getEmpSearchList2</prop>
+				<!-- 프로젝트 이력추가 업데이트 로직 -->
+				<prop key="/projecthistory/updateProjectHistory.src1">updateProjectHistory</prop>
+				<!-- 프로젝트 이력 조회 검색 -->
+				<prop key="/projecthistory/getProjectListProc.src1">getProjectListProc</prop>
+				<!-- 프로젝트 이력 추가 -->
+				<prop key="/projecthistory/updateProjectInfo.src1">updateProjectInfo</prop>
+				
 			</props>
 		</property>
 	</bean>

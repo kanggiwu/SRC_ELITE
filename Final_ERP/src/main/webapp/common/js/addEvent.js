@@ -1,53 +1,29 @@
-var eventModal = $('#eventModal');
+let eventModal = $('#eventModal');
+let editUserName = $('#edit-username');
+let modalTitle = $('.modal-title');
+let editAllDay = $('#edit-allDay');
+let editTitle = $('#edit-title');
+let editStart = $('#edit-start');
+let editEnd = $('#edit-end');
+let editType = $('#edit-type');
+let editColor = $('#edit-color');
+let editDesc = $('#edit-desc');
+let empDept = $('#emp_dept');
 
-var modalTitle = $('.modal-title');
-var editAllDay = $('#edit-allDay');
-var editTitle = $('#edit-title');
-var editUserName = $('#edit-username');
-var editStart = $('#edit-start');
-var editEnd = $('#edit-end');
-var editType = $('#edit-type');
-var editColor = $('#edit-color');
-var editDesc = $('#edit-desc');
+let addBtnContainer = $('.modalBtnContainer-addEvent');
+let modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
 
-var addBtnContainer = $('.modalBtnContainer-addEvent');
-var modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
-
-/**********************************************************************
- * 예약이 겹치면 실패페이지로 넘어가고 거기서 다시 메인서비스로 이동하자. forward
- **********************************************************************/
 
 /* ****************
  *  새로운 일정 생성
  * ************** */
-var newEvent = function (start, end, eventType) {
-
-	//alert('eventType: '+eventType);
-	var color = '';
-	//회의실에 맞게 색깔들어가기
-	if(eventType == '제1회의실'){
-		//alert('eventType if: '+eventType);
-		color = "#"+$("#edit-color option:eq(0)").val();
-	}
-	else if(eventType == '제2회의실'){
-		color = "#"+$("#edit-color option:eq(1)").val();
-	}
-	else if(eventType == '제3회의실'){
-		color = "#"+$("#edit-color option:eq(2)").val();
-	}
-	else if(eventType == '제4회의실'){
-		color = "#"+$("#edit-color option:eq(3)").val();
-	}
-	alert('color: '+color);
-	
+let newEvent = function (start, end, eventType) {
     $("#contextMenu").hide(); //메뉴 숨김
 
-    modalTitle.html('새로운 일정');
+  
+    modalTitle.html('일정 추가');
     editType.val(eventType).prop('selected', true);
     editTitle.val('');
-    editUserName.val('');
-    //editColor.val(color).prop('selected', true);
-    editColor.val(color).css('color',color);
     editStart.val(start);
     editEnd.val(end);
     editDesc.val('');
@@ -56,40 +32,40 @@ var newEvent = function (start, end, eventType) {
     modifyBtnContainer.hide();
     eventModal.modal('show');
 
-//    /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
-//    var eventId = 1 + Math.floor(Math.random() * 1000);
-//    /******** 임시 RAMDON ID - 실제 DB 연동시 삭제 **********/
 
     //새로운 일정 저장버튼 클릭
     $('#save-event').unbind();
-    $('#save-event').on('click', function () {
-    	alert('start: '+editStart.val());
-        alert('end: '+editEnd.val());
-        alert('bgColor: '+editColor.val());
-        var eventData = {
-  //          _id: eventId,
-            title: editTitle.val(),
-            start: editStart.val(),
-            end: editEnd.val(),
-            description: editDesc.val(),
-            type: editType.val(),
-            username: editUserName.val(),
-            backgroundColor: editColor.val(),
-  //          textColor: '#ffffff',
+    $(document).off('click').on('click','#save-event', function () {
+
+        let eventData = {
+            schedule_title: editTitle.val(),
+            schedule_type: editType.val(),
+            schedule_startdate: editStart.val(),
+            schedule_enddate: editEnd.val(),
+            schedule_content: editDesc.val(),
+            backgroundcolor: editColor.val(),
             allDay: false
         };
-
+		
+		
+		console.log(eventData.schedule_enddate+"일정 마감일");
+		console.log(eventData.backgroundcolor+"색을 넣어본다");
+		
         if (eventData.start > eventData.end) {
             alert('끝나는 날짜가 앞설 수 없습니다.');
             return false;
         }
-
-        if (eventData.title === '') {
+		
+        if (eventData.schedule_title === '') {
             alert('일정명은 필수입니다.');
             return false;
         }
+        if (eventData.schedule_type === null ) {
+            alert('분류는 필수입니다.');
+            return false;
+        }
 
-        var realEndDay;
+       	let realEndDay;
 
         if (editAllDay.is(':checked')) {
             eventData.start = moment(eventData.start).format('YYYY-MM-DD');
@@ -105,23 +81,44 @@ var newEvent = function (start, end, eventType) {
         eventModal.find('input, textarea').val('');
         editAllDay.prop('checked', false);
         eventModal.modal('hide');
-
+		
+		let schedule_type 		=	eventData.schedule_type;
+		let schedule_title 	=	eventData.schedule_title;
+		let schedule_startdate =	eventData.schedule_startdate;
+		let schedule_enddate 	=	eventData.schedule_enddate;
+		let schedule_content	=	eventData.schedule_content;
+		let color 	=	eventData.backgroundcolor;
+		let all_Day 			=	eventData.allDay;
+		console.log("끝나는 날"+schedule_enddate);
         //새로운 일정 저장
         $.ajax({
-            type: "get",
-            url: "conAddRoom.erp?cfr_title="+eventData.title+"&cfr_memo="+eventData.description+
-            "&cfr_sdate="+eventData.start+"&cfr_edate="+eventData.end+
-            "&cfr_type="+eventData.type+"&cfr_allday="+eventData.allDay+"&cfr_bgcolor="+eventData.backgroundColor,
-//            data: {
-//                //.....
-//            },
+            type: "post",
+            url: "/schedule/insertSchedule.src1",
+            data: {
+                schedule_type: 			schedule_type, 		
+                schedule_title: 		schedule_title, 		
+                schedule_startdate: 	schedule_startdate, 
+                schedule_enddate: 		schedule_enddate, 	
+                backgroundcolor: 		color, 	
+                allDay: 				all_Day, 				
+                schedule_content:		schedule_content	
+            },
             success: function (response) {
             	if(response == 0){
-            		alert("회 의 실 예 약 실 패");
+            		alert('일정추가 실패');
+            	}else if(response == 3){
+            	    let ko_type = null;
+					if(event.type%10 === 0){
+						ko_type = '부서';
+					}else if(event.type === 1){
+						ko_type = '공통';
+					}else{
+						ko_type = '프로젝트';
+					}
+            		alert(ko_type+' 일정 추가 권한이 없는 사원입니다.');
             	}else{
-            		alert("회 의 실 예 약 성 공");
+            		alert('일정이 추가되었습니다.');
             	}
-                //DB연동시 중복이벤트 방지를 위한
                 $('#calendar').fullCalendar('removeEvents');
                 $('#calendar').fullCalendar('refetchEvents');
             }

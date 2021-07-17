@@ -29,7 +29,7 @@
 <link href="../common/css/custom.css" rel="stylesheet" />
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 <script>
-  $(document).ready(function () {
+$(document).ready(function () {
     var $setRows = $('#setRows');
 
 $setRows.submit(function (e) {
@@ -99,7 +99,11 @@ $setRows.submit(function (e) {
 
 $setRows.submit();
   });
-
+  
+	function empSearchAction() {
+		console.log("입력 액션 호출");
+		$('#emp_search').submit();
+	}  
   </script>
 <title>HR - ERP PROGRAM</title>
 </head>
@@ -115,49 +119,46 @@ $setRows.submit();
 				<div id="page_contents" style="max-width: 1730px; margin: 10px 100px;">
      			<!-- 컨텐츠 들어갈내용 시작-->
 	<div class="col" >
-		<div style="text-align: left; padding: 5px; display: inline-block; width: 40%;">
-      
-      <span class="input-group">
-        <select class="form-control">
-          <option value="" selected disabled hidden >부서</option>
-          <option>개발</option>
-          <option>인사</option>
-          <option>회계</option>
-          <option>임원</option>
-         </select>
-         <select class="form-control ">
-          <option value="" selected disabled hidden >팀</option>
-          <option>1팀</option>
-          <option>2팀</option>
-          <option>3팀</option>
-          <option>SM</option>
-         </select>           
-        <input type="text" class="form-control float-left " placeholder="검색">
-        <a class="btn btn-default float-left" href="" role="button"><i class="fas fa-search"></i></a>
-      </span>  
+		<div style="text-align: left; padding: 5px; display: inline-block; width: 49%;">
+     	 <form id="emp_search" method="post" enctype="multipart/form-data" action="getEmpSearchList.src1">
+	      <span class="input-group" >
+	        <select name="dept_name" class="form-control" id="dept_options">
+	          <option value="전체">부서</option>
+	          <option value="개발부">개발</option>
+	          <option value="인사부">인사</option>
+	          <option value="회계부">회계</option>
+	          <option value="임원">임원</option>
+	         </select>
+	         <select name="rank_name" class="form-control" id="rank_options">
+	          <option value="전체">직위</option>
+	          <option value="사원">사원</option>
+	          <option value="대리">대리</option>
+	          <option value="차장">차장</option>
+	          <option value="과장">과장</option>
+	          <option value="부장">부장</option>
+	          <option value="부사장">부사장</option>
+	          <option value="이사">이사</option>
+	          <option value="대표">대표</option>
+	         </select>           
+	        <input name="emp_name" type="text" class="form-control float-left " placeholder="이름">
+	        <a href="javascript:empSearchAction()" class="btn btn-default float-left" role="button"><i class="fas fa-search"></i></a>
+	      </span>
+      	</form>  
 		</div>
-		<div style="text-align: right; padding: 5px; display: inline-block; width: 59%">
-			<button class="btn btn-info" onclick="location.href='insertEmployee.jsp'">
+		<div style="text-align: right; padding: 5px; display: inline-block; width: 50%">
+			<button class="btn btn-info" onclick="location.href='getDetailEmployee.src1'">
 			사원 추가</button>
 		
 		</div>
 	</div>     			
-
    <div>
-     <table class="table table-bordered table-hover" id="products" 
-              data-toggle="table"
-              data-height="650"
-              data-search="true"
-              data-show-columns="true"
-             data-method="post"
-              data-pagination="true"
-                  data-url="./member.json">
+     <table class="table table-bordered table-hover table-striped" id="products">
 
                   <form action="" id="setRows">
                     <input type="hidden" name="rowPerPage" value="10" id="rowPerPage">
                   </form>
     <thead>
-      <tr>
+      <tr class="thead-dark">
         <th>사원번호</th>
         <th>이름</th>
         <th>부서</th>
@@ -168,6 +169,7 @@ $setRows.submit();
     <tbody>
 <%
 			//조회 결과가 없는거야?
+	            String emp_status = null;
 			if(size==0){
 %>
 	        <tr>
@@ -186,7 +188,17 @@ $setRows.submit();
 	            <td><%=rmap.get("EMP_NAME") %></td>
 	            <td><%=rmap.get("DEPT_NAME") %></td>
 	            <td><%=rmap.get("RANK_NAME") %></td>
-	            <td><%=rmap.get("EMP_STATUS") %></td>
+	            <%
+	            switch(Integer.parseInt(String.valueOf(rmap.get("EMP_STATUS")))){
+	            case 0: emp_status = "재직";
+	            		break;
+	            case 1: emp_status = "휴직";
+	            		break;
+	            case 2: emp_status = "퇴직";
+	            		break;
+	            }
+	            %>
+	            <td><%=emp_status%></td>
 	        </tr>
 <%
 				}///end of for
@@ -216,7 +228,6 @@ $setRows.submit();
 		</main>
 	</div>
 </div>
-
 <!-- 슬라이드바 사용할때 필요 -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <!-- 탑메뉴 사용 -->

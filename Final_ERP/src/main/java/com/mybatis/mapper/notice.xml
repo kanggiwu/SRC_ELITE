@@ -3,6 +3,8 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
 <mapper namespace="com.mybatis.mapper.NoticeMapper">
+	<resultMap  type="map" id="noticeMap"/>
+	
 	<select id="test" parameterType="map" resultType="map">
 		SELECT
 		SYSDATE FROM DUAL
@@ -11,28 +13,28 @@
 	<select id="getNoticeList" parameterType="int" resultType="map"> 
 	SELECT notice_no, notice_type, notice_title, notice_content, notice_date
   	  FROM      notice
-  	  <!-- 화면에서 체크박스가 체크될때마다 각각 다른 조건의 리스트를 불러와야한다. ////////////미해결////////// -->
-  	 WHERE notice_type = #{notice_type}
-  	 ORDER BY notice_date DESC
+	<!-- 화면에서 체크박스가 체크될때마다 각각 다른 조건의 리스트를 불러와야한다. ////////////미해결////////// -->
+ 	<if test="NOTICE_NO != null">
+   	 WHERE notice_no = #{NOTICE_NO}
+ 	</if>
+   	 ORDER BY notice_date DESC, notice_no DESC
 	</select>
 	
-	<!-- 공지 리스트 검색 -->  
-	<select id="getSearchNoticeList" parameterType="int" resultType="map"> 
-	SELECT notice_no, notice_type, notice_title, notice_content, notice_date
-  	  FROM      notice
-  	 WHERE notice_type = #{notice_type}
-  	 <if test='#{추가예정} != null'>
-  	 	AND notice_title LIKE '%'||#{추가예정}||'%'
-  	 </if>
-  	 ORDER BY notice_date DESC
-	</select>
+	<!-- 공지 리스트 검색 프로시저-->  
+	<select id="getNoticeListProc" statementType="CALLABLE" parameterType="map">
+		{call PROC_NOTICE_LIST(        
+          #{p_notice_type, mode=IN, jdbcType=VARCHAR},
+          #{p_string, mode=IN, jdbcType=VARCHAR},
+          #{n_cursor, mode=OUT, jdbcType=CURSOR, resultMap=noticeMap}
+       	)}
+	</select>    
 	
 	
 	<!-- 신규 공지 등록 -->
 	<insert id="insertNotice" parameterType="map">
-		INSERT INTO notice (notico_no, notice_type, notice_title, notice_content, notice_date)
-                 VALUES (#{seq_notice}, #{notice_type}, #{notice_title}, #{notice_content}, SYSDATE)
-	</insert>
+		INSERT INTO notice (notice_no, notice_type, notice_title, notice_content, notice_date)
+                 VALUES (seq_notice.nextval, #{notice_type}, #{notice_title}, #{notice_content}, SYSDATE)
+    </insert>
 	
 	<!-- 공지 수정 -->
 	<update id="updateNotice" parameterType="map">
@@ -47,7 +49,7 @@
 	
 	<!-- 공지 삭제 -->		
 	<delete id="deleteNotice" parameterType="int">
-		DELETE notice WHERE notice_no = #{notice_no};
+		DELETE FROM notice WHERE NOTICE_NO = #{value}
 	</delete>
 
 </mapper>
