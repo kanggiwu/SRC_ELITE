@@ -17,15 +17,20 @@ public class AccountManagerController extends MultiActionController {
 		this.accountManagerLogic = accountManagerLogic;
 	}
 
-	// 급여 정보 조회
+	// 급여 정산 조회
 	public void getAccountInfo(HttpServletRequest request, HttpServletResponse response) {}
 	
-	// 급여 정보 변경
+	// 급여 정산 변경
 	public void updateAccountInfo(HttpServletRequest request, HttpServletResponse response) {}
 	
-	// 급여 정보 추가
+	// 급여 정산 추가
 	public void insertMonthSalary(HttpServletRequest request, HttpServletResponse response) {}
 	
+	// 급여 정산 사원 검색
+	public ModelAndView getAccountEmpSearch(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		return mav;
+	}
 	// 수익 관리 조회
 	public ModelAndView getProfitList (HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
@@ -52,6 +57,11 @@ public class AccountManagerController extends MultiActionController {
 	
 	// 손익 조회
 	public ModelAndView getBalanceLIst(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		return mav;
+	}
+	// 월말 결산
+	public ModelAndView getMonthlyAccount(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		return mav;
 	}
