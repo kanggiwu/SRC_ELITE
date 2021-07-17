@@ -164,11 +164,8 @@ document.getElementById('my_form').onsubmit = function(){
 								<thead>
 									<tr class="thead-dark">
 										<th style="width: 20%">프로젝트명</th>
-										<th style="width: 16%">시작일</th>
 										<th style="width: 16%">종료일</th>
 										<th style="width: 13%">단가</th>
-										<th style="width: 13%">매출</th>
-										<th style="width: 13%">종류</th>
 										<th style="width: 10%">수정</th>
 									</tr>
 								</thead>
@@ -178,7 +175,7 @@ document.getElementById('my_form').onsubmit = function(){
 									if (size == 0) {
 									%>
 									<tr>
-										<td colspan="7">조회결과가 없습니다.</td>
+										<td colspan="4">조회결과가 없습니다.</td>
 									</tr>
 									<%
 									} else {//조회 결과가 있을 때
