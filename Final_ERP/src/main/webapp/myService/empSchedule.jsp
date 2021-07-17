@@ -225,7 +225,7 @@
     <script src="<%=path.toString() %>common/vendor/js/ko.js"></script>
     <script src="<%=path.toString() %>common/vendor/js/select2.min.js"></script>
     <script src="<%=path.toString() %>common/vendor/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="<%=path.toString() %>common/js/main.js?ver=6"></script>
+    <script src="<%=path.toString() %>common/js/main.js?ver=7"></script>
     <script src="<%=path.toString() %>common/js/addEvent.js?ver=6"></script>
     <script src="<%=path.toString() %>common/js/editEvent.js?ver=13"></script>
     <script src="<%=path.toString() %>common/js/etcSetting.js?ver=3"></script>

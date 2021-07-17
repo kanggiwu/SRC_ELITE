@@ -209,7 +209,6 @@ else{//조회 결과가 있을 때
 			<!-- 
 				===============사원정보테이블 만들기======================
 			-->
-			<div class="form-group"'></div>
 			<div style="overflow:scroll; width:100%; height:300px;">
 			<table class="table table-hover" id = "empTable">
 				<thead>

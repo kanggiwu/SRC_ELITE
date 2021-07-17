@@ -47,12 +47,11 @@
        	)}
 	</select>    
 
-	<!-- 비밀번호 변경 -->
+	<!-- 비밀번호, 전화번호 변경 -->
 	<update id="updatePassword" parameterType="map">
 		UPDATE emp
 		SET
-		emp_pw =
-		#{emp_pw}
+		emp_pw = #{emp_pw}, emp_tel = #{emp_tel}
 		WHERE emp_no = #{emp_no}
 	</update>
 

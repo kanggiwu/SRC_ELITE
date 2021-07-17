@@ -29,12 +29,12 @@ public class ScheduleController extends MultiActionController {
 	}
 
 	/*
-	 * <prop key="/schedule/getStartWorktime.src1">getStartWorktime</prop> <prop
-	 * key="/schedule/getCalendarSchedule.src1">getCalendarSchedule</prop> <prop
-	 * key="/schedule/getDetailSchedule.src1">getDetailSchedule</prop> <prop
-	 * key="/schedule/insertSchedule.src1">insertSchedule</prop> <prop
-	 * key="/schedule/updateSchedule.src1">updateSchedule</prop> <prop
-	 * key="/schedule/deleteSchedule.src1">deleteSchedule</prop>
+	 * <prop key="/schedule/getStartWorktime.src1">getStartWorktime</prop> 
+	 * <prop key="/schedule/getCalendarSchedule.src1">getCalendarSchedule</prop> 
+	 * <prop key="/schedule/insertSchedule.src1">insertSchedule</prop> 
+	 * <prop key="/schedule/updateSchedule.src1">updateSchedule</prop> 
+	 * <prop key="/schedule/updateDateSchedule.src1">schedule-controller</prop>
+	 * <prop key="/schedule/deleteSchedule.src1">deleteSchedule</prop>
 	 */
 	public ModelAndView getCalendarSchedule(HttpServletRequest request, HttpServletResponse response) {
 		HashMapBinder hmb = new HashMapBinder(request);
@@ -42,12 +42,9 @@ public class ScheduleController extends MultiActionController {
 		Map<String, Object> pMap = new HashMap<>();
 		hmb.bind(pMap);
 		
-		//로그인 시 session에 사원번호(아이디)를 저장하고 그걸 불러온다.
-		/*
-		 * session = request.getSession(true); String
-		 * login_no=(String)session.getAttribute("login_no");
-		 */
-		int login_no = 77;
+		session = request.getSession(true); 
+		int login_no=Integer.parseInt(session.getAttribute("login_no").toString());
+		
 		logger.info("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥로그인한 사원 번호: "+login_no+"♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥");
 		pMap.put("login_no", login_no);
 		/* pMap.put("schedule_type", 3); */
@@ -79,12 +76,11 @@ public class ScheduleController extends MultiActionController {
 		logger.info("--------------------insertSchedule 메소드 호출 ");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pMap = new HashMap<>();
-		hmb.bind(pMap);
-		/* 로그인 시 session에 사원번호(아이디)를 저장하고 그걸 불러온다. 
-		 * session = request.getSession(true);
-		 * int login_no=(int)session.getAttribute("login_no");
-		 */
-		int login_no = 77;
+		hmb.bindAjax(pMap);
+		/* 로그인 시 session에 사원번호(아이디)를 저장하고 그걸 불러온다. */ 
+		session = request.getSession(true);
+		int login_no=Integer.parseInt(session.getAttribute("login_no").toString());
+		
 		
 		pMap.put("login_no", login_no);
 		logger.info("쿼리스트링: " + pMap);
@@ -108,12 +104,11 @@ public class ScheduleController extends MultiActionController {
 		logger.info("%%%%%%%%%%%%%%%%%%%%updateSchedule 메소드 호출 ");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pMap = new HashMap<>();
-		hmb.bind(pMap);
-		/* 로그인 시 세션에 저장된 사원번호를 불러옴
-		 * session = request.getSession(true); 
-		 * int login_no=(int)session.getAttribute("login_no");
-		 */
-		int login_no = 77;
+		hmb.bindAjax(pMap);
+		/* 로그인 시 세션에 저장된 사원번호를 불러옴*/ 
+		session = request.getSession(true); 
+		int login_no=Integer.parseInt(session.getAttribute("login_no").toString());
+		
 		
 		pMap.put("login_no", login_no);
 		logger.info("쿼리스트링: " + pMap);
@@ -134,12 +129,10 @@ public class ScheduleController extends MultiActionController {
 		logger.info("%%%%%%%%%%%%%%%%%%%%updateSchedule 메소드 호출 ");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pMap = new HashMap<>();
-		hmb.bind(pMap);
-		/* 로그인 시 세션에 저장된 사원번호를 불러옴
-		 * session = request.getSession(true); 
-		 * int login_no=(int)session.getAttribute("login_no");
-		 */
-		int login_no = 77;
+		hmb.bindAjax(pMap);
+		/* 로그인 시 세션에 저장된 사원번호를 불러옴 */
+		session = request.getSession(true); 
+		int login_no=Integer.parseInt(session.getAttribute("login_no").toString());
 		
 		pMap.put("login_no", login_no);
 		logger.info("쿼리스트링: " + pMap);
@@ -161,15 +154,12 @@ public class ScheduleController extends MultiActionController {
 		logger.info("@*@*@*@*@*@*@*@*@*@*deleteSchedule 메소드 호출 ");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pMap = new HashMap<>();
-		hmb.bind(pMap);
+		hmb.bindAjax(pMap);
 		logger.info("쿼리스트링: " + pMap);
 
-		/* 로그인 시 세션에 저장된 사원번호를 불러옴
-		 * session = request.getSession(true); 
-		 * int login_no=(int)session.getAttribute("login_no");
-		 */
-		
-		int login_no = 77;
+		/* 로그인 시 세션에 저장된 사원번호를 불러옴*/ 
+		session = request.getSession(true); 
+		int login_no=Integer.parseInt(session.getAttribute("login_no").toString());
 		
 		pMap.put("login_no", login_no);
 		logger.info("쿼리스트링: " + pMap);

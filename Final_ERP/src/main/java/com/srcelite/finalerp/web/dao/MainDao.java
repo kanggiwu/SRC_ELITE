@@ -1,6 +1,5 @@
 package com.srcelite.finalerp.web.dao;
 
-import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -25,8 +24,24 @@ public class MainDao {
 	public int insertAttendanceTime(Map<String,Object> pmap) {
 		logger.info("insertAttendanceTime 호출 성공 : "+pmap);
 		int result = 0;
-		sqlSessionTemplate.insert("insertAttendanceTime",pmap);
-		result = 1;
+		result = sqlSessionTemplate.insert("insertAttendanceTime",pmap);
 		return result;
+	}
+	public int checkAttendance(Map<String,Object> pmap) {
+		logger.info("checkAttendance 호출 성공 : " + pmap);
+		logger.info("pmap : " + pmap);
+		logger.info("pmap.get(\"emp_no\").toString() : " + pmap.get("emp_no").toString());
+		int result = 0;
+		try {
+		result = sqlSessionTemplate.selectOne("checkAttendance", pmap.get("emp_no").toString());
+		} catch(NullPointerException ne) {
+			return 0;
+		}
+		if(result == 0) {
+			return 0;
+		} else {
+			return result;
+		}
+		
 	}
 }

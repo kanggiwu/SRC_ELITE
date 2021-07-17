@@ -23,13 +23,9 @@
 		<property name="methodNameResolver" ref="erp-resolver"/>
 		<property name="scheduleLogic" ref="schedule-logic"/>
 	</bean>
-	<bean id="account-user-controller" class="com.srcelite.finalerp.web.controller.AccountUserController">
+	<bean id="account-controller" class="com.srcelite.finalerp.web.controller.AccountController">
 		<property name="methodNameResolver" ref="erp-resolver"/>
-		<property name="accountUserLogic" ref="account-user-logic"/>
-	</bean>
-	<bean id="account-manager-controller" class="com.srcelite.finalerp.web.controller.AccountManagerController">
-		<property name="methodNameResolver" ref="erp-resolver"/>
-		<property name="accountManagerLogic" ref="account-manager-logic"/>
+		<property name="accountLogic" ref="account-logic"/>
 	</bean>
 	<bean id="human-resource-controller" class="com.srcelite.finalerp.web.controller.HumanResourceController">
 		<property name="methodNameResolver" ref="erp-resolver"/>
@@ -68,30 +64,21 @@
 				<prop key="/notice/updateNotice.src1">notice-controller</prop>
 				<prop key="/notice/deleteNotice.src1">notice-controller</prop>
 
-				<prop key="/schedule/getStartWorktime.src1">schedule-controller</prop>
 				<prop key="/schedule/getCalendarSchedule.src1">schedule-controller</prop>
-				<prop key="/schedule/getDetailSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/insertSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/updateSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/updateDateSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/deleteSchedule.src1">schedule-controller</prop>
 
-				<prop key="/useraccount/getMonthSalary.src1">account-user-controller</prop>
-				<prop key="/useraccount/getYearSalary.src1">account-user-controller</prop>
-				<prop key="/useraccount/getReirementPay.src1">account-user-controller</prop>
-
-				<prop key="/manageraccount/updateAccountInfo.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/insertMonthSalary.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/getProfitList.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/updateProfit.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/insertProfit.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/getExpenseList.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/updateExpense.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/insertExpense.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/getBalanceLIst.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/getAccountInfo.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/getAccountEmpSearch.src1">account-manager-controller</prop>
-				<prop key="/manageraccount/getMonthlyAccount.src1">account-manager-controller</prop>
+				<prop key="/account/updateSalary.src1">account-controller</prop>
+				<prop key="/account/insertSalary.src1">account-controller</prop>
+				<prop key="/account/getProfitList.src1">account-controller</prop>
+				<prop key="/account/updateProfit.src1">account-controller</prop>
+				<prop key="/account/insertProfit.src1">account-controller</prop>
+				<prop key="/account/getExpenseList.src1">account-controller</prop>
+				<prop key="/account/updateExpense.src1">account-controller</prop>
+				<prop key="/account/insertExpense.src1">account-controller</prop>
+				<prop key="/account/getBalanceLIst.src1">account-controller</prop>
 
 				<prop key="/humanresource/getOrganizationChart.src1">human-resource-controller</prop>
 				<prop key="/humanresource/updateOrganizationChart.src1">human-resource-controller</prop>
@@ -104,6 +91,7 @@
 				<prop key="/humanresource/deleteLIcenceInfo.src1">human-resource-controller</prop>
 
 				<prop key="/approval/getApprovalForm.src1">approval-controller</prop>
+				<prop key="/approval/getApprovalFormList.src1">approval-controller</prop>
 				<prop key="/approval/submitApproval.src1">approval-controller</prop>
 				<prop key="/approval/getSendApproval.src1">approval-controller</prop>
 				<prop key="/approval/getDetailSendApproval.src1">approval-controller</prop>
@@ -111,6 +99,10 @@
 				<prop key="/approval/getDetailReceiveApproval.src1">approval-controller</prop>
 				<prop key="/approval/getNumUnsignedApproval.src1">approval-controller</prop>
 				<prop key="/approval/getLineApproval.src1">approval-controller</prop>
+				<!-- 결재자조회 getApproverEmp-->
+				<prop key="/approval/getApproverEmp.src1">approval-controller</prop>
+				<!-- 결재문서조회 getApproverEmp-->
+				<!-- <prop key="/approval/getDetailApproval.src1">approval-controller</prop> -->
 
 				<prop key="/projecthistory/getProjectHistoryList.src1">project-history-controller</prop>
 				<prop key="/projecthistory/getDetailProjectHistory.src1">project-history-controller</prop>
@@ -151,22 +143,15 @@
 				<prop key="/schedule/updateDateSchedule.src1">updateDateSchedule</prop>
 				<prop key="/schedule/deleteSchedule.src1">deleteSchedule</prop>
 
-				<prop key="/useraccount/getMonthSalary.src1">getMonthSalary</prop>
-				<prop key="/useraccount/getYearSalary.src1">getYearSalary</prop>
-				<prop key="/useraccount/getReirementPay.src1">getReirementPay</prop>
-
-				<prop key="/manageraccount/updateAccountInfo.src1">updateAccountInfo</prop>
-				<prop key="/manageraccount/insertMonthSalary.src1">insertMonthSalary</prop>
-				<prop key="/manageraccount/getProfitList.src1">getProfitList</prop>
-				<prop key="/manageraccount/updateProfit.src1">updateProfit</prop>
-				<prop key="/manageraccount/insertProfit.src1">insertProfit</prop>
-				<prop key="/manageraccount/getExpenseList.src1">getExpenseList</prop>
-				<prop key="/manageraccount/updateExpense.src1">updateExpense</prop>
-				<prop key="/manageraccount/insertExpense.src1">insertExpense</prop>
-				<prop key="/manageraccount/getBalanceLIst.src1">getBalanceLIst</prop>
-				<prop key="/manageraccount/getAccountInfo.src1">getAccountInfo</prop>
-				<prop key="/manageraccount/getAccountEmpSearch.src1">getAccountEmpSearch</prop>
-				<prop key="/manageraccount/getMonthlyAccount.src1">getMonthlyAccount</prop>
+				<prop key="/account/updateSalary.src1">updateSalary</prop>
+				<prop key="/account/insertSalary.src1">insertSalary</prop>
+				<prop key="/account/getProfitList.src1">getProfitList</prop>
+				<prop key="/account/updateProfit.src1">updateProfit</prop>
+				<prop key="/account/insertProfit.src1">insertProfit</prop>
+				<prop key="/account/getExpenseList.src1">getExpenseList</prop>
+				<prop key="/account/updateExpense.src1">updateExpense</prop>
+				<prop key="/account/insertExpense.src1">insertExpense</prop>
+				<prop key="/account/getBalanceLIst.src1">getBalanceLIst</prop>
 
 				<prop key="/humanresource/getOrganizationChart.src1">getOrganizationChart</prop>
 				<prop key="/humanresource/updateOrganizationChart.src1">updateOrganizationChart</prop>
@@ -179,6 +164,7 @@
 				<prop key="/humanresource/deleteLIcenceInfo.src1">deleteLIcenceInfo</prop>
 
 				<prop key="/approval/getApprovalForm.src1">getApprovalForm</prop>
+				<prop key="/approval/getApprovalFormList.src1">getApprovalForm</prop>
 				<prop key="/approval/submitApproval.src1">submitApproval</prop>
 				<prop key="/approval/getSendApproval.src1">getSendApproval</prop>
 				<prop key="/approval/getDetailSendApproval.src1">getDetailSendApproval</prop>
@@ -186,6 +172,11 @@
 				<prop key="/approval/getDetailReceiveApproval.src1">getDetailReceiveApproval</prop>
 				<prop key="/approval/getNumUnsignedApproval.src1">getNumUnsignedApproval</prop>
 				<prop key="/approval/getLineApproval.src1">getLineApproval</prop>
+				<!-- 결재자조회 getApproverEmp-->
+				<prop key="/approval/getApproverEmp.src1">getApproverEmp</prop>
+				<!-- 결재문서조회 getApproverEmp-->
+				<!-- <prop key="/approval/getDetailApproval.src1">getDetailApproval</prop> -->
+				
 
 				<prop key="/projecthistory/getProjectHistoryList.src1">getProjectHistoryList</prop>
 				<prop key="/projecthistory/getDetailProjectHistory.src1">getDetailProjectHistory</prop>

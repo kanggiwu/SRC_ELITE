@@ -4,8 +4,7 @@
  "http://mybatis.org/dtd/mybatis-3-config.dtd"> 
 <configuration>
  <mappers>
- 	<mapper resource="com/mybatis/mapper/account-manager.xml"/>
- 	<mapper resource="com/mybatis/mapper/account-user.xml"/>
+ 	<mapper resource="com/mybatis/mapper/account.xml"/>
  	<mapper resource="com/mybatis/mapper/approval.xml"/>
  	<mapper resource="com/mybatis/mapper/human-resource.xml"/>
  	<mapper resource="com/mybatis/mapper/main.xml"/>

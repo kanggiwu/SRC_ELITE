@@ -136,7 +136,7 @@ public class NoticeController extends MultiActionController {
 		logger.info("pmap: "+pmap);
 		int result = 0;
 		result = noticeLogic.updateNotice(pmap);
-		logger.info("result: "+result);
+		logger.info("ctrl result : " + result);
 		if(result == 1) {
 			response.sendRedirect("/notice/getAllNoticeList.src1");
 		}

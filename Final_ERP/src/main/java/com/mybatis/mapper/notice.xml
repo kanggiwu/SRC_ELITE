@@ -34,7 +34,7 @@
 	<insert id="insertNotice" parameterType="map">
 		INSERT INTO notice (notice_no, notice_type, notice_title, notice_content, notice_date)
                  VALUES (seq_notice.nextval, #{notice_type}, #{notice_title}, #{notice_content}, SYSDATE)
-             	</insert>
+    </insert>
 	
 	<!-- 공지 수정 -->
 	<update id="updateNotice" parameterType="map">

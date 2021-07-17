@@ -83,7 +83,7 @@ String oc_path = rmap.get("OC_PATH").toString();
               <img id="OrganizationChartImg" src="../<%=oc_path%>" style="width: 90%; height: 90%;" alt="Organization chart" onerror="imgAreaError()">
               <input name="emp_no" value="<%=emp_no%>" hidden>
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="InputSubject1">파일첨부</label>
             <input id="fileInput" name="u_file" filestyle="" type="file" data-class-button="btn btn-default" data-class-input="form-control"
             data-button-text="" data-icon-name="fa fa-upload" class="form-control" tabindex="-1" 
@@ -97,7 +97,7 @@ String oc_path = rmap.get("OC_PATH").toString();
                 <button class="btn btn-info" onclick="location.href='updateOrganizationChart.src1'">
                   수정</button>
               </span>
-            </div>
+            </div> -->
           </div>
 				<!-- 컨텐츠 들어갈내용 끝   -->
      			</div>
