@@ -54,7 +54,7 @@ if (NoticeDetail != null) {
 <!-- 수정에 필요한 코드 시작 -->
 <script type="text/javascript">
 	function updateNotice(){
-		alert("updateNotice호출");
+		/* alert("updateNotice호출"); */
 		$("#notice_upd").attr("method","post");
 		$("#notice_upd").attr("action","/notice/updateNotice.src1");
 		$("#notice_upd").submit();
@@ -63,7 +63,7 @@ if (NoticeDetail != null) {
 	
 <!-- 삭제에 필요한 코드 시작 -->
 	function deleteNotice(){
-		alert("삭제확인 호출");
+		/* alert("삭제확인 호출"); */
 		$("#notice_del").attr("method","get");
 		$("#notice_del").attr("action","/notice/deleteNotice.src1");
 		$("#notice_del").submit();	
@@ -88,7 +88,7 @@ if (NoticeDetail != null) {
 					<!-- 컨텐츠 들어갈내용 시작-->
 					<div style="padding-left: 20%; padding-right: 20%;">
 						<!-- 수정 시작-->
-						<form id="notice_upd" enctype="multipart/form-data" >
+						<form id="notice_upd">
 										<table>
 									<tr>
 

@@ -60,15 +60,16 @@ public class MainController extends MultiActionController{
 		HttpSession session = request.getSession();
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String,Object> pmap = new HashMap<>();
-		pmap.put("emp_no", 1);
 		hmb.bind(pmap);
-		if(session.getAttribute("attandanced") == null) {
-			int result = 0; 
-			result = mainLogic.insertAttendanceTime(pmap);
-			session.setAttribute("attandanced", result);
-			response.sendRedirect("insertAttendanceTime_success.jsp");
-		} else {
+		pmap.put("emp_no", session.getAttribute("login_no"));
+		logger.info("pmap : " + pmap);
+		int result = 0; 
+		result  = mainLogic.insertAttendanceTime(pmap);
+		logger.info("result : " + result);
+		if(result == 0) {
 			response.sendRedirect("insertAttendanceTime_already.jsp");
+		} else {
+			response.sendRedirect("insertAttendanceTime_success.jsp");
 		}
 	}
 }

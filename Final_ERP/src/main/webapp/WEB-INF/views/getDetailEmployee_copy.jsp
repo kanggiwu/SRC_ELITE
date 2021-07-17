@@ -16,7 +16,6 @@ String emp_year = null;
 String dept_name = null;
 String team_name = null;
 String rank_name = null;
-String emp_job = null;
 String emp_hiredate = null;
 String emp_retiredate = null;
 String emp_tel = null;
@@ -35,7 +34,6 @@ if (boardDetail != null) {
 	dept_name = rmap.get("DEPT_NAME").toString();
 	team_name = rmap.get("TEAM_NAME").toString();
 	rank_name = rmap.get("RANK_NAME").toString();
-	emp_job = rmap.get("EMP_JOB").toString();
 	emp_hiredate = rmap.get("EMP_HIREDATE").toString();
 	if (rmap.get("EMP_RETIREDATE") != null) {
 		emp_retiredate = rmap.get("EMP_RETIREDATE").toString();
@@ -102,7 +100,6 @@ case "퇴직": emp_status_no = 2;
 }
 
 List<Map<String, Object>> insertLicenceList = null;
-String jobCheck = "";
 
 %>
 <!DOCTYPE html>
@@ -126,38 +123,32 @@ String jobCheck = "";
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 <script>
-let myMap = new Map();
 	//자격증 로우 추가
 	function add_row() {
-		var a="";
-		let my_tbody = $('#licence-tbody');
-		var selected = $("#licence-select option:selected").val();
-			console.log(myMap.get(selected));
-			if(myMap.get(selected) !== undefined || selected==="선택")
-			return; 
-		myMap.set(selected,selected) 
-		console.log(myMap.get(selected));
-		let selectedText = document.querySelector("#licence-select");
-		let licenceText = selectedText[selectedText.selectedIndex].text
-	    /* let test = $('.test1').attr('class');  */
-	   var a="";
-            a+="<tr id='licence_"+selected+"'>";
-             a+="     <td><input name='licence_no' value='"+selected+"' type='hidden'/>"+selected+"</td>";
-             a+="     <td>"+licenceText+"</td>";
-             a+="     <td>"+'35000'+"</td>";
-            a+="</tr>";
-            document.querySelector("#licence-tbody").innerHTML += a;
-	
-}
+		console.log(document.getElementById('AddLicenseRow1').value);
+		console.log(document.getElementById('AddLicenseRow2').value);
+		console.log(document.getElementById('AddLicenseRow3').value);
+			var my_tbody = document.getElementById('licence-tbody');
+			// var row = my_tbody.insertRow(0); // 상단에 추가
+			var row = my_tbody.insertRow(my_tbody.rows.length); // 하단에 추가
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			cell1.innerHTML = document.getElementById('AddLicenseRow1').value;
+			cell2.innerHTML = document.getElementById('AddLicenseRow2').value;
+			cell3.innerHTML = document.getElementById('AddLicenseRow3').value;
+			const map1 = new Map();
+			map1.set('bar', document.getElementById('AddLicenseRow1').value);
+
+			console.log(map1.get('bar'));
+
+	}
 	function delete_row() {
 		var my_tbody = document.getElementById('licence-tbody');
-		var selected = $("#licence-select option:selected").val();
-		var lname = "#licence_"+selected;
 		if (my_tbody.rows.length < 1)
-		return;
-		console.log(lname);
-		$(lname).remove();
-		myMap.delete(selected); 
+			return;
+		// my_tbody.deleteRow(0); // 상단부터 삭제
+		my_tbody.deleteRow(my_tbody.rows.length - 1); // 하단부터 삭제
 	}
 
 	//사원 수정을 위한 활성화
@@ -180,7 +171,7 @@ let myMap = new Map();
 		console.log(value);
 		if (value != "20") {
 			document.getElementById('team_options').disabled = true;
-			$("#team_options").val("").prop("selected", true);
+			$("#team_options").val().prop("selected", true);
 		} else {
 			document.getElementById('team_options').disabled = false;
 			$("#team_options").val("1").prop("selected", true);
@@ -209,13 +200,7 @@ let myMap = new Map();
 	/* function imgAreaError(){
 	 $('#imgViewArea').css({ 'display' : 'none' });
 	 } */
-	 
-	 //수정 완료
 	function empUpdateAction() {
-		 //팀장 체크박스 변경
-		 if($("input:checkbox[id=TT]").is(":checked") == true) {
-			 $('#FF').prop("disabled", true);
-		 }
 		Swal.fire({
 		  title: '수정 되었습니다!',
 		  confirmButtonColor: '#17a2b8'})
@@ -296,22 +281,9 @@ let myMap = new Map();
 															<option value=2>개발2팀</option>
 															<option value=3>개발3팀</option>
 															<option value=4>개발4팀</option>
-															<option value="" hidden>없음</option>
+															<option value=hidden>없음</option>
 														</select>
 													</div>
-													<div class="input-group">
-														<span class="input-group-addon" id="basic-addon1"
-															style="display: inline-block; width: 25%"></span> 
-														<lable>&nbsp;팀장&nbsp;
-														<%
-														if("T".equals(emp_job)){
-														jobCheck = "checked";		
-														} ///end of if
-														%>
-														<input type="checkbox" id="TT" name="emp_job" value="T" <%=jobCheck%>>
-														<input type="checkbox" id="FF" name="emp_job" value="F" checked hidden>
-														</lable>
-													</div>														
 													<br>
 													<div class="input-group">
 														<span class="input-group-addon" id="basic-addon1"
@@ -407,6 +379,7 @@ let myMap = new Map();
 												</div>
 											</div>
 										</div>
+									</form>
 									<div class="col-lg-12">
 										<div class="input-group">
 											<span class="input-group-addon" id="basic-addon1"
@@ -428,9 +401,11 @@ let myMap = new Map();
 												<option value=11>OCA</option>
 												<option value=12>OCM</option>
 											</select>
-											<button type="button" class="btn btn-light" onclick="add_row()">추가</button>
-											<button type="button" class="btn btn-light" onclick="delete_row()">삭제</button>
+											<button class="btn btn-light" onclick="add_row()">추가</button>
+											<button class="btn btn-light" onclick="delete_row()">삭제</button>
 										</div>
+										<form id="licence_add" method="post"
+											enctype="multipart/form-data" action="updateEmployee.src1">
 											<table class="table table-bordered table-hover"
 												id="testTable" id="table" data-toggle="table"
 												data-height="650" data-search="true"
@@ -458,8 +433,7 @@ let myMap = new Map();
 
 												%>
 													<tr id='licence_<%=licence_no%>'>
-														<td value="<%=licence_no%>"><%=licence_no%>
-														<input name = 'licence_no' value='<%=licence_no%>' hidden>"</td>
+														<td value="<%=licence_no%>"><%=licence_no%></td>
 														<td value="<%=licence_name%>"><%=licence_name%></td>
 														<td value="<%=licence_incentive%>"><%=licence_incentive%></td>
 													</tr>
@@ -470,14 +444,13 @@ let myMap = new Map();
 												%>
 												</tbody>
 											</table>
+										</form>
 									</div>
 
-									</form>
 								</fieldset>
 								<!-- 컨텐츠 들어갈내용 끝   -->
 							</div>
 						</div>
-					</div>
 					</div>
 			</main>
 		</div>

@@ -42,7 +42,7 @@ if (newNotice != null) {
 <!-- 삭제에 필요한 코드 시작 -->
 <script type="text/javascript">
 	function insertNotice(){
-		alert("추가확인 호출");
+		/* alert(""); */
 		$("#notice_ins").attr("method","post");
 		$("#notice_ins").attr("action","/notice/insertNotice.src1");
 		$("#notice_ins").submit();	
@@ -66,7 +66,7 @@ if (newNotice != null) {
 						style="max-width: 1730px; margin: 10px 100px;">
 						<!-- 컨텐츠 들어갈내용 시작-->
 						<div>
-						<form id="notice_ins" enctype="multipart/form-data" accept-charset="utf-8">
+						<form id="notice_ins" accept-charset="utf-8">
 						<!-- 테이블 시작  -->
 							<table>
 								<tr>

@@ -35,8 +35,6 @@ let editEvent = function (event, element, view) {
     }else{
     	ko_type = '프로젝트';
     }
-	console.log(event.type);
-	console.log(ko_type);
     
     modalTitle.html('일정 수정');
     editTitle.val(event.title);
@@ -127,7 +125,7 @@ let editEvent = function (event, element, view) {
 };
 
 // 삭제버튼
-$(document).off('click').on('click','#deleteEvent', function () {
+$('#deleteEvent').off('click').on('click', function () {
     
     $('#deleteEvent').unbind();
     

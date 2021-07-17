@@ -149,7 +149,6 @@ schedule_type: -1,
     //주,일 view일때 종일 <-> 시간 변경불가
     if (view.type === 'agendaWeek' || view.type === 'agendaDay') {
       if (draggedEventIsAllDay !== event.allDay) {
-        alert('드래그앤드롭으로 종일<->시간 변경은 불가합니다.');
         location.reload();
         return false;
       }

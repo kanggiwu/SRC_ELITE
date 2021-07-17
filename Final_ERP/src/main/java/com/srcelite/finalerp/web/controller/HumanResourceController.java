@@ -79,7 +79,11 @@ public class HumanResourceController extends MultiActionController {
 		Map<String,Object> pmap = new HashMap<>();
 		hmb.multiBind(pmap);
 		int result = 0;
-		/* result = humanResourceLogic.insertEmployee(pmap); */
+		if(pmap.get("team_no") == null) {
+			logger.info("팀이 소속되지 않았다");
+			pmap.put("team_no", "");
+		}
+		result = humanResourceLogic.insertEmployee(pmap);
 		if(result == 1) {
 			res.sendRedirect("getEmployeeList.src1");
 		}
