@@ -39,11 +39,17 @@
 
 <title>프로젝트 이력 조회</title>
 <script>
+	//프로젝트 이력조회 검색
 	function projectSearchAction(){
 		//let a ={"d":a,"d1":b};
 		//alert("여기")
 		//var deptTarget = document.getElementById("dept_options")
 		var typeTarget = $("#type_options option:selected").val();
+		//alert(typeTarget);
+		if (typeTarget == "===종류==="){
+			typeTarget = null;
+		}
+		//alert(typeTarget);		
 		var startTarget = $("#start_period").val();
 		var endTarget = $("#end_period").val();
 		var nameTarget = $("#txt_name").val();
