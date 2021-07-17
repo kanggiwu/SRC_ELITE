@@ -65,9 +65,7 @@
 				<prop key="/notice/updateNotice.src1">notice-controller</prop>
 				<prop key="/notice/deleteNotice.src1">notice-controller</prop>
 
-				<prop key="/schedule/getStartWorktime.src1">schedule-controller</prop>
 				<prop key="/schedule/getCalendarSchedule.src1">schedule-controller</prop>
-				<prop key="/schedule/getDetailSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/insertSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/updateSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/updateDateSchedule.src1">schedule-controller</prop>
