@@ -63,12 +63,7 @@ public class HashMapBinder {
 			logger.info("Exception : "+e.toString());
 		}
 		Enumeration en = multi.getParameterNames();//배열 구조체 묶음
-<<<<<<< HEAD
-=======
-//		String[] arr_peno = multi.getParameterValues("emp_no");
-//		int arr_peno = Integer.parseUnsignedInt(multi.getContentType("emp_no"));
-//		target.put("arr_peno", arr_peno);
->>>>>>> origin/KT_01
+
 		//<input type="text" name="mem_id"
 		if(multi.getParameterValues("licence_no") != null) {
 			String[] licences = multi.getParameterValues("licence_no");
