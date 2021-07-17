@@ -1,5 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>    
+<%
+	StringBuilder path = new StringBuilder(request.getContextPath());
+	path.append("/");
+	List<Map<String,Object>> getDetailSendApproval = null;
+	getDetailSendApproval = (List<Map<String,Object>>)request.getAttribute("getDetailSendApproval");
+	int size = 0;
+	//String pProjectNo = null;
+	if(getDetailSendApproval!=null){
+		size = getDetailSendApproval.size();
+	}
+	out.print("size:"+size);
+%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,9 +34,21 @@
 <body>
 <div class="container">
 	<form class="form-horizontal" role="form">
+		<%
+		//조회 결과가 없는 거야?
+		if(size==0){		
+		%>    
+			alert("조회결과가 없습니다");
+		<%
+		}
+		else{//조회 결과가 있을 때
+			for(int i=0;i<size;i++){
+				Map<String,Object> pmap = getDetailSendApproval.get(i);
+				if(i==size) break;
+		%>   
 		<div class="form-group" >
 			<label for="lab_deptName">부서명</label>				
-			<input type="text" class="form-control" id="txt_deptName" value="" readonly>				
+			<input type="text" class="form-control" id="txt_deptName" value="<%=pmap.get("APRV_NO").toString()%>" readonly>				
 		</div>
 		<div class="form-group">
 			<label for="lab_empName">사원명</label>

@@ -1,5 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>    
+<%
+	StringBuilder path = new StringBuilder(request.getContextPath());
+	path.append("/");
+	List<Map<String,Object>> sendApprovalList = null;
+	List<Map<String,Object>> getApproverEmp = null;
+	sendApprovalList = (List<Map<String,Object>>)request.getAttribute("sendApprovalList");
+	int size = 0;
+	//String pProjectNo = null;
+	if(sendApprovalList!=null){
+		size = sendApprovalList.size();
+	}
+	out.print("size:"+size);
+	getApproverEmp = (List<Map<String,Object>>)request.getAttribute("getApproverEmp");
+	int size2 = 0;
+	//String empSearch2 = null;
+	if(getApproverEmp!=null){
+		size2 = getApproverEmp.size();
+	}
+	out.print("size2:"+size2);
+%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,47 +53,44 @@
 		<table id="appSend" class="table table-hover">
 			<thead>
 				<tr style="background-color:lightgray">					
-					<th style="width: 15%">결제번호</th>
+					<th style="width: 15%">결재번호</th>
 					<th style="width: 20%">작성일</th>
 					<th style="width: 25%">문서제목</th>
 					<th style="width: 20%">결재상태</th>
-					<th style="width: 10%">결재자조회</th>
-					<th style="width: 10%">상세조회</th>
+					<th style="width: 10%"></th>
+					<th style="width: 10%"></th>
 				</tr>
 			</thead>
 			<tbody class="sendBody" id="recievePlan">
+			<%
+			//조회 결과가 없는 거야?
+			if(size==0){		
+			%>    
+			        <tr>
+			            <td colspan="6">조회결과가 없습니다.</td>
+			        </tr>
+			<%
+			}
+			else{//조회 결과가 있을 때
+				for(int i=0;i<size;i++){
+					Map<String,Object> pmap = sendApprovalList.get(i);
+					if(i==size) break;
+					/* pProjectNo = pmap.get("PROJECT_NO").toString(); */
+			%>   
 				<tr>
-					<td>12345</td>
-					<td>2021-06-21</td>
-					<td>휴가계획서</td>
-					<td>결재완료</td>
+					<td><%=pmap.get("APRV_NO").toString()%></td>
+					<td><%=pmap.get("APRV_DATE").toString()%></td>
+					<td><%=pmap.get("APRV_TITLE").toString()%></td>
+					<td><%=pmap.get("APRV_STATUS").toString()%></td>
 					<td><button type="button" class="btn btn-info btn-sm" id="btn_sel2"
-						onclick="openModal2()">조회</button></td>
+						onclick="openModal2()">결재자조회</button></td>
 					<td><button type="button" class="btn btn-info btn-sm" id="btn_detail"
-						onclick="openPop2()">상세조회</button></td>
+						onclick="openPop2()">결재문서조회</button></td>
 				</tr>
-				<tr>
-					<td>12346</td>
-					<td>2021-06-21</td>
-					<td>휴가계획서</td>
-					<td>결재완료</td>
-					<td><button type="button" class="btn btn-info btn-sm" id="btn_sel2"
-						onclick="openModal2()">조회</button></td>
-					<td><button type="button" class="btn btn-info btn-sm" id="btn_detail"
-						onclick="openPop2()">상세조회</button></td>
-				</tr>
-				<tr>
-					<td>12347</td>
-					<td>2021-06-21</td>
-					<td>프로젝트 계약확정서</td>
-					<td>결재완료</td>
-					<td><button type="button" class="btn btn-info btn-sm" id="btn_sel2"
-						onclick="openModal2()">조회</button></td>
-					<td><button type="button" class="btn btn-info btn-sm" id="btn_detail"
-						onclick="openPop2()">상세조회</button></td>
-					<!-- <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" 
-						data-target="#mod_appLine">조회</button></td> -->
-				</tr>
+			<% 
+				}///end of for
+			} ///end of if
+			%>
 			</tbody>
 		</table>
 					
@@ -87,29 +105,38 @@
 			<table class="table table-hover" >
 				<thead>
 					<tr style="background-color:lightgray">						
-						<th style="width: 30%">결재자</th>
-						<th style="width: 40%">결재인</th>
-						<th style="width: 30%">결재상태</th>
+						<th style="width: 20%">결재순서</th>
+						<th style="width: 20%">부서</th>
+						<th style="width: 20%">직위</th>
+						<th style="width: 20%">사원명</th>
+						<th style="width: 20%">결재상태</th>
+					</tr>
 					</tr>
 				</thead>
 				<tbody>
 				<!-- 
 				===============DB에서 데이터 가져와서 뿌려주기======================
 				 -->
+				 	<%
+					//조회 결과가 없는 거야?
+					if(size2==0){		
+					%>    
+					        <tr>
+					            <td colspan="5">조회결과가 없습니다.</td>
+					        </tr>
+					<%
+					}
+					else{//조회 결과가 있을 때
+						for(int i=0;i<size2;i++){
+							Map<String,Object> pmap2 = getApproverEmp.get(i);
+							if(i==size) break;
+					%>   
 					<tr>						
-						<td>1차 결재자</td>
-						<td>개발1팀 팀장 김현진</td>
-						<td>승인완료</td>
-					</tr>
-					<tr>						
-						<td>2차 결재자</td>
-						<td>개발1팀 팀장 김현진</td>
-						<td>승인완료</td>
-					</tr>
-					<tr>						
-						<td>3차 결재자</td>
-						<td>개발1팀 팀장 김현진</td>
-						<td>승인완료</td>
+						<td><%=pmap2.get("sign_level").toString()%></td>
+						<td><%=pmap2.get("sign_level").toString()%></td>
+						<td><%=pmap2.get("sign_level").toString()%></td>
+						<td><%=pmap2.get("sign_level").toString()%></td>
+						<td><%=pmap2.get("sign_level").toString()%></td>
 					</tr>
 				</tbody>	
 			</table>
@@ -129,21 +156,37 @@
 		</main>
 	</div>
 </div>
-<!-- 결제창 -->
+<!-- 결재창 -->
 <script type="text/javascript">
 	//$("#approvalPlan").on("click", "btn_app", function(){
 	let appPlan2 = "";
+	let aprv_no = "";
 	//모달창 오픈
  	function openModal2(){
-		//alert("모달창 오픈");
 		$("#recievePlan").off("click").on('click',"tr", function(){
-        	$("#mod_appLine2").modal();
-		});
+			aprv_no = $(this).find("td:eq(0)").text();
+			alert(aprv_no);
+			$.ajax({
+				type:"post",
+				/* data:{"aprv_no":app_noTarget}, */
+				data:{"aprv_no":aprv_no},
+				url: "getApproverEmp.src1",
+				dataType:"json",
+			    	success:function(data){
+			        	$("#mod_appLine2").modal();
+			  	    },
+			        error:function(e){
+			        	let x = e.responseXML;
+			        	alert("fail ===> "+e)
+			        } 
+				});        	
+			});
 	}
 	 
 	function openPop2(){
 		$("#recievePlan").off("click").on('click',"tr", function(){
 			//alert( $(this).find("td:eq(1)").text() );
+			//alert(aprv_no);
 			appPlan2 = $(this).find("td:eq(2)").text();	
 			//alert(appPlan);
 			openPopup2(appPlan2);
@@ -152,7 +195,7 @@
     function openPopup2(appPlan2){
     //function openPopup(){
     	//alert("팝업");
-    	let url1 = "/myService/sendVacationPlan.jsp";
+    	let url1 = "getDetailSendApproval.src1";
     	let url2 = "/myService/sendProjectPlan.jsp";
     	//alert(appPlan);
     	if (appPlan2 == "휴가계획서") {
