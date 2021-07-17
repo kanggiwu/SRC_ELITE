@@ -125,7 +125,7 @@ let editEvent = function (event, element, view) {
 };
 
 // 삭제버튼
-$(document).off('click').on('click','#deleteEvent', function () {
+$('#deleteEvent').off('click').on('click', function () {
     
     $('#deleteEvent').unbind();
     
