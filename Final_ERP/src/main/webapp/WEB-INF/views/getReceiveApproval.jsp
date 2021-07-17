@@ -1,5 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>    
+<%
+	StringBuilder path = new StringBuilder(request.getContextPath());
+	path.append("/");
+	List<Map<String,Object>> getReceiveApproval = null;
+	getReceiveApproval = (List<Map<String,Object>>)request.getAttribute("getReceiveApproval");
+	int size = 0;
+	String aprvRead = null;
+	if(getReceiveApproval!=null){
+		size = getReceiveApproval.size();
+	}
+	out.print("size:"+size);
+%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +24,8 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"
   	  rel="stylesheet" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous" >
+</script>
 <link href="../common/main.css" rel="stylesheet" />
 <link href="../common/css/custom.css" rel="stylesheet" />
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
@@ -31,52 +45,60 @@ let title = "";
 				<h2>전자결재 수신함</h2></div>
 				<div id="page_contents" style="max-width: 1730px; margin: 10px 100px;">
 <!--================================= 컨텐츠 들어갈내용 시작===============================================-->
-		<table id="appSend" class="table table-hover">
+<table id="appSend" class="table table-hover">
 			<thead>
 				<tr style="background-color:lightgray">
-					<th style="width: 15%">결제번호</th>
+					<th style="width: 2%"></th>
+					<th style="width: 18%">결재번호</th>
 					<th style="width: 20%">작성일</th>
 					<th style="width: 25%">문서제목</th>
-					<th style="width: 20%">결재상태</th>
-					<th style="width: 10%">결재자조회</th>
-					<th style="width: 10%">결재</th>
+					<th style="width: 15%">결재상태</th>
+					<th style="width: 10%"></th>
+					<th style="width: 10%"></th>
 				</tr>
 			</thead>
 			<tbody class="sendBody" id="approvalPlan">
+			<%
+			//조회 결과가 없는 거야?
+			if(size==0){		
+			%>    
+			        <tr>
+			            <td colspan="7">조회결과가 없습니다.</td>
+			        </tr>
+			<%
+			}
+			else{//조회 결과가 있을 때
+				for(int i=0;i<size;i++){
+					Map<String,Object> pmap = getReceiveApproval.get(i);
+					if(i==size) break;
+					aprvRead = pmap.get("APRV_READ").toString();
+					//out.print("aprvRead:"+aprvRead);
+			%>   
 				<tr>
-					<td>12345</td>
-					<td>2021-06-21</td>
-					<td>휴가계획서</td>
-					<td>결재완료</td>
+			<%
+					if (aprvRead == "F") {
+			%>
+					<td>💌</td>
+			<%
+					}else { 
+			%>
+					<td>💌</td>
+			<%
+					}
+			%>
+					<td><%=pmap.get("APRV_NO").toString()%></td>
+					<td><%=pmap.get("APRV_DATE").toString()%></td>
+					<td><%=pmap.get("APRV_TITLE").toString()%></td>
+					<td><%=pmap.get("APRV_STATUS").toString()%></td>
 					<td><button type="button" class="btn btn-info btn-sm" id="btn_sel"
-						onclick="openModal()">조회</button></td>
+						onclick="openModal()">결재자조회</button></td>
 					<td><button type="button" class="btn btn-info btn-sm" name="btn_app"
-						onclick="openPop()">결재</button></td>
+						onclick="openPop()">결재문서조회</button></td>
 				</tr>
-				<tr>
-					<td>12346</td>
-					<td>2021-06-21</td>
-					<td>휴가계획서</td>
-					<td>결재완료</td>
-					<<td><button type="button" class="btn btn-info btn-sm" id="btn_sel"
-						onclick="openModal()">조회</button></td>
-					<td><button type="button" class="btn btn-info btn-sm" name="btn_app"
-						onclick="openPop()">결재</button></td>
-				</tr>
-				<tr>
-					<td>12347</td>
-					<td>2021-06-21</td>
-					<td>프로젝트 계약확정서</td>
-					<td>결재완료</td>
-					<!-- <td><button type="button" class="btn btn-info btn-sm" id="btn_sel"
-						data-dismiss="modal">조회</button></td> -->
- 					<td><button type="button" class="btn btn-info btn-sm" id="btn_sel"
-						onclick="openModal()">조회</button></td>
-					<!-- <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" name="btn_sel"
-						data-target="#mod_appLine">조회</button></td> -->
- 					<td><button type="button" class="btn btn-info btn-sm" name="btn_app"
-						onclick="openPop()">결재</button></td>
-				</tr>
+			<% 
+				}///end of for
+			} ///end of if
+			%>
 			</tbody>
 		</table>
 					
@@ -91,9 +113,11 @@ let title = "";
 			<table class="table table-hover" >
 				<thead>
 					<tr style="background-color:lightgray">						
-						<th style="width: 30%">결재자</th>
-						<th style="width: 40%">결재인</th>
-						<th style="width: 30%">결재상태</th>
+						<th style="width: 20%">결재순서</th>
+						<th style="width: 20%">부서</th>
+						<th style="width: 20%">직위</th>
+						<th style="width: 20%">사원명</th>
+						<th style="width: 20%">결재상태</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -102,17 +126,23 @@ let title = "";
 				 -->
 					<tr>						
 						<td>1차 결재자</td>
-						<td>개발1팀 팀장 김현진</td>
+						<td>개발1팀</td>
+						<td>팀장</td>
+						<td>김현진</td>
 						<td>승인완료</td>
 					</tr>
 					<tr>						
 						<td>2차 결재자</td>
-						<td>개발1팀 팀장 김현진</td>
+						<td>개발1팀</td>
+						<td>팀장</td>
+						<td>김현진</td>
 						<td>승인완료</td>
 					</tr>
 					<tr>						
 						<td>3차 결재자</td>
-						<td>개발1팀 팀장 김현진</td>
+						<td>개발1팀</td>
+						<td>팀장</td>
+						<td>김현진</td>
 						<td>승인완료</td>
 					</tr>
 				</tbody>	
@@ -134,7 +164,7 @@ let title = "";
 	</div>
 </div>
 
-<!-- 결제창 -->
+<!-- 결재창 -->
 <script type="text/javascript">
 	//$("#approvalPlan").on("click", "btn_app", function(){
 	let appPlan = "";
@@ -151,7 +181,7 @@ let title = "";
 		//$("#approvalPlan").on("click", "tr", function(){	
 		$("#approvalPlan").off("click").on('click',"tr", function(){
 			//alert( $(this).find("td:eq(1)").text() );
-			appPlan = $(this).find("td:eq(2)").text();	
+			appPlan = $(this).find("td:eq(3)").text();	
 			//alert(appPlan);
 			openPopup(appPlan);
 		});

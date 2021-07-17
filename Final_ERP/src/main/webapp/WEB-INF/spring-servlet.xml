@@ -111,6 +111,10 @@
 				<prop key="/approval/getDetailReceiveApproval.src1">approval-controller</prop>
 				<prop key="/approval/getNumUnsignedApproval.src1">approval-controller</prop>
 				<prop key="/approval/getLineApproval.src1">approval-controller</prop>
+				<!-- 결재자조회 getApproverEmp-->
+				<prop key="/approval/getApproverEmp.src1">approval-controller</prop>
+				<!-- 결재문서조회 getApproverEmp-->
+				<!-- <prop key="/approval/getDetailApproval.src1">approval-controller</prop> -->
 
 				<prop key="/projecthistory/getProjectHistoryList.src1">project-history-controller</prop>
 				<prop key="/projecthistory/getDetailProjectHistory.src1">project-history-controller</prop>
@@ -188,6 +192,11 @@
 				<prop key="/approval/getDetailReceiveApproval.src1">getDetailReceiveApproval</prop>
 				<prop key="/approval/getNumUnsignedApproval.src1">getNumUnsignedApproval</prop>
 				<prop key="/approval/getLineApproval.src1">getLineApproval</prop>
+				<!-- 결재자조회 getApproverEmp-->
+				<prop key="/approval/getApproverEmp.src1">getApproverEmp</prop>
+				<!-- 결재문서조회 getApproverEmp-->
+				<!-- <prop key="/approval/getDetailApproval.src1">getDetailApproval</prop> -->
+				
 
 				<prop key="/projecthistory/getProjectHistoryList.src1">getProjectHistoryList</prop>
 				<prop key="/projecthistory/getDetailProjectHistory.src1">getDetailProjectHistory</prop>
