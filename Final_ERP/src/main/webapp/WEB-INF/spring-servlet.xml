@@ -52,7 +52,6 @@
 				<prop key="/mypage/getMyInfo.src1">my-page-controller</prop>
 				<prop key="/mypage/updateMyInfo.src1">my-page-controller</prop>
 				<prop key="/mypage/getMySalary.src1">my-page-controller</prop>
-
 				<prop key="/mypage/getYearSalary.src1">my-page-controller</prop>
 				<prop key="/mypage/getRetirementPay.src1">my-page-controller</prop>
 
@@ -87,7 +86,6 @@
 				<prop key="/humanresource/getDetailEmployee.src1">human-resource-controller</prop>
 				<prop key="/humanresource/insertEmployee.src1">human-resource-controller</prop>
 				<prop key="/humanresource/updateEmployee.src1">human-resource-controller</prop>
-				
 				<prop key="/humanresource/getEmpSearchList.src1">human-resource-controller</prop>
 				<prop key="/humanresource/insertLIcenceInfo.src1">human-resource-controller</prop>
 				<prop key="/humanresource/deleteLIcenceInfo.src1">human-resource-controller</prop>
@@ -109,11 +107,8 @@
 				<prop key="/projecthistory/getProjectHistoryList.src1">project-history-controller</prop>
 				<prop key="/projecthistory/getDetailProjectHistory.src1">project-history-controller</prop>
 				<prop key="/projecthistory/insertProjectHistory.src1">project-history-controller</prop>
-				<!-- 인력추가 검색을 위한 것들 -->
 				<prop key="/projecthistory/getEmpSearchList2.src1">project-history-controller</prop>
-				<!-- 이력조회 검색을 위한 것들 -->
 				<prop key="/projecthistory/getProjectListProc.src1">project-history-controller</prop>
-				<!-- 프로젝트 추가 -->
 				<prop key="/projecthistory/updateProjectInfo.src1">project-history-controller</prop>
 			</props>
 		</property>
@@ -164,7 +159,6 @@
 				<prop key="/humanresource/getDetailEmployee.src1">getDetailEmployee</prop>
 				<prop key="/humanresource/insertEmployee.src1">insertEmployee</prop>
 				<prop key="/humanresource/updateEmployee.src1">updateEmployee</prop>
-				
 				<prop key="/humanresource/getEmpSearchList.src1">getEmpSearchList</prop>
 				<prop key="/humanresource/insertLIcenceInfo.src1">insertLIcenceInfo</prop>
 				<prop key="/humanresource/deleteLIcenceInfo.src1">deleteLIcenceInfo</prop>
@@ -187,13 +181,9 @@
 				<prop key="/projecthistory/getProjectHistoryList.src1">getProjectHistoryList</prop>
 				<prop key="/projecthistory/getDetailProjectHistory.src1">getDetailProjectHistory</prop>
 				<prop key="/projecthistory/insertProjectHistory.src1">insertProjectHistory</prop>				
-				<!-- 인력추가 검색을 위한 것들 -->
 				<prop key="/projecthistory/getEmpSearchList2.src1">getEmpSearchList2</prop>
-				<!-- 프로젝트 이력추가 업데이트 로직 -->
 				<prop key="/projecthistory/updateProjectHistory.src1">updateProjectHistory</prop>
-				<!-- 프로젝트 이력 조회 검색 -->
 				<prop key="/projecthistory/getProjectListProc.src1">getProjectListProc</prop>
-				<!-- 프로젝트 이력 추가 -->
 				<prop key="/projecthistory/updateProjectInfo.src1">updateProjectInfo</prop>
 				
 			</props>

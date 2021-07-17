@@ -91,7 +91,7 @@ List<Map<String, Object>> insertLicenceList = null;
 		let emp_pw = $('#emp_pw').val();
 		(async () => {	
 	 const { value: password } = await Swal.fire({
-		  title: '새 비밀번호를 다시 입력해주세요',
+		  title: '비밀번호를 다시 입력해주세요',
 		  input: 'password',
 		  confirmButtonColor: '#28a745',
 		  confirmButtonText: '확인',
