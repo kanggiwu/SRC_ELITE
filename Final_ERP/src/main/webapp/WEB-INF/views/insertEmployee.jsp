@@ -69,12 +69,12 @@ out.print(path);
 		const value = e.value;
 		console.log(value);
 		if (value != "20") {
-			$('#team_options').prop("disabled", true);
+			 $('#team_options').prop("disabled", true); 
 			$("#team_options").val("").prop("selected", true);
 		} else {
 			
-			$('#team_options').prop("disabled", false);
-			$("#team_options").val("1").prop("selected", true);
+			 $('#team_options').prop("disabled", false); 
+			$("#team_options").val(1).prop("selected", true);
 		}
 	}
 	// 콘텐츠 수정 :: 사진 수정 시 이미지 미리보기
@@ -213,13 +213,6 @@ out.print(path);
 													<br>
 													<div class="input-group">
 														<span class="input-group-addon" id="basic-addon1"
-															style="display: inline-block; width: 25%">연차</span> <input
-															type="text" class="form-control"
-															aria-describedby="basic-addon1">
-													</div>
-													<br>
-													<div class="input-group">
-														<span class="input-group-addon" id="basic-addon1"
 															style="display: inline-block; width: 25%">입사일자</span> <input
 															type="date" name="emp_hiredate" class="form-control"
 															aria-describedby="basic-addon1">
@@ -227,8 +220,10 @@ out.print(path);
 													<br>
 													<div class="input-group">
 														<span class="input-group-addon" id="basic-addon1"
-															style="display: inline-block; width: 25%">퇴사일자</span> <input
-															type="date" name="emp_retiredate" class="form-control"
+															style="display: inline-block; width: 25%">급여계좌</span> <input
+															type="text" class="form-control" placeholder="국민은행"
+															aria-describedby="basic-addon1" disabled> <input
+															type="text" name="emp_account" class="form-control"
 															aria-describedby="basic-addon1">
 													</div>
 												</div>
@@ -260,57 +255,9 @@ out.print(path);
 															<option value="2">퇴직</option>
 														</select>
 													</div>
-													<br>
-													<div class="input-group">
-														<span class="input-group-addon" id="basic-addon1"
-															style="display: inline-block; width: 25%">급여계좌</span> <input
-															type="text" class="form-control" placeholder="국민은행"
-															aria-describedby="basic-addon1" disabled> <input
-															type="text" name="emp_account" class="form-control"
-															aria-describedby="basic-addon1">
-													</div>
 												</div>
 											</div>
 											</div>
-											<div class="col-lg-12">
-													<div class="input-group">
-													<span class="input-group-addon" id="basic-addon1"
-															style="display: inline-block; width: 33%">
-													<h5>보유 자격증</h5>
-													</span>
-													<select	class="form-control"  id="licence-select">
-															<option selected disabled>선택</option>
-															<option value=1>정보처리산업기사</option>
-															<option value=2>정보처리기사</option>
-															<option value=3>정보보안산업기사</option>
-															<option value=4>정보보안기사</option>
-															<option value=5>리눅스마스터1급</option>
-															<option value=6>리눅스마스터2급</option>
-															<option value=7>데이터분석준전문가</option>
-															<option value=8>데이터분석가</option>
-															<option value=9>네트워크관리사2급</option>
-															<option value=10>네트워크관리사1급</option>
-															<option value=11>OCA</option>
-															<option value=12>OCM</option>
-														</select>
-														<button class="btn btn-light" type="button" onclick="add_row()">추가</button>
-														<button class="btn btn-light" type="button" onclick="delete_row()">삭제</button>
-													</div>													
-									
-										<table class="table table-bordered table-hover" id="testTable"
-											id="table" data-toggle="table" data-height="650"
-											data-search="true" data-show-columns="true"
-											data-method="post" data-pagination="true"
-											data-url="./member.json">
-											<thead>
-												<tr>
-													<th><h6>이름</h6></th>
-												</tr>
-											</thead>
-											<tbody id="licence-tbody">
-											</tbody>
-									</table>
-								</div>
 									</form>
 							</fieldset>			
 							</div>
