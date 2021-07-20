@@ -126,7 +126,7 @@ out.print("size:" + size);
 									</tr>
 									<tr>
 										<%-- 										<td><%=pmap.get("PROJECT_PERIOD").toString()%></td> --%>
-										<td>순수익</td>
+										<td>합계</td>
 										<td>100</td>
 										<td>100</td>
 										<td>100</td>

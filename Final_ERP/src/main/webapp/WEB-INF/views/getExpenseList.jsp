@@ -164,7 +164,7 @@ $setRows.submit();
 
 						<!-- -----------------------------------검색부분---------------------------------- -->
 						<div
-							style="text-align: left; padding: 5px; display: inline-block; width: 60%;">
+							style="text-align: left; padding: 5px; display: inline-block; width: 50%;">
 							<form id="expense_search" method="post"
 								action="getExpenseList.src1">
 								<span class="input-group"> <select
@@ -176,31 +176,20 @@ $setRows.submit();
 										<option value="전체">월</option>
 										<%
 										int month = 12;
-										int day = 31;
 										for (int i = 1; i <= month; i++) {
 										%>
 										<option value="<%=i%>"><%=i%></option>
 										<%
 										} //end of for
 										%>
-								</select> <select name="expense_date_day" class="form-control"
-									id="rank_options">
-										<option value="전체">일</option>
-										<%
-										for (int i = 1; i <= day; i++) {
-										%>
-										<option value="<%=i%>"><%=i%></option>
-										<%
-										} //end of for
-										%>
-								</select> <a href="javascript:expenseSearchAction()"
+								</select>  <a href="javascript:expenseSearchAction()"
 									class="btn btn-default float-left" role="button"><i
 										class="fas fa-search"></i></a>
 								</span>
 							</form>
 						</div>
 						<div
-							style="text-align: right; padding: 5px; display: inline-block; width: 39%">
+							style="text-align: right; padding: 5px; display: inline-block; width: 49%">
 							<button type="button" class="btn btn-info" data-toggle="modal"
 								data-target="#mod_addEmp">지출 추가</button>
 						</div>

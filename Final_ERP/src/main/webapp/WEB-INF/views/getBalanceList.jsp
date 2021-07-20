@@ -29,55 +29,52 @@ out.print("size:" + size);
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js"
 	crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>	
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
 <link href="../common/main.css" rel="stylesheet" />
 <link href="../common/css/custom.css" rel="stylesheet" />
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 <script type="text/javascript">
-google.charts.load('current', {'packages':['line']});
-      google.charts.setOnLoadCallback(drawChart);
+	google.charts.load('current', {
+		'packages' : [ 'line' ]
+	});
+	google.charts.setOnLoadCallback(drawChart);
 
-    function drawChart() {
+	function drawChart() {
 
-      var data = new google.visualization.DataTable();
-      data.addColumn('number', 'Month');
-      data.addColumn('number', '수익금');
-      data.addColumn('number', '지출금');
-      data.addColumn('number', '순수익');
+		var data = new google.visualization.DataTable();
+		data.addColumn('number', 'Month');
+		data.addColumn('number', '수익금');
+		data.addColumn('number', '지출금');
+		data.addColumn('number', '순수익');
 
-      data.addRows([
-        [1,  37.8, 80.8, 41.8],
-        [2,  30.9, 69.5, 32.4],
-        [3,  25.4,   57, 25.7],
-        [4,  11.7, 18.8, 10.5],
-        [5,  11.9, 17.6, 10.4],
-        [6,   8.8, 13.6,  7.7],
-        [7,   7.6, 12.3,  9.6],
-        [8,  12.3, 29.2, 10.6],
-        [9,  16.9, 42.9, 14.8],
-        [10, 12.8, 30.9, 11.6],
-        [11,  5.3,  7.9,  4.7],
-        [12,  4.2,  6.2,  3.4]
-      ]);
+		data.addRows([ [ 1, 37.8, 80.8, 41.8 ], [ 2, 30.9, 69.5, 32.4 ],
+				[ 3, 25.4, 57, 25.7 ], [ 4, 11.7, 18.8, 10.5 ],
+				[ 5, 11.9, 17.6, 10.4 ], [ 6, 8.8, 13.6, 7.7 ],
+				[ 7, 7.6, 12.3, 9.6 ], [ 8, 12.3, 29.2, 10.6 ],
+				[ 9, 16.9, 42.9, 14.8 ], [ 10, 12.8, 30.9, 11.6 ],
+				[ 11, 5.3, 7.9, 4.7 ], [ 12, 4.2, 6.2, 3.4 ] ]);
 
-      var options = {
-        chart: {
-          title: 'SourceELITE 연별 손익 그래프',
-          subtitle: 'in millions of Won (KRW)'
-        },
-        width: 900,
-        height: 500,
-        axes: {
-          x: {
-            0: {side: 'bottom'}
-          }
-        }
-      };
+		var options = {
+			chart : {
+				title : 'SourceELITE 연별 손익 그래프',
+				subtitle : 'in millions of Won (KRW)'
+			},
+			width : 900,
+			height : 500,
+			axes : {
+				x : {
+					0 : {
+						side : 'bottom'
+					}
+				}
+			}
+		};
 
-      var chart = new google.charts.Line(document.getElementById('lineChart'));
+		var chart = new google.charts.Line(document.getElementById('lineChart'));
 
-      chart.draw(data, google.charts.Line.convertOptions(options));
-    }
+		chart.draw(data, google.charts.Line.convertOptions(options));
+	}
 </script>
 <title>Account</title>
 </head>
@@ -107,19 +104,19 @@ google.charts.load('current', {'packages':['line']});
 						<!-- -----------------------------------검색부분---------------------------------- -->
 						<form id="myform" class="form-horizontal" role="form">
 							<div
-								style="text-align: left; padding: 5px; display: inline-block; width: 60%;">
-								<span class="input-group"> <input type="date"
-									class="form-control" id="date_period_first">&nbsp; ~
-									&nbsp; <input type="date" class="form-control"
-									id="date_period_last">&nbsp; <a
-									href="javascript:empSearchAction()"
+								style="text-align: left; padding: 5px; display: inline-block; width: 40%;">
+								<span class="input-group"> <select
+									name="expense_date_year" class="form-control" id="dept_options">
+										<option value="전체">년</option>
+										<option value=2021>2021</option>
+								</select> <a href="javascript:empSearchAction()"
 									class="btn btn-default float-left" role="button"><i
 										class="fas fa-search"></i></a>
 								</span>
 
 							</div>
 							<div
-								style="text-align: right; padding: 5px; display: inline-block; width: 39%">
+								style="text-align: right; padding: 5px; display: inline-block; width: 59%">
 							</div>
 						</form>
 						<!-- -----------------------------------검색부분 끝----------------------------------- -->
@@ -141,7 +138,7 @@ google.charts.load('current', {'packages':['line']});
 									if (size == 0) {
 									%>
 									<tr>
-										<td colspan="3">조회결과가 없습니다.</td>
+										<td colspan="2">조회결과가 없습니다.</td>
 									</tr>
 									<%
 									} else {//조회 결과가 있을 때
@@ -155,7 +152,6 @@ google.charts.load('current', {'packages':['line']});
 			===============DB에서 데이터 가져와서 뿌려주기======================
 			 -->
 									<tr>
-										<%-- 										<td><%=pmap.get("PROJECT_PERIOD").toString()%></td> --%>
 										<td>수익금</td>
 										<td>100</td>
 										<td>100</td>
@@ -163,7 +159,6 @@ google.charts.load('current', {'packages':['line']});
 										<td>100</td>
 									</tr>
 									<tr>
-										<%-- 										<td><%=pmap.get("PROJECT_PERIOD").toString()%></td> --%>
 										<td>지출금</td>
 										<td>100</td>
 										<td>100</td>
@@ -171,7 +166,6 @@ google.charts.load('current', {'packages':['line']});
 										<td>100</td>
 									</tr>
 									<tr>
-										<%-- 										<td><%=pmap.get("PROJECT_PERIOD").toString()%></td> --%>
 										<td>순수익</td>
 										<td>100</td>
 										<td>100</td>
