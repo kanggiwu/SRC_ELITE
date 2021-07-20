@@ -79,7 +79,8 @@
 				<prop key="/account/getExpenseList.src1">account-controller</prop>
 				<prop key="/account/updateExpense.src1">account-controller</prop>
 				<prop key="/account/insertExpense.src1">account-controller</prop>
-				<prop key="/account/getBalanceLIst.src1">account-controller</prop>
+				<prop key="/account/getBalanceList.src1">account-controller</prop>
+				<prop key="/account/getMonthStatement.src1">account-controller</prop>
 
 				<prop key="/humanresource/getOrganizationChart.src1">human-resource-controller</prop>
 				<prop key="/humanresource/updateOrganizationChart.src1">human-resource-controller</prop>
@@ -156,7 +157,8 @@
 				<prop key="/account/getExpenseList.src1">getExpenseList</prop>
 				<prop key="/account/updateExpense.src1">updateExpense</prop>
 				<prop key="/account/insertExpense.src1">insertExpense</prop>
-				<prop key="/account/getBalanceLIst.src1">getBalanceLIst</prop>
+				<prop key="/account/getBalanceList.src1">getBalanceList</prop>
+				<prop key="/account/getMonthStatement.src1">getMonthStatement</prop>
 
 				<prop key="/humanresource/getOrganizationChart.src1">getOrganizationChart</prop>
 				<prop key="/humanresource/updateOrganizationChart.src1">updateOrganizationChart</prop>

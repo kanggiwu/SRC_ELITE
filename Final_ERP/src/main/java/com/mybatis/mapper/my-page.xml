@@ -40,7 +40,7 @@
     
 	<!-- 급여 출력 프로시저-->
 	<select id="getMySalaryProc" statementType="CALLABLE" parameterType="map">
-		{call PROC_SET_TOTAL_SALARY(        
+		{call PROC_GET_SALARY(        
           #{login_no, mode=IN, jdbcType=NUMERIC},
           #{sal_date, mode=IN, jdbcType=VARCHAR},
           #{sal_cursor, mode=OUT, jdbcType=CURSOR, resultMap=salaryMap}

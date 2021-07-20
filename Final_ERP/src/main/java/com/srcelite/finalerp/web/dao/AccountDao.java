@@ -96,6 +96,16 @@ public class AccountDao {
 		return balanceList;
 	}
 	// 연말 결산
-	public List<Map<String,Object>> getMonthStatement(Map<String,Object> pmap) {List<Map<String,Object>> list = null; return list;}
+	public List<Map<String,Object>> getMonthStatement(Map<String,Object> pmap) {
+		logger.info("Dao getMonthStatement 호출:" + pmap);
+		List<Map<String, Object>> monthStatement = null;
+		sqlSessionTemplate.selectList("getMonthStateProc", pmap);
+		monthStatement = (List<Map<String, Object>>) pmap.get("profit_cursor");
+		monthStatement.add((Map<String, Object>) pmap.get("profit_sum"));
+		monthStatement.add((Map<String, Object>) pmap.get("expense_cursor"));
+		monthStatement.add((Map<String, Object>) pmap.get("expense_sum"));
+		monthStatement.add((Map<String, Object>) pmap.get("total"));
+		return monthStatement;
+	}
 	
 }
