@@ -4,12 +4,12 @@
 <%
 StringBuilder path = new StringBuilder(request.getContextPath());
 path.append("/");
-List<Map<String, Object>> profitList = null;
-profitList = (List<Map<String, Object>>) request.getAttribute("profitList");
-int size = 1;
+List<Map<String, Object>> expenseList = null;
+expenseList = (List<Map<String, Object>>) request.getAttribute("expenseList");
+int size = 0;
 String pProjectNo = null;
-if (profitList != null) {
-	size = profitList.size();
+if (expenseList != null) {
+	size = expenseList.size();
 }
 out.print("size:" + size);
 %>
@@ -31,6 +31,7 @@ out.print("size:" + size);
 	crossorigin="anonymous"></script>
 <link href="../common/main.css" rel="stylesheet" />
 <link href="../common/css/custom.css" rel="stylesheet" />
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 
 <!--페이징 처리   =================================================================================-->
@@ -106,6 +107,40 @@ $setRows.submit(function (e) {
 
 $setRows.submit();
   });
+  // 지출 수정창 값 불러오기
+   function updExpense(e){
+	  console.log($(e).closest('td').attr('id'));
+	  console.log($(e).parents('td').attr('id'));
+	  console.log($(e).closest('tr').attr('id'));
+	  console.log($(e).parents('tr').attr('id'));
+	  console.log($('#'+ expense_no).attr('id'));
+	  var expense_no = ($(e).parents('tr').attr('id'));
+	  var expense_type = $(e).closest('td').prevAll("#expense_type").attr('value')
+	  var expense_price = $(e).closest('td').prevAll("#expense_price").attr('value')
+	  var dept_no = $(e).closest('td').prevAll("#dept_no").attr('value')
+	  var expense_detail = $(e).closest('td').prevAll("#expense_detail").attr('value')
+	  var expense_date = $(e).closest('td').prevAll("#expense_date").attr('value')
+	$('#upd_expense_type').val(expense_type);
+	$('#upd_expense_price').val(expense_price);
+	$('#upd_dept_no').val(dept_no);
+	$('#upd_expense_detail').val(expense_detail);
+	$('#upd_expense_date').val(expense_date);
+	$('#upd_expense_no').val(expense_no);
+  } 
+  // 지출 추가 
+   function insertExpense() {
+		Swal.fire({
+			  title: '추가 되었습니다!',
+			  confirmButtonColor: '#17a2b8'})
+			setTimeout(() => $('#expense_insert').submit() , 1500);
+   }
+  // 지출 수정
+   function updateExpense() {
+		Swal.fire({
+			  title: '수정 되었습니다!',
+			  confirmButtonColor: '#17a2b8'})
+			setTimeout(() => $('#expense_update').submit() , 1500);
+   }
 </script>
 
 <title>Account - ERP PROGRAM</title>
@@ -126,29 +161,39 @@ $setRows.submit();
 						<!--
 ******************************************* 컨텐츠 들어갈내용 시작************************************************
 -->
-						<script type="text/javascript">
-document.getElementById('my_form').onsubmit = function(){
-	  var dat_period = this.dat_period.value
-	  alert(dat_period);
-	}
-</script>
 
 						<!-- -----------------------------------검색부분---------------------------------- -->
 						<div
 							style="text-align: left; padding: 5px; display: inline-block; width: 60%;">
-							<form id="emp_search" method="post" enctype="multipart/form-data"
-								action="getEmpSearchList.src1">
-								<span class="input-group"> <select name="dept_name"
-									class="form-control" id="dept_options">
+							<form id="expense_search" method="post"
+								action="getExpenseList.src1">
+								<span class="input-group"> <select
+									name="expense_date_year" class="form-control" id="dept_options">
 										<option value="전체">년</option>
 										<option value=2021>2021</option>
-								</select> <select name="rank_name" class="form-control" id="rank_options">
+								</select> <select name="expense_date_month" class="form-control"
+									id="rank_options">
 										<option value="전체">월</option>
-										<option value="1">1</option>
-								</select> <select name="rank_name" class="form-control" id="rank_options">
+										<%
+										int month = 12;
+										int day = 31;
+										for (int i = 1; i <= month; i++) {
+										%>
+										<option value="<%=i%>"><%=i%></option>
+										<%
+										} //end of for
+										%>
+								</select> <select name="expense_date_day" class="form-control"
+									id="rank_options">
 										<option value="전체">일</option>
-										<option value="1">1</option>
-								</select> <a href="javascript:empSearchAction()"
+										<%
+										for (int i = 1; i <= day; i++) {
+										%>
+										<option value="<%=i%>"><%=i%></option>
+										<%
+										} //end of for
+										%>
+								</select> <a href="javascript:expenseSearchAction()"
 									class="btn btn-default float-left" role="button"><i
 										class="fas fa-search"></i></a>
 								</span>
@@ -169,11 +214,11 @@ document.getElementById('my_form').onsubmit = function(){
 								</form>
 								<thead>
 									<tr class="thead-dark">
-										<th style="width: 14%">분류</th>
-										<th style="width: 16%">금액</th>
+										<th style="width: 18%">분류</th>
+										<th style="width: 15%">부서</th>
+										<th style="width: 20%">금액</th>
 										<th style="width: 20%">내용</th>
-										<th style="width: 20%">지출일자</th>
-										<th style="width: 18%">지출처</th>
+										<th style="width: 17%">지출일자</th>
 										<th style="width: 10%">수정</th>
 									</tr>
 								</thead>
@@ -183,28 +228,68 @@ document.getElementById('my_form').onsubmit = function(){
 									if (size == 0) {
 									%>
 									<tr>
-										<td colspan="6">조회결과가 없습니다.</td>
+										<td colspan="7">조회결과가 없습니다.</td>
 									</tr>
 									<%
 									} else {//조회 결과가 있을 때
 									for (int i = 0; i < size; i++) {
-										//Map<String, Object> pmap = profitList.get(i);
+										Map<String, Object> rmap = expenseList.get(i);
 										if (i == size)
 											break;
-										//pProjectNo = pmap.get("PROJECT_NO").toString();
+
+										String dept_name = null;
+										String expense_type_name = null;
+										switch (rmap.get("DEPT_NO").toString()) {
+										case "20":
+											dept_name = "개발부";
+											break;
+										case "30":
+											dept_name = "인사부";
+											break;
+										case "40":
+											dept_name = "회계부";
+											break;
+										case "10":
+											dept_name = "임원";
+											break;
+										}
+										switch (rmap.get("EXPENSE_TYPE").toString()) {
+										case "1":
+											expense_type_name = "인건비";
+											break;
+										case "2":
+											expense_type_name = "교육훈련비";
+											break;
+										case "3":
+											expense_type_name = "임차료";
+											break;
+										case "4":
+											expense_type_name = "통신비";
+											break;
+										case "5":
+											expense_type_name = "수도광열비";
+											break;
+										case "6":
+											expense_type_name = "소모품비";
+											break;
+										case "7":
+											expense_type_name = "기타";
+											break;
+										}
 									%>
 									<!-- 
 			===============DB에서 데이터 가져와서 뿌려주기======================
 			 -->
-									<tr>
-										<%-- <td><%=pmap.get("PROJECT_PERIOD").toString()%></td> --%>
-										<td>소모품</td>
-										<td>백만</td>
-										<td>사무용품</td>
-										<td>2021-07-21</td>
-										<td>모닝글로리</td>
-										<td><button type="button" class="btn btn-warning"
-												data-toggle="modal" data-target="#mod_updEmp">
+									<tr id="<%=rmap.get("EXPENSE_NO")%>">
+										<td id="expense_type" value="<%=rmap.get("EXPENSE_TYPE")%>"><%=expense_type_name%></td>
+										<td id="dept_no" value="<%=rmap.get("DEPT_NO")%>"><%=dept_name%></td>
+										<td id="expense_price" value="<%=rmap.get("EXPENSE_PRICE")%>"><%=rmap.get("EXPENSE_PRICE")%></td>
+										<td id="expense_detail"
+											value="<%=rmap.get("EXPENSE_DETAIL")%>"><%=rmap.get("EXPENSE_DETAIL")%></td>
+										<td id="expense_date" value="<%=rmap.get("EXPENSE_DATE")%>"><%=rmap.get("EXPENSE_DATE")%></td>
+										<td id="asdaq"><button type="button"
+												class="btn btn-warning" id="adsad" data-toggle="modal"
+												data-target="#mod_updEmp" onclick="updExpense(this)">
 												<i class="fas fa-edit"></i>
 											</button></td>
 									</tr>
@@ -221,58 +306,66 @@ document.getElementById('my_form').onsubmit = function(){
 							role="dialog" aria-labelledby="myModalLabel">
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
-									<div class="modal-header">
-										<h4 class="modal-title" id="myModalLabel">지출추가</h4>
-									</div>
-									<div class="modal-body">
-										<form class="form-horizontal" role="form">
+									<form id="expense_insert" method="post"
+										action="insertExpense.src1">
+										<div class="modal-header">
+											<h4 class="modal-title" id="myModalLabel">지출추가</h4>
+										</div>
+										<div class="modal-body">
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">분류</span> <select
-													name="dept_name" class="form-control" id="dept_options">
-													<option value="소모품">소모품</option>
-													<option value="인건비">인건비</option>
-													<option value="통신비">통신비</option>
-													<option value="임차료">임차료</option>
+													name="expense_type" class="form-control" id="dept_options">
+													<option value="1">인건비</option>
+													<option value="2">교육훈련비</option>
+													<option value="3">임차료</option>
+													<option value="4">통신비</option>
+													<option value="5">수도광열비</option>
+													<option value="6">소모품비</option>
+													<option value="7">기타</option>
+												</select>
+											</div>
+											<br>
+											<div class="input-group">
+												<span class="input-group-addon" id="basic-addon1"
+													style="display: inline-block; width: 25%">부서</span> <select
+													name="dept_no" class="form-control">
+													<option value="20">개발부</option>
+													<option value="10">임원</option>
+													<option value="30">인사부</option>
+													<option value="40">회계부</option>
 												</select>
 											</div>
 											<br>
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">금액</span> <input
-													type="text" name="emp_retiretext" class="form-control"
+													type="text" name="expense_price" class="form-control"
 													value="" aria-describedby="basic-addon1">
 											</div>
 											<br>
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">내용</span> <input
-													type="text" name="emp_retiretext" class="form-control"
+													type="text" name="expense_detail" class="form-control"
 													value="" aria-describedby="basic-addon1">
 											</div>
 											<br>
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">지출일자</span> <input
-													type="date" name="emp_retiretext" class="form-control"
+													type="date" name="expense_date" class="form-control"
 													value="" aria-describedby="basic-addon1">
 											</div>
 											<br>
-											<div class="input-group">
-												<span class="input-group-addon" id="basic-addon1"
-													style="display: inline-block; width: 25%">수주처</span> <input
-													type="text" name="emp_retiretext" class="form-control"
-													value="" aria-describedby="basic-addon1" placeholder="해당없음">
-											</div>
-
-											<br>
-										</form>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-info">추가</button>
-										<button type="button" class="btn btn-danger"
-											data-dismiss="modal">닫기</button>
-									</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-info"
+												onclick="insertExpense()">추가</button>
+											<button type="button" class="btn btn-danger"
+												data-dismiss="modal">닫기</button>
+										</div>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -283,60 +376,74 @@ document.getElementById('my_form').onsubmit = function(){
 					<div class="modal fade" id="mod_updEmp" tabindex="-1" role="dialog"
 						aria-labelledby="myModalLabel">
 						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h4 class="modal-title" id="myModalLabel">지출수정</h4>
+							<form id="expense_update" method="post"
+								action="updateExpense.src1">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title" id="myModalLabel">지출수정</h4>
+									</div>
+									<div class="modal-body">
+										<div class="input-group">
+											<span class="input-group-addon"
+												style="display: inline-block; width: 25%">분류</span> <select
+												name="expense_type" class="form-control"
+												id="upd_expense_type">
+												<option value="1">인건비</option>
+												<option value="2">교육훈련비</option>
+												<option value="3">임차료</option>
+												<option value="4">통신비</option>
+												<option value="5">수도광열비</option>
+												<option value="6">소모품비</option>
+												<option value="7">기타</option>
+											</select>
+										</div>
+										<br>
+										<div class="input-group">
+											<span class="input-group-addon" id="basic-addon1"
+												style="display: inline-block; width: 25%">부서</span> <select
+												name="dept_no" class="form-control" id="upd_dept_no">
+												<option value="20">개발부</option>
+												<option value="10">임원</option>
+												<option value="30">인사부</option>
+												<option value="40">회계부</option>
+											</select>
+										</div>
+										<br>
+										<div class="input-group">
+											<span class="input-group-addon"
+												style="display: inline-block; width: 25%">금액</span> <input
+												type="text" name="expense_price" class="form-control"
+												value="" aria-describedby="basic-addon1"
+												id="upd_expense_price">
+										</div>
+										<br>
+										<div class="input-group">
+											<span class="input-group-addon" id="basic-addon1"
+												style="display: inline-block; width: 25%">내용</span> <input
+												type="text" name="expense_detail" class="form-control"
+												value="" aria-describedby="basic-addon1"
+												id="upd_expense_detail">
+										</div>
+										<br>
+										<div class="input-group">
+											<span class="input-group-addon" id="basic-addon1"
+												style="display: inline-block; width: 25%">지출일자</span> <input
+												type="date" name="expense_date" class="form-control"
+												value="" aria-describedby="basic-addon1"
+												id="upd_expense_date">
+										</div>
+										<input type="text" name="expense_no" class="form-control"
+											value="" aria-describedby="basic-addon1"
+											id="upd_expense_no" hidden> <br>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-warning"
+											onclick="updateExpense()">수정</button>
+										<button type="button" class="btn btn-danger"
+											data-dismiss="modal">닫기</button>
+									</div>
 								</div>
-								<div class="modal-body">
-									<form class="form-horizontal" role="form">
-											<div class="input-group">
-												<span class="input-group-addon" id="basic-addon1"
-													style="display: inline-block; width: 25%">분류</span> <select
-													name="dept_name" class="form-control" id="dept_options">
-													<option value="소모품">소모품</option>
-													<option value="인건비">인건비</option>
-													<option value="통신비">통신비</option>
-													<option value="임차료">임차료</option>
-												</select>
-											</div>
-											<br>
-											<div class="input-group">
-												<span class="input-group-addon" id="basic-addon1"
-													style="display: inline-block; width: 25%">금액</span> <input
-													type="text" name="emp_retiretext" class="form-control"
-													value="" aria-describedby="basic-addon1">
-											</div>
-											<br>
-											<div class="input-group">
-												<span class="input-group-addon" id="basic-addon1"
-													style="display: inline-block; width: 25%">내용</span> <input
-													type="text" name="emp_retiretext" class="form-control"
-													value="" aria-describedby="basic-addon1">
-											</div>
-											<br>
-											<div class="input-group">
-												<span class="input-group-addon" id="basic-addon1"
-													style="display: inline-block; width: 25%">지출일자</span> <input
-													type="date" name="emp_retiretext" class="form-control"
-													value="" aria-describedby="basic-addon1">
-											</div>
-											<br>
-											<div class="input-group">
-												<span class="input-group-addon" id="basic-addon1"
-													style="display: inline-block; width: 25%">수주처</span> <input
-													type="text" name="emp_retiretext" class="form-control"
-													value="" aria-describedby="basic-addon1" placeholder="해당없음">
-											</div>
-
-											<br>
-										</form>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-warning">수정</button>
-									<button type="button" class="btn btn-danger"
-										data-dismiss="modal">닫기</button>
-								</div>
-							</div>
+							</form>
 						</div>
 					</div>
 				</div>

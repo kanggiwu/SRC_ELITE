@@ -36,6 +36,12 @@ public class ScheduleController extends MultiActionController {
 	 * <prop key="/schedule/updateDateSchedule.src1">schedule-controller</prop>
 	 * <prop key="/schedule/deleteSchedule.src1">deleteSchedule</prop>
 	 */
+	public ModelAndView empSchedule(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		logger.info("empSchedule");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("empSchedule");
+		return mav;
+	}
 	public ModelAndView getCalendarSchedule(HttpServletRequest request, HttpServletResponse response) {
 		HashMapBinder hmb = new HashMapBinder(request);
 		

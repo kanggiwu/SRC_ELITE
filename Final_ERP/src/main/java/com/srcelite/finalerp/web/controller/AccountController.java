@@ -22,15 +22,29 @@ public class AccountController extends MultiActionController {
 		this.accountLogic = accountLogic;
 	}
 
-	// 급여 정보 변경
-	public void updateSalary(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	// 급여 정산 조회
+	public ModelAndView getAccountInfo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info("getAccountInfo호출 성공");
+		HashMapBinder hmb = new  HashMapBinder(request);
+		Map<String, Object> target = new HashMap<>();
+		hmb.bind(target);
+		List<Map<String, Object>> accountList = null;
+//		accountList = accountLogic.getAccount(target);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("getAccountInfo");
+//		mav.addObject("accountList", accountList);
+		return mav;
+	}
+	
+	// 급여 정산 변경
+	public void updateAccount(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("updateAccountInfo호출 성공");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String, Object> pmap = new HashMap<>();
 		hmb.bind(pmap);
 		logger.info("pmap: "+pmap);
 		int result = 0;
-		result = accountLogic.updateSalary(pmap);
+		result = accountLogic.updateAccount(pmap);
 		logger.info("ctrl result : " + result);
 		if(result == 1) {
 			response.sendRedirect("");
@@ -40,14 +54,14 @@ public class AccountController extends MultiActionController {
 		}
 	}
 	
-	// 급여 정보 추가
-	public void insertSalary(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		logger.info("insertMonthSalary호출 성공");
+	// 급여 정산 추가
+	public void insertAccount(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info("insertMonthAccount호출 성공");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String,Object> pmap = new HashMap<>();
 		hmb.bind(pmap);
 		int result = 0;
-		result = accountLogic.insertSalary(pmap);
+		result = accountLogic.insertAccount(pmap);
 		if(result == 1) {
 			response.sendRedirect("");
 		}
@@ -55,9 +69,6 @@ public class AccountController extends MultiActionController {
 			response.sendRedirect("");
 		}
 	}
-	
-	
-
 	
 	// 수익 관리 조회
 	public ModelAndView getProfitList (HttpServletRequest request, HttpServletResponse response) {
@@ -132,7 +143,7 @@ public class AccountController extends MultiActionController {
 		result = accountLogic.updateExpense(pmap);
 		logger.info("ctrl result : " + result);
 		if(result == 1) {
-			response.sendRedirect("");
+			response.sendRedirect("getExpenseList.src1");
 		}
 		else {
 			response.sendRedirect("");
@@ -148,7 +159,7 @@ public class AccountController extends MultiActionController {
 		int result = 0;
 		result = accountLogic.insertExpense(pmap);
 		if(result == 1) {
-			response.sendRedirect("");
+			response.sendRedirect("getExpenseList.src1");
 		}
 		else {
 			response.sendRedirect("");
@@ -163,23 +174,23 @@ public class AccountController extends MultiActionController {
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
 		List<Map<String, Object>> balanceList = null;
-		balanceList = accountLogic.getBalanceList(target);
+//		balanceList = accountLogic.getBalanceList(target);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("getBalanceList");
-		mav.addObject("balanceList", balanceList);
+//		mav.addObject("balanceList", balanceList);
 		return mav;
 	}
 	//월말결산
-	public ModelAndView getMonthStatement(HttpServletRequest request, HttpServletResponse response) {
-		logger.info("getMonthStatement 호출");
+	public ModelAndView getMonthlyAccount(HttpServletRequest request, HttpServletResponse response) {
+		logger.info("getMonthAccount 호출");
 		HashMapBinder hmb = new  HashMapBinder(request);
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
 		List<Map<String, Object>> balanceList = null;
-		balanceList = accountLogic.getBalanceList(target);
+//		balanceList = accountLogic.getBalanceList(target);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("getMonthStatement");
-		mav.addObject("balanceList", balanceList);
+		mav.setViewName("getMonthlyAccount");
+//		mav.addObject("balanceList", balanceList);
 		return mav;
 	}
 

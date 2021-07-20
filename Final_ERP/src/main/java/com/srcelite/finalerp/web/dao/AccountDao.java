@@ -15,20 +15,28 @@ public class AccountDao {
 	}
 	
 	
-	// 급여 정보 변경
-	public int updateSalary(Map<String,Object> pmap){
-		logger.info("DAO updateSalary 호출:" + pmap);
+	// 급여 정산 조회
+	public List<Map<String,Object>> getAccount(Map<String,Object> pmap) {
+		logger.info("Dao getAccountList 호출:" + pmap);
+		List<Map<String, Object>> accountList = null;
+		accountList = sqlSessionTemplate.selectList("getaccountList",pmap);
+		return accountList;
+	}
+	
+	// 급여 정산 변경
+	public int updateAccount(Map<String,Object> pmap){
+		logger.info("DAO updateAccount 호출:" + pmap);
 		int result = 0;
-		result = sqlSessionTemplate.update("updateSalary",pmap);
+		result = sqlSessionTemplate.update("updateAccount",pmap);
 		logger.info("result:"+result);
 		return result;
 	}
 	
-	// 급여 정보 추가
-	public int insertSalary(Map<String,Object> pmap){
-		logger.info("DAO insertSalary 호출:" + pmap);
+	// 급여 정산 추가
+	public int insertAccount(Map<String,Object> pmap){
+		logger.info("DAO insertAccount 호출:" + pmap);
 		int result = 0;
-		result = sqlSessionTemplate.insert("insertSalary",pmap);
+		result = sqlSessionTemplate.insert("insertAccount",pmap);
 		logger.info("result:"+result);
 		return result;
 	}
@@ -96,6 +104,6 @@ public class AccountDao {
 		return balanceList;
 	}
 	// 연말 결산
-	public List<Map<String,Object>> getMonthStatement(Map<String,Object> pmap) {List<Map<String,Object>> list = null; return list;}
+	public List<Map<String,Object>> getMonthAccount(Map<String,Object> pmap) {List<Map<String,Object>> list = null; return list;}
 	
 }
