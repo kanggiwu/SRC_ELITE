@@ -66,6 +66,7 @@
 				<prop key="/notice/deleteNotice.src1">notice-controller</prop>
 
 				<prop key="/schedule/getCalendarSchedule.src1">schedule-controller</prop>
+				<prop key="/schedule/getJsonSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/insertSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/updateSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/updateDateSchedule.src1">schedule-controller</prop>
@@ -140,9 +141,8 @@
 				<prop key="/notice/updateNotice.src1">updateNotice</prop>
 				<prop key="/notice/deleteNotice.src1">deleteNotice</prop>
 
-				<prop key="/schedule/getStartWorktime.src1">getStartWorktime</prop>
 				<prop key="/schedule/getCalendarSchedule.src1">getCalendarSchedule</prop>
-				<prop key="/schedule/getDetailSchedule.src1">getDetailSchedule</prop>
+				<prop key="/schedule/getJsonSchedule.src1">getJsonSchedule</prop>
 				<prop key="/schedule/insertSchedule.src1">insertSchedule</prop>
 				<prop key="/schedule/updateSchedule.src1">updateSchedule</prop>
 				<prop key="/schedule/updateDateSchedule.src1">updateDateSchedule</prop>

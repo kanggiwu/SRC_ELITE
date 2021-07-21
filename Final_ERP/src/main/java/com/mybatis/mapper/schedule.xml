@@ -56,11 +56,10 @@
  -->
 	<!-- 일정 조회  1:공통 2:프로젝트 3:개인 부서번호:부서 -->
 	<select id="getScheduleList" parameterType="map" resultMap="scheduleJSON">
-        SELECT schedule_no,emp_no, schedule_type, schedule_title, schedule_startdate, schedule_enddate, schedule_content, emp_name, backgroundcolor
-        FROM (SELECT s.schedule_no AS schedule_no, s.emp_no AS emp_no, s.schedule_type AS schedule_type, s.schedule_title AS schedule_title,
-               s.schedule_startdate AS schedule_startdate,s.schedule_enddate AS schedule_enddate, s.schedule_content AS schedule_content,
-               s.backgroundcolor as backgroundcolor, e.emp_name AS emp_name
-                  FROM schedule s JOIN emp e ON s.emp_no = e.emp_no)
+        SELECT schedule_no,emp_no, schedule_type, schedule_title
+        		, schedule_startdate, schedule_enddate, schedule_content
+        		, emp_name, backgroundcolor
+        FROM get_schedule
         WHERE (schedule_type = 3 AND emp_no = #{login_no})
         OR (schedule_type != 3 and mod(schedule_type,10)!=0)
         OR (schedule_type = (SELECT dept_no

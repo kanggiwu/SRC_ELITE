@@ -51,7 +51,7 @@ const sideNavMainTitleApi = [
     id: "personal",
     title: "일정",
     className: "",
-    ref: "/myService/empSchedule.jsp",
+    ref: "/schedule/getCalendarSchedule.src1",
     onClick: "",
     collapsed: false,
   },

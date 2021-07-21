@@ -1356,13 +1356,11 @@ td, th {
 }
 
 html {
-	font-size: 10px;
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0)
 }
 
 body {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 15px;
 	line-height: 1.42857143;
 	color: #333;
 	background-color: #fff
@@ -4881,8 +4879,8 @@ border-bottom-right-radius
 	float: left;
 	height: 50px;
 	padding: 15px 15px;
-	font-size: 18px;
-	line-height: 20px
+	line-height: 20px;
+	font-size: 1.7rem;
 }
 
 .navbar-brand:focus, .navbar-brand:hover {

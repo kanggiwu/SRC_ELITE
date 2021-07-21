@@ -29,41 +29,44 @@ public class ScheduleController extends MultiActionController {
 	}
 
 	/*
-	 * <prop key="/schedule/getStartWorktime.src1">getStartWorktime</prop> 
 	 * <prop key="/schedule/getCalendarSchedule.src1">getCalendarSchedule</prop> 
 	 * <prop key="/schedule/insertSchedule.src1">insertSchedule</prop> 
 	 * <prop key="/schedule/updateSchedule.src1">updateSchedule</prop> 
 	 * <prop key="/schedule/updateDateSchedule.src1">schedule-controller</prop>
 	 * <prop key="/schedule/deleteSchedule.src1">deleteSchedule</prop>
 	 */
+	
+	
 	public ModelAndView getCalendarSchedule(HttpServletRequest request, HttpServletResponse response) {
+		logger.info("캘린더 url로 불러오기");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("empSchedule");
+
+		return mav;
+	}
+	
+	public ModelAndView getJsonSchedule(HttpServletRequest request, HttpServletResponse response) {
 		HashMapBinder hmb = new HashMapBinder(request);
+		List<Map<String, Object>> scheduleList = null; //스케줄 정보 저장 변수 선언
 		
 		Map<String, Object> pMap = new HashMap<>();
 		hmb.bind(pMap);
 		
+		//로그인한 사원번호를 map에 넣어준다.
 		session = request.getSession(true); 
 		int login_no=Integer.parseInt(session.getAttribute("login_no").toString());
-		
-		logger.info("♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥로그인한 사원 번호: "+login_no+"♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥");
+		logger.info("로그인한 사원 번호: "+login_no);
 		pMap.put("login_no", login_no);
-		/* pMap.put("schedule_type", 3); */
-		// ?emp_no=#{emp_no}&schedule_type=[1,20,3]&date=#{yy/mm}
-
-		logger.info("쿼리스트링: " + pMap);
-		ModelAndView mav = new ModelAndView();
-		response.setContentType("application/json;charset=utf-8");
-
-		// 개인일정인 경우 출석 시간 받아오기
-		/*
-		 * if ("3".equals(pMap.get("schedule_type").toString())) { List<Map<String,
-		 * Object>> attendanceList = null; attendanceList =
-		 * scheduleLogic.getAttendance(pMap); logger.info("attendanceList: " +
-		 * attendanceList); mav.addObject("attendanceList", attendanceList); }
-		 */
-		List<Map<String, Object>> scheduleList = null;
+		logger.info("일정데이터를 불러오기 위해 필요한 데이터들: " + pMap);
+		
+		//일정 받아오기
 		scheduleList = scheduleLogic.getScheduleList(pMap);
 		logger.info("scheduleList: " + scheduleList);
+
+
+		//json형식으로 페이지 이동
+		ModelAndView mav = new ModelAndView();
+		response.setContentType("application/json;charset=utf-8");
 		mav.addObject("scheduleList", scheduleList);
 		mav.setViewName("jsonSchedule");
 
