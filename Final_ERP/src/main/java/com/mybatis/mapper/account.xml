@@ -128,7 +128,7 @@
        </where>
       GROUP BY SUBSTR(profit_date, 1, 7), SUBSTR(expense_date, 1, 7)
       HAVING SUBSTR(profit_date, 1, 7) = SUBSTR(expense_date, 1, 7)
-      ORDER BY total_date DESC
+      ORDER BY total_date
     </select>  
 	
 	<!-- 월말 결산 -->
@@ -137,9 +137,9 @@
           #{p_month, mode=IN, jdbcType=VARCHAR},
           #{profit_cursor, mode=OUT, jdbcType=CURSOR, resultMap=profitMap},
           #{profit_sum, mode=OUT, jdbcType=NUMERIC},
-          #{expense_cursor, mode=OUT, jdbcType=CURSOR, resultMap=expenseMap}
+          #{expense_cursor, mode=OUT, jdbcType=CURSOR, resultMap=expenseMap},
           #{expense_sum, mode=OUT, jdbcType=NUMERIC},
-          #{total, mode=OUT, jdbcType=NUMERIC},
+          #{total, mode=OUT, jdbcType=NUMERIC}
        	)}
 	</select>    
 	

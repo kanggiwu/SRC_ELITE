@@ -174,10 +174,10 @@ public class AccountController extends MultiActionController {
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
 		List<Map<String, Object>> balanceList = null;
-//		balanceList = accountLogic.getBalanceList(target);
+		balanceList = accountLogic.getBalanceList(target);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("getBalanceList");
-//		mav.addObject("balanceList", balanceList);
+		mav.addObject("balanceList", balanceList);
 		return mav;
 	}
 	//월말결산
@@ -187,7 +187,7 @@ public class AccountController extends MultiActionController {
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
 		List<Map<String, Object>> monthStatement = null;
-		monthStatement = accountLogic.getBalanceList(target);
+		monthStatement = accountLogic.getMonthAccount(target);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("getMonthlyAccount");
 		mav.addObject("monthStatement", monthStatement);
