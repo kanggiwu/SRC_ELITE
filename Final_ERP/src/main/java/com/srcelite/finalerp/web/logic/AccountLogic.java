@@ -25,6 +25,19 @@ public class AccountLogic {
 		accountList = accountDao.getAccount(pmap);
 		return accountList;
 	}
+	// 급여 정산 사원 조회
+	public List<Map<String,Object>> getAccountEmpList(Map<String,Object> pmap) {
+		List<Map<String, Object>> empList = null;
+		empList = accountDao.getAccountEmpList(pmap);
+		return empList;
+	}
+	
+	// 급여 정산 사원 검색
+	public List<Map<String,Object>> getAccountEmpSearch(Map<String,Object> pmap) {
+		List<Map<String, Object>> empList = null;
+		empList = accountDao.getAccountEmpSearch(pmap);
+		return empList;
+	}
 	
 	// 급여 정산 변경
 	public int updateAccount(Map<String,Object> pmap){

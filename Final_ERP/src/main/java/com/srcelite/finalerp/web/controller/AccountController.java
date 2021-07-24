@@ -36,6 +36,38 @@ public class AccountController extends MultiActionController {
 		return mav;
 	}
 	
+	// 급여 정산 사원 조회
+	public ModelAndView getAccountEmpList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info("getAccountInfo호출 성공");
+		HashMapBinder hmb = new  HashMapBinder(request);
+		Map<String, Object> target = new HashMap<>();
+		hmb.bind(target);
+		List<Map<String, Object>> empList = null;
+		empList = accountLogic.getAccountEmpList(target);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("getAccountEmpList");
+		mav.addObject("empList", empList);
+		return mav;
+	}
+	
+	// 급여 정산 사원 검색
+	public ModelAndView getAccountEmpSearch(HttpServletRequest req, HttpServletResponse res)
+	throws Exception
+	{
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		hmb.bind(pmap);
+		List<Map<String,Object>> empList = null;
+		logger.info("emp_name value: "+pmap.get("emp_name"));
+		logger.info("dept_name value: "+pmap.get("dept_name"));
+		logger.info("rank_name value: "+pmap.get("rank_name"));
+		empList = accountLogic.getAccountEmpSearch(pmap);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("getAccountEmpList");
+		mav.addObject("empList", empList);
+		return mav;
+	}
+	
 	// 급여 정산 변경
 	public void updateAccount(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("updateAccountInfo호출 성공");
@@ -44,7 +76,7 @@ public class AccountController extends MultiActionController {
 		hmb.bind(pmap);
 		logger.info("pmap: "+pmap);
 		int result = 0;
-		result = accountLogic.updateAccount(pmap);
+//		result = accountLogic.updateAccount(pmap);
 		logger.info("ctrl result : " + result);
 		if(result == 1) {
 			response.sendRedirect("");
@@ -101,7 +133,7 @@ public class AccountController extends MultiActionController {
 		}
 	}
 	
-	// 수익 관리 추가
+	// 수익 관리 입력
 	public void insertProfit(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("insertProfit호출 성공");
 		HashMapBinder hmb = new HashMapBinder(request);
@@ -110,7 +142,7 @@ public class AccountController extends MultiActionController {
 		int result = 0;
 		result = accountLogic.insertProfit(pmap);
 		if(result == 1) {
-			response.sendRedirect("");
+			response.sendRedirect("getProfitList.src1");
 		}
 		else {
 			response.sendRedirect("");
@@ -126,6 +158,14 @@ public class AccountController extends MultiActionController {
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
 		List<Map<String, Object>> expenseList = null;
+		logger.info(target.get("expense_date_year")+"-"+target.get("expense_date_month"));
+		if(target.get("expense_date_year") != null && target.get("expense_date_month") != null) {
+			String expense_date = "";
+			expense_date = target.get("expense_date_year").toString()+"-"+target.get("expense_date_month").toString();
+			target.put("EXPENSE_DATE", expense_date);
+			logger.info(expense_date);
+			
+		}
 		expenseList = accountLogic.getExpenseList(target);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("getExpenseList");

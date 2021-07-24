@@ -138,8 +138,12 @@ $setRows.submit();
    function updateExpense() {
 		Swal.fire({
 			  title: '수정 되었습니다!',
-			  confirmButtonColor: '#17a2b8'})
+			  confirmButtonColor: '#ffc107'})
 			setTimeout(() => $('#expense_update').submit() , 1500);
+   }
+  // 검색 
+   function searchExpense() {
+			$('#expense_search').submit();
    }
 </script>
 
@@ -169,20 +173,27 @@ $setRows.submit();
 								action="getExpenseList.src1">
 								<span class="input-group"> <select
 									name="expense_date_year" class="form-control" id="dept_options">
-										<option value="전체">년</option>
+										<option disabled selected hidden>년</option>
 										<option value=2021>2021</option>
 								</select> <select name="expense_date_month" class="form-control"
 									id="rank_options">
-										<option value="전체">월</option>
+										<option disabled selected hidden>월</option>
 										<%
 										int month = 12;
+										String mon = "";
 										for (int i = 1; i <= month; i++) {
+											if (i < 10) {
+												mon = "0";
+												mon += Integer.toString(i);
+											} else {
+												mon = Integer.toString(i);
+											}
 										%>
-										<option value="<%=i%>"><%=i%></option>
+										<option value="<%=mon%>"><%=i%></option>
 										<%
 										} //end of for
 										%>
-								</select>  <a href="javascript:expenseSearchAction()"
+								</select> <a href="javascript:searchExpense()"
 									class="btn btn-default float-left" role="button"><i
 										class="fas fa-search"></i></a>
 								</span>
@@ -202,7 +213,7 @@ $setRows.submit();
 										id="rowPerPage">
 								</form>
 								<thead>
-									<tr class="thead-dark">
+									<tr class="thead-dark" style="text-align: center;">
 										<th style="width: 18%">분류</th>
 										<th style="width: 15%">부서</th>
 										<th style="width: 20%">금액</th>
@@ -276,9 +287,10 @@ $setRows.submit();
 										<td id="expense_detail"
 											value="<%=rmap.get("EXPENSE_DETAIL")%>"><%=rmap.get("EXPENSE_DETAIL")%></td>
 										<td id="expense_date" value="<%=rmap.get("EXPENSE_DATE")%>"><%=rmap.get("EXPENSE_DATE")%></td>
-										<td id="asdaq"><button type="button"
-												class="btn btn-warning" id="adsad" data-toggle="modal"
-												data-target="#mod_updEmp" onclick="updExpense(this)">
+										<td id="expense_update_modal_td"><button type="button"
+												class="btn btn-warning" id="expense_update_modal_button"
+												data-toggle="modal" data-target="#mod_updEmp"
+												onclick="updExpense(this)">
 												<i class="fas fa-edit"></i>
 											</button></td>
 									</tr>
@@ -422,8 +434,8 @@ $setRows.submit();
 												id="upd_expense_date">
 										</div>
 										<input type="text" name="expense_no" class="form-control"
-											value="" aria-describedby="basic-addon1"
-											id="upd_expense_no" hidden> <br>
+											value="" aria-describedby="basic-addon1" id="upd_expense_no"
+											hidden> <br>
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-warning"

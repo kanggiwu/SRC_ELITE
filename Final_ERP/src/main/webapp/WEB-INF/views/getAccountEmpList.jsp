@@ -5,7 +5,7 @@
 StringBuilder path = new StringBuilder(request.getContextPath());
 path.append("/");
 List<Map<String, Object>> boardList = null;
-boardList = (List<Map<String, Object>>) request.getAttribute("boardList");
+boardList = (List<Map<String, Object>>) request.getAttribute("empList");
 int size = 0;
 if (boardList != null) {
 	size = boardList.size();
@@ -104,6 +104,16 @@ out.print("size:" + size);
 		console.log("입력 액션 호출");
 		$('#emp_search').submit();
 	}
+	
+	function checkEmp(e){
+		console.log($(e).parents('tr').attr('id'));
+		var requestValue = ($(e).parents('tr').attr('id'));
+	    var theURL = "/account/getAccountInfo.src1?emp_no="+requestValue; // 전송 URL
+	    // 호출 한 부모 페이지에서 URL 호출
+	    opener.window.location = theURL;
+	    // 호출 한 뒤 현재 팝업 창 닫기 이벤트
+	    close();
+	} 
 </script>
 <title>Account - ERP PROGRAM</title>
 </head>
@@ -120,9 +130,9 @@ out.print("size:" + size);
 				<div class="container">
 					<div class="col">
 						<div
-							style="text-align: left; padding: 5px; display: inline-block; width: 49%;">
-							<form id="emp_search" method="post" enctype="multipart/form-data"
-								action="getEmpSearchList.src1">
+							style="text-align: left; padding: 5px; display: inline-block; width: 60%;">
+							<form id="emp_search" method="post" 
+								action="getAccountEmpSearch.src1">
 								<span class="input-group"> <select name="dept_name"
 									class="form-control" id="dept_options">
 										<option value="전체">부서</option>
@@ -149,9 +159,9 @@ out.print("size:" + size);
 							</form>
 						</div>
 						<div
-							style="text-align: right; padding: 5px; display: inline-block; width: 50%">
-							<button class="btn btn-info"
-								onclick="Select()">선택</button>
+							style="text-align: right; padding: 5px; display: inline-block; width: 39%">
+							<button class="btn btn-danger"
+								onclick="window.close()">닫기</button>
 
 						</div>
 					</div>
@@ -164,12 +174,12 @@ out.print("size:" + size);
 									id="rowPerPage">
 							</form>
 							<thead>
-								<tr class="thead-dark">
-									<th>선택</th>
-									<th>사원번호</th>
-									<th>이름</th>
-									<th>부서</th>
-									<th>직위</th>
+								<tr class="thead-dark" style="text-align: center;">
+									<th style="width: 21%">사원번호</th>
+									<th style="width: 25%">이름</th>
+									<th style="width: 22%">부서</th>
+									<th style="width: 22%">직위</th>
+									<th style="width: 10%">선택</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -189,12 +199,16 @@ out.print("size:" + size);
 										break;
 								%>
 
-								<tr>
-									<td><input type="checkbox"></td>
+								<tr id="<%=rmap.get("EMP_NO")%>">
 									<td><%=rmap.get("EMP_NO")%></td>
 									<td><%=rmap.get("EMP_NAME")%></td>
 									<td><%=rmap.get("DEPT_NAME")%></td>
 									<td><%=rmap.get("RANK_NAME")%></td>
+									<td><button type="button"
+												class="btn btn-success"
+												onclick="checkEmp(this)">
+												<i class="fas fa-user-check"></i>
+											</button></td>
 								</tr>
 								<%
 								} ///end of for

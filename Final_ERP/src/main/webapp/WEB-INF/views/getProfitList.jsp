@@ -102,9 +102,20 @@ out.print("size:" + size);
 
 				$setRows.submit();
 			});
-	function name(){
-		var nmnm = "ㅅㅂ";
+	
+	// 수익 입력창 프로젝트 이름 불러오기
+	function insertProfitAction(e){
+		console.log(project_name);
+		var project_name = $(e).closest('td').prevAll("#project_name").attr('value')
+		$('#ins_project_name').val(project_name);
 	}
+	// 수익 입력
+	 function insertProfit() {
+			Swal.fire({
+				  title: '입력 되었습니다!',
+				  confirmButtonColor: '#17a2b8'})
+				setTimeout(() => $('#profit_insert').submit() , 1500);
+	   }
 </script>
 
 <title>Account</title>
@@ -189,17 +200,25 @@ out.print("size:" + size);
 			===============DB에서 데이터 가져와서 뿌려주기======================
 			 -->
 									<tr>
-										<td><%=rmap.get("PROJECT_NAME")%></td>
+										<td id="project_name" value="<%=rmap.get("PROJECT_NAME")%>"><%=rmap.get("PROJECT_NAME")%></td>
 										<td><%=rmap.get("PROJECT_STARTLINE")%></td>
 										<td><%=rmap.get("PROJECT_DEADLINE")%></td>
 										<%-- 										<td><%=project_deadline%></td> --%>
 										<td><%=rmap.get("PROJECT_PROFIT")%></td>
 										<td><%=rmap.get("PROJECT_TYPE")%></td>
-										<td style="text-align: center;"><button type="button"
+										<td style="text-align: center;">
+										<%
+										if("미완".equals(rmap.get("PROJECT_DEADLINE").toString())){
+										%>
+										<button type="button"
 												class="btn btn-warning" data-toggle="modal"
-												data-target="#mod_updEmp" onclick="name()">
+												data-target="#mod_updEmp" onclick="insertProfitAction(this)">
 												<i class="fas fa-edit"></i>
-											</button></td>
+											</button>
+										<%	
+										}// end of if
+										%>
+											</td>
 									</tr>
 									<%
 									} ///end of for
@@ -218,13 +237,13 @@ out.print("size:" + size);
 										<h4 class="modal-title" id="myModalLabel">매출금 입력</h4>
 									</div>
 									<div class="modal-body">
-										<form class="form-horizontal" role="form">
+										<form id="profit_insert" method="post"	action="insertProfit.src1">
 											<div class="form-group">
 												<div class="input-group-addon" id="basic-addon1">프로젝트
 													명</div>
 												<br>
 												<div class="input-group">
-													<input type="text" name="project_name" id="projectName"
+													<input type="text" name="project_name" id="ins_project_name"
 														class="form-control" value=""
 														aria-describedby="basic-addon1" readonly>
 												</div>
@@ -240,7 +259,7 @@ out.print("size:" + size);
 										</form>
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-warning">입력</button>
+										<button type="button" class="btn btn-warning" onclick="insertProfit()">입력</button>
 										<button type="button" class="btn btn-danger"
 											data-dismiss="modal">닫기</button>
 									</div>

@@ -154,7 +154,7 @@ $setRows.submit();
                   data-url="./member.json">
 
                   <form action="" id="setRows">
-                    <input type="hidden" name="rowPerPage" value="5" id="rowPerPage">
+                    <input type="hidden" name="rowPerPage" value="3" id="rowPerPage">
                   </form>
     <thead>
       <tr>
