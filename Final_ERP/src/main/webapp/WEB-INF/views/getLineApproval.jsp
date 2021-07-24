@@ -1,5 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>    
+<%
+	request.setCharacterEncoding("UTF-8");
+	String aprv_title = request.getParameter("aprv_title");
+	String vacationSql = "";
+	String projectSql = "";
+	//휴가계획서
+	String deptName = request.getParameter("txt_deptName");
+	String empName = request.getParameter("txt_empName");
+	String dat_peri = request.getParameter("dat_peri");
+	String dat_peri1 = request.getParameter("dat_peri1");
+	String reason = request.getParameter("txt_reason");
+	vacationSql = aprv_title+"|"+deptName+"|"+empName+"|"+dat_peri+"|"+dat_peri1+"|"+reason;
+	//프로젝트계약확정서
+	String projectName = request.getParameter("txt_projectName");
+	String company = request.getParameter("txt_company");
+	String dat_peri2 = request.getParameter("dat_peri2");
+	String dat_peri3 = request.getParameter("dat_peri3");
+	String benefit = request.getParameter("txt_benefit");
+	String kind = request.getParameter("txt_kind");
+	String context = request.getParameter("txt_context");
+	projectSql = aprv_title+"|"+projectName+"|"+company+"|"+dat_peri2+"|"+dat_peri3+"|"+benefit+"|"+kind+"|"+context;
+%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +40,60 @@
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 
 <title>결재라인 선택</title>
+<script>
+	function empSchAction(){
+		//alert("여기")
+		let deptTarget = $("#dept_options option:selected").val();
+		let rankTarget = $("#rank_options option:selected").val();
+		let companyTarget = $("#txt_company").val();
+		//alert(companyTarget)
+     	$.ajax({
+  		  type:"post",
+  		  //type:"get"
+  		  data:{"dept_name":deptTarget,"rank_name":rankTarget,"emp_name":companyTarget},
+  		  url: "/approval/getEmpSearchList3.src1",
+  		  //data:{"dept":개발부} getparameter("dept")
+  		  dataType:"json",
+	          success:function(data){
+	        	  result1(data);
+	  	       },
+	          error:function(e){
+	        	  let x = e.responseXML;
+	        	  alert("fail ===> "+e)
+	          }
+  	}); 
+ 
+	}
+	
+function result1(data){
+	let a="";
+      //조회 결과가 없는 거야?
+      if(data.size==0){	
+    	  console.log("df");
+    	a+="        <td colspan='6'>조회결과가 없습니다.</td>";
+      }
+      else{//조회 결과가 있을 때
+      	for(let i=0;i<data.length;i++){
+      		console.log(data[i]['RANK_NAME']);
+      				a+="<tr>";
+       				a+="	<td>"+data[i]['EMP_NO']+"</td>";
+      				a+="	<td>"+data[i]['DEPT_NAME']+"</td>";
+      				a+="	<td>"+data[i]['RANK_NAME']+"</td>";
+      				a+="	<td>"+data[i]['EMP_NAME']+"</td>"; 
+      				a+="	<td><select name = 'app_name' class='form-control'  id="+data[i]['EMP_NO']+">";
+      				a+="  		<option value='전체'>==결재라인==</option>";
+      				a+="  		<option value='1차결재자'>1차결재자</option>";
+      				a+="  		<option value='2차결재자'>2차결재자</option>";
+      				a+="  		<option value='3차결재자'>3차결재자</option>";
+      				a+="		</select>";
+      				a+="	</td>";
+      				a+="	<td><a href='javascript:void(0)' onclick='selectBtn()' class='btn btn-info btn-sm'>선택</a></td>"
+      				a+="</tr>";
+      	}///end of for
+      } ///end of if
+      document.querySelector(".empTab").innerHTML = a;
+}
+</script>
 </head>
 <body class="sb-nav-fixed">
 <nav id="topNav"></nav>
@@ -69,36 +146,7 @@
 					</tr>
 				</thead>
 				<tbody class="empTab">
-					<tr>						
-						<td>1234</td>
-						<td>개발1팀</td>
-						<td>부장</td>
-						<td>유재석</td>
-						<td><select name = "app_name" class="form-control" id="app_options">
-							  <option value="전체">==결재라인==</option>
-							  <option value="1차결재자">1차결재자</option>
-							  <option value="2차결재자">2차결재자</option>
-							  <option value="3차결재자">3차결재자</option>
-							</select>
-						</td>
-						<td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" 
-						data-target="#mod_sel">선택</button></td>
-					</tr>
-					<tr>						
-						<td>1234</td>
-						<td>개발1팀</td>
-						<td>부장</td>
-						<td>유재석</td>
-						<td><select name = "app_name" class="form-control" id="app_options">
-							  <option value="전체">==결재라인==</option>
-							  <option value="1차결재자">1차결재자</option>
-							  <option value="2차결재자">2차결재자</option>
-							  <option value="3차결재자">3차결재자</option>
-							</select>
-						</td>
-						<td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" 
-						data-target="#mod_sel">선택</button></td>
-					</tr>
+				<!-- DB에서 데이터 뿌려주기 -->
 				</tbody>	
 			</table>
 			</div>
@@ -106,50 +154,166 @@
 <!-- ==========================결재라인테이블 만들기 ===============================-->
 		<div style="width:100%;">
 			<br>
+			<!-- ******post방식으로 값보내기****** -->
+			<!-- <form class="form-horizontal" role="form" id="appLine" method="post" action="getLineApproval.src1"> -->
+			<input type="hidden" id="aprv_title2" value="<%=aprv_title%>">
+			<input type="hidden" id="vacationSql2" value="<%=vacationSql%>">
+			<input type="hidden" id="projectSql2" value="<%=projectSql%>">
 			<table class="table table-hover" id = "appTbl">
 				<thead>
 					<tr style="background-color:lightgray">						
 						<th style="width: 20%">결재라인</th>
-						<th style="width: 30%">부서명</th>
+						<th style="width: 20%">사원번호</th>
+						<th style="width: 20%">부서명</th>
 						<th style="width: 20%">직위명</th>
 						<th style="width: 20%">결재자명</th>
 					</tr>
 				</thead>
 				<tbody class="appTab">
-					<tr>
-						<td>1차 결재자</td>
-						<td>개발1팀</td>
-						<td>부장</td>
-						<td>유재석</td>
+ 					<tr>
+						<td id='SIGN_LEVEL1'>1차결재자</td>
+						<td id="a1" name='txt_empNo1'></td>
+						<td id="a2" name='txt_deptName1'></td>
+						<td id="a3" name='txt_rankName1'></td>
+						<td id="a4" name='txt_name1'></td>
 					</tr>
 					<tr>
-						<td>2차 결재자</td>
-						<td>개발1팀</td>
-						<td>부장</td>
-						<td>유재석</td>
+						<td id='SIGN_LEVEL2'>2차결재자</td>
+						<td id="b1" name='txt_empNo2'></td>
+						<td id="b2" name='txt_deptName2'></td>
+						<td id="b3" name='txt_rankName2'></td>
+						<td id="b4" name='txt_name2'></td>
 					</tr>
 					<tr>
-						<td>3차 결재자</td>
-						<td>개발1팀</td>
-						<td>부장</td>
-						<td>유재석</td>
+						<td id='SIGN_LEVEL3'>3차결재자</td>
+						<td id="c1" name='txt_empNo3'></td>
+						<td id="c2" name='txt_deptName3'></td>
+						<td id="c3" name='txt_rankName3'></td>
+						<td id="c4" name='txt_name3'></td>
 					</tr>
 				</tbody>	
 			</table>
+			<!-- </form>	 -->		
 			</div>
 			<div class="col text-right">
-				<button type="submit" id="addApproval" class="btn btn-warning btn-lg" onclick="addApprovalAction()">
-				결재신청 완료</button>	
+				<a href='javascript:addApprovalAction()' class='btn btn-warning btn-lg'>결재신청 완료</a>
+				<!-- <button type="submit" id="addApproval" class="btn btn-warning btn-lg" onclick="addApprovalAction()"> -->
+				<!-- 결재신청 완료</button>	 -->
 			</div>
 <!-- ==========================결재라인테이블 만들기 끝===============================-->
-	</div>
-			
+	</div>		
+<%-- 	<input type="text"><%=vacationSql%></input>
+	<input type="text"><%=projectSql%></input> --%>
 <!--================================= 컨텐츠 들어갈내용 끝  ============================================== -->
      			</div>
 			</div>
 		</main>
+		
 	</div>
 </div>
+
+<script>
+//let EMP_NO = 0;
+//결재라인을 선택하고 선택버튼을 눌렀을 때
+function selectBtn(){
+	$("#empTbl").off("click").on('click',"tr", function(){
+		let str = ""
+		let tdArr = new Array();
+		//현재 로우값 가져오기
+	    let tr = $(this);
+		let td = tr.children();
+		
+		//EMP_NO = td.eq(0).text();
+		let EMP_NO = td.eq(0).text();
+		//alert (EMP_NO);
+		let DEPT_NAME = td.eq(1).text();
+		let RANK_NAME = td.eq(2).text();
+		let EMP_NAME = td.eq(3).text(); 
+		let elem = document.getElementById(EMP_NO);
+		let SIGN_LEVEL = elem.options[elem.selectedIndex].value;
+		
+		tdArr.push(EMP_NO);
+		tdArr.push(DEPT_NAME);
+		tdArr.push(RANK_NAME);
+		tdArr.push(EMP_NAME);
+		if(SIGN_LEVEL == "전체"){   
+	  		alert("결재자를 선택하세요");
+	    	return;   				  		
+	  	}else {
+	  		tdArr.push(SIGN_LEVEL);
+	  	}
+		tabResult(tdArr);	
+		tdArr = new Array();
+		$("#empTbl").off("click") //클릭이벤트 중첩발생 금지
+	});
+}
+function tabResult(data){
+	let b="";
+	let appLine = "";
+	appLine = data[4];
+	
+	if (appLine == "1차결재자"){
+ 		for(let i=0;i<4;i++){
+			document.getElementById("a"+(i+1)).innerHTML = data[i];
+		} 
+	}else if (appLine == "2차결재자"){
+ 		for(let i=0;i<4;i++){
+ 			document.getElementById("b"+(i+1)).innerHTML = data[i];
+		} 
+	}else if (appLine == "3차결재자"){
+ 		for(let i=0;i<4;i++){
+ 			document.getElementById("c"+(i+1)).innerHTML = data[i];
+		} 
+	}
+}
+
+//결재신청완료
+function addApprovalAction(){
+	//alert("결재신청완료버튼 클릭!");
+	let aprvTitle = $("#aprv_title2").val();
+	//alert(aprvTitle);
+	let APRV_CONTENT = "";
+	if (aprvTitle == "휴가계획서"){ //휴가계획서
+		APRV_CONTENT = $("#vacationSql2").val();
+	}else { //프로젝트계약확정서
+		//alert("여기여기");
+		APRV_CONTENT = $("#projectSql2").val();		
+	}
+	let SIGN_PERMISSION = "W";
+	let empNo1 = $("#a1").text();
+	//alert(empNo1);
+	let empNo2 = $("#b1").text();
+	let empNo3 = $("#c1").text();
+	let SIGN_LEVEL1 = "1";
+	let SIGN_LEVEL2 = "2";
+	let SIGN_LEVEL3 = "3";	
+	//결재라인
+	let lineApp =[
+		{EMP_NO:empNo1, SIGN_PERMISSION:"W", SIGN_LEVEL:"1"},
+		{EMP_NO:empNo2, SIGN_PERMISSION:"W", SIGN_LEVEL:"2"},
+		{EMP_NO:empNo3, SIGN_PERMISSION:"W", SIGN_LEVEL:"3"},		
+	];
+	
+	$.ajax({
+		type:"post",
+		  /* data:{"aprvTitle":aprvTitle,"APRV_CONTENT":APRV_CONTENT,"SIGN_PERMISSION":SIGN_PERMISSION
+			  ,"empNo1":empNo1,"empNo2":empNo2,"empNo3":empNo3
+			  ,"SIGN_LEVEL1":SIGN_LEVEL1,"SIGN_LEVEL2":SIGN_LEVEL2,"SIGN_LEVEL3":SIGN_LEVEL3}, */
+		  data:{"aprvTitle":aprvTitle,"APRV_CONTENT":APRV_CONTENT},
+		  data:JSON.stringify(lineApp),
+		  url: "/approval/insertApproval.src1",
+		  dataType:"json",
+		      success:function(data){
+		    	  alert("입력되었습니다!");
+		       },
+		      error:function(e){
+		    	  let x = e.responseXML;
+		    	  alert("fail ===> "+e);
+		      } 
+	});
+	
+}
+</script>
 
 <!-- 슬라이드바 사용할때 필요 -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

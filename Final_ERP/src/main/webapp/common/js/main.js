@@ -104,7 +104,7 @@ schedule_type: -1,
   /***************** 일정데이터 받아오기***************/
   events: function (start, end, timezone, callback) {
   	  $.ajax({
-      type: "get",
+      type: "post",
       url: "../schedule/getJsonSchedule.src1",
       data: {
         // 화면이 바뀌면 Date 객체인 start, end 가 들어옴

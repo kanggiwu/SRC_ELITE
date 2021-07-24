@@ -60,7 +60,7 @@ public class ScheduleController extends MultiActionController {
 		logger.info("일정데이터를 불러오기 위해 필요한 데이터들: " + pMap);
 		
 		//일정 받아오기
-		scheduleList = scheduleLogic.getScheduleList(pMap);
+		scheduleList = scheduleLogic.getJsonScheduleList(pMap);
 		logger.info("scheduleList: " + scheduleList);
 
 
