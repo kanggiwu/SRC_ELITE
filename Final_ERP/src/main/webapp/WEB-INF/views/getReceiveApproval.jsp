@@ -12,6 +12,8 @@
 		size = getReceiveApproval.size();
 	}
 	out.print("size:"+size);
+	String aprvStatus = "";
+	String aprvStatus2 = "";
 %> 
 <!DOCTYPE html>
 <html>
@@ -73,6 +75,15 @@ let title = "";
 					if(i==size) break;
 					aprvRead = pmap.get("APRV_READ").toString();
 					//out.print("aprvRead:"+aprvRead);
+					aprvStatus = pmap.get("APRV_STATUS").toString().trim();					
+					//out.print("aprvStatus:"+aprvStatus);
+					if(aprvStatus.equals("1")){
+						aprvStatus2 = "대기중";
+					}else if(aprvStatus.equals("2")){
+						aprvStatus2 = "반려";					
+					}else if(aprvStatus.equals("3")){
+						aprvStatus2 = "결재완료";					
+					}
 			%>   
 				<tr>
 			<%
@@ -89,7 +100,8 @@ let title = "";
 					<td><%=pmap.get("APRV_NO").toString()%></td>
 					<td><%=pmap.get("APRV_DATE").toString()%></td>
 					<td><%=pmap.get("APRV_TITLE").toString()%></td>
-					<td><%=pmap.get("APRV_STATUS").toString()%></td>
+					<td><%=aprvStatus2%></td>
+					<%-- <td><%=pmap.get("APRV_STATUS").toString()%></td> --%>
 					<td><button type="button" class="btn btn-info btn-sm" id="btn_sel"
 						onclick="openModal()">결재자조회</button></td>
 					<td><button type="button" class="btn btn-info btn-sm" name="btn_app"
@@ -120,31 +132,11 @@ let title = "";
 						<th style="width: 20%">결재상태</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody class="modAppLine">
 				<!-- 
 				===============DB에서 데이터 가져와서 뿌려주기======================
 				 -->
-					<tr>						
-						<td>1차 결재자</td>
-						<td>개발1팀</td>
-						<td>팀장</td>
-						<td>김현진</td>
-						<td>승인완료</td>
-					</tr>
-					<tr>						
-						<td>2차 결재자</td>
-						<td>개발1팀</td>
-						<td>팀장</td>
-						<td>김현진</td>
-						<td>승인완료</td>
-					</tr>
-					<tr>						
-						<td>3차 결재자</td>
-						<td>개발1팀</td>
-						<td>팀장</td>
-						<td>김현진</td>
-						<td>승인완료</td>
-					</tr>
+					
 				</tbody>	
 			</table>
       </div>
@@ -172,35 +164,73 @@ let title = "";
  	function openModal(){
 		//alert("모달창 오픈");
 		$("#approvalPlan").off("click").on('click',"tr", function(){
-        	$("#mod_appLine").modal();
+		//현재 로우값 가져오기
+	    let tr = $(this);
+		let td = tr.children();
+		let aprv_no = td.eq(1).text();
+		//alert(aprv_no);
+		$.ajax({
+			type:"post",
+			  data:{"aprv_no":aprv_no},
+			  url: "/approval/getApproverEmp.src1",
+			  dataType:"json",
+		          success:function(data){
+		        	  appResult2(data);
+		  	      },
+		          error:function(e){
+		        	  let x = e.responseXML;
+		        	  alert("fail ===> "+e)
+		          } 
 		});
+		
+        $("#mod_appLine").modal();
+	});
+		//$("#approvalPlan").off("click")
 	}
-	 
+	
+ 	function appResult2(data){
+ 		let a="";
+ 		for(let i=0;i<data.length;i++){
+ 			a+="<tr>";						
+ 			a+="<td>"+data[i]['SIGN_LEVEL']+"</td>";
+ 			a+="<td>"+data[i]['DEPT_NAME']+"</td>";
+ 			a+="<td>"+data[i]['RANK_NAME']+"</td>";
+ 			a+="<td>"+data[i]['EMP_NAME']+"</td>";
+ 			a+="<td>"+data[i]['SIGN_PERMISSION']+"</td>";
+ 			a+="</tr>";
+ 		}
+ 			document.querySelector(".modAppLine").innerHTML = a;
+ 	}
+	
+ 	//결재문서조회
 	function openPop(){
-		//$("#approvalPlan").unbind("click").bind("click", "tr", function(){ 
-		//$("#approvalPlan").on("click", "tr", function(){	
+		//alert("오픈팝업");
 		$("#approvalPlan").off("click").on('click',"tr", function(){
 			//alert( $(this).find("td:eq(1)").text() );
 			appPlan = $(this).find("td:eq(3)").text();	
+			let aprv_no = $(this).find("td:eq(1)").text();	
 			//alert(appPlan);
-			openPopup(appPlan);
+			openPopup(aprv_no,appPlan);
 		});
 	}
-    function openPopup(appPlan){
-    //function openPopup(){
+    function openPopup(aprv_no,appPlan){
     	//alert("팝업");
-    	let url1 = "/myService/vacationPlan.jsp";
-    	let url2 = "/myService/projectPlan.jsp";
+    	//alert(aprv_no);
     	//alert(appPlan);
-    	if (appPlan == "휴가계획서") {
-    		//alert ("여기여기");
-    		window.open(url1, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );  
-    	}else if (appPlan == "프로젝트 계약확정서"){
-    		window.open(url2, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );   		
-    		
-    	}
-    }
-    
+	    if (appPlan == "휴가계획서") {
+	    	//alert("휴가계획서");
+	    	window.open("/approval/vacationPlan.src1?aprv_no="+aprv_no+"&appPlan="+appPlan, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
+	    }else if (appPlan == "프로젝트 계약확정서"){
+	    	//alert("프로젝트 계약확정서");
+	    	window.open("/approval/projectPlan.src1?aprv_no="+aprv_no+"&appPlan="+appPlan, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );   	
+	    	
+	    }////end of if
+    	//});
+    	$("#approvalPlan").off("click") //이벤트 다중으로 걸리는 것 방지
+    }////end of function
+    function appResult3(data){
+    	window.open(url2, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
+ 	}
 </script>
 <!-- 슬라이드바 사용할때 필요 -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous" ></script>

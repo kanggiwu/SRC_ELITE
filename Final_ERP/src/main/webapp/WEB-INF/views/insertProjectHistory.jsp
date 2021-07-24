@@ -330,7 +330,7 @@ function result2(data){
 			}
       		b+="</tr>"; 
 
-      document.querySelector(".bbbb").innerHTML += b;
+    document.querySelector(".bbbb").innerHTML += b;
 }
 </script>
 <script>

@@ -64,6 +64,9 @@
 	<bean id="project-history-dao" class="com.srcelite.finalerp.web.dao.ProjectHistoryDao">
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
-
+<!-- transaction처리를 위한 transactionManager Bean 등록 -->   
+   <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="data-source-target" />
+   </bean>
 
 </beans>
