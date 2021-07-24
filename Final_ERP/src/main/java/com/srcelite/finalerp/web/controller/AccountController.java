@@ -181,15 +181,15 @@ public class AccountController extends MultiActionController {
 		return mav;
 	}
 	//월말결산
-	public ModelAndView getMonthlyAccount(HttpServletRequest request, HttpServletResponse response) {
-		logger.info("getMonthlyAccount 호출");
+	public ModelAndView getMonthStatement(HttpServletRequest request, HttpServletResponse response) {
+		logger.info("getMonthStatement 호출");
 		HashMapBinder hmb = new  HashMapBinder(request);
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
 		List<Map<String, Object>> monthStatement = null;
-		monthStatement = accountLogic.getBalanceList(target);
+		monthStatement = accountLogic.getMonthStatement(target);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("getMonthlyAccount");
+		mav.setViewName("getMonthStatement");
 		mav.addObject("monthStatement", monthStatement);
 		return mav;
 	}

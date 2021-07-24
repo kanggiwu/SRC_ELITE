@@ -133,13 +133,13 @@
 	
 	<!-- 월말 결산 -->
 	<select id="getMonthStateProc" statementType="CALLABLE" parameterType="map">
-		{call proc_get_month_statement(        
+		{call proc_get_month_statement(   
           #{p_month, mode=IN, jdbcType=VARCHAR},
           #{profit_cursor, mode=OUT, jdbcType=CURSOR, resultMap=profitMap},
           #{profit_sum, mode=OUT, jdbcType=NUMERIC},
-          #{expense_cursor, mode=OUT, jdbcType=CURSOR, resultMap=expenseMap}
+          #{expense_cursor, mode=OUT, jdbcType=CURSOR, resultMap=expenseMap},
           #{expense_sum, mode=OUT, jdbcType=NUMERIC},
-          #{total, mode=OUT, jdbcType=NUMERIC},
+          #{total, mode=OUT, jdbcType=NUMERIC}
        	)}
 	</select>    
 	

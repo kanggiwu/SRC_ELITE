@@ -92,9 +92,9 @@ public class AccountLogic {
 		return expenseList;
 	}
 	// 월말 결산
-	public List<Map<String,Object>> getMonthAccount(Map<String,Object> pmap) {
+	public List<Map<String,Object>> getMonthStatement(Map<String,Object> pmap) {
 		List<Map<String, Object>> monthStatement = null;
-		monthStatement = accountDao.getMonthlyAccount(pmap);
+		monthStatement = accountDao.getMonthStatement(pmap);
 		return monthStatement;
 	}
 

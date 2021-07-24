@@ -96,7 +96,7 @@ const sideNavMainTitleApi = [
         id: "approval_wb",
         title: "월말정산",//"휴지통",
         className: "",
-        ref: "/account/getMonthlyAccount.src1",
+        ref: "/account/getMonthStatement.src1",
         onClick: "",
         },
         ],
