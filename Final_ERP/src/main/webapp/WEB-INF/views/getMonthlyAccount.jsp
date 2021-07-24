@@ -33,6 +33,8 @@ out.print("size:" + size);
 <link href="../common/css/custom.css" rel="stylesheet" />
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 
+<!--페이징 처리   =================================================================================-->
+
 <title>Account</title>
 </head>
 <body class="sb-nav-fixed">
@@ -44,49 +46,29 @@ out.print("size:" + size);
 				<div id="frame_div" style="border: 1px solid black;">
 					<div id="page_title"
 						style="border-bottom: 2px solid gray; margin: 50px 30px;">
-						<h2>손익 조회</h2>
+						<h2>월말 결산</h2>
 					</div>
 					<div id="page_contents"
 						style="max-width: 1730px; margin: 10px 100px;">
 						<!--
 ******************************************* 컨텐츠 들어갈내용 시작************************************************
 -->
-						<script type="text/javascript">
-							document.getElementById('my_form').onsubmit = function() {
-								var dat_period = this.dat_period.value
-								alert(dat_period);
-							}
-						</script>
-
-						<!-- -----------------------------------검색부분---------------------------------- -->
-						<form id="myform" class="form-horizontal" role="form">
-							<div
-								style="text-align: left; padding: 5px; display: inline-block; width: 60%;">
-								<span class="input-group"> <input type="date"
-									class="form-control" id="date_period_first">&nbsp; ~
-									&nbsp; <input type="date" class="form-control"
-									id="date_period_last">&nbsp; <a
-									href="javascript:empSearchAction()"
-									class="btn btn-default float-left" role="button"><i
-										class="fas fa-search"></i></a>
-								</span>
-
-							</div>
-							<div
-								style="text-align: right; padding: 5px; display: inline-block; width: 39%">
-							</div>
-						</form>
-						<!-- -----------------------------------검색부분 끝----------------------------------- -->
+						<h2>2021년 7월</h2>
 						<div class='row'>
 							<table id="products"
 								class="table table-bordered table-hover table-striped">
 								<thead>
+									<tr class="thead-dark" style="text-align: center">
+										<th colspan="3">수익</th>
+										<th colspan="3">지출</th>
+									</tr>
 									<tr class="thead-dark">
-										<th></th>
-										<th>2021년 4월</th>
-										<th>2021년 5월</th>
-										<th>2021년 6월</th>
-										<th>2021년 7월</th>
+										<th style="width: 20%">항목</th>
+										<th style="width: 10%">일자</th>
+										<th style="width: 20%">금액</th>
+										<th style="width: 20%">항목</th>
+										<th style="width: 10%">일자</th>
+										<th style="width: 20%">금액</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -95,7 +77,7 @@ out.print("size:" + size);
 									if (size == 0) {
 									%>
 									<tr>
-										<td colspan="3">조회결과가 없습니다.</td>
+										<td colspan="6">조회결과가 없습니다.</td>
 									</tr>
 									<%
 									} else {//조회 결과가 있을 때
@@ -110,38 +92,50 @@ out.print("size:" + size);
 			 -->
 									<tr>
 										<%-- 										<td><%=pmap.get("PROJECT_PERIOD").toString()%></td> --%>
-										<td>수익금</td>
-										<td>100</td>
-										<td>100</td>
-										<td>100</td>
-										<td>100</td>
+										<td>프로젝트a</td>
+										<td>1</td>
+										<td>억</td>
+										<td>소모품</td>
+										<td></td>
+										<td>백만</td>
 									</tr>
 									<tr>
 										<%-- 										<td><%=pmap.get("PROJECT_PERIOD").toString()%></td> --%>
-										<td>지출금</td>
-										<td>100</td>
-										<td>100</td>
-										<td>100</td>
-										<td>100</td>
+										<td>프로젝트b</td>
+										<td>20</td>
+										<td>억</td>
+										<td>사무용품</td>
+										<td>2</td>
+										<td>이백만</td>
 									</tr>
 									<tr>
 										<%-- 										<td><%=pmap.get("PROJECT_PERIOD").toString()%></td> --%>
-										<td>합계</td>
-										<td>100</td>
-										<td>100</td>
-										<td>100</td>
-										<td>100</td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td>간식비</td>
+										<td>15</td>
+										<td>백만</td>
 									</tr>
-
 									<%
 									} ///end of for
 									} ///end of if
 									%>
 								</tbody>
+								<tfoot>
+									<tr>
+										<td>총 합계</td>
+										<td colspan="2" style="text-align: right;">2억</td>
+										<td>총 합계</td>
+										<td colspan="2" style="text-align: right;">2백만</td>
+									</tr>
+								</tfoot>
 							</table>
 							<hr />
 						</div>
-						여긴 차트
+
+
+
 						<!--
 ****************************************** 컨텐츠 들어갈내용 끝 *************************************************   
 -->
@@ -151,7 +145,6 @@ out.print("size:" + size);
 			</main>
 		</div>
 	</div>
-
 
 	<!-- 슬라이드바 사용할때 필요 -->
 	<script

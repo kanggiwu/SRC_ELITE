@@ -19,17 +19,24 @@ public class AccountLogic {
 		this.accountDao = accountDao;
 	}
 	
-	// 급여 정보 변경
-	public int updateSalary(Map<String,Object> pmap){
+	// 급여 정산 조회
+	public List<Map<String,Object>> getAccount(Map<String,Object> pmap) {
+		List<Map<String, Object>> accountList = null;
+		accountList = accountDao.getAccount(pmap);
+		return accountList;
+	}
+	
+	// 급여 정산 변경
+	public int updateAccount(Map<String,Object> pmap){
 		int result = 0;
-		result = accountDao.updateSalary(pmap);
+		result = accountDao.updateAccount(pmap);
 		return result;
 	}
 	
-	// 급여 정보 추가
-	public int insertSalary(Map<String,Object> pmap){
+	// 급여 정산 추가
+	public int insertAccount(Map<String,Object> pmap){
 		int result = 0;
-		result = accountDao.insertSalary(pmap);
+		result = accountDao.insertAccount(pmap);
 		return result;
 	}
 	
@@ -85,10 +92,10 @@ public class AccountLogic {
 		return expenseList;
 	}
 	// 월말 결산
-	public List<Map<String,Object>> getMonthStatement(Map<String,Object> pmap) {
-		List<Map<String, Object>> expenseList = null;
-		expenseList = accountDao.getBalanceList(pmap);
-		return expenseList;
+	public List<Map<String,Object>> getMonthAccount(Map<String,Object> pmap) {
+		List<Map<String, Object>> monthStatement = null;
+		monthStatement = accountDao.getMonthlyAccount(pmap);
+		return monthStatement;
 	}
 
 }

@@ -108,7 +108,7 @@ $setRows.submit();
   });
 </script>
 
-<title>수익 관리</title>
+<title>Account</title>
 </head>
 <body class="sb-nav-fixed">
 	<nav id="topNav"></nav>
@@ -191,11 +191,8 @@ document.getElementById('my_form').onsubmit = function(){
 									<tr>
 										<%-- 										<td><%=pmap.get("PROJECT_PERIOD").toString()%></td> --%>
 										<td>육지로</td>
-										<td>엊그제</td>
 										<td>어제</td>
-										<td>억</td>
 										<td>백만</td>
-										<td>si</td>
 										<td><button type="button" class="btn btn-warning"
 												data-toggle="modal" data-target="#mod_updEmp">
 												<i class="fas fa-edit"></i>
@@ -233,13 +230,6 @@ document.getElementById('my_form').onsubmit = function(){
 											<br>
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
-													style="display: inline-block; width: 25%">시작일</span> <input
-													type="date" name="emp_retiretext" class="form-control"
-													value="" aria-describedby="basic-addon1">
-											</div>
-											<br>
-											<div class="input-group">
-												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">종료일</span> <input
 													type="date" name="emp_retiretext" class="form-control"
 													value="" aria-describedby="basic-addon1">
@@ -250,22 +240,6 @@ document.getElementById('my_form').onsubmit = function(){
 													style="display: inline-block; width: 25%">단가</span> <input
 													type="text" name="emp_retiretext" class="form-control"
 													value="" aria-describedby="basic-addon1">
-											</div>
-											<br>
-											<div class="input-group">
-												<span class="input-group-addon" id="basic-addon1"
-													style="display: inline-block; width: 25%">매출</span> <input
-													type="text" name="emp_retiretext" class="form-control"
-													value="" aria-describedby="basic-addon1">
-											</div>
-											<br>
-											<div class="input-group">
-												<span class="input-group-addon" id="basic-addon1"
-													style="display: inline-block; width: 25%">종류</span> <select
-													name="project_name" class="form-control" id="dept_options">
-													<option value="SI">SI</option>
-													<option value="SM">SM</option>
-												</select>
 											</div>
 
 											<br>
@@ -305,13 +279,6 @@ document.getElementById('my_form').onsubmit = function(){
 										<br>
 										<div class="input-group">
 											<span class="input-group-addon" id="basic-addon1"
-												style="display: inline-block; width: 25%">시작일</span> <input
-												type="date" name="emp_retiretext" class="form-control"
-												value="" aria-describedby="basic-addon1">
-										</div>
-										<br>
-										<div class="input-group">
-											<span class="input-group-addon" id="basic-addon1"
 												style="display: inline-block; width: 25%">종료일</span> <input
 												type="date" name="emp_retiretext" class="form-control"
 												value="" aria-describedby="basic-addon1">
@@ -323,22 +290,7 @@ document.getElementById('my_form').onsubmit = function(){
 												type="text" name="emp_retiretext" class="form-control"
 												value="" aria-describedby="basic-addon1">
 										</div>
-										<br>
-										<div class="input-group">
-											<span class="input-group-addon" id="basic-addon1"
-												style="display: inline-block; width: 25%">매출</span> <input
-												type="text" name="emp_retiretext" class="form-control"
-												value="" aria-describedby="basic-addon1">
-										</div>
-										<br>
-										<div class="input-group">
-											<span class="input-group-addon" id="basic-addon1"
-												style="display: inline-block; width: 25%">종류</span> <select
-												name="project_name" class="form-control" id="dept_options">
-												<option value="SI">SI</option>
-												<option value="SM">SM</option>
-											</select>
-										</div>
+
 
 										<br>
 									</form>

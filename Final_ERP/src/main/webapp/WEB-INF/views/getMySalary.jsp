@@ -27,24 +27,42 @@ int sal_deduction_etc = 0;
 int sal_deductions = 0;
 int sal_total = 0;
 if (mySalary != null) {
-	if(mySalary.get("SAL_NO") != null) sal_no = Integer.parseInt(mySalary.get("SAL_NO").toString());
-	if(mySalary.get("SAL_BASE") != null) sal_base = Integer.parseInt(mySalary.get("SAL_BASE").toString());
-	if(mySalary.get("SAL_INCENTIVE") != null) sal_incentive = Integer.parseInt(mySalary.get("SAL_INCENTIVE").toString());
-	if(mySalary.get("SAL_POSITION") != null)sal_position = Integer.parseInt(mySalary.get("SAL_POSITION").toString());
-	if(mySalary.get("SAL_TECH") != null)sal_tech = Integer.parseInt(mySalary.get("SAL_TECH").toString());
-	if(mySalary.get("SAL_ETC") != null)sal_etc = Integer.parseInt(mySalary.get("SAL_ETC").toString());
-	if(mySalary.get("SAL_MEAL") != null)sal_meal = Integer.parseInt(mySalary.get("SAL_MEAL").toString());
-	if(mySalary.get("SAL_COMMU") != null)sal_commu = Integer.parseInt(mySalary.get("SAL_COMMU").toString());
-	if(mySalary.get("SAL_PAYMENT") != null)sal_payment = Integer.parseInt(mySalary.get("SAL_PAYMENT").toString());
-	if(mySalary.get("SAL_NATION_PENSION") != null)sal_nation_pension = Integer.parseInt(mySalary.get("SAL_NATION_PENSION").toString());
-	if(mySalary.get("SAL_HEALTH") != null)sal_health = Integer.parseInt(mySalary.get("SAL_HEALTH").toString());
-	if(mySalary.get("SAL_INDUSTRIAL_INSURANCE") != null)sal_industrial_insurance = Integer.parseInt(mySalary.get("SAL_INDUSTRIAL_INSURANCE").toString());
-	if(mySalary.get("SAL_EMPLOY_INSURANCE") != null)sal_employ_insurance = Integer.parseInt(mySalary.get("SAL_EMPLOY_INSURANCE").toString());
-	if(mySalary.get("SAL_INCOME_TAX") != null)sal_income_tax = Integer.parseInt(mySalary.get("SAL_INCOME_TAX").toString());
-	if(mySalary.get("SAL_LOCAL_TAX") != null)sal_local_tax = Integer.parseInt(mySalary.get("SAL_LOCAL_TAX").toString());
-	if(mySalary.get("SAL_DEDUCTION_ETC") != null)sal_deduction_etc = Integer.parseInt(mySalary.get("SAL_DEDUCTION_ETC").toString());
-	if(mySalary.get("SAL_DEDUCTIONS") != null)sal_deductions = Integer.parseInt(mySalary.get("SAL_DEDUCTIONS").toString());
-	if(mySalary.get("SAL_TOTAL") != null)sal_total = Integer.parseInt(mySalary.get("SAL_TOTAL").toString());
+	if (mySalary.get("SAL_NO") != null)
+		sal_no = Integer.parseInt(mySalary.get("SAL_NO").toString());
+	if (mySalary.get("SAL_BASE") != null)
+		sal_base = Integer.parseInt(mySalary.get("SAL_BASE").toString());
+	if (mySalary.get("SAL_INCENTIVE") != null)
+		sal_incentive = Integer.parseInt(mySalary.get("SAL_INCENTIVE").toString());
+	if (mySalary.get("SAL_POSITION") != null)
+		sal_position = Integer.parseInt(mySalary.get("SAL_POSITION").toString());
+	if (mySalary.get("SAL_TECH") != null)
+		sal_tech = Integer.parseInt(mySalary.get("SAL_TECH").toString());
+	if (mySalary.get("SAL_ETC") != null)
+		sal_etc = Integer.parseInt(mySalary.get("SAL_ETC").toString());
+	if (mySalary.get("SAL_MEAL") != null)
+		sal_meal = Integer.parseInt(mySalary.get("SAL_MEAL").toString());
+	if (mySalary.get("SAL_COMMU") != null)
+		sal_commu = Integer.parseInt(mySalary.get("SAL_COMMU").toString());
+	if (mySalary.get("SAL_PAYMENT") != null)
+		sal_payment = Integer.parseInt(mySalary.get("SAL_PAYMENT").toString());
+	if (mySalary.get("SAL_NATION_PENSION") != null)
+		sal_nation_pension = Integer.parseInt(mySalary.get("SAL_NATION_PENSION").toString());
+	if (mySalary.get("SAL_HEALTH") != null)
+		sal_health = Integer.parseInt(mySalary.get("SAL_HEALTH").toString());
+	if (mySalary.get("SAL_INDUSTRIAL_INSURANCE") != null)
+		sal_industrial_insurance = Integer.parseInt(mySalary.get("SAL_INDUSTRIAL_INSURANCE").toString());
+	if (mySalary.get("SAL_EMPLOY_INSURANCE") != null)
+		sal_employ_insurance = Integer.parseInt(mySalary.get("SAL_EMPLOY_INSURANCE").toString());
+	if (mySalary.get("SAL_INCOME_TAX") != null)
+		sal_income_tax = Integer.parseInt(mySalary.get("SAL_INCOME_TAX").toString());
+	if (mySalary.get("SAL_LOCAL_TAX") != null)
+		sal_local_tax = Integer.parseInt(mySalary.get("SAL_LOCAL_TAX").toString());
+	if (mySalary.get("SAL_DEDUCTION_ETC") != null)
+		sal_deduction_etc = Integer.parseInt(mySalary.get("SAL_DEDUCTION_ETC").toString());
+	if (mySalary.get("SAL_DEDUCTIONS") != null)
+		sal_deductions = Integer.parseInt(mySalary.get("SAL_DEDUCTIONS").toString());
+	if (mySalary.get("SAL_TOTAL") != null)
+		sal_total = Integer.parseInt(mySalary.get("SAL_TOTAL").toString());
 }
 %>
 <!DOCTYPE html>
@@ -113,23 +131,30 @@ function searchMySalary() {
 										data-toggle="modal" data-target="#mod_addEmp">퇴직금 계산기</button>
 								</div>
 								<div class="row">
-									
+
 									<div class="row"></div>
 									<div class="col-lg-12">
-										<br>
-										<div class="input-group">
-											<span class="input-group-addon" id="basic-addon1"
-												style="display: inline-block; width: 50%">
-												<h5>급여 상세 내역</h5>
-											</span> <select class="form-control" name="year"
-												id="yearSearch">
-												<option selected>2021</option>
-											</select> <select class="form-control" name="month"
-												id="monthSearch">
-												<option selected>06</option>
-											</select>
-											<button class="btn btn-light" onclick="javascript:searchMySalary()">검색</button>
-										</div>
+										<!-- -----------------------------------검색부분---------------------------------- -->
+										<form id="myform" class="form-horizontal" role="form">
+											<div
+												style="text-align: left; padding: 5px; display: inline-block; width: 50%;">
+												<span class="input-group"> <select
+													class="form-control" name="year" id="yearSearch">
+														<option selected>2021</option>
+												</select> <select class="form-control" name="month" id="monthSearch">
+														<option selected>06</option>
+												</select> <a href="javascript:empSearchAction()"
+													class="btn btn-default float-left" role="button"><i
+														class="fas fa-search"></i></a>
+												</span>
+
+											</div>
+											<div
+												style="text-align: right; padding: 5px; display: inline-block; width: 49%">
+
+											</div>
+										</form>
+										<!-- -----------------------------------검색부분 끝----------------------------------- -->
 										<table class="table table-bordered table-hover table-striped"
 											id="testTable" id="table" data-toggle="table"
 											data-height="650" data-search="true" data-show-columns="true"
@@ -222,7 +247,8 @@ function searchMySalary() {
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1"
 								style="display: inline-block; width: 40%">입사날짜</span> <input
-								type="text" class="form-control" id="emp_hiredte" value="" readonly>
+								type="text" class="form-control" id="emp_hiredte" value=""
+								readonly>
 						</div>
 						<br>
 						<div class="input-group">
@@ -234,7 +260,8 @@ function searchMySalary() {
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1"
 								style="display: inline-block; width: 40%">3개월 평균 급여</span> <input
-								type="text" class="form-control" id="averageSalary" value="" readonly>
+								type="text" class="form-control" id="averageSalary" value=""
+								readonly>
 						</div>
 						<br>
 						<div class="input-group">
@@ -249,13 +276,15 @@ function searchMySalary() {
 						<div class="input-group">
 							<span class="input-group-addon" id="basic-addon1"
 								style="display: inline-block; width: 40%">예상 퇴직금</span> <input
-								type="text" class="form-control" id="retirementPay" value="" readonly>
+								type="text" class="form-control" id="retirementPay" value=""
+								readonly>
 						</div>
 						<br>
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success" onclick="calculateSalary()">계산</button>
+					<button type="button" class="btn btn-success"
+						onclick="calculateSalary()">계산</button>
 					<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 				</div>
 			</div>

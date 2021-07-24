@@ -260,11 +260,9 @@ document.getElementById('my_form').onsubmit = function(){
 											<br>
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
-													style="display: inline-block; width: 25%">수주처</span> <select
-													name="project_name" class="form-control" id="dept_options">
-													<option value="SI">SI</option>
-													<option value="SM">SM</option>
-												</select>
+													style="display: inline-block; width: 25%">수주처</span> <input
+													type="text" name="emp_retiretext" class="form-control"
+													value="" aria-describedby="basic-addon1" placeholder="해당없음">
 											</div>
 
 											<br>
@@ -325,11 +323,9 @@ document.getElementById('my_form').onsubmit = function(){
 											<br>
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
-													style="display: inline-block; width: 25%">수주처</span> <select
-													name="project_name" class="form-control" id="dept_options">
-													<option value="SI">SI</option>
-													<option value="SM">SM</option>
-												</select>
+													style="display: inline-block; width: 25%">수주처</span> <input
+													type="text" name="emp_retiretext" class="form-control"
+													value="" aria-describedby="basic-addon1" placeholder="해당없음">
 											</div>
 
 											<br>

@@ -63,12 +63,10 @@ out.print("size:" + size);
 										<th colspan="3">지출</th>
 									</tr>
 									<tr class="thead-dark">
-										<th style="width: 20%">항목</th>
-										<th style="width: 10%">일자</th>
-										<th style="width: 20%">금액</th>
-										<th style="width: 20%">항목</th>
-										<th style="width: 10%">일자</th>
-										<th style="width: 20%">금액</th>
+										<th style="width: 25%">항목</th>
+										<th style="width: 25%">금액</th>
+										<th style="width: 25%">항목</th>
+										<th style="width: 25%">금액</th>
 									</tr>
 								</thead>
 								<tbody>

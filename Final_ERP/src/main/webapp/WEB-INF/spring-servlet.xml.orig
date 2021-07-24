@@ -155,6 +155,11 @@
 				<prop key="/notice/updateNotice.src1">updateNotice</prop>
 				<prop key="/notice/deleteNotice.src1">deleteNotice</prop>
 
+<<<<<<< HEAD
+=======
+				<prop key="/schedule/empSchedule.src1">empSchedule</prop>
+				<prop key="/schedule/getStartWorktime.src1">getStartWorktime</prop>
+>>>>>>> origin/KT_02
 				<prop key="/schedule/getCalendarSchedule.src1">getCalendarSchedule</prop>
 				<prop key="/schedule/getJsonSchedule.src1">getJsonSchedule</prop>
 				<prop key="/schedule/insertSchedule.src1">insertSchedule</prop>

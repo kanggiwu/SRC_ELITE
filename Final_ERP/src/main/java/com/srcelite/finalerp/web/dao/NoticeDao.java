@@ -16,28 +16,27 @@ public class NoticeDao {
 
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
-//	공지조회 페이지
 	}
-	
+
+	//	공지조회 페이지
 	public List<Map<String, Object>> getAllNoticeList(Map<String, Object> pmap) {
 		logger.info("NoticeDao == getAllNoticeList == 호출");
 
 		List<Map<String, Object>> noticeAllList = null;
 		noticeAllList = sqlSessionTemplate.selectList("getNoticeList",pmap);
 		return noticeAllList;
+	}
 		
-//	공지 검색기능
-		
-		}
+	//	공지 검색기능
 	public List<Map<String, Object>> searchNotice(Map<String, Object> pmap) {
 		logger.info("NoticeDao == searchNotice == 호출");
 		List<Map<String, Object>> searchNotice = null;
 		sqlSessionTemplate.selectList("getNoticeListProc",pmap);
 		searchNotice = (List<Map<String, Object>>) pmap.get("n_cursor");
 		return searchNotice;
-		
-//	공지 상세조회
 	}
+
+	//	공지 상세조회
 	public List<Map<String, Object>> getDetailNotice(Map<String, Object> pmap) {
 		logger.info("NoticeDao == getDetailNotice == 호출");
 		
@@ -46,8 +45,8 @@ public class NoticeDao {
 		logger.info("NoticeDao == getDetailNotice == 호출:"+NoticeDetail);
 		
 		return NoticeDetail;
-//		공지추가 페이지
 	}
+	// 공지추가 페이지
 	public List<Map<String, Object>> getNewNotice(Map<String, Object> pmap) {
 		logger.info("NoticeDao == getNewNotice == 호출");
 
@@ -55,7 +54,8 @@ public class NoticeDao {
 		newNotice = sqlSessionTemplate.selectList("getNoticeList",pmap);
 		return newNotice;
 	}
-//	공지추가
+
+	//	공지추가
 	public int insertNotice(Map<String, Object> pmap) {
 		logger.info("notice_no:"+pmap.get("notice_no"));
 		logger.info("notice_type:"+pmap.get("notice_type"));
@@ -66,7 +66,8 @@ public class NoticeDao {
 		logger.info("dao result : " + result);
 		return result;
 	}
-//	공지 수정
+
+	//	공지 수정
 	public int updateNotice(Map<String, Object> pmap) {
 		logger.info("notice_no:"+pmap.get("notice_no"));
 		logger.info("notice_type:"+pmap.get("notice_type"));
@@ -77,7 +78,8 @@ public class NoticeDao {
 		logger.info("result:"+result);
 		return result;
 	}
-//	공지삭제
+
+	//	공지삭제
 	public int deleteNotice(Map<String, Object> pmap) {
 		logger.info("notice_no:"+pmap.get("dnotice_no"));
 		int result = 0;

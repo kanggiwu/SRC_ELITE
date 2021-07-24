@@ -51,7 +51,11 @@ const sideNavMainTitleApi = [
     id: "personal",
     title: "일정",
     className: "",
+<<<<<<< HEAD
     ref: "/schedule/getCalendarSchedule.src1",
+=======
+    ref: "/schedule/empSchedule.src1",
+>>>>>>> origin/KT_02
     onClick: "",
     collapsed: false,
   },
