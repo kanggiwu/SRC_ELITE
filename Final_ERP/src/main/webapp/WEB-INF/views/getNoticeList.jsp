@@ -167,7 +167,7 @@ function search() {
 	<!-- 탑메뉴 사용 -->
 	<script src="../common/js/topNav.js"></script>
 	<!-- 사이드 메뉴 사용 -->
-	<script src="../common/js/sideNav.js"></script>
+	<script src="../common/js/sideNav.js?ver=1"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
 		crossorigin="anonymous"></script>
 	<script src="../common/scripts.js"></script>
