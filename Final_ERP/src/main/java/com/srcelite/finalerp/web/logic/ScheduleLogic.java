@@ -26,9 +26,10 @@ public class ScheduleLogic {
 	 */
 
 	// 일정 조회(월) -- 스케줄 타입별로 데이터 가져오기
-	public List<Map<String, Object>> getScheduleList(Map<String, Object> pMap) {
+	public List<Map<String, Object>> getJsonScheduleList(Map<String, Object> pMap) {
+		logger.info("[Logic] getScheduleList 호출 성공");
 		List<Map<String, Object>> scheduleList = null;
-		scheduleList = scheduleDao.getScheduleList(pMap);
+		scheduleList = scheduleDao.getJsonScheduleList(pMap);
 
 		return scheduleList;
 	}

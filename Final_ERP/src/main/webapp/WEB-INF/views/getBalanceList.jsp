@@ -67,7 +67,7 @@ String balance_total = "";
 				if (i == size)
 					break;
 				
-				balance_date = smap.get("TOTAL_DATE").toString();
+				balance_date = smap.get("BALANCE_DATE").toString();
 				balance_date_month = balance_date.substring(5, 7);
 				balance_profit = smap.get("BALANCE_PROFIT").toString();
 				balance_expense = smap.get("BALANCE_EXPENSE").toString();

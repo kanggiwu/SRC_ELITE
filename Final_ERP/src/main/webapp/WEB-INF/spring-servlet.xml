@@ -66,6 +66,7 @@
 
 				<prop key="/schedule/empSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/getCalendarSchedule.src1">schedule-controller</prop>
+				<prop key="/schedule/getJsonSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/insertSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/updateSchedule.src1">schedule-controller</prop>
 				<prop key="/schedule/updateDateSchedule.src1">schedule-controller</prop>
@@ -74,8 +75,8 @@
 				<prop key="/account/getAccountInfo.src1">account-controller</prop>
 				<prop key="/account/getAccountEmpList.src1">account-controller</prop>
 				<prop key="/account/getAccountEmpSearch.src1">account-controller</prop>
-				<prop key="/account/updateSalary.src1">account-controller</prop>
-				<prop key="/account/insertSalary.src1">account-controller</prop>
+				<prop key="/account/updateAccount.src1">account-controller</prop>
+				<prop key="/account/insertAccount.src1">account-controller</prop>
 				<prop key="/account/getProfitList.src1">account-controller</prop>
 				<prop key="/account/updateProfit.src1">account-controller</prop>
 				<prop key="/account/insertProfit.src1">account-controller</prop>
@@ -106,6 +107,22 @@
 				<prop key="/approval/getLineApproval.src1">approval-controller</prop>
 				<!-- 결재자조회 getApproverEmp-->
 				<prop key="/approval/getApproverEmp.src1">approval-controller</prop>
+				<!-- 발신함결재자조회 getSendApproverEmp-->
+				<prop key="/approval/getSendApproverEmp.src1">approval-controller</prop>
+				<!-- 결재라인에서 결재자조회 -->
+				<prop key="/approval/getEmpSearchList3.src1">approval-controller</prop>
+				<!-- 결재문서조회 -->
+				<prop key="/approval/vacationPlan.src1">approval-controller</prop>
+				<!-- 결재문서조회 (프로젝트계약확정서)-->
+				<prop key="/approval/projectPlan.src1">approval-controller</prop>
+				<!-- 발신결재문서조회 -->
+				<prop key="/approval/sendVacationPlan.src1">approval-controller</prop>
+				<!-- 발신결재문서조회 (프로젝트계약확정서)-->
+				<prop key="/approval/sendProjectPlan.src1">approval-controller</prop>
+				<!-- 결재신청입력-->
+				<prop key="/approval/insertApproval.src1">approval-controller</prop>
+				<!-- 수신결재문서 승인/결재-->
+				<prop key="/approval/permissionApproval.src1">approval-controller</prop>
 				<!-- 결재문서조회 getApproverEmp-->
 				<!-- <prop key="/approval/getDetailApproval.src1">approval-controller</prop> -->
 
@@ -140,10 +157,8 @@
 				<prop key="/notice/updateNotice.src1">updateNotice</prop>
 				<prop key="/notice/deleteNotice.src1">deleteNotice</prop>
 
-				<prop key="/schedule/empSchedule.src1">empSchedule</prop>
-				<prop key="/schedule/getStartWorktime.src1">getStartWorktime</prop>
 				<prop key="/schedule/getCalendarSchedule.src1">getCalendarSchedule</prop>
-				<prop key="/schedule/getDetailSchedule.src1">getDetailSchedule</prop>
+				<prop key="/schedule/getJsonSchedule.src1">getJsonSchedule</prop>
 				<prop key="/schedule/insertSchedule.src1">insertSchedule</prop>
 				<prop key="/schedule/updateSchedule.src1">updateSchedule</prop>
 				<prop key="/schedule/updateDateSchedule.src1">updateDateSchedule</prop>
@@ -152,8 +167,8 @@
 				<prop key="/account/getAccountInfo.src1">getAccountInfo</prop>
 				<prop key="/account/getAccountEmpList.src1">getAccountEmpList</prop>
 				<prop key="/account/getAccountEmpSearch.src1">getAccountEmpSearch</prop>
-				<prop key="/account/updateSalary.src1">updateSalary</prop>
-				<prop key="/account/insertSalary.src1">insertSalary</prop>
+				<prop key="/account/updateAccount.src1">updateAccount</prop>
+				<prop key="/account/insertAccount.src1">insertAccount</prop>
 				<prop key="/account/getProfitList.src1">getProfitList</prop>
 				<prop key="/account/updateProfit.src1">updateProfit</prop>
 				<prop key="/account/insertProfit.src1">insertProfit</prop>
@@ -174,7 +189,7 @@
 				<prop key="/humanresource/deleteLIcenceInfo.src1">deleteLIcenceInfo</prop>
 
 				<prop key="/approval/getApprovalForm.src1">getApprovalForm</prop>
-				<prop key="/approval/getApprovalFormList.src1">getApprovalForm</prop>
+				<prop key="/approval/getApprovalFormList.src1">getApprovalFormList</prop>
 				<prop key="/approval/submitApproval.src1">submitApproval</prop>
 				<prop key="/approval/getSendApproval.src1">getSendApproval</prop>
 				<prop key="/approval/getDetailSendApproval.src1">getDetailSendApproval</prop>
@@ -182,8 +197,25 @@
 				<prop key="/approval/getDetailReceiveApproval.src1">getDetailReceiveApproval</prop>
 				<prop key="/approval/getNumUnsignedApproval.src1">getNumUnsignedApproval</prop>
 				<prop key="/approval/getLineApproval.src1">getLineApproval</prop>
-				<!-- 결재자조회 getApproverEmp-->
+				<!-- 결재자조회 -->
 				<prop key="/approval/getApproverEmp.src1">getApproverEmp</prop>
+				<!-- 발신함결재자조회 getSendApproverEmp-->
+				<prop key="/approval/getSendApproverEmp.src1">getSendApproverEmp</prop>
+				<!-- 결재라인에서 결재자조회 -->
+				<prop key="/approval/getEmpSearchList3.src1">getEmpSearchList3</prop>
+				<!-- 결재문서조회 (휴가계획서)-->
+				<prop key="/approval/vacationPlan.src1">getDetailApproval</prop>
+				<!-- 결재문서조회 (프로젝트계약확정서)-->
+				<prop key="/approval/projectPlan.src1">getDetailApproval2</prop>
+				<!-- 결재신청입력-->
+				<prop key="/approval/insertApproval.src1">insertApproval</prop>
+				<!-- 발신결재문서조회 -->
+				<prop key="/approval/sendVacationPlan.src1">sendVacationPlan</prop>
+				<!-- 발신결재문서조회 (프로젝트계약확정서)-->
+				<prop key="/approval/sendProjectPlan.src1">sendProjectPlan</prop>
+				<!-- 수신결재문서 승인/결재-->
+				<prop key="/approval/permissionApproval.src1">permissionApproval</prop>
+				
 				<!-- 결재문서조회 getApproverEmp-->
 				<!-- <prop key="/approval/getDetailApproval.src1">getDetailApproval</prop> -->
 				

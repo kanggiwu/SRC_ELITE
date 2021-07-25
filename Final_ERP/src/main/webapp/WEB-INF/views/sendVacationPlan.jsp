@@ -4,14 +4,12 @@
 <%
 	StringBuilder path = new StringBuilder(request.getContextPath());
 	path.append("/");
-	List<Map<String,Object>> getDetailSendApproval = null;
-	getDetailSendApproval = (List<Map<String,Object>>)request.getAttribute("getDetailSendApproval");
-	int size = 0;
-	//String pProjectNo = null;
-	if(getDetailSendApproval!=null){
-		size = getDetailSendApproval.size();
-	}
-	out.print("size:"+size);
+	String[] token = null; 
+	token = (String[])request.getAttribute("token");
+	String deptName = token[0];
+	String empName = token[1];
+	String period = token[2];
+	String reason = token[3];
 %> 
 <!DOCTYPE html>
 <html>
@@ -34,33 +32,21 @@
 <body>
 <div class="container">
 	<form class="form-horizontal" role="form">
-		<%
-		//조회 결과가 없는 거야?
-		if(size==0){		
-		%>    
-			alert("조회결과가 없습니다");
-		<%
-		}
-		else{//조회 결과가 있을 때
-			for(int i=0;i<size;i++){
-				Map<String,Object> pmap = getDetailSendApproval.get(i);
-				if(i==size) break;
-		%>   
 		<div class="form-group" >
 			<label for="lab_deptName">부서명</label>				
-			<input type="text" class="form-control" id="txt_deptName" value="<%=pmap.get("APRV_NO").toString()%>" readonly>				
+			<input type="text" class="form-control" id="txt_deptName" value="<%=deptName%>" readonly>				
 		</div>
 		<div class="form-group">
 			<label for="lab_empName">사원명</label>
-			<input type="text" class="form-control" id="txt_empName" value="" readonly>
+			<input type="text" class="form-control" id="txt_empName" value="<%=empName%>" readonly>
 		</div>
 		<div class="form-group">
 			<label for="lab_period">기간</label>
-			<input type="text" class="form-control" id="txt_period" value="" readonly>
+			<input type="text" class="form-control" id="txt_period" value="<%=period%>" readonly>
 		</div>
 		<div class="form-group">
 			<label for="lab_reason">내용(사유)</label>
-			<textarea class="form-control" id="txt_reason" rows="5" cols="50" readonly></textarea>
+			<textarea class="form-control" id="txt_reason" rows="5" cols="50" readonly><%=reason%></textarea>
 		</div>
 		<div class="col text-center">
 			<button type="button" id="sendConfirm" class="btn btn-info btn-lg" onclick="self.close()">

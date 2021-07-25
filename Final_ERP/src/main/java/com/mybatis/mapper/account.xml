@@ -7,17 +7,33 @@
 	<resultMap  type="map" id="expenseMap"/>
 	<resultMap  type="map" id="salaryMap"/>
 	
+	<!-- 사원의 급여 정보 조회 (현재 년/월) -->
+	<select id="getCurrentSalaryAndEmpInfo" parameterType="map" resultType="map">
+   SELECT dept_name, salary.emp_no, rank_name, emp_name, emp_hiredate, emp_account, sal_date,
+       DECODE (sal_base, NULL, '0', sal_base) sal_base,
+       DECODE (sal_position, NULL, '0', sal_position) sal_position, DECODE (sal_nation_pension, NULL, '0', sal_nation_pension) sal_nation_pension,
+       DECODE (sal_health, NULL, '0', sal_health) sal_health, DECODE (sal_industrial_insurance, NULL, '0', sal_industrial_insurance) sal_industrial_insurance,
+       DECODE (sal_employ_insurance, NULL, '0', sal_employ_insurance) sal_employ_insurance, DECODE (sal_income_tax, NULL, '0', sal_income_tax) sal_income_tax,
+       DECODE (sal_tech, NULL, '0', sal_tech) sal_tech, DECODE (sal_meal, NULL, '0', sal_meal) sal_meal,
+       DECODE (sal_commu, NULL, '0', sal_commu) sal_commu, DECODE (sal_local_tax, NULL, '0', sal_local_tax) sal_local_tax,
+       DECODE (sal_etc, NULL, '0', sal_etc) sal_etc, DECODE (sal_deduction_etc, NULL, '0', sal_deduction_etc) sal_deduction_etc,
+       DECODE (sal_total, NULL, '0', sal_total) sal_total, DECODE (sal_deductions, NULL, '0', sal_deductions) sal_deductions
+     FROM Salary
+    JOIN (SELECT dept.dept_name dept_name, emp.emp_no emp_no,
+                  emp.emp_name emp_name, emp.emp_hiredate emp_hiredate,
+                  emp.emp_account emp_account, RANK.rank_name rank_name
+          FROM emp, dept, RANK
+          WHERE emp.dept_no = dept.dept_no AND emp.rank_no = RANK.rank_no) emp_info
+    ON salary.emp_no = emp_info.emp_no
+    AND SUBSTR (salary.sal_date, 0, 7) = TO_CHAR (SYSDATE, 'yyyy-mm')
+    AND salary.emp_no = #{emp_no}
+	</select>
+	
 	<!-- 급여 정보 수정 -->
-	<update id="updateSalary" parameterType="map">
+	<update id="updateAccount" parameterType="map">
 		UPDATE salary
 		SET
-    		sal_base = NVL(#{sal_base}, 0),
-    		sal_incentive = NVL(#{sal_incentive}, 0),
-   			sal_position = NVL(#{sal_position}, 0),
-    		sal_tech = NVL(#{sal_tech}, 0),
-    		sal_etc = NVL(#{sal_etc}, 0),
-    		sal_meal = NVL(#{sal_meal}, 0),
-    		sal_commu = NVL(#{sal_commu}, 0),
+    		sal_base = NVL(#{sal_base}, 0)
 		WHERE sal_no = #{sal_no} AND emp_no = #{emp_no}
 	</update>
 	
@@ -39,7 +55,7 @@
 	</select>
 	
 	<!-- 급여 정보 추가 -->
-	<insert id="insertSalary" parameterType="map">
+	<insert id="insertAccount" parameterType="map">
 		INSERT INTO salary (sal_no, emp_no, sal_date, sal_base, sal_incentive, sal_position, sal_tech, sal_etc, sal_meal, sal_commu)
                   VALUES (seq_salary,  #{emp_no}, #{sal_date}, #{sal_base}, #{sal_incentive}, #{sal_position}, #{sal_tech}, #{sal_etc}, #{sal_meal}, #{sal_commu})
     </insert>
@@ -58,20 +74,15 @@
  	ORDER BY profit_date DESC
 	</select>
 	
-	<!-- 수익 관리 수정 -->
-	<update id="updateProfit" parameterType="map">
-		UPDATE profit
-		SET
-    	project_no = #{project_no},
-    	profit_price = NVL(#{profit_price}, 0),
-    	profit_date = #{profit_date}
-		WHERE profit_no = #{profit_no}
-	</update>
-	
-	<!-- 수익 관리 추가 -->
-	<insert id="insertProfit" parameterType="map">
-		INSERT INTO profit (profit_no, project_no, profit_price, profit_date)
-                 VALUES (#{profit_no}, #{project_no}, NVL(#{profit_price}, 0), #{profit_date})
+   <!-- 프로젝트 리스트 -->
+   <select id="getProjectList" resultType="map">
+   SELECT project_name, project_no  FROM project WHERE project_register = 'N'
+   </select>
+   
+   <!-- 수익 관리 추가 -->
+   <insert id="insertProfit" parameterType="map">
+      INSERT INTO profit (profit_no, project_no, profit_price, profit_date, profit_detail)
+                 VALUES (seq_profit_no.NEXTVAL, #{project_no}, NVL(#{profit_price}, 0), #{profit_date}, #{profit_detail})
     </insert>
 	
 

@@ -60,6 +60,12 @@ public class AccountLogic {
 		profitList = accountDao.getProfitList(pmap);
 		return profitList;
 	}
+	// 수익 관리 조회
+	public List<Map<String,Object>> getProjectList(Map<String,Object> pmap) {
+		List<Map<String, Object>> projectList = null;
+		projectList = accountDao.getProjectList(pmap);
+		return projectList;
+	}
 
 	// 수익 관리 수정
 	public int updateProfit(Map<String,Object> pmap) {

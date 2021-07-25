@@ -58,71 +58,79 @@ function approvalForm(){
 }///////end of function
 //////휴가계획서 인 경우//////////////
 	function result2(data){
-	let a="";
+		let a="";
+		//a+="<form class='form-horizontal' role='form' id='aaa' method='post' action='getLineApproval.src1'>";
+		a+="<input type='hidden' name='aprv_title' value='휴가계획서'>";
+		a+="<div>";
 			a+="<div class='form-group'>";
 			a+="<label for='lab_deptName'>부서명</label>";				
-			a+="<input type='text' class='form-control' id='txt_deptName'>";				
+			a+="<input type='text' class='form-control' name='txt_deptName'>";				
 			a+="</div>";
 			a+="<div class='form-group'>";
 			a+="<label for='lab_empName'>사원명</label>";
-			a+="<input type='text' class='form-control' id='txt_empName'>";
+			a+="<input type='text' class='form-control' name='txt_empName'>";
 			a+="</div>";
 			a+="<div class='form-group'>";
 			a+="<label for='lab_period'>기간</label>";
 			a+="<div class='form-inline'>";
-			a+="<input type='date' class='form-control' id='dat_peri' name='dat_peri'>&nbsp; ~ &nbsp;";
-			a+="<input type='date' class='form-control' id='dat_peri1' name='dat_peri1'>";
+			a+="<input type='date' class='form-control' name='dat_peri'>&nbsp; ~ &nbsp;";
+			a+="<input type='date' class='form-control' name='dat_peri1'>";
 			a+="</div>";
-			//a+="<input type='text' class='form-control' id='txt_period' value=''>";
 			a+="</div>";
 			a+="<div class='form-group'>";
 			a+="<label for='lab_reason'>내용(사유)</label>";
-			a+="<textarea class='form-control' id='txt_reason' rows='5' cols='50'></textarea>";
+			a+="<textarea class='form-control' name='txt_reason' rows='5' cols='50'></textarea>";
 			a+="</div>";
-			a+="<div class='col text-center'>";	
-			a+="</div>";
+		a+="</div>";
+		//a+="</form>";
+		a+="<div id='ft_sel'>";
 			a+="<div class='col text-right'>";
-			a+="<button type='submit' id='addApproval' class='btn btn-warning btn-lg'"; 
-			a+="onclick='/myService/getLineApproval.jsp'>결재자 선택</button>";	
+			a+="<a href='javascript:selectAppBtn()' class='btn btn-info btn-lg'>결재자 선택</a>";
 			a+="</div>";
-		//document.querySelector(".aaa").innerHTML = a;
+		a+="</div>";
   	 	$('#aaa').html(a);  	        
+		//document.querySelector(".aaa").innerHTML = a;
 }
 ///////프로젝트 계약확정서 인 경우/////////////
 	function result3(data){
 		let b="";
+		//b+="<form class='form-horizontal' role='form' id='aaa' method='post' action='getLineApproval.src1'>";
+		b+="<input type='hidden' name='aprv_title' value='프로젝트계약확정서'>";
+		b+="<div>";
 			b+="<div class='form-group' >";
 			b+="	<label for='lab_projectName'>프로젝트명</label>";				
-			b+="	<input type='text' class='form-control' id='txt_projectName'>";				
+			b+="	<input type='text' class='form-control' name='txt_projectName'>";				
 			b+="</div>";
 			b+="<div class='form-group'>";
 			b+="	<label for='lab_company'>발주사</label>";
-			b+="	<input type='text' class='form-control' id='txt_company'>";
+			b+="	<input type='text' class='form-control' name='txt_company'>";
 			b+="</div>";
 			b+="<div class='form-group'>";
 			b+="	<label for='lab_period2'>기간</label>";
 			b+="<div class='form-inline'>";
-			b+="<input type='date' class='form-control' id='dat_peri2' name='dat_peri2'>&nbsp; ~ &nbsp;";
-			b+="<input type='date' class='form-control' id='dat_peri3' name='dat_peri3'>";
+			b+="	<input type='date' class='form-control' id='dat_peri2' name='dat_peri2'>&nbsp; ~ &nbsp;";
+			b+="	<input type='date' class='form-control' id='dat_peri3' name='dat_peri3'>";
 			b+="</div>";
-			//b+="	<input type='text' class='form-control' id='txt_period2'>";
 			b+="</div>";
 			b+="<div class='form-group'>";
 			b+="	<label for='lab_benefit'>수익금</label>";
-			b+="	<input type='text' class='form-control' id='txt_benefit'>";
+			b+="	<input type='text' class='form-control' name='txt_benefit'>";
 			b+="</div>";
 			b+="<div class='form-group'>";
 			b+="	<label for='lab_kind'>종류</label>";
-			b+="	<input type='text' class='form-control' id='txt_kind'>";
+			b+="	<input type='text' class='form-control' name='txt_kind'>";
 			b+="</div>";
 			b+="<div class='form-group'>";
 			b+="	<label for='lab_context'>개발내용</label>";
-			b+="	<textarea class='form-control' id='txt_context' rows='5' cols='50'></textarea>";
+			b+="	<textarea class='form-control' name='txt_context' rows='5' cols='50'></textarea>";
 			b+="</div>";
+		b+="</div>";
+		//b+="</form>";
+		b+="<div id='ft_sel'>";
 			b+="<div class='col text-right'>";
-			b+="<button type='submit' id='addApproval' class='btn btn-warning btn-lg'"; 
-			b+="onclick='/myService/getLineApproval.jsp'>결재자 선택</button>";	
-			b+="</div>";
+			b+="<a href='javascript:selectAppBtn()' class='btn btn-info btn-lg'>결재자 선택</a>";
+			b+="</div>";		
+		b+="</div>";
 		$('#aaa').html(b);
 }
 </script>
@@ -147,28 +155,29 @@ function approvalForm(){
 						<option value="프로젝트 계약확정서">프로젝트 계약확정서</option>
 					</select>
 					&nbsp;&nbsp;
-					<!-- <button type="button" class="btn btn-info">확인</button> -->
 					<a href="javascript:void(0)" onclick="approvalForm()" class="btn btn-info">확인</a>
      			</div>
      			</div>
-<!--================================= 휴가계획서인 경우 시작  ============================================== -->
-<div class="container">
-	<form class="form-horizontal" role="form" id="aaa">
-	<!-- 내용 들어가는 곳 -->
+<!--=============================================================================== -->
+<div class="container" data-options="iconCls:'icon-save', closed:true, footer:'#ft_sel'">
+	<form class="form-horizontal" role="form" id="aaa" method="post" action="getLineApproval.src1">
+	<!--&&&&&&&&&&& 내용 들어가는 곳 &&&&&&&&&&&&&-->
 	</form>
 </div>
-<!--================================= 프로젝트 계약확정서 경우 끝  ============================================== -->
-     		<!-- <div class="col text-right">
-				<button type="submit" id="addApproval" class="btn btn-warning btn-lg" 
-				onclick="/myService/getLineApproval.jsp">결재자 선택</button>	
-			</div> -->
+
 <!--================================= 컨텐츠 들어갈내용 끝  ============================================== -->
      			</div>
 			</div>
 		</main>
 	</div>
 </div>
+<script>
+function selectAppBtn(){
+	//alert("여기");
+	$('#aaa').submit();
+}
 
+</script>
 <!-- 슬라이드바 사용할때 필요 -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <!-- 탑메뉴 사용 -->

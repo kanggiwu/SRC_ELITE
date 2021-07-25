@@ -19,7 +19,7 @@ public class AccountDao {
 	public List<Map<String,Object>> getAccount(Map<String,Object> pmap) {
 		logger.info("Dao getAccountList 호출:" + pmap);
 		List<Map<String, Object>> accountList = null;
-		accountList = sqlSessionTemplate.selectList("getaccountList",pmap);
+		accountList = sqlSessionTemplate.selectList("getCurrentSalaryAndEmpInfo",pmap);
 		return accountList;
 	}
 	
@@ -65,6 +65,14 @@ public class AccountDao {
 		List<Map<String, Object>> profitList = null;
 		profitList = sqlSessionTemplate.selectList("getProfitList",pmap);
 		return profitList;
+	}
+	
+	// 수익 관리 조회 - 진행중인 프로젝트 조회
+	public List<Map<String,Object>> getProjectList(Map<String,Object> pmap) {
+		logger.info("Dao getProjectList 호출:" + pmap);
+		List<Map<String, Object>> projectList = null;
+		projectList = sqlSessionTemplate.selectList("getProjectList",pmap);
+		return projectList;
 	}
 	
 	// 수익 관리 수정

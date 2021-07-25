@@ -51,7 +51,11 @@ const sideNavMainTitleApi = [
     id: "personal",
     title: "일정",
     className: "",
+<<<<<<< HEAD
     ref: "/schedule/getCalendarSchedule.src1",
+=======
+    ref: "/schedule/empSchedule.src1",
+>>>>>>> origin/KT_02
     onClick: "",
     collapsed: false,
   },
@@ -96,7 +100,7 @@ const sideNavMainTitleApi = [
         id: "approval_wb",
         title: "월말정산",//"휴지통",
         className: "",
-        ref: "/account/getMonthStatement.src1",
+        ref: "/account/getMonthlyAccount.src1",
         onClick: "",
         },
         ],

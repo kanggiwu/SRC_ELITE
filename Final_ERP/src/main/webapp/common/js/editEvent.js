@@ -122,40 +122,45 @@ let editEvent = function (event, element, view) {
         });
 
     });
+
+
+	// 삭제버튼
+	$('#deleteEvent').off('click').on('click', function () {
+	    
+	    $('#deleteEvent').unbind();
+	    
+	    eventModal.modal('hide');
+		/*let schedule_no = $(this).data('id');
+		let schedule_type = $(this).data('type');
+		let schedule_writer = $(this).data('schedule_writer');*/
+		
+		let schedule_no = $(this).data('id');
+		let schedule_type = $(this).data('type');
+		let schedule_writer = $(this).data('schedule_writer');
+		
+	    //삭제시
+	    $.ajax({
+	        type: "post",
+	        url: "/schedule/deleteSchedule.src1",
+	        data: {
+	            schedule_no:schedule_no,
+	            schedule_type:schedule_type,
+	            schedule_writer:schedule_writer
+	        },
+	        success: function (response) {
+	        	if(response == 0){
+	        		alert('일정삭제 실패.');
+	        	}else if(response == 3){
+	            	alert('일정을 삭제할 권한이 없는 사원입니다.');
+	            		
+	            }else{
+	        		alert('삭제되었습니다.');
+	        		$("#calendar").fullCalendar('removeEvents', $(this).data('id'));
+	        	}
+	            $('#calendar').fullCalendar('removeEvents');
+	            $('#calendar').fullCalendar('refetchEvents');
+	        }
+	    });
+	});
+
 };
-
-// 삭제버튼
-$('#deleteEvent').off('click').on('click', function () {
-    
-    $('#deleteEvent').unbind();
-    
-    eventModal.modal('hide');
-	let schedule_no = $(this).data('id');
-	let schedule_type = $(this).data('type');
-	let schedule_writer = $(this).data('schedule_writer');
-	
-    //삭제시
-    $.ajax({
-        type: "post",
-        url: "/schedule/deleteSchedule.src1",
-        data: {
-            schedule_no:schedule_no,
-            schedule_type:schedule_type,
-            schedule_writer:schedule_writer
-        },
-        success: function (response) {
-        	if(response == 0){
-        		alert('일정삭제 실패.');
-        	}else if(response == 3){
-            	alert('일정을 삭제할 권한이 없는 사원입니다.');
-            		
-            }else{
-        		alert('삭제되었습니다.');
-        		$("#calendar").fullCalendar('removeEvents', $(this).data('id'));
-        	}
-            $('#calendar').fullCalendar('removeEvents');
-            $('#calendar').fullCalendar('refetchEvents');
-        }
-    });
-
-});

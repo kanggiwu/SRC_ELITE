@@ -35,8 +35,17 @@ public class ScheduleController extends MultiActionController {
 	 * <prop key="/schedule/updateDateSchedule.src1">schedule-controller</prop>
 	 * <prop key="/schedule/deleteSchedule.src1">deleteSchedule</prop>
 	 */
+<<<<<<< HEAD
 	
 	
+=======
+	public ModelAndView empSchedule(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		logger.info("empSchedule");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("empSchedule");
+		return mav;
+	}
+>>>>>>> origin/KT_02
 	public ModelAndView getCalendarSchedule(HttpServletRequest request, HttpServletResponse response) {
 		logger.info("캘린더 url로 불러오기");
 		ModelAndView mav = new ModelAndView();
