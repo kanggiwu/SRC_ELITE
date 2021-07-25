@@ -84,7 +84,7 @@
 				<prop key="/account/updateExpense.src1">account-controller</prop>
 				<prop key="/account/insertExpense.src1">account-controller</prop>
 				<prop key="/account/getBalanceList.src1">account-controller</prop>
-				<prop key="/account/getMonthlyAccount.src1">account-controller</prop>
+				<prop key="/account/getMonthStatement.src1">account-controller</prop>
 
 				<prop key="/humanresource/getOrganizationChart.src1">human-resource-controller</prop>
 				<prop key="/humanresource/updateOrganizationChart.src1">human-resource-controller</prop>
@@ -93,8 +93,8 @@
 				<prop key="/humanresource/insertEmployee.src1">human-resource-controller</prop>
 				<prop key="/humanresource/updateEmployee.src1">human-resource-controller</prop>
 				<prop key="/humanresource/getEmpSearchList.src1">human-resource-controller</prop>
-				<prop key="/humanresource/insertLIcenceInfo.src1">human-resource-controller</prop>
-				<prop key="/humanresource/deleteLIcenceInfo.src1">human-resource-controller</prop>
+				<prop key="/humanresource/insertLicenceInfo.src1">human-resource-controller</prop>
+				<prop key="/humanresource/deleteLicenceInfo.src1">human-resource-controller</prop>
 
 				<prop key="/approval/getApprovalForm.src1">approval-controller</prop>
 				<prop key="/approval/getApprovalFormList.src1">approval-controller</prop>
@@ -176,7 +176,7 @@
 				<prop key="/account/updateExpense.src1">updateExpense</prop>
 				<prop key="/account/insertExpense.src1">insertExpense</prop>
 				<prop key="/account/getBalanceList.src1">getBalanceList</prop>
-				<prop key="/account/getMonthlyAccount.src1">getMonthlyAccount</prop>
+				<prop key="/account/getMonthStatement.src1">getMonthStatement</prop>
 
 				<prop key="/humanresource/getOrganizationChart.src1">getOrganizationChart</prop>
 				<prop key="/humanresource/updateOrganizationChart.src1">updateOrganizationChart</prop>

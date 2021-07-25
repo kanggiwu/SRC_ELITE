@@ -6,12 +6,6 @@
 		<property name="driverClassName">
 			<value>oracle.jdbc.driver.OracleDriver</value>
 		</property>
-	<!-- 외부 ip 연결 시 사용 부분  -->
-<!--
-		<property name="url">
-			<value>jdbc:oracle:thin:115.91.81.108:15210:orcl11</value>
-			-->
-	<!-- 로컬 DB 사용 부분  -->
 		<property name="url">
 			<value>jdbc:oracle:thin:@115.91.81.108:15210:orcl11</value> 
 		</property>
@@ -23,8 +17,13 @@
 		</property>
 	</bean>
 	
-	<!--spring을 사용하지 않는다면 mybatis-config.xml설정파일(오라클 정보 및 쿼리문.xml 매핑)로부터 
-	SqlSessionFactory를 만들어야한다.  -->
+	
+	<!-- transaction처리를 위한 transactionManager Bean 등록 -->   
+   <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="data-source-target" />
+   </bean>
+	
+	<!--spring을 사용하지 않는다면 mybatis-config.xml설정파일(오라클 정보 및 쿼리문.xml 매핑)로부터 SqlSessionFactory를 만들어야한다.  -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="WEB-INF/mybatis-config.xml"/>
 		<property name="dataSource" ref="data-source-target"/>

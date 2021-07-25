@@ -64,11 +64,9 @@ out.print("size:" + size);
 									</tr>
 									<tr class="thead-dark">
 										<th style="width: 20%">항목</th>
-										<th style="width: 10%">일자</th>
-										<th style="width: 20%">금액</th>
+										<th style="width: 30%">금액</th>
 										<th style="width: 20%">항목</th>
-										<th style="width: 10%">일자</th>
-										<th style="width: 20%">금액</th>
+										<th style="width: 30%">금액</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -93,28 +91,22 @@ out.print("size:" + size);
 									<tr>
 										<%-- 										<td><%=pmap.get("PROJECT_PERIOD").toString()%></td> --%>
 										<td>프로젝트a</td>
-										<td>1</td>
 										<td>억</td>
 										<td>소모품</td>
-										<td></td>
 										<td>백만</td>
 									</tr>
 									<tr>
 										<%-- 										<td><%=pmap.get("PROJECT_PERIOD").toString()%></td> --%>
 										<td>프로젝트b</td>
-										<td>20</td>
 										<td>억</td>
 										<td>사무용품</td>
-										<td>2</td>
 										<td>이백만</td>
 									</tr>
 									<tr>
 										<%-- 										<td><%=pmap.get("PROJECT_PERIOD").toString()%></td> --%>
 										<td></td>
 										<td></td>
-										<td></td>
 										<td>간식비</td>
-										<td>15</td>
 										<td>백만</td>
 									</tr>
 									<%
@@ -124,9 +116,9 @@ out.print("size:" + size);
 								</tbody>
 								<tfoot>
 									<tr>
-										<td>총 합계</td>
+										<td>총 수익</td>
 										<td colspan="2" style="text-align: right;">2억</td>
-										<td>총 합계</td>
+										<td>총 지출</td>
 										<td colspan="2" style="text-align: right;">2백만</td>
 									</tr>
 								</tfoot>

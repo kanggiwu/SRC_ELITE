@@ -5,6 +5,7 @@
 <mapper namespace="com.mybatis.mapper.AccountManagerMapper">
 	<resultMap  type="map" id="profitMap"/>
 	<resultMap  type="map" id="expenseMap"/>
+	<resultMap  type="map" id="salaryMap"/>
 	
 	<!-- 사원의 급여 정보 조회 (현재 년/월) -->
 	<select id="getCurrentSalaryAndEmpInfo" parameterType="map">
@@ -67,23 +68,16 @@
     
     <!-- 수익 리스트 가져오기 -->  
 	<select id="getProfitList" resultType="map"> 
-	SELECT project_name, substr(project_startline,1,10) PROJECT_STARTLINE, nvl(substr(project_deadline,1,10),'미완') PROJECT_DEADLINE, project_type, project_profit
-  	  FROM project
-  		<where>
-  		<if test="PROJECT_NAME != null">
-  		AND poject_name LIKE '%'||#{PROJECT_NAME}||'%'
-  		</if>
- 		<if test="PROJECT_STARTLINE != null">
- 		AND project_startline <![CDATA[>=]]> #{PROJECT_STARTLINE}
+	SELECT profit_no, project_name, balance_no, profit_price, profit_detail, profit_date
+  	  FROM profit pft, project pjt
+  	  WHERE pft.project_no = pjt.project_no
+ 		<if test="PROFIT_START != null">
+ 		AND profit_date <![CDATA[>=]]> #{PROFIT_START}
  		</if>
- 		<if test="PROJECT_DEADLINE != null">
- 		AND project_deadline <![CDATA[<=]]> #{PROJECT_DEADLINE}
+ 		<if test="PROFIT_END != null">
+ 		AND profit_date <![CDATA[<=]]> #{PROFIT_END}
  		</if>
- 		<if test="PROJECT_TYPE != null">
- 		AND project_type = #{PROJECT_TYPE}
- 		</if>
- 		</where>
- 	ORDER BY project_deadline DESC
+ 	ORDER BY profit_date DESC
 	</select>
 	
 	<!-- 수익 관리 수정 -->
@@ -91,7 +85,7 @@
 		UPDATE profit
 		SET
     	project_no = #{project_no},
-    	profit_price = #{profit_price},
+    	profit_price = NVL(#{profit_price}, 0),
     	profit_date = #{profit_date}
 		WHERE profit_no = #{profit_no}
 	</update>
@@ -99,7 +93,7 @@
 	<!-- 수익 관리 추가 -->
 	<insert id="insertProfit" parameterType="map">
 		INSERT INTO profit (profit_no, project_no, profit_price, profit_date)
-                 VALUES (#{profit_no}, #{project_no}, #{profit_price}, #{profit_date})
+                 VALUES (#{profit_no}, #{project_no}, NVL(#{profit_price}, 0), #{profit_date})
     </insert>
 	
 
@@ -129,33 +123,32 @@
 	
 	<!-- 지출 관리 추가 -->
 	<insert id="insertExpense" parameterType="map">
-		<selectKey keyProperty="expense_no" resultType="int" order="BEFORE">
-		SELECT seq_expense_no.NEXTVAL FROM DUAL
-        </selectKey>
 		INSERT INTO expense (expense_no, dept_no, expense_type, expense_price, expense_detail, expense_date)
-                  VALUES (#{expense_no}, #{dept_no}, #{expense_type}, #{expense_price}, #{expense_detail}, #{expense_date})
+                  VALUES (seq_expense_no.NEXTVAL, #{dept_no}, #{expense_type}, NVL(#{expense_price}, 0), #{expense_detail}, #{expense_date})
+    </insert>
+    
+    <!-- 손익 추가 -->
+    <insert id="insertBalance" parameterType="map">
+		 INSERT INTO Balance (balance_no, balance_date, balance_profit, balance_expense, balance_total)
+                              VALUES (seq_balance.NEXTVAL , #{P_YEAR_MONTH}, func_get_total_profit(#{P_YEAR_MONTH}), func_get_total_expense(#{P_YEAR_MONTH}), 
+                                                                          func_get_total>profit(#{P_YEAR_MONTH})-func_get_total_expense(#{P_YEAR_MONTH}))
     </insert>
     
 	<!-- 손익 조회 -->
     <select id="getBalanceList" resultType="map"> 
-      SELECT  SUBSTR(profit_date, 1, 7) as total_date, SUM(profit_price) as month_profit, SUM(expense_price) as month_expense, SUM(profit_price)-SUM(expense_price) as month_balance
-        FROM profit, expense
+      SELECT balance_no, balance_date, balance_profit, balance_expense, balance_total
+        FROM balance
       <where>
-         <if test="START_MONTH != null">
-         AND SUBSTR(profit_date, 1, 7) <![CDATA[>=]]> START_MONTH
-         </if>
-         <if test="END_MONTH != null">
-         AND SUBSTR(profit_date, 1, 7) <![CDATA[<=]]> END_MONTH
+         <if test="YEAR != null">
+         AND SUBSTR(balance_date, 1, 4) = YEAR
          </if>
        </where>
-      GROUP BY SUBSTR(profit_date, 1, 7), SUBSTR(expense_date, 1, 7)
-      HAVING SUBSTR(profit_date, 1, 7) = SUBSTR(expense_date, 1, 7)
-      ORDER BY total_date
+      ORDER BY balance_date ASC
     </select>  
 	
 	<!-- 월말 결산 -->
 	<select id="getMonthStateProc" statementType="CALLABLE" parameterType="map">
-		{call proc_get_month_statement(        
+		{call proc_get_month_statement(   
           #{p_month, mode=IN, jdbcType=VARCHAR},
           #{profit_cursor, mode=OUT, jdbcType=CURSOR, resultMap=profitMap},
           #{profit_sum, mode=OUT, jdbcType=NUMERIC},
