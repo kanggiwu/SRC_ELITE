@@ -107,6 +107,20 @@
             schedule_enddate = #{schedule_enddate}
         WHERE  schedule_no = #{schedule_no}
     </update>
+    
+    	<!-- 프로젝트 일정 추가시 프로젝트 테이블에 내용 추가 -->
+	<select id="updateProjectSchedule" parameterType="map" statementType="CALLABLE">
+		{call proc_update_project_schedule(
+			  #{schedule_no,mode=IN,jdbcType=NUMERIC} 
+			 ,#{schedule_type,mode=IN,jdbcType=NUMERIC} 
+             ,#{schedule_title,mode=IN,jdbcType=VARCHAR}
+             ,#{schedule_startdate,mode=IN,jdbcType=VARCHAR}
+             ,#{schedule_enddate,mode=IN,jdbcType=VARCHAR}
+             ,#{schedule_content,mode=IN,jdbcType=VARCHAR}
+             ,#{backgroundcolor,mode=IN,jdbcType=VARCHAR}
+             ,#{allDay,mode=IN,jdbcType=VARCHAR})
+		}
+	</select>  
 <!-- /////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
 		<!-- 일정 삭제 -->
@@ -114,6 +128,11 @@
 		DELETE schedule WHERE schedule_no = #{schedule_no}
 	</delete> 
 	
+	<select id="deleteProjectSchedule" parameterType="map" statementType="CALLABLE">
+		{call proc_delect_project_schedule(
+			  #{schedule_no,mode=IN,jdbcType=NUMERIC})
+		}
+	</select>  
 	<!-- 사원의 부서번호 받아오기 -->
 	<select id="getEmpDept" parameterType="int" resultType="int">
 		SELECT dept_no
@@ -130,4 +149,19 @@
 	<select id="getEmpRank" parameterType="int" resultType="String">
 		SELECT rank_name FROM RANK JOIN emp ON emp.rank_no = rank.rank_no and emp.emp_no=#{login_no}
 	</select>
+	
+	
+	<!-- 프로젝트 일정 추가시 프로젝트 테이블에 내용 추가 -->
+	<select id="insertProjectSchedule" parameterType="map" statementType="CALLABLE">
+		{call proc_insert_project_schedule(
+             #{login_no,mode=IN,jdbcType=NUMERIC}
+             ,#{schedule_type,mode=IN,jdbcType=NUMERIC}
+             ,#{schedule_title,mode=IN,jdbcType=VARCHAR}
+             ,#{schedule_startdate,mode=IN,jdbcType=VARCHAR}
+             ,#{schedule_enddate,mode=IN,jdbcType=VARCHAR}
+             ,#{schedule_content,mode=IN,jdbcType=VARCHAR}
+             ,#{backgroundcolor,mode=IN,jdbcType=VARCHAR} 
+             ,#{allDay,mode=IN,jdbcType=VARCHAR})
+		}
+	</select>  
 </mapper>

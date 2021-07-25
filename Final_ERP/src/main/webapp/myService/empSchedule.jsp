@@ -3,7 +3,7 @@
 <%
 	String emp_name = (String)session.getAttribute("emp_name");
 	String login_no = (String)session.getAttribute("login_no");
-	String emp_deptno = (String)session.getAttribute("emp_dept");
+	String emp_deptno = (String)session.getAttribute("login_dept");
 	if(emp_name==null){
 		emp_name = "dzuza";//hjdlp
 	}

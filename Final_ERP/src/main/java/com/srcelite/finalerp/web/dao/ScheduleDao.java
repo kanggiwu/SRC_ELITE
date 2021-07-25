@@ -31,17 +31,21 @@ public class ScheduleDao {
 		return getScheduleList;
 	}
 
-	public Map<String, Object> getDetailSchedule(Map<String, Object> pMap) {
-		Map<String, Object> detailSchedule =null;
-//		detailSchedule = sqlSessionTemplate.selectOne();
-		
-		return detailSchedule;
-	}
+
 
 	public int deleteSchedule(int schedule_no) {
 		int result = 0;
 		
 		result = sqlSessionTemplate.delete("deleteSchedule", schedule_no);
+		
+		logger.info("dao result: " + result);
+		
+		return result;
+	}
+	public int deleteProjectSchedule(int schedule_no) {
+		int result = 0;
+		
+		result = sqlSessionTemplate.delete("deleteProjectSchedule", schedule_no);
 		
 		logger.info("dao result: " + result);
 		
@@ -60,6 +64,11 @@ public class ScheduleDao {
 	public int updateSchedule(Map<String, Object> pMap) {
 		int result = 0;
 		result = sqlSessionTemplate.update("updateSchedule",pMap);
+		return result;
+	}
+	public int updateProjectSchedule(Map<String, Object> pMap) {
+		int result = 0;
+		result = sqlSessionTemplate.update("updateProjectSchedule",pMap);
 		return result;
 	}
 	public int updateDateSchedule(Map<String, Object> pMap) {
@@ -93,6 +102,15 @@ public class ScheduleDao {
 		String emp_rank = null; 
 		emp_rank = sqlSessionTemplate.selectOne("getEmpRank",login_no);
 		return emp_rank;
+	}
+
+	public int insertProjectSchedule(Map<String, Object> pMap) {
+		int result = 0;
+		logger.info("다오에서 출력하기: " +pMap.get("schedule_startdate"));
+		result = sqlSessionTemplate.insert("insertProjectSchedule",pMap);
+		logger.info("dao result: " + result);
+		
+		return result;
 	}
 
 }
