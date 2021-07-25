@@ -163,9 +163,6 @@ else{//조회 결과가 있을 때
 			===============DB에서 데이터 가져와서 뿌려주기======================
 			 -->
 				<tr onclick="openPopup()">
-					<%-- <tr onclick="location.href='getDetailProjectHistory.src1?project_no=<%=pmap.get("PROJECT_NO")%>'"> --%>
-					<%-- <tr onclick="location.href='getDetailProjectHistory.src1?project_no=<%=pProjectNo%>'"> --%>
-					<!--<td onclick="openPopup()">부트스트랩</td>  -->
 					<td><%=pmap.get("PROJECT_NAME").toString()%></td>
 					<td><%=pmap.get("PROJECT_PERIOD").toString()%></td>
 					<td><%=pmap.get("EMP_NAME").toString()%></td>

@@ -60,14 +60,17 @@
 		<!-- SELECT e.emp_name
   		  FROM emp e, project_emp pe, project p
 		 WHERE p.project_no = pe.project_no AND pe.emp_no = e.emp_no AND p.project_no = #{project_no} -->
-		 SELECT e.emp_name,
-		       e.DEPT_NO,
-		       E.TEAM_NO,
-		       E.RANK_NO
-		  FROM emp e, project_emp pe
-		 WHERE e.emp_no = pe.emp_no
-		       AND PE.PROJECT_NO = #{project_no}
-		       AND PE.PROJECT_MANAGER = 'N'
+    SELECT 
+         e.emp_name
+       , substr(d.dept_name,1,2) || e.team_no || '팀' as dname  
+       , r.rank_name
+       , e.emp_no
+      FROM emp e, project_emp pe, dept d, rank r
+     WHERE e.emp_no = pe.emp_no
+       AND e.dept_no = d.dept_no
+       AND e.rank_no = r.rank_no
+       AND pe.project_no = #{project_no}
+       AND pe.project_manager = 'N'       
 	</select>
 	
 

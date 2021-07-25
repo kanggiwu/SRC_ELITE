@@ -20,10 +20,11 @@
 	String project_type 		= null;
 	String project_content 		= null;	
 	//String emp_name		 	= null;
-	String emp_name2		 	= null;
-	String DEPT_NO		 		= null;
-	String TEAM_NO		 		= null;
-	String RANK_NO		 		= null;
+	String empNo		 	= null;
+	String empName 		= null;
+	String dept_no 		= null;
+	String team_no 		= null;
+	String rank_no 		= null;
 	if(detailProjectHistory!=null){
 		size = detailProjectHistory.size();
 		Map<String,Object> pmap = detailProjectHistory.get(0);
@@ -40,12 +41,12 @@
 	if(projectParticipation!=null){
 		psize = projectParticipation.size();
 		Map<String,Object> pmap2 = projectParticipation.get(0);
-		emp_name2 = pmap2.get("EMP_NAME").toString();
-		DEPT_NO = pmap2.get("DEPT_NO").toString();
-		TEAM_NO = pmap2.get("TEAM_NO").toString();
-		RANK_NO = pmap2.get("RANK_NO").toString();		
+		dept_no = pmap2.get("DNAME").toString();
+		team_no = pmap2.get("RANK_NAME").toString();
+		rank_no = pmap2.get("EMP_NO").toString();		
+		empName = pmap2.get("EMP_NAME").toString();
 	}
-	//out.print("detailProjectHistory:"+detailProjectHistory);
+	//out.print("detailProjectHistory:"+projectParticipation);
 %>       
 <!DOCTYPE html>
 <html>
@@ -123,9 +124,9 @@
             </form>		
 			<thead>
 				<tr style="background-color:lightgray">
-					<th style="width: 25%">사원번호</th>
-					<th style="width: 25%">부서명</th>
+					<th style="width: 25%">팀명</th>
 					<th style="width: 25%">직위명</th>
+					<th style="width: 25%">사원번호</th>
 					<th style="width: 25%">사원명</th>
 				</tr>
 			</thead>
@@ -146,10 +147,10 @@ else{//조회 결과가 있을 때
 		if(i==psize) break;
 %>    	
 				<tr>
-					<td><%=pmap.get("EMP_NAME").toString()%></td>
-					<td><%=pmap.get("DEPT_NO").toString()%></td>
-					<td><%=pmap.get("TEAM_NO").toString()%></td>
-					<td><%=pmap.get("RANK_NO").toString()%></td>
+					<td><%=pmap.get("DNAME").toString()%></td>
+					<td><%=pmap.get("RANK_NAME").toString()%></td>
+					<td><%=pmap.get("EMP_NO").toString()%></td>
+					<td><%=pmap.get("EMP_NAME").toString()%></td> 
 				</tr>
 <% 
 	}///end of for

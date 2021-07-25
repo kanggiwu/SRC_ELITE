@@ -70,7 +70,7 @@ public class ProjectHistoryController extends MultiActionController {
 		List<Map<String,Object>> projectParticipation = null;
 		detailProjectHistory=projectHistoryLogic.getDetailProjectHistory(target);
 		projectParticipation=projectHistoryLogic.getProjectParticipation(target);
-		logger.info("detailProjectHistory:"+detailProjectHistory);//
+		logger.info("detailProjectHistory:"+projectParticipation);//
 		ModelAndView mav = new ModelAndView();
 		//ModelAndView pmav = new ModelAndView();
 		mav.setViewName("getDetailProjectHistory");
