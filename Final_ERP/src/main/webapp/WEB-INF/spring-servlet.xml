@@ -72,6 +72,8 @@
 				<prop key="/schedule/deleteSchedule.src1">schedule-controller</prop>
 
 				<prop key="/account/getAccountInfo.src1">account-controller</prop>
+				<prop key="/account/getAccountEmpList.src1">account-controller</prop>
+				<prop key="/account/getAccountEmpSearch.src1">account-controller</prop>
 				<prop key="/account/updateSalary.src1">account-controller</prop>
 				<prop key="/account/insertSalary.src1">account-controller</prop>
 				<prop key="/account/getProfitList.src1">account-controller</prop>
@@ -148,6 +150,8 @@
 				<prop key="/schedule/deleteSchedule.src1">deleteSchedule</prop>
 
 				<prop key="/account/getAccountInfo.src1">getAccountInfo</prop>
+				<prop key="/account/getAccountEmpList.src1">getAccountEmpList</prop>
+				<prop key="/account/getAccountEmpSearch.src1">getAccountEmpSearch</prop>
 				<prop key="/account/updateSalary.src1">updateSalary</prop>
 				<prop key="/account/insertSalary.src1">insertSalary</prop>
 				<prop key="/account/getProfitList.src1">getProfitList</prop>
