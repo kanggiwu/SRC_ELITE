@@ -58,20 +58,15 @@
  	ORDER BY profit_date DESC
 	</select>
 	
-	<!-- 수익 관리 수정 -->
-	<update id="updateProfit" parameterType="map">
-		UPDATE profit
-		SET
-    	project_no = #{project_no},
-    	profit_price = NVL(#{profit_price}, 0),
-    	profit_date = #{profit_date}
-		WHERE profit_no = #{profit_no}
-	</update>
+	<!-- 프로젝트 리스트 -->
+	<select id="getProjectList" resultType="map">
+	SELECT project_name FROM project WHERE project_register = 'N'
+	</select>
 	
 	<!-- 수익 관리 추가 -->
 	<insert id="insertProfit" parameterType="map">
 		INSERT INTO profit (profit_no, project_no, profit_price, profit_date)
-                 VALUES (#{profit_no}, #{project_no}, NVL(#{profit_price}, 0), #{profit_date})
+                 VALUES (seq_profit_no.NEXTVAL, #{project_no}, NVL(#{profit_price}, 0), #{profit_date})
     </insert>
 	
 
@@ -128,21 +123,21 @@
 	<select id="getMonthProfitList" resultType="map"> 
    SELECT project_name, profit_sum
      FROM v_profit
-	WHERE profit_month = #{STATE_MONTH}
+	WHERE profit_month = NVL(#{STATE_MONTH}, SUBSTR(SYSDATE, 1, 7))
    </select>
    
    <!-- 월말 결산 지출 뷰 조회 -->
 	<select id="getMonthExpenseList" resultType="map"> 
    SELECT expense_type, expense_sum
      FROM v_expense
-	WHERE expense_month = #{STATE_MONTH}
+	WHERE expense_month = NVL(#{STATE_MONTH}, SUBSTR(SYSDATE, 1, 7))
    </select> 
 	
 	<!-- 월말 결산 합계 조회 -->
 	<select id="getMonthTotalList" resultType="map"> 
    	SELECT balance_no, balance_date, balance_profit, balance_expense, balance_total
       FROM balance
-	 WHERE balance_date = #{STATE_MONTH}
+	 WHERE balance_date = NVL(#{STATE_MONTH}, SUBSTR(SYSDATE, 1, 7))
    </select> 
     
 </mapper>

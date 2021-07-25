@@ -15,6 +15,8 @@ if ((profitMonthList != null) && (expenseMonthList != null)) {
 	} else {
 		size = expenseMonthList.size();
 	}
+} else {
+	size = 0;
 }
 out.print("size:" + size);
 %>
@@ -58,7 +60,7 @@ out.print("size:" + size);
 						<!--
 ******************************************* 컨텐츠 들어갈내용 시작************************************************
 -->
-						<h2>2021년 7월</h2>
+						<h2></h2>
 						<div class='row'>
 							<table id="products"
 								class="table table-bordered table-hover table-striped">
@@ -80,39 +82,24 @@ out.print("size:" + size);
 									if (size == 0) {
 									%>
 									<tr>
-										<td colspan="6">조회결과가 없습니다.</td>
+										<td colspan="4">조회결과가 없습니다.</td>
 									</tr>
 									<%
 									} else {//조회 결과가 있을 때
 									for (int i = 0; i < size; i++) {
-										//Map<String, Object> pmap = profitList.get(i);
+										Map<String, Object> profitMap = profitMonthList.get(i);
+										Map<String, Object> expenseMap = expenseMonthList.get(i);
 										if (i == size)
 											break;
-										//pProjectNo = pmap.get("PROJECT_NO").toString();
 									%>
 									<!-- 
 			===============DB에서 데이터 가져와서 뿌려주기======================
 			 -->
 									<tr>
-										<%-- 										<td><%=pmap.get("PROJECT_PERIOD").toString()%></td> --%>
-										<td>프로젝트a</td>
-										<td>억</td>
-										<td>소모품</td>
-										<td>백만</td>
-									</tr>
-									<tr>
-										<%-- 										<td><%=pmap.get("PROJECT_PERIOD").toString()%></td> --%>
-										<td>프로젝트b</td>
-										<td>억</td>
-										<td>사무용품</td>
-										<td>이백만</td>
-									</tr>
-									<tr>
-										<%-- 										<td><%=pmap.get("PROJECT_PERIOD").toString()%></td> --%>
-										<td></td>
-										<td></td>
-										<td>간식비</td>
-										<td>백만</td>
+										<td><%= profitMap.get("PROJECT_NAME").toString()%></td>
+										<td><%= profitMap.get("PROFIT_SUM").toString()%></td>
+										<td><%= expenseMap.get("EXPENSE_TYPE").toString()%></td>
+										<td><%= expenseMap.get("EXPENSE_SUM").toString()%></td>
 									</tr>
 									<%
 									} ///end of for
@@ -122,9 +109,9 @@ out.print("size:" + size);
 								<tfoot>
 									<tr>
 										<td>총 수익</td>
-										<td colspan="2" style="text-align: right;">2억</td>
+										<td>2억</td>
 										<td>총 지출</td>
-										<td colspan="2" style="text-align: right;">2백만</td>
+										<td>2백만</td>
 									</tr>
 								</tfoot>
 							</table>

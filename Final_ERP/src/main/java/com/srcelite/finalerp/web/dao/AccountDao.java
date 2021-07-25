@@ -134,5 +134,11 @@ public class AccountDao {
 		expenseMonthList = sqlSessionTemplate.selectList("getMonthExpenseList",pmap);
 		return expenseMonthList;
 	}
-	
+	// 연말 결산 지출 조회
+		public List<Map<String,Object>> getMonthTotalList(Map<String,Object> pmap) {
+			logger.info("Dao getMonthExpenseList 호출:" + pmap);
+			List<Map<String, Object>> totalMonthList = null;
+			totalMonthList = sqlSessionTemplate.selectList("getMonthTotalList",pmap);
+			return totalMonthList;
+		}
 }
