@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.dao.DataAccessException;
 
 public class AccountDao {
 	Logger logger = Logger.getLogger(AccountDao.class);
@@ -142,5 +143,17 @@ public class AccountDao {
 		expenseMonthList = sqlSessionTemplate.selectList("getMonthExpenseList",pmap);
 		return expenseMonthList;
 	}
-	
+	// 손익 데이터 생성
+	public int insertBalance(Map<String,Object> pmap) {
+		int result = 0;
+		result = sqlSessionTemplate.selectOne("insetBalanceProc",pmap);
+		return result;
+	}
+	// 연말 결산 합계 조회
+	public List<Map<String,Object>> getMonthTotalList(Map<String,Object> pmap) {
+		logger.info("Dao getMonthTotalList 호출:" + pmap);
+		List<Map<String, Object>> totalMonthList = null;
+		totalMonthList = sqlSessionTemplate.selectList("getMonthTotalList",pmap);
+		return totalMonthList;
+	}
 }

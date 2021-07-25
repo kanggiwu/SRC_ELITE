@@ -3,11 +3,6 @@ package com.srcelite.finalerp.web.logic;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.servlet.ModelAndView;
-
 import com.srcelite.finalerp.web.dao.AccountDao;
 
 public class AccountLogic {
@@ -101,6 +96,12 @@ public class AccountLogic {
 		List<Map<String, Object>> expenseMonthList = null;
 		expenseMonthList = accountDao.getMonthExpenseList(pmap);
 		return expenseMonthList;
+	}
+	// 월말 결산 합계 조회
+	public List<Map<String,Object>> getMonthTotalList(Map<String,Object> pmap) {
+		List<Map<String, Object>> totalMonthList = null;
+		totalMonthList = accountDao.getMonthTotalList(pmap);
+		return totalMonthList;
 	}
 
 }

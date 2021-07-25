@@ -46,7 +46,7 @@ public class AccountController extends MultiActionController {
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
 		List<Map<String, Object>> empList = null;
-		empList = accountLogic.getAccountEmpList(target);
+		//empList = accountLogic.getAccountEmpList(target);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("getAccountEmpList");
 		mav.addObject("empList", empList);
@@ -64,7 +64,7 @@ public class AccountController extends MultiActionController {
 		logger.info("emp_name value: "+pmap.get("emp_name"));
 		logger.info("dept_name value: "+pmap.get("dept_name"));
 		logger.info("rank_name value: "+pmap.get("rank_name"));
-		empList = accountLogic.getAccountEmpSearch(pmap);
+		//empList = accountLogic.getAccountEmpSearch(pmap);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("getAccountEmpList");
 		mav.addObject("empList", empList);
@@ -96,7 +96,7 @@ public class AccountController extends MultiActionController {
 		Map<String,Object> pmap = new HashMap<>();
 		hmb.bind(pmap);
 		int result = 0;
-		result = accountLogic.insertAccount(pmap);
+		//result = accountLogic.insertAccount(pmap);
 		if(result == 1) {
 			response.sendRedirect("");
 		}
@@ -232,14 +232,18 @@ public class AccountController extends MultiActionController {
 		HashMapBinder hmb = new  HashMapBinder(request);
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
+		//target.put("STATE_MONTH", "2021-07");
 		List<Map<String, Object>> profitMonthList = null;
 		List<Map<String, Object>> expenseMonthList = null;
+		List<Map<String, Object>> totalMonthList = null;
 		profitMonthList = accountLogic.getMonthProfitList(target);
 		expenseMonthList = accountLogic.getMonthExpenseList(target);
+		totalMonthList = accountLogic.getMonthTotalList(target);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("getMonthStatement");
 		mav.addObject("profitMonthList", profitMonthList);
 		mav.addObject("expenseMonthList", expenseMonthList);
+		mav.addObject("totalMonthList", totalMonthList);
 		return mav;
 	}
 
