@@ -9,12 +9,12 @@ AccountList = (List<Map<String, Object>>) request.getAttribute("AccountList");
 Map<String, Object> Amap = new HashMap<>();
 //Amap = AccountList.get(1);
 int size = 0;
-String emp_no = null;
-String emp_name = null;
-String dept_name = null;
-String rank_name = null;
-String emp_account = null;
-String emp_hiredate = null;
+String emp_no = "";
+String emp_name = "";
+String dept_name = "";
+String rank_name = "";
+String emp_account = "";
+String emp_hiredate = "";
 int sal_no = 0;
 int sal_date = 0;
 int sal_base = 0;
@@ -75,7 +75,15 @@ if (Amap != null) {
 <link href="../common/css/custom.css" rel="stylesheet" />
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
-
+<script type="text/javascript">
+// 수익 입력
+function updateSal_base() {
+		Swal.fire({
+			  title: '수정 되었습니다!',
+			  confirmButtonColor: '#ffc107'})
+			setTimeout(() => $('#sal_base_update').submit() , 1500);
+  }
+</script>
 <title>Account - ERP PROGRAM</title>
 </head>
 <body class="sb-nav-fixed">
@@ -98,7 +106,7 @@ if (Amap != null) {
 									<div style="text-align: right; padding: 5px;">
 										<button class="btn btn-success" id="getYearSalary"
 											onclick="openPopup()">사원 검색</button>
-										<button class="btn btn-success" id="retirementCalc"
+										<button class="btn btn-warning" id="retirementCalc"
 											data-toggle="modal" data-target="#mod_addEmp">급여 정보 수정</button>
 									</div>
 									<div class="input-group">
@@ -123,7 +131,7 @@ if (Amap != null) {
 												class="form-control" value="사번"
 												aria-describedby="basic-addon1" readonly> <input
 												type="text" name="emp_" class="form-control"
-												value="<%=emp_hiredate%>" aria-describedby="basic-addon1"
+												value="<%=emp_no%>" aria-describedby="basic-addon1"
 												readonly> <input type="text" name="emp_"
 												class="form-control" value="이름"
 												aria-describedby="basic-addon1" readonly> <input
@@ -135,12 +143,12 @@ if (Amap != null) {
 											<input type="text" name="emp_" class="form-control"
 												value="입사일" aria-describedby="basic-addon1" readonly>
 											<input type="text" name="emp_" class="form-control"
-												value="<%=sal_total%>" aria-describedby="basic-addon1"
+												value="<%=emp_hiredate%>" aria-describedby="basic-addon1"
 												readonly> <input type="text" name="emp_"
 												class="form-control" value="계좌번호"
 												aria-describedby="basic-addon1" readonly> <input
 												type="text" name="emp_" class="form-control"
-												value="<%=sal_deductions%>" aria-describedby="basic-addon1"
+												value="<%=emp_account%>" aria-describedby="basic-addon1"
 												readonly> <input type="text" name="emp_"
 												class="form-control" value="지급계"
 												aria-describedby="basic-addon1" readonly> <input
@@ -150,7 +158,7 @@ if (Amap != null) {
 												class="form-control" value="공제계"
 												aria-describedby="basic-addon1" readonly> <input
 												type="text" name="emp_" class="form-control"
-												value="<%=emp_account%>" aria-describedby="basic-addon1"
+												value="<%=sal_deductions%>" aria-describedby="basic-addon1"
 												readonly>
 										</div>
 									</div>
@@ -174,13 +182,14 @@ if (Amap != null) {
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">기본급</span> <input
 													type="text" name="emp_no" class="form-control"
-													value="<%=emp_no%>" aria-describedby="basic-addon1">
+													value="<%=sal_base%>" aria-describedby="basic-addon1" readonly>
 											</div>
 											<br>
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">성과금</span> <select
-															class="form-control" name="rank_no">
+															class="form-control" name="rank_no" value="<%=sal_incentive%>">
+															<option disabled hidden selected>프로젝트</option>
 															<option value=1>프로젝트1</option>
 															<option value=2>프로젝트2</option>
 														</select><input
@@ -191,7 +200,7 @@ if (Amap != null) {
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">직책수당</span> <select
-															class="form-control" name="rank_no">
+															class="form-control" name="rank_no" value="<%=sal_position%>">
 															<option value=1>비적용</option>
 															<option value=2>부서장</option>
 															<option value=2>팀장</option>
@@ -201,14 +210,14 @@ if (Amap != null) {
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">기술수당</span> <input
-													type="text" class="form-control" value=""
+													type="text" class="form-control" value="<%=sal_tech%>"
 													aria-describedby="basic-addon1">
 											</div>
 											<br>
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">식비</span> <select
-															class="form-control" name="rank_no">
+															class="form-control" name="rank_no" value="<%=sal_meal%>">
 															<option value=1 selected>비적용</option>
 															<option value=2>적용</option>
 														</select>
@@ -217,7 +226,7 @@ if (Amap != null) {
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">통신비</span> <select
-															class="form-control" name="rank_no">
+															class="form-control" name="rank_no" value="<%=sal_commu%>">
 															<option value=1 selected>비적용</option>
 															<option value=2>적용</option>
 														</select>
@@ -226,7 +235,7 @@ if (Amap != null) {
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">기타수당</span> <input
-													type="text" class="form-control" value=""
+													type="text" class="form-control" value="<%=sal_etc%>"
 													aria-describedby="basic-addon1">
 											</div>
 										</div>
@@ -239,50 +248,50 @@ if (Amap != null) {
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">국민연금</span> <input
-													type="text" name="emp_tel" class="form-control" value=""
+													type="text" name="emp_tel" class="form-control" value="<%=sal_nation_pension%>"
 													aria-describedby="basic-addon1">
 											</div>
 											<br>
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">건강보험</span> <input
-													type="text" name="emp_tel" class="form-control" value=""
+													type="text" name="emp_tel" class="form-control" value="<%=sal_health%>"
 													aria-describedby="basic-addon1">
 											</div>
 											<br>
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">산재보험</span> <input
-													type="text" name="emp_tel" class="form-control" value=""
+													type="text" name="emp_tel" class="form-control" value="<%=sal_industrial_insurance%>"
 													aria-describedby="basic-addon1">
 											</div>
 											<br>
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">고용보험</span> <input
-													type="text" name="emp_tel" class="form-control" value=""
+													type="text" name="emp_tel" class="form-control" value="<%=sal_employ_insurance%>"
 													aria-describedby="basic-addon1">
 											</div>
 											<br>
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">소득세</span> <input
-													type="text" name="emp_email" class="form-control" value=""
+													type="text" name="emp_email" class="form-control" value="<%=sal_income_tax%>"
 													aria-describedby="basic-addon1">
 											</div>
 											<br>
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">지방세</span> <input
-													type="text" name="emp_account" class="form-control"
-													value="<%=emp_account%>" aria-describedby="basic-addon1">
+													type="text" name="emp_account" class="form-control" 
+													value="<%=sal_local_tax%>" aria-describedby="basic-addon1">
 											</div>
 											<br>
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">기타공제</span><input
 													type="text" name="emp_account" class="form-control"
-													value="<%=emp_account%>" aria-describedby="basic-addon1">
+													value="<%=sal_deduction_etc%>" aria-describedby="basic-addon1">
 											</div>
 										</div>
 									</div>
@@ -312,15 +321,15 @@ if (Amap != null) {
 					<h4 class="modal-title" id="myModalLabel">급여 정보 수정</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal" role="form">
+					<form id="sal_base_update" method="post" action="updateAccount.src1">
 						<div class="form-group">
 							<div class="input-group-addon" id="basic-addon1">연봉 변동</div> 
 						<br>
 						<div class="input-group">
 								<br><input
-								type="text" class="form-control" id="txt_company"
+								type="text" class="form-control"
 								value="<%=sal_base%>" readonly><i class="fas fa-arrow-right" style="width: 10%"></i><input
-								type="text" class="form-control" id="txt_company"
+								type="text" class="form-control" 
 								value="">
 								</div>
 						</div>
@@ -330,9 +339,9 @@ if (Amap != null) {
 						<br>
 						<div class="input-group">
 								<br><input
-								type="text" class="form-control" id="txt_company"
+								type="text" class="form-control" 
 								value="<%=emp_account%>" readonly><i class="fas fa-arrow-right" style="width: 10%"></i><input
-								type="text" class="form-control" id="txt_company"
+								type="text" class="form-control" 
 								value="">
 								</div>
 						</div>
@@ -341,7 +350,7 @@ if (Amap != null) {
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-success">수정</button>
+					<button type="button" class="btn btn-warning" onclick="updateSal_base()">수정</button>
 					<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 				</div>
 			</div>
@@ -349,7 +358,7 @@ if (Amap != null) {
 	</div>
 	<script type="text/javascript">
 function openPopup(){
-	window.open("getAccountEmpSearch.jsp", "window_name", "width=1000, height=1000");
+	window.open("getAccountEmpList.src1", "window_name", "width=1000, height=1000");
 }
     var _width = '1050';
     var _height = '1000';

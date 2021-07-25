@@ -4,14 +4,20 @@
 <%
 StringBuilder path = new StringBuilder(request.getContextPath());
 path.append("/");
-List<Map<String, Object>> profitList = null;
-profitList = (List<Map<String, Object>>) request.getAttribute("profitList");
-int size = 1;
-String pProjectNo = null;
-if (profitList != null) {
-	size = profitList.size();
+List<Map<String, Object>> balanceList = null;
+balanceList = (List<Map<String, Object>>) request.getAttribute("balanceList");
+int size = 0;
+if (balanceList != null) {
+	size = balanceList.size();
 }
 out.print("size:" + size);
+String total_date_year =  balanceList.get(0).get("TOTAL_DATE").toString().substring(1, 4);
+String total_date = "";
+String month_profit = "";
+String month_expense = "";
+String month_balance = "";
+String total_date_month = "";
+out.print(total_date_year);
 %>
 <!DOCTYPE html>
 <html>
@@ -48,13 +54,31 @@ out.print("size:" + size);
 		data.addColumn('number', '지출금');
 		data.addColumn('number', '순수익');
 
-		data.addRows([ [ 1, 37.8, 80.8, 41.8 ], [ 2, 30.9, 69.5, 32.4 ],
-				[ 3, 25.4, 57, 25.7 ], [ 4, 11.7, 18.8, 10.5 ],
-				[ 5, 11.9, 17.6, 10.4 ], [ 6, 8.8, 13.6, 7.7 ],
-				[ 7, 7.6, 12.3, 9.6 ], [ 8, 12.3, 29.2, 10.6 ],
-				[ 9, 16.9, 42.9, 14.8 ], [ 10, 12.8, 30.9, 11.6 ],
-				[ 11, 5.3, 7.9, 4.7 ], [ 12, 4.2, 6.2, 3.4 ] ]);
-
+		data.addRows([ 
+			<%
+			//조회 결과가 없는 거야?
+			if (size == 0) {
+			%>
+			<%
+			} else {//조회 결과가 있을 때
+			for (int i = 0; i < size; i++) {
+				Map<String, Object> smap = balanceList.get(i);
+				if (i == size)
+					break;
+				
+				total_date = smap.get("TOTAL_DATE").toString();
+				total_date_month = total_date.substring(5, 7);
+				month_profit = smap.get("MONTH_PROFIT").toString();
+				month_expense = smap.get("MONTH_EXPENSE").toString();
+				month_balance = smap.get("MONTH_BALANCE").toString();
+			%>
+			[ <%=total_date_month%>, <%=month_profit%>, <%=month_expense%>, <%=month_balance%> ] ,
+			<%
+			} ///end of for
+			} //end of else
+			%>
+			]);
+		console.log(<%=total_date_month%>);
 		var options = {
 			chart : {
 				title : 'SourceELITE 연별 손익 그래프',
@@ -94,13 +118,6 @@ out.print("size:" + size);
 						<!--
 ******************************************* 컨텐츠 들어갈내용 시작************************************************
 -->
-						<script type="text/javascript">
-							document.getElementById('my_form').onsubmit = function() {
-								var dat_period = this.dat_period.value
-								alert(dat_period);
-							}
-						</script>
-
 						<!-- -----------------------------------검색부분---------------------------------- -->
 						<form id="myform" class="form-horizontal" role="form">
 							<div
@@ -126,55 +143,80 @@ out.print("size:" + size);
 								<thead>
 									<tr class="thead-dark">
 										<th></th>
-										<th>2021년 4월</th>
-										<th>2021년 5월</th>
-										<th>2021년 6월</th>
-										<th>2021년 7월</th>
+										<%
+										//조회 결과가 없는 거야?
+										if (size == 0) {
+										%>
+										<th></th>
+										<%
+										} else {//조회 결과가 있을 때
+										for (int i = 0; i < size; i++) {
+											Map<String, Object> hmap = balanceList.get(i);
+											if (i == size)
+												break;
+											total_date = hmap.get("TOTAL_DATE").toString();
+										%>
+										<th><%=total_date%></th>
+
+										<%
+										} ///end of for
+										} ///end of if
+										%>
 									</tr>
 								</thead>
 								<tbody>
-									<%
-									//조회 결과가 없는 거야?
-									if (size == 0) {
-									%>
-									<tr>
-										<td colspan="2">조회결과가 없습니다.</td>
-									</tr>
-									<%
-									} else {//조회 결과가 있을 때
-									for (int i = 0; i < size; i++) {
-										//Map<String, Object> pmap = profitList.get(i);
-										if (i == size)
-											break;
-										//pProjectNo = pmap.get("PROJECT_NO").toString();
-									%>
 									<!-- 
 			===============DB에서 데이터 가져와서 뿌려주기======================
 			 -->
 									<tr>
 										<td>수익금</td>
-										<td>100</td>
-										<td>100</td>
-										<td>100</td>
-										<td>100</td>
+										<%
+										//조회 결과가 없는 거야?
+										if (size == 0) {
+										%>
+										<td rowspan="3">조회결과가 없습니다.</td>
+										<%
+										} else {//조회 결과가 있을 때
+										for (int i = 0; i < size; i++) {
+											Map<String, Object> bmap = balanceList.get(i);
+											if (i == size)
+												break;
+											month_profit = bmap.get("MONTH_PROFIT").toString();
+										%>
+										<td><%=month_profit%></td>
+										<%
+										} ///end of for
+										%>
 									</tr>
 									<tr>
 										<td>지출금</td>
-										<td>100</td>
-										<td>100</td>
-										<td>100</td>
-										<td>100</td>
+										<%
+										for (int i = 0; i < size; i++) {
+											Map<String, Object> bmap = balanceList.get(i);
+											if (i == size)
+												break;
+											month_expense = bmap.get("MONTH_EXPENSE").toString();
+										%>
+										<td><%=month_expense%></td>
+										<%
+										} ///end of for
+										%>
 									</tr>
 									<tr>
 										<td>순수익</td>
-										<td>100</td>
-										<td>100</td>
-										<td>100</td>
-										<td>100</td>
+										<%
+										for (int i = 0; i < size; i++) {
+											Map<String, Object> bmap = balanceList.get(i);
+											if (i == size)
+												break;
+											month_balance = bmap.get("MONTH_BALANCE").toString();
+										%>
+										<td><%=month_balance%></td>
+										<%
+										} ///end of for
+										%>
 									</tr>
-
 									<%
-									} ///end of for
 									} ///end of if
 									%>
 								</tbody>
