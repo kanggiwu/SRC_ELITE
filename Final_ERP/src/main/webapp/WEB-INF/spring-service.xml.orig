@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:aop="http://www.springframework.org/schema/aop" 
+       xmlns:tx="http://www.springframework.org/schema/tx" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+       ">
+	
+	<!-- 트랜잭션 AOP 설정 -->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.srcelite.finalerp.web.logic.*.*(..))" id="point-cut"/>
+		<aop:advisor advice-ref="tx-advice" pointcut-ref="point-cut"/>
+	</aop:config>
+	<tx:advice id="tx-advice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="insert*" />
+			<tx:method name="update*" />
+			<tx:method name="delete*" />
+		</tx:attributes>
+	</tx:advice>
+
+	 <bean id="main-logic" class="com.srcelite.finalerp.web.logic.MainLogic">
+		<property name="mainDao" ref="main-dao"></property>
+	</bean> 
+	
+	 <bean id="my-page-logic" class="com.srcelite.finalerp.web.logic.MyPageLogic">
+		<property name="myPageDao" ref="my-page-dao"></property>
+	</bean> 
+
+	<bean id="notice-logic" class="com.srcelite.finalerp.web.logic.NoticeLogic" >
+		<property name="noticeDao" ref="notice-dao"></property>
+		
+	</bean>
+
+	<bean id="schedule-logic" class="com.srcelite.finalerp.web.logic.ScheduleLogic">
+		<property name="scheduleDao" ref="schedule-dao"></property>
+		
+	</bean>	
+
+	<bean id="account-logic" class="com.srcelite.finalerp.web.logic.AccountLogic">
+		<property name="accountDao" ref="account-dao"></property>
+		
+	</bean>
+
+	<bean id="human-resource-logic" class="com.srcelite.finalerp.web.logic.HumanResourceLogic">
+		<property name="humanResourceDao" ref="human-resource-dao"></property>
+		
+	</bean>
+
+	<bean id="approval-logic" class="com.srcelite.finalerp.web.logic.ApprovalLogic">
+		<property name="approvalDao" ref="approval-dao"></property>
+		
+	</bean>
+
+	<bean id="project-history-logic" class="com.srcelite.finalerp.web.logic.ProjectHistoryLogic">
+		<property name="projectHistoryDao" ref="project-history-dao"></property>
+		
+	</bean>
+</beans>

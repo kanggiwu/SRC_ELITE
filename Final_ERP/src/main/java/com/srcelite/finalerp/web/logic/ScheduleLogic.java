@@ -91,7 +91,7 @@ public class ScheduleLogic {
 			if ("T".equals(emp_jop)) {
 				pMap.put("schedule_type", 2);
 				logger.info("logic schedule_type 변환 후: " + pMap.get("schedule_type"));
-				result = scheduleDao.insertSchedule(pMap);
+				result = scheduleDao.insertProjectSchedule(pMap);
 			} else {
 				result = 3;
 			}
@@ -149,7 +149,7 @@ public class ScheduleLogic {
 			String emp_jop = scheduleDao.getEmpJob(login_no);
 			// 사원의 직책이 'T'이고 작성자인 경우 update, 아닌 경우는 result = 3
 			if ("T".equals(emp_jop) && scheduleWriter == login_no) {
-				result = scheduleDao.updateSchedule(pMap);
+				result = scheduleDao.updateProjectSchedule(pMap);
 			} else {
 				result = 3;
 			}
@@ -271,7 +271,7 @@ public class ScheduleLogic {
 			String emp_jop = scheduleDao.getEmpJob(login_no);
 			// 사원의 직책이 'T'이고 작성자인 경우 update, 아닌 경우는 result = 3
 			if ("T".equals(emp_jop) && scheduleWriter == login_no) {
-				result = scheduleDao.deleteSchedule(schedule_no);
+				result = scheduleDao.deleteProjectSchedule(schedule_no);
 			} else {
 				result = 3;
 			}

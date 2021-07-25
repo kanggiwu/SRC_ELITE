@@ -4,12 +4,17 @@
 <%
 StringBuilder path = new StringBuilder(request.getContextPath());
 path.append("/");
-List<Map<String, Object>> profitList = null;
-profitList = (List<Map<String, Object>>) request.getAttribute("profitList");
+List<Map<String, Object>> profitMonthList = null;
+List<Map<String, Object>> expenseMonthList = null;
+profitMonthList = (List<Map<String, Object>>) request.getAttribute("profitMonthList");
+expenseMonthList = (List<Map<String, Object>>) request.getAttribute("expenseMonthList");
 int size = 1;
-String pProjectNo = null;
-if (profitList != null) {
-	size = profitList.size();
+if ((profitMonthList != null) && (expenseMonthList != null)) {
+	if(profitMonthList.size() >= expenseMonthList.size()) {
+		size = profitMonthList.size();
+	} else {
+		size = expenseMonthList.size();
+	}
 }
 out.print("size:" + size);
 %>

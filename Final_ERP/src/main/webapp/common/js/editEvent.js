@@ -92,7 +92,8 @@ let editEvent = function (event, element, view) {
         event.description = editDesc.val();
         $("#calendar").fullCalendar('updateEvent', event);
 
-		
+		alert('스케줄 번호'+event.schedule_no);
+		alert('스케줄 번호');
         //일정 업데이트
         $.ajax({
             type: "post"

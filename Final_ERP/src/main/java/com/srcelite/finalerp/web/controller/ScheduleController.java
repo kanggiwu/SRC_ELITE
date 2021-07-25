@@ -98,8 +98,6 @@ public class ScheduleController extends MultiActionController {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
-		
-
 	}
 
 	// 일정 수정
