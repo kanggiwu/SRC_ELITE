@@ -9,15 +9,16 @@ balanceList = (List<Map<String, Object>>) request.getAttribute("balanceList");
 int size = 0;
 if (balanceList != null) {
 	size = balanceList.size();
+//String balance_date_year =  balanceList.get(0).get("BALANCE_DATE").toString().substring(1, 4);
+//out.print(balance_date_year);
 }
 out.print("size:" + size);
-String total_date_year =  balanceList.get(0).get("TOTAL_DATE").toString().substring(1, 4);
-String total_date = "";
-String month_profit = "";
-String month_expense = "";
-String month_balance = "";
-String total_date_month = "";
-out.print(total_date_year);
+String balance_date_month = "";
+
+String balance_date = "";
+String balance_profit = "";
+String balance_expense = "";
+String balance_total = "";
 %>
 <!DOCTYPE html>
 <html>
@@ -66,19 +67,19 @@ out.print(total_date_year);
 				if (i == size)
 					break;
 				
-				total_date = smap.get("TOTAL_DATE").toString();
-				total_date_month = total_date.substring(5, 7);
-				month_profit = smap.get("MONTH_PROFIT").toString();
-				month_expense = smap.get("MONTH_EXPENSE").toString();
-				month_balance = smap.get("MONTH_BALANCE").toString();
+				balance_date = smap.get("TOTAL_DATE").toString();
+				balance_date_month = balance_date.substring(5, 7);
+				balance_profit = smap.get("BALANCE_PROFIT").toString();
+				balance_expense = smap.get("BALANCE_EXPENSE").toString();
+				balance_total = smap.get("BALANCE_TOTAL").toString();
 			%>
-			[ <%=total_date_month%>, <%=month_profit%>, <%=month_expense%>, <%=month_balance%> ] ,
+			[ <%=balance_date_month%>, <%=balance_profit%>, <%=balance_expense%>, <%=balance_total%> ] ,
 			<%
 			} ///end of for
 			} //end of else
 			%>
 			]);
-		console.log(<%=total_date_month%>);
+		console.log(<%=balance_date_month%>);
 		var options = {
 			chart : {
 				title : 'SourceELITE 연별 손익 그래프',
@@ -154,9 +155,9 @@ out.print(total_date_year);
 											Map<String, Object> hmap = balanceList.get(i);
 											if (i == size)
 												break;
-											total_date = hmap.get("TOTAL_DATE").toString();
+											balance_date = hmap.get("BALANCE_DATE").toString();
 										%>
-										<th><%=total_date%></th>
+										<th><%=balance_date%></th>
 
 										<%
 										} ///end of for
@@ -169,21 +170,23 @@ out.print(total_date_year);
 			===============DB에서 데이터 가져와서 뿌려주기======================
 			 -->
 									<tr>
-										<td>수익금</td>
 										<%
 										//조회 결과가 없는 거야?
 										if (size == 0) {
 										%>
-										<td rowspan="3">조회결과가 없습니다.</td>
+										<td colspan="2">조회결과가 없습니다.</td>
 										<%
 										} else {//조회 결과가 있을 때
+											%>
+										<td>수익금</td>
+										<%
 										for (int i = 0; i < size; i++) {
 											Map<String, Object> bmap = balanceList.get(i);
 											if (i == size)
 												break;
-											month_profit = bmap.get("MONTH_PROFIT").toString();
+											balance_profit = bmap.get("BALANCE_PROFIT").toString();
 										%>
-										<td><%=month_profit%></td>
+										<td><%=balance_profit%></td>
 										<%
 										} ///end of for
 										%>
@@ -195,9 +198,9 @@ out.print(total_date_year);
 											Map<String, Object> bmap = balanceList.get(i);
 											if (i == size)
 												break;
-											month_expense = bmap.get("MONTH_EXPENSE").toString();
+											balance_expense = bmap.get("BALANCE_EXPENSE").toString();
 										%>
-										<td><%=month_expense%></td>
+										<td><%=balance_expense%></td>
 										<%
 										} ///end of for
 										%>
@@ -209,9 +212,9 @@ out.print(total_date_year);
 											Map<String, Object> bmap = balanceList.get(i);
 											if (i == size)
 												break;
-											month_balance = bmap.get("MONTH_BALANCE").toString();
+											balance_total = bmap.get("BALANCE_TOTAL").toString();
 										%>
-										<td><%=month_balance%></td>
+										<td><%=balance_total%></td>
 										<%
 										} ///end of for
 										%>

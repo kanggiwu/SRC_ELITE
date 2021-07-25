@@ -59,8 +59,8 @@ out.print("size:" + size);
 								class="table table-bordered table-hover table-striped">
 								<thead>
 									<tr class="thead-dark" style="text-align: center">
-										<th colspan="3">수익</th>
-										<th colspan="3">지출</th>
+										<th colspan="2">수익</th>
+										<th colspan="2">지출</th>
 									</tr>
 									<tr class="thead-dark">
 										<th style="width: 20%">항목</th>
@@ -75,7 +75,7 @@ out.print("size:" + size);
 									if (size == 0) {
 									%>
 									<tr>
-										<td colspan="6">조회결과가 없습니다.</td>
+										<td colspan="4">조회결과가 없습니다.</td>
 									</tr>
 									<%
 									} else {//조회 결과가 있을 때
@@ -117,9 +117,9 @@ out.print("size:" + size);
 								<tfoot>
 									<tr>
 										<td>총 수익</td>
-										<td colspan="2" style="text-align: right;">2억</td>
+										<td >2억</td>
 										<td>총 지출</td>
-										<td colspan="2" style="text-align: right;">2백만</td>
+										<td >2백만</td>
 									</tr>
 								</tfoot>
 							</table>
