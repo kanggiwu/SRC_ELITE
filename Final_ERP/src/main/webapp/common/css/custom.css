@@ -29,3 +29,6 @@
   font-size: 17px;
   margin-bottom: 10px;
 }
+.no-padding {
+  padding: 0 !important;
+}

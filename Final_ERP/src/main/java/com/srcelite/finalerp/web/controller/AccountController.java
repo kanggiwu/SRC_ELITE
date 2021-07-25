@@ -226,15 +226,18 @@ public class AccountController extends MultiActionController {
 		HashMapBinder hmb = new  HashMapBinder(request);
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
-		target.put("STATE_MONTH", "2021-07");
+		//target.put("STATE_MONTH", "2021-07");
 		List<Map<String, Object>> profitMonthList = null;
 		List<Map<String, Object>> expenseMonthList = null;
+		List<Map<String, Object>> totalMonthList = null;
 		profitMonthList = accountLogic.getMonthProfitList(target);
 		expenseMonthList = accountLogic.getMonthExpenseList(target);
+		totalMonthList = accountLogic.getMonthTotalList(target);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("getMonthStatement");
 		mav.addObject("profitMonthList", profitMonthList);
 		mav.addObject("expenseMonthList", expenseMonthList);
+		mav.addObject("totalMonthList", totalMonthList);
 		return mav;
 	}
 

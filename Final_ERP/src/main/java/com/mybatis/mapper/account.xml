@@ -123,21 +123,49 @@
 	<select id="getMonthProfitList" resultType="map"> 
    SELECT project_name, profit_sum
      FROM v_profit
-	WHERE profit_month = NVL(#{STATE_MONTH}, SUBSTR(SYSDATE, 1, 7))
+     <where>
+     	<if test="STATE_MONTH == null">
+     	AND profit_month = SUBSTR(TO_CHAR(SYSDATE, 'YYYY-MM'), 1, 7)
+     	</if>
+     	<if test="STATE_MONTH != null">
+     	AND profit_month = #{STATE_MONTH}
+     	</if>
+     </where>
    </select>
    
    <!-- 월말 결산 지출 뷰 조회 -->
 	<select id="getMonthExpenseList" resultType="map"> 
    SELECT expense_type, expense_sum
      FROM v_expense
-	WHERE expense_month = NVL(#{STATE_MONTH}, SUBSTR(SYSDATE, 1, 7))
-   </select> 
+	<where>
+     	<if test="STATE_MONTH == null">
+     	AND expense_month = SUBSTR(TO_CHAR(SYSDATE, 'YYYY-MM'), 1, 7)
+     	</if>
+     	<if test="STATE_MONTH != null">
+     	AND expense_month = #{STATE_MONTH}
+     	</if>
+     </where>
+   </select>
+   
+   <!-- 급여 총계 계산하여 반환하는 프로시저-->  
+	<select id="insertBalanceProc" statementType="CALLABLE" parameterType="map">
+		{call proc_insert_balance(        
+          #{STATE_MONTH, mode=IN, jdbcType=VARCHAR}
+       	)}
+	</select>
 	
 	<!-- 월말 결산 합계 조회 -->
 	<select id="getMonthTotalList" resultType="map"> 
    	SELECT balance_no, balance_date, balance_profit, balance_expense, balance_total
       FROM balance
-	 WHERE balance_date = NVL(#{STATE_MONTH}, SUBSTR(SYSDATE, 1, 7))
+	 <where>
+     	<if test="STATE_MONTH == null">
+     	AND balance_date = SUBSTR(TO_CHAR(SYSDATE, 'YYYY-MM'), 1, 7)
+     	</if>
+     	<if test="STATE_MONTH != null">
+     	AND balance_date = #{STATE_MONTH}
+     	</if>
+     </where>
    </select> 
     
 </mapper>
