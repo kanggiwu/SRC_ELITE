@@ -39,7 +39,8 @@ public class HashMapBinder {
 			String key = (String)en.nextElement();
 			logger.info("key:"+key);
 			logger.info("value:"+request.getParameter(key));
-			target.put(key, HangulConversion.toUTF(request.getParameter(key)));
+			target.put(key, request.getParameter(key));
+//			target.put(key, HangulConversion.toUTF(request.getParameter(key)));
 		}
 	}////////end of bind
 	public void bindAjax(Map<String,Object> target) {

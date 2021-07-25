@@ -5,21 +5,14 @@
 	StringBuilder path = new StringBuilder(request.getContextPath());
 	path.append("/");
 	List<Map<String,Object>> sendApprovalList = null;
-	List<Map<String,Object>> getApproverEmp = null;
 	sendApprovalList = (List<Map<String,Object>>)request.getAttribute("sendApprovalList");
 	int size = 0;
-	//String pProjectNo = null;
 	if(sendApprovalList!=null){
 		size = sendApprovalList.size();
 	}
 	out.print("size:"+size);
-	getApproverEmp = (List<Map<String,Object>>)request.getAttribute("getApproverEmp");
-	int size2 = 0;
-	//String empSearch2 = null;
-	if(getApproverEmp!=null){
-		size2 = getApproverEmp.size();
-	}
-	out.print("size2:"+size2);
+	String aprvStatus = "";
+	String aprvStatus2 = "";
 %> 
 <!DOCTYPE html>
 <html>
@@ -72,20 +65,34 @@
 			<%
 			}
 			else{//조회 결과가 있을 때
+				/* String aprvStatus = "";
+				String aprvStatus2 = ""; */
 				for(int i=0;i<size;i++){
 					Map<String,Object> pmap = sendApprovalList.get(i);
 					if(i==size) break;
 					/* pProjectNo = pmap.get("PROJECT_NO").toString(); */
+					aprvStatus = pmap.get("APRV_STATUS").toString().trim();					
+					//out.print("aprvStatus:"+aprvStatus);
+					if(aprvStatus.equals("1")){
+						aprvStatus2 = "대기중";
+					}else if(aprvStatus.equals("2")){
+						aprvStatus2 = "반려";					
+					}else if(aprvStatus.equals("3")){
+						aprvStatus2 = "결재완료";					
+					}
+					//out.print("aprvStatus2:"+aprvStatus2);
 			%>   
 				<tr>
 					<td><%=pmap.get("APRV_NO").toString()%></td>
 					<td><%=pmap.get("APRV_DATE").toString()%></td>
 					<td><%=pmap.get("APRV_TITLE").toString()%></td>
-					<td><%=pmap.get("APRV_STATUS").toString()%></td>
-					<td><button type="button" class="btn btn-info btn-sm" id="btn_sel2"
+					<td><%=aprvStatus2%></td>
+					<!-- <td><button type="button" class="btn btn-info btn-sm" id="btn_sel2"
 						onclick="openModal2()">결재자조회</button></td>
 					<td><button type="button" class="btn btn-info btn-sm" id="btn_detail"
-						onclick="openPop2()">결재문서조회</button></td>
+						onclick="openPop2()">결재문서조회</button></td> -->
+					<td><a href='javascript:void(0)' onclick='openModal2()' class='btn btn-info btn-sm'>결재자조회</a></td>
+					<td><a href='javascript:void(0)' onclick='openPop2()' class='btn btn-info btn-sm'>결재문서조회</a></td>
 				</tr>
 			<% 
 				}///end of for
@@ -113,31 +120,10 @@
 					</tr>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody class="modAppLine2">
 				<!-- 
 				===============DB에서 데이터 가져와서 뿌려주기======================
 				 -->
-				 	<%
-					//조회 결과가 없는 거야?
-					if(size2==0){		
-					%>    
-					        <tr>
-					            <td colspan="5">조회결과가 없습니다.</td>
-					        </tr>
-					<%
-					}
-					else{//조회 결과가 있을 때
-						for(int i=0;i<size2;i++){
-							Map<String,Object> pmap2 = getApproverEmp.get(i);
-							if(i==size) break;
-					%>   
-					<tr>						
-						<td><%=pmap2.get("sign_level").toString()%></td>
-						<td><%=pmap2.get("sign_level").toString()%></td>
-						<td><%=pmap2.get("sign_level").toString()%></td>
-						<td><%=pmap2.get("sign_level").toString()%></td>
-						<td><%=pmap2.get("sign_level").toString()%></td>
-					</tr>
 				</tbody>	
 			</table>
       </div>
@@ -164,47 +150,66 @@
 	//모달창 오픈
  	function openModal2(){
 		$("#recievePlan").off("click").on('click',"tr", function(){
+			//현재 로우값 가져오기
+		    let tr = $(this);
+			let td = tr.children();
+			let aprv_no = td.eq(1).text();
 			aprv_no = $(this).find("td:eq(0)").text();
-			alert(aprv_no);
+			//alert(aprv_no);
 			$.ajax({
 				type:"post",
-				/* data:{"aprv_no":app_noTarget}, */
 				data:{"aprv_no":aprv_no},
-				url: "getApproverEmp.src1",
+				url: "getSendApproverEmp.src1",
 				dataType:"json",
 			    	success:function(data){
-			        	$("#mod_appLine2").modal();
+			    		//alert("성공");
+			    		appResult2(data);
 			  	    },
 			        error:function(e){
 			        	let x = e.responseXML;
 			        	alert("fail ===> "+e)
-			        } 
-				});        	
-			});
+			        }        	
+			});		
+    	$("#mod_appLine2").modal();	
+		});
+	//$("#approvalPlan").off("click")
 	}
-	 
+	function appResult2(data){
+		let a="";
+		for(let i=0;i<data.length;i++){
+			a+="<tr>";						
+			a+="<td>"+data[i]['SIGN_LEVEL']+"</td>";
+			a+="<td>"+data[i]['DEPT_NAME']+"</td>";
+			a+="<td>"+data[i]['RANK_NAME']+"</td>";
+			a+="<td>"+data[i]['EMP_NAME']+"</td>";
+			a+="<td>"+data[i]['SIGN_PERMISSION']+"</td>";
+			a+="</tr>";
+		}
+			document.querySelector(".modAppLine2").innerHTML = a;
+	}
 	function openPop2(){
-		$("#recievePlan").off("click").on('click',"tr", function(){
-			//alert( $(this).find("td:eq(1)").text() );
-			//alert(aprv_no);
+		$("#recievePlan").off("click").on("click","tr", function(){
 			appPlan2 = $(this).find("td:eq(2)").text();	
+			let aprv_no = $(this).find("td:eq(0)").text()
+			//alert(aprv_no);
 			//alert(appPlan);
-			openPopup2(appPlan2);
+			openPopup2(aprv_no,appPlan2);
 		});
 	}
-    function openPopup2(appPlan2){
-    //function openPopup(){
-    	//alert("팝업");
-    	let url1 = "getDetailSendApproval.src1";
-    	let url2 = "/myService/sendProjectPlan.jsp";
+    function openPopup2(aprv_no,appPlan){
+    	//let url1 = "getDetailSendApproval.src1";
+    	//let url2 = "/myService/sendProjectPlan.jsp";
+    	//alert("여기여기여기");
     	//alert(appPlan);
     	if (appPlan2 == "휴가계획서") {
-    		//alert ("여기여기");
-    		window.open(url1, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );  
+    		//window.open(url1, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );  
+	    	window.open("/approval/sendVacationPlan.src1?aprv_no="+aprv_no+"&appPlan="+appPlan, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
     	}else if (appPlan2 == "프로젝트 계약확정서"){
-    		window.open(url2, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );   		
-    		
+    		//alert("여기여기 프로젝트 계약확정서");
+    		//window.open(url2, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );   		
+	    	window.open("/approval/sendProjectPlan.src1?aprv_no="+aprv_no+"&appPlan="+appPlan, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );  	
     	}
+    	$("#recievePlan").off("click") //이벤트 다중으로 걸리는 것 방지
     }
     
 </script>
@@ -214,7 +219,7 @@
 <!-- 탑메뉴 사용 -->
 <script src="../common/js/topNav.js"></script>
 <!-- 사이드 메뉴 사용 -->
-<script src="../common/js/sideNav.js"></script>
+<script src="../common/js/sideNav.js?ver=2"></script>
 <script src="../common/scripts.js"></script>
 </body>
 </html>

@@ -1,5 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>    
+<%
+	StringBuilder path = new StringBuilder(request.getContextPath());
+	path.append("/");
+	//List<Map<String,Object>> getDetailApproval2 = null;
+	String[] token = null; 
+	token = (String[])request.getAttribute("token");
+	String projectName = token[0];
+	String company = token[1];
+	String period2 = token[2];
+	String benefit = token[3];
+	String kind = token[4];
+	String context = token[5];
+%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,27 +37,27 @@
 	<form class="form-horizontal" role="form">
 		<div class="form-group" >
 			<label for="lab_projectName">프로젝트명</label>				
-			<input type="text" class="form-control" id="txt_projectName" value="" readonly>				
+			<input type="text" class="form-control" id="txt_projectName" value="<%=projectName%>" readonly>				
 		</div>
 		<div class="form-group">
 			<label for="lab_company">발주사</label>
-			<input type="text" class="form-control" id="txt_company" value="" readonly>
+			<input type="text" class="form-control" id="txt_company" value="<%=company%>" readonly>
 		</div>
 		<div class="form-group">
 			<label for="lab_period2">기간</label>
-			<input type="text" class="form-control" id="txt_period2" value="" readonly>
+			<input type="text" class="form-control" id="txt_period2" value="<%=period2%>" readonly>
 		</div>
 		<div class="form-group">
 			<label for="lab_benefit">수익금</label>
-			<input type="text" class="form-control" id="txt_benefit" value="" readonly>
+			<input type="text" class="form-control" id="txt_benefit" value="<%=benefit%>" readonly>
 		</div>
 		<div class="form-group">
 			<label for="lab_kind">종류</label>
-			<input type="text" class="form-control" id="txt_kind" value="" readonly>
+			<input type="text" class="form-control" id="txt_kind" value="<%=kind%>" readonly>
 		</div>
 		<div class="form-group">
 			<label for="lab_context">개발내용</label>
-			<textarea class="form-control" id="txt_context" rows="5" cols="50" readonly></textarea>
+			<textarea class="form-control" id="txt_context" rows="5" cols="50" readonly><%=context%></textarea>
 		</div>
 		<div class="col text-center">
 			<button type="button" id="sendConfirm2" class="btn btn-info btn-lg" onclick="self.close()">

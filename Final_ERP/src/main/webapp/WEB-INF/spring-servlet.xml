@@ -106,6 +106,24 @@
 				<prop key="/approval/getLineApproval.src1">approval-controller</prop>
 				<!-- 결재자조회 getApproverEmp-->
 				<prop key="/approval/getApproverEmp.src1">approval-controller</prop>
+				<!-- 발신함결재자조회 getSendApproverEmp-->
+				<prop key="/approval/getSendApproverEmp.src1">approval-controller</prop>
+				<!-- 결재라인에서 결재자조회 -->
+				<prop key="/approval/getEmpSearchList3.src1">approval-controller</prop>
+				<!-- 결재문서조회 -->
+				<prop key="/approval/vacationPlan.src1">approval-controller</prop>
+				<!-- 결재문서조회 (프로젝트계약확정서)-->
+				<prop key="/approval/projectPlan.src1">approval-controller</prop>
+				<!-- 발신결재문서조회 -->
+				<prop key="/approval/sendVacationPlan.src1">approval-controller</prop>
+				<!-- 발신결재문서조회 (프로젝트계약확정서)-->
+				<prop key="/approval/sendProjectPlan.src1">approval-controller</prop>
+				<!-- 결재신청입력-->
+				<prop key="/approval/insertApproval.src1">approval-controller</prop>
+				<!-- 수신결재문서 승인/결재-->
+				<prop key="/approval/permissionApproval.src1">approval-controller</prop>
+				<!-- 결재신청완료/결재라인 저장-->
+				<prop key="/approval/insertApproverEmp.src1">approval-controller</prop>
 				<!-- 결재문서조회 getApproverEmp-->
 				<!-- <prop key="/approval/getDetailApproval.src1">approval-controller</prop> -->
 
@@ -174,7 +192,7 @@
 				<prop key="/humanresource/deleteLIcenceInfo.src1">deleteLIcenceInfo</prop>
 
 				<prop key="/approval/getApprovalForm.src1">getApprovalForm</prop>
-				<prop key="/approval/getApprovalFormList.src1">getApprovalForm</prop>
+				<prop key="/approval/getApprovalFormList.src1">getApprovalFormList</prop>
 				<prop key="/approval/submitApproval.src1">submitApproval</prop>
 				<prop key="/approval/getSendApproval.src1">getSendApproval</prop>
 				<prop key="/approval/getDetailSendApproval.src1">getDetailSendApproval</prop>
@@ -182,8 +200,27 @@
 				<prop key="/approval/getDetailReceiveApproval.src1">getDetailReceiveApproval</prop>
 				<prop key="/approval/getNumUnsignedApproval.src1">getNumUnsignedApproval</prop>
 				<prop key="/approval/getLineApproval.src1">getLineApproval</prop>
-				<!-- 결재자조회 getApproverEmp-->
+				<!-- 결재자조회 -->
 				<prop key="/approval/getApproverEmp.src1">getApproverEmp</prop>
+				<!-- 발신함결재자조회 getSendApproverEmp-->
+				<prop key="/approval/getSendApproverEmp.src1">getSendApproverEmp</prop>
+				<!-- 결재라인에서 결재자조회 -->
+				<prop key="/approval/getEmpSearchList3.src1">getEmpSearchList3</prop>
+				<!-- 결재문서조회 (휴가계획서)-->
+				<prop key="/approval/vacationPlan.src1">getDetailApproval</prop>
+				<!-- 결재문서조회 (프로젝트계약확정서)-->
+				<prop key="/approval/projectPlan.src1">getDetailApproval2</prop>
+				<!-- 결재신청입력-->
+				<prop key="/approval/insertApproval.src1">insertApproval</prop>
+				<!-- 발신결재문서조회 -->
+				<prop key="/approval/sendVacationPlan.src1">sendVacationPlan</prop>
+				<!-- 발신결재문서조회 (프로젝트계약확정서)-->
+				<prop key="/approval/sendProjectPlan.src1">sendProjectPlan</prop>
+				<!-- 수신결재문서 승인/결재-->
+				<prop key="/approval/permissionApproval.src1">permissionApproval</prop>
+				<!-- 결재신청완료/결재라인 저장-->
+				<prop key="/approval/insertApproverEmp.src1">insertApproverEmp</prop>
+				
 				<!-- 결재문서조회 getApproverEmp-->
 				<!-- <prop key="/approval/getDetailApproval.src1">getDetailApproval</prop> -->
 				

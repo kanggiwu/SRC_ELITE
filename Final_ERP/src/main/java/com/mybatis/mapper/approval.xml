@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
@@ -15,8 +15,8 @@ SELECT aprv_no,
        aprv_title,
        aprv_status ,
        aprv_read
-  FROM view_reception
-  WHERE emp_no =#{login_no}
+  FROM view_reception_su
+  WHERE emp_no =#{login_no,jdbcType=NUMERIC}
 </select>
 
 <!-- 결재 상태 update 승인시 => 승인한 사람보다 결재순위가 높은 사람의 전자결재 수신 추가: 프로시저 미완성 -->
@@ -29,6 +29,7 @@ SELECT DECODE (s.sign_level, 1, '1차 결재자', 2, '2차 결재자', 3, '3차 
        ,e.dept_name
        ,e.rank_name
        ,e.emp_name
+       ,s.sign_permission
   FROM    signer s
        JOIN
           (SELECT emp.emp_no emp_no,
@@ -43,7 +44,7 @@ SELECT DECODE (s.sign_level, 1, '1차 결재자', 2, '2차 결재자', 3, '3차 
 </select>
 
 <!-- 결재문서 내용 상세조회(결재번호와 결재내용-결재내용은 토큰으로 하나씩 넣는다) -->
-<select id="getDetailApproval" parameterType="int" resultType="map">
+<select id="getDetailApproval" parameterType="map" resultType="map">
 		SELECT aprv_content FROM approval WHERE aprv_no = #{aprv_no}
 </select>
 
@@ -57,15 +58,15 @@ SELECT DECODE (s.sign_level, 1, '1차 결재자', 2, '2차 결재자', 3, '3차 
                               ,#{P_APRV_TITLE, mode=IN,jdbcType=VARCHAR}
                               , #{P_APRV_CONTENT, mode=IN,jdbcType=VARCHAR}
                               , #{P_SIGN_EMP_NO, mode=IN,jdbcType=NUMERIC}
-                              , #{SEQ_APRV_NO, mode=OUT, jdbcType=NUMERIC}
+                              , #{SEQ_APRV_MAX, mode=OUT, jdbcType=NUMERIC}
                               )
     }                           
 </select>
 
 <!-- 결재권자 추가: 로직단에서 반목 필요 -->
-<insert id="insertApproverEmp">
+<insert id="insertApproverEmp" parameterType="map">
 INSERT INTO SIGNER (EMP_NO,APRV_NO,SIGN_PERMISSION,SIGN_DATE,SIGN_LEVEL) 
-    VALUES(#{EMP_NO},#{SEQ_APRV_NO},#{SIGN_PERMISSION},TO_CHAR(SYSDATE,'yyyy-mm-dd hh:mm:ss'),#{SIGN_LEVEL})
+    VALUES(#{EMP_NO},#{SEQ_APRV_MAX},#{SIGN_PERMISSION},TO_CHAR(SYSDATE,'yyyy-mm-dd hh:mm:ss'),#{SIGN_LEVEL})
 </insert>   
 
 
@@ -78,10 +79,27 @@ SELECT aprv_no,
        aprv_title,
        aprv_status,
        aprv_read
-  FROM view_reception
+  FROM view_reception_bal
  WHERE emp_no = #{login_no}
 
 </select>
 
+<!-- 사원리스트를 부서명, 직위명, 사원이름으로 조건검색하여 프로시저 출력 -->
+<select id="getEmpListProc3" statementType="CALLABLE" parameterType="map">
+	{call PROC_EMP_LIST(        
+      #{dept_name, mode=IN, jdbcType=VARCHAR},
+      #{rank_name, mode=IN, jdbcType=VARCHAR},
+      #{emp_name, mode=IN, jdbcType=VARCHAR},
+      #{e_cursor, mode=OUT, jdbcType=CURSOR, resultMap=empMap}
+   	)}
+</select>  
 
+<!-- 결재수신함 상세정보조회 승인,반려 -->
+<select id="permissionProc" statementType="CALLABLE" parameterType="map">
+	{call proc_update_permission(
+		#{p_aprv_no, mode=IN,jdbcType=NUMERIC},
+		#{p_login_no, mode=IN,jdbcType=NUMERIC},
+		#{p_sign_permission, mode=IN, jdbcType=VARCHAR}
+	)}
+</select>  
 </mapper>

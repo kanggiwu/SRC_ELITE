@@ -39,11 +39,17 @@
 
 <title>프로젝트 이력 조회</title>
 <script>
+	//프로젝트 이력조회 검색
 	function projectSearchAction(){
 		//let a ={"d":a,"d1":b};
 		//alert("여기")
 		//var deptTarget = document.getElementById("dept_options")
 		var typeTarget = $("#type_options option:selected").val();
+		//alert(typeTarget);
+		if (typeTarget == "===종류==="){
+			typeTarget = null;
+		}
+		//alert(typeTarget);		
 		var startTarget = $("#start_period").val();
 		var endTarget = $("#end_period").val();
 		var nameTarget = $("#txt_name").val();
@@ -162,7 +168,10 @@ else{//조회 결과가 있을 때
 			<!-- 
 			===============DB에서 데이터 가져와서 뿌려주기======================
 			 -->
-				<tr onclick="openPopup()">
+				<tr onclick="openPopup(this)" id="<%=pProjectNo%>">
+					<%-- <tr onclick="location.href='getDetailProjectHistory.src1?project_no=<%=pmap.get("PROJECT_NO")%>'"> --%>
+					<%-- <tr onclick="location.href='getDetailProjectHistory.src1?project_no=<%=pProjectNo%>'"> --%>
+					<!--<td onclick="openPopup()">부트스트랩</td>  -->
 					<td><%=pmap.get("PROJECT_NAME").toString()%></td>
 					<td><%=pmap.get("PROJECT_PERIOD").toString()%></td>
 					<td><%=pmap.get("EMP_NAME").toString()%></td>
@@ -210,8 +219,12 @@ else{//조회 결과가 있을 때
 </div>
 
 <script>
-    function openPopup(){
-        window.open("getDetailProjectHistory.src1?project_no=<%=pProjectNo%>", "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
+    function openPopup(e){
+    	let pProjectNo3 = $(e).attr('id');
+    		//alert(pProjectNo3);
+        /* window.open("getDetailProjectHistory.src1?project_no="pProjectNo2", "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" ); */
+        window.open("getDetailProjectHistory.src1?project_no="+pProjectNo3 ,"new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
+        //$("#products").off("click") //클릭이벤트 중첩발생 금지
     }
 </script>
 <!-- 슬라이드바 사용할때 필요 -->
