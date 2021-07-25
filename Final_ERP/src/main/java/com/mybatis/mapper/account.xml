@@ -98,7 +98,7 @@
 	
 
 	<!-- 지출 관리 조회 -->
-<select id="getExpenseList" resultType="map"> 
+	<select id="getExpenseList" resultType="map"> 
    SELECT expense_no, dept_no, expense_type, expense_price, expense_detail, expense_date
       FROM expense
     <where>
@@ -140,23 +140,31 @@
         FROM balance
       <where>
          <if test="YEAR != null">
-         AND SUBSTR(balance_date, 1, 4) = YEAR
+         AND SUBSTR(balance_date, 1, 4) = #{YEAR}
          </if>
        </where>
       ORDER BY balance_date ASC
     </select>  
 	
-	<!-- 월말 결산 -->
-	<select id="getMonthStateProc" statementType="CALLABLE" parameterType="map">
-		{call proc_get_month_statement(   
-          #{p_month, mode=IN, jdbcType=VARCHAR},
-          #{profit_cursor, mode=OUT, jdbcType=CURSOR, resultMap=profitMap},
-          #{profit_sum, mode=OUT, jdbcType=NUMERIC},
-          #{expense_cursor, mode=OUT, jdbcType=CURSOR, resultMap=expenseMap},
-          #{expense_sum, mode=OUT, jdbcType=NUMERIC},
-          #{total, mode=OUT, jdbcType=NUMERIC}
-       	)}
-	</select>    
+	<!-- 월말 결산 수익 뷰 조회 -->
+	<select id="getMonthProfitList" resultType="map"> 
+   SELECT project_name, profit_sum
+     FROM v_profit
+	WHERE profit_month = #{STATE_MONTH}
+   </select>
+   
+   <!-- 월말 결산 지출 뷰 조회 -->
+	<select id="getMonthExpenseList" resultType="map"> 
+   SELECT expense_type, expense_sum
+     FROM v_expense
+	WHERE expense_month = #{STATE_MONTH}
+   </select> 
 	
+	<!-- 월말 결산 합계 조회 -->
+	<select id="getMonthTotalList" resultType="map"> 
+   	SELECT balance_no, balance_date, balance_profit, balance_expense, balance_total
+      FROM balance
+	 WHERE balance_date = #{STATE_MONTH}
+   </select> 
     
 </mapper>

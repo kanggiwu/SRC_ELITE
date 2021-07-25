@@ -120,17 +120,19 @@ public class AccountDao {
 		balanceList = sqlSessionTemplate.selectList("getBalanceList",pmap);
 		return balanceList;
 	}
-	// 연말 결산
-	public List<Map<String,Object>> getMonthStatement(Map<String,Object> pmap) {
-		logger.info("Dao getMonthlyAccount 호출:" + pmap);
-		List<Map<String, Object>> monthStatement = null;
-		sqlSessionTemplate.selectList("getMonthStateProc", pmap);
-		monthStatement = (List<Map<String, Object>>) pmap.get("profit_cursor");
-		monthStatement.add(List<Map<String, Object>>) pmap.get("profit_sum"));
-		monthStatement.add(List<Map<String, Object>>) pmap.get("expense_cursor"));
-		monthStatement.add(List<Map<String, Object>>(Map<String, Object>) pmap.get("expense_sum"));
-		monthStatement.add(List<Map<String, Object>>) pmap.get("total"));
-		return monthStatement;
+	// 연말 결산 수익 조회
+	public List<Map<String,Object>> getMonthProfitList(Map<String,Object> pmap) {
+		logger.info("Dao getMonthProfitList 호출:" + pmap);
+		List<Map<String, Object>> profitMonthList = null;
+		profitMonthList = sqlSessionTemplate.selectList("getMonthProfitList",pmap);
+		return profitMonthList;
+	}
+	// 연말 결산 지출 조회
+	public List<Map<String,Object>> getMonthExpenseList(Map<String,Object> pmap) {
+		logger.info("Dao getMonthExpenseList 호출:" + pmap);
+		List<Map<String, Object>> expenseMonthList = null;
+		expenseMonthList = sqlSessionTemplate.selectList("getMonthExpenseList",pmap);
+		return expenseMonthList;
 	}
 	
 }
