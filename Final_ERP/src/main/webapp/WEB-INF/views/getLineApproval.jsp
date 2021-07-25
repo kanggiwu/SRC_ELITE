@@ -12,7 +12,8 @@
 	String dat_peri = request.getParameter("dat_peri");
 	String dat_peri1 = request.getParameter("dat_peri1");
 	String reason = request.getParameter("txt_reason");
-	vacationSql = aprv_title+"|"+deptName+"|"+empName+"|"+dat_peri+"|"+dat_peri1+"|"+reason;
+	vacationSql = deptName+"|"+empName+"|"+dat_peri+"~"+dat_peri1+"|"+reason;
+	//vacationSql = aprv_title+"|"+deptName+"|"+empName+"|"+dat_peri+"|"+dat_peri1+"|"+reason;
 	//프로젝트계약확정서
 	String projectName = request.getParameter("txt_projectName");
 	String company = request.getParameter("txt_company");
@@ -21,7 +22,8 @@
 	String benefit = request.getParameter("txt_benefit");
 	String kind = request.getParameter("txt_kind");
 	String context = request.getParameter("txt_context");
-	projectSql = aprv_title+"|"+projectName+"|"+company+"|"+dat_peri2+"|"+dat_peri3+"|"+benefit+"|"+kind+"|"+context;
+	projectSql = projectName+"|"+company+"|"+dat_peri2+"~"+dat_peri3+"|"+benefit+"|"+kind+"|"+context;
+	//projectSql = aprv_title+"|"+projectName+"|"+company+"|"+dat_peri2+"|"+dat_peri3+"|"+benefit+"|"+kind+"|"+context;
 %> 
 <!DOCTYPE html>
 <html>
@@ -270,17 +272,18 @@ function tabResult(data){
 //결재신청완료
 function addApprovalAction(){
 	//alert("결재신청완료버튼 클릭!");
-	let aprvTitle = $("#aprv_title2").val();
+	let P_APRV_TITLE = $("#aprv_title2").val();
 	//alert(aprvTitle);
-	let APRV_CONTENT = "";
-	if (aprvTitle == "휴가계획서"){ //휴가계획서
-		APRV_CONTENT = $("#vacationSql2").val();
+	let P_APRV_CONTENT = "";
+	if (P_APRV_TITLE == "휴가계획서"){ //휴가계획서
+		P_APRV_CONTENT = $("#vacationSql2").val();
 	}else { //프로젝트계약확정서
 		//alert("여기여기");
-		APRV_CONTENT = $("#projectSql2").val();		
+		P_APRV_CONTENT = $("#projectSql2").val();		
 	}
 	let SIGN_PERMISSION = "W";
 	let empNo1 = $("#a1").text();
+	let P_SIGN_EMP_NO = empNo1;
 	//alert(empNo1);
 	let empNo2 = $("#b1").text();
 	let empNo3 = $("#c1").text();
@@ -294,15 +297,12 @@ function addApprovalAction(){
 		{EMP_NO:empNo3, SIGN_PERMISSION:"W", SIGN_LEVEL:"3"},		
 	];
 	
+	//lineApp2 = JSON.stringify(lineApp);
 	$.ajax({
 		type:"post",
-		  /* data:{"aprvTitle":aprvTitle,"APRV_CONTENT":APRV_CONTENT,"SIGN_PERMISSION":SIGN_PERMISSION
-			  ,"empNo1":empNo1,"empNo2":empNo2,"empNo3":empNo3
-			  ,"SIGN_LEVEL1":SIGN_LEVEL1,"SIGN_LEVEL2":SIGN_LEVEL2,"SIGN_LEVEL3":SIGN_LEVEL3}, */
-		  data:{"aprvTitle":aprvTitle,"APRV_CONTENT":APRV_CONTENT},
-		  data:JSON.stringify(lineApp),
+		  data:{"P_APRV_TITLE":P_APRV_TITLE,"P_APRV_CONTENT":P_APRV_CONTENT,"P_SIGN_EMP_NO":P_SIGN_EMP_NO, "lineApp":lineApp},
 		  url: "/approval/insertApproval.src1",
-		  dataType:"json",
+		  //dataType:"json",
 		      success:function(data){
 		    	  alert("입력되었습니다!");
 		       },

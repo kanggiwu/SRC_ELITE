@@ -87,10 +87,12 @@
 					<td><%=pmap.get("APRV_DATE").toString()%></td>
 					<td><%=pmap.get("APRV_TITLE").toString()%></td>
 					<td><%=aprvStatus2%></td>
-					<td><button type="button" class="btn btn-info btn-sm" id="btn_sel2"
+					<!-- <td><button type="button" class="btn btn-info btn-sm" id="btn_sel2"
 						onclick="openModal2()">결재자조회</button></td>
 					<td><button type="button" class="btn btn-info btn-sm" id="btn_detail"
-						onclick="openPop2()">결재문서조회</button></td>
+						onclick="openPop2()">결재문서조회</button></td> -->
+					<td><a href='javascript:void(0)' onclick='openModal2()' class='btn btn-info btn-sm'>결재자조회</a></td>
+					<td><a href='javascript:void(0)' onclick='openPop2()' class='btn btn-info btn-sm'>결재문서조회</a></td>
 				</tr>
 			<% 
 				}///end of for
@@ -189,7 +191,7 @@
 		$("#recievePlan").off("click").on("click","tr", function(){
 			appPlan2 = $(this).find("td:eq(2)").text();	
 			let aprv_no = $(this).find("td:eq(0)").text()
-			alert(aprv_no);
+			//alert(aprv_no);
 			//alert(appPlan);
 			openPopup2(aprv_no,appPlan2);
 		});
@@ -197,13 +199,13 @@
     function openPopup2(aprv_no,appPlan){
     	//let url1 = "getDetailSendApproval.src1";
     	//let url2 = "/myService/sendProjectPlan.jsp";
-    	alert("여기여기여기");
-    	alert(appPlan);
+    	//alert("여기여기여기");
+    	//alert(appPlan);
     	if (appPlan2 == "휴가계획서") {
     		//window.open(url1, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );  
 	    	window.open("/approval/sendVacationPlan.src1?aprv_no="+aprv_no+"&appPlan="+appPlan, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
     	}else if (appPlan2 == "프로젝트 계약확정서"){
-    		alert("여기여기 프로젝트 계약확정서");
+    		//alert("여기여기 프로젝트 계약확정서");
     		//window.open(url2, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );   		
 	    	window.open("/approval/sendProjectPlan.src1?aprv_no="+aprv_no+"&appPlan="+appPlan, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );  	
     	}

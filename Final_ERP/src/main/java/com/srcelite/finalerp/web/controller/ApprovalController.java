@@ -260,32 +260,80 @@ public class ApprovalController extends MultiActionController {
 			//mav.addObject("getDetailApproval", getDetailApproval);
 			return mav;
 		}
+		
+		// 발신 결재 상세조회(프로젝트 상세조회 경우)
+		public ModelAndView sendProjectPlan(HttpServletRequest request, HttpServletResponse response)
+		throws Exception
+		{
+			logger.info("sendProjectPlan 호출 성공");
+			HashMapBinder hmb = new HashMapBinder(request);
+			Map<String,Object> target = new HashMap<>();
+			hmb.bind(target);
+			HttpSession session = request.getSession(true);
+			target.put("login_no", session.getAttribute("login_no"));
+			logger.info(session.getAttribute("login_no"));
+			List<Map<String,Object>> sendProjectPlan = null;
+			sendProjectPlan=approvalLogic.getDetailApproval(target);
+			logger.info("sendProjectPlan:::"+sendProjectPlan);//
+			Map<String,Object> pmap = sendProjectPlan.get(0);
+			String projectDetail = pmap.get("APRV_CONTENT").toString();
+			logger.info("vacationDetail:"+projectDetail);//
+			StringTokenizer st = new StringTokenizer(projectDetail,"|");//문자열로 들어온값 잘라주기
+			int count = st.countTokens();
+			String[] token = new String[count];
+			logger.info("Tokens count:"+count);
+			for (int i=0; i<count; i++) {
+				token[i] = st.nextToken();
+				//logger.info("token:"+token);
+			}
+			ModelAndView mav = new ModelAndView(); 
+			mav.setViewName("sendProjectPlan");
+			mav.addObject("token", token);
+			//mav.addObject("getDetailApproval", getDetailApproval);
+			return mav;
+		}
 	// 결재신청입력
-	public ModelAndView insertApproval(HttpServletRequest request,HttpServletResponse response) 
+	public void insertApproval(HttpServletRequest request,HttpServletResponse response) 
 	throws Exception 
-	{
+	/*
+	 * public ModelAndView insertApproval(HttpServletRequest
+	 * request,HttpServletResponse response) throws Exception
+	 */	{
 		logger.info("insertApproval 호출 성공");
 		HashMapBinder hmb = new HashMapBinder(request);
 		Map<String,Object> target = new HashMap<>();
 		hmb.bind(target);
 		HttpSession session = request.getSession(true);
-		//Map<String,Object> pmap = new HashMap<>();
-		target.put("login_no", session.getAttribute("login_no"));
 		logger.info(session.getAttribute("login_no"));
-		List<Map<String,Object>> insertApproval = null;
-		//logger.info(target.get("lineApp"));
+		target.put("P_LOGIN_NO", session.getAttribute("login_no"));
+		int seq_aprv_max = 0;
+		/////////////lineApp2의 값만 따로 읽어서 넣어야해~~~
+		Map<String,Object> pmap = new HashMap<>();
+		
 		try {
-			insertApproval=approvalLogic.insertApproval(target); //결재문서내용 저장
-			
+			seq_aprv_max = approvalLogic.insertApproval(target); //결재문서내용 저장
+			for (int i=0;i<3;i++) {
+				pmap.put("SEQ_APRV_MAX",seq_aprv_max);
+				pmap.put("EMP_NO",target.get("lineApp["+i+"][EMP_NO]"));
+				pmap.put("SIGN_PERMISSION",target.get("lineApp["+i+"][SIGN_PERMISSION]"));
+				pmap.put("SIGN_LEVEL",target.get("lineApp["+i+"][SIGN_LEVEL]"));
+				//pmap.put("login_no",target.get("login_no"));
+				logger.info(pmap.get("SEQ_APRV_MAX"));
+				logger.info(pmap.get("EMP_NO"));
+				logger.info(pmap.get("SIGN_PERMISSION"));
+				logger.info(pmap.get("SIGN_LEVEL"));
+				approvalLogic.insertApproverEmp(pmap); //결재라인 저장
+			}
 			
 		} catch (Exception e) {
 			throw e;
 		}
-		logger.info("insertApproval:"+insertApproval);//
-		ModelAndView mav = new ModelAndView(); 
-		mav.setViewName("getApprovalFormList");
-		mav.addObject("insertApproval", insertApproval);
-		return mav;
+//		logger.info("insertApproval:"+insertApproval);//
+		//ModelAndView mav = new ModelAndView(); 
+		//mav.setViewName("getApprovalFormList");
+//		mav.addObject("insertApproval", insertApproval);
+		//return mav;
+		response.sendRedirect("/approval/getSendApproval.src1");
 	 }
 
 	//결재문서 반려/결재
@@ -301,17 +349,26 @@ public class ApprovalController extends MultiActionController {
 		logger.info(target.get("P_SIGN_PERMISSION"));
 		logger.info(session.getAttribute("login_no"));
 		logger.info("permissionApproval 호출 성공");
-		//List<Map<String,Object>> permissionApproval = null;
-		//permissionApproval=approvalLogic.permissionApproval(target);
 		int result = 0;
 		result = approvalLogic.permissionApproval(target);
-		//logger.info("permissionApproval:"+permissionApproval);//
-		//Gson g = new Gson();
-		//String imsi = g.toJson(permissionApproval);
-		//response.setContentType("application/json;charset=utf-8");
-		//PrintWriter out = response.getWriter();
-		//System.out.println("여기야");
-		//System.out.println(imsi);
-		//out.print(imsi);
+		if(result == 1) {
+			response.sendRedirect("./getReceiveApproval.src1");
+		}
 	}
+	//결재신청완료/결재라인 저장
+	//public void  insertApproverEmp(HttpServletRequest request, HttpServletResponse response) 
+	//		throws Exception
+	//{
+	//	HashMapBinder hmb = new HashMapBinder(request);
+	//	Map<String,Object> target = new HashMap<>();
+	//	hmb.bind(target);
+	//	HttpSession session = request.getSession(true);
+	//	target.put("p_login_no", session.getAttribute("login_no"));
+	//	logger.info("insertApproverEmp 호출 성공");
+	//	int result = 0;
+	//	result = approvalLogic.insertApproverEmp(target);
+	//	if(result == 1) {
+	//		response.sendRedirect("./getApprovalForm.src1");
+	//	}
+	//}
 }

@@ -62,10 +62,12 @@
 <% 
 %>
 		<div class="col text-center">
-			<button type="submit" id="rejectAct" class="btn btn-info btn-lg" onclick="rejectAction()">
+			<!-- <button type="submit" id="rejectAct" class="btn btn-info btn-lg" onclick="rejectAction()">
 			반려</button>	
 			<button type="submit" id="approvalAct" class="btn btn-warning btn-lg" onclick="approvalAction()">
-			결재</button>	
+			결재</button>	 -->
+			<a href="javascript:void(0)" onclick="rejectAction()" class="btn btn-info btn-lg">반려</a>
+			<a href="javascript:void(0)" id="appBtn" onclick="approvalAction()" class="btn btn-warning btn-lg">승인</a>
 		</div>
 		&nbsp;
 	</form>
@@ -109,15 +111,16 @@ function rejectAction(){
     let p = getParams();
     alert("p['aprv_no'] = "+p["aprv_no"]);
     
-    let aprv_no = p["aprv_no"]; 
-    alert (aprv_no);
+    let p_aprv_no = p["aprv_no"]; 
+    alert (p_aprv_no);
 	
-	let sign_permission = "F";
+	let p_sign_permission = "F";
 	$.ajax({
+		//alert("ajax 들어왔어요");
 		type:"post",
-		  data:{"aprv_no":aprv_no,"sign_permission":sign_permission},
+		  data:{"p_aprv_no":p_aprv_no,"p_sign_permission":p_sign_permission},
 		  url: "/approval/permissionApproval.src1",
-		  dataType:"json",
+		  //dataType:"json",
 	          success:function(data){
 	        	  alert("반려되었습니다");
 	  	      },
@@ -129,21 +132,23 @@ function rejectAction(){
 }
 //승인
 function approvalAction(){
-	alert("결재");
+	alert("승인");
     let p = getParams();
     alert("p['aprv_no'] = "+p["aprv_no"]);
     
-    let aprv_no = p["aprv_no"]; 
-    alert (aprv_no);
+    let p_aprv_no = p["aprv_no"]; 
+    alert (p_aprv_no);
 	
-	let sign_permission = "T";
+	let p_sign_permission = "T";
 	$.ajax({
+		//alert("ajax 들어왔어요");
 		type:"post",
-		  data:{"aprv_no":aprv_no, "sign_permission":sign_permission},
+		  data:{"p_aprv_no":p_aprv_no,"p_sign_permission":p_sign_permission},
 		  url: "/approval/permissionApproval.src1",
-		  dataType:"json",
+		  //dataType:"json",
 	          success:function(data){
-	        	  alert("결재되었습니다");
+	        	  alert("승인되었습니다");
+	        	  $("#appBtn").prop("disabled", true);
 	  	      },
 	          error:function(e){
 	        	  let x = e.responseXML;

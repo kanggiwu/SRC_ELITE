@@ -119,6 +119,8 @@
 				<prop key="/approval/insertApproval.src1">approval-controller</prop>
 				<!-- 수신결재문서 승인/결재-->
 				<prop key="/approval/permissionApproval.src1">approval-controller</prop>
+				<!-- 결재신청완료/결재라인 저장-->
+				<prop key="/approval/insertApproverEmp.src1">approval-controller</prop>
 				<!-- 결재문서조회 getApproverEmp-->
 				<!-- <prop key="/approval/getDetailApproval.src1">approval-controller</prop> -->
 
@@ -212,6 +214,8 @@
 				<prop key="/approval/sendProjectPlan.src1">sendProjectPlan</prop>
 				<!-- 수신결재문서 승인/결재-->
 				<prop key="/approval/permissionApproval.src1">permissionApproval</prop>
+				<!-- 결재신청완료/결재라인 저장-->
+				<prop key="/approval/insertApproverEmp.src1">insertApproverEmp</prop>
 				
 				<!-- 결재문서조회 getApproverEmp-->
 				<!-- <prop key="/approval/getDetailApproval.src1">getDetailApproval</prop> -->

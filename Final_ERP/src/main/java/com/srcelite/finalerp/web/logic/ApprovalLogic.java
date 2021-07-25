@@ -108,12 +108,13 @@ public class ApprovalLogic {
 	}
 
 	//전자결재신청 입력
-	public List<Map<String, Object>> insertApproval(Map<String, Object> pmap) {
+	public int insertApproval(Map<String, Object> pmap) {
 		logger.info("insertApproval 호출 성공");
 		List<Map<String,Object>> insertApproval = null;
+		int result = 0;
 		//두개 넣어주기
-		insertApproval = approvalDao.insertApproval(pmap);			
-		return insertApproval;
+		result = approvalDao.insertApproval(pmap);			
+		return result;
 	}
 
 	//결재문서 반려/결재
@@ -124,6 +125,15 @@ public class ApprovalLogic {
 		//List<Map<String,Object>> permissionApproval = null;
 		//permissionApproval = approvalDao.permissionApproval(pmap);
 		approvalDao.permissionApproval(pmap);
+		result = 1;
+		return result;
+	}
+	
+	//결재신청완료(결재라인저장)
+	public int insertApproverEmp(Map<String, Object> pmap) {
+		logger.info("insertApproverEmp 호출 성공");
+		int result = 0;
+		approvalDao.insertApproverEmp(pmap);
 		result = 1;
 		return result;
 	}

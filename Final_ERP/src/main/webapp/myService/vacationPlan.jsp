@@ -38,8 +38,7 @@
 			<textarea class="form-control" id="txt_reason" rows="5" cols="50" readonly></textarea>
 		</div>
 		<div class="col text-center">
-			<button type="submit" id="rejectAct" class="btn btn-info btn-lg" onclick="rejectAction()">
-			반려</button>	
+			<a id="rejectAct" href="javascript:void(0)"  onclick="rejectAction()" class="btn btn-info btn-lg">반려</a>
 			<button type="submit" id="approvalAct" class="btn btn-warning btn-lg" onclick="approvalAction()">
 			결재</button>	
 		</div>
@@ -48,3 +47,12 @@
 </div>
 </body>
 </html>
+<<script type="text/javascript">
+
+//반려
+function rejectAction(){
+	alert("반려");
+	$('#rejectAct').addClass('disabled');  //rejectAct버튼 비활성화
+
+}
+</script>

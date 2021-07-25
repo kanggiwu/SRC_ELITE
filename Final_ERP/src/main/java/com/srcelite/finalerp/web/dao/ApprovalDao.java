@@ -73,17 +73,25 @@ public class ApprovalDao {
 	}
 	
 	//결재신청 완료
-	public List<Map<String, Object>> insertApproval(Map<String, Object> pmap) {
-		// TODO Auto-generated method stub
-		return null;
+	public int insertApproval(Map<String, Object> pmap) {
+		int result = 0;
+		sqlSessionTemplate.selectList("procApplyApprobal",pmap);
+		result = Integer.parseInt(String.valueOf(pmap.get("SEQ_APRV_MAX")));
+		logger.info(pmap.get("SEQ_APRV_MAX"));
+//		insertApproval = (List<Map<String, Object>>) pmap.get("SEQ_APRV_MAX");
+		return result;
 	}
 	
 	//결재신청 반려/결재
 	public int permissionApproval(Map<String, Object> pmap) {
-	//public List<Map<String, Object>> permissionApproval(Map<String, Object> pmap) {
-		//List<Map<String, Object>> getSendApproverEmp = null;
 		int result = 0;
 		sqlSessionTemplate.selectList("permissionProc",pmap);
+	    return result;
+	}
+
+	public int insertApproverEmp(Map<String,Object> pmap) {
+		int result = 0;
+		sqlSessionTemplate.selectList("insertApproverEmp",pmap);
 	    return result;
 	}
 }

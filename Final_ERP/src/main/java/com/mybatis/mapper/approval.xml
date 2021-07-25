@@ -64,7 +64,7 @@ SELECT DECODE (s.sign_level, 1, '1차 결재자', 2, '2차 결재자', 3, '3차 
 </select>
 
 <!-- 결재권자 추가: 로직단에서 반목 필요 -->
-<insert id="insertApproverEmp">
+<insert id="insertApproverEmp" parameterType="map">
 INSERT INTO SIGNER (EMP_NO,APRV_NO,SIGN_PERMISSION,SIGN_DATE,SIGN_LEVEL) 
     VALUES(#{EMP_NO},#{SEQ_APRV_MAX},#{SIGN_PERMISSION},TO_CHAR(SYSDATE,'yyyy-mm-dd hh:mm:ss'),#{SIGN_LEVEL})
 </insert>   
@@ -97,9 +97,9 @@ SELECT aprv_no,
 <!-- 결재수신함 상세정보조회 승인,반려 -->
 <select id="permissionProc" statementType="CALLABLE" parameterType="map">
 	{call proc_update_permission(
-		#{P_APRV_NO, mode=IN,jdbcType=NUMERIC},
-		#{P_LOGIN_NO, mode=IN,jdbcType=NUMERIC},
-		#{P_SIGN_PERMISSION, mode=IN, jdbcType=VARCHAR}
+		#{p_aprv_no, mode=IN,jdbcType=NUMERIC},
+		#{p_login_no, mode=IN,jdbcType=NUMERIC},
+		#{p_sign_permission, mode=IN, jdbcType=VARCHAR}
 	)}
 </select>  
 </mapper>

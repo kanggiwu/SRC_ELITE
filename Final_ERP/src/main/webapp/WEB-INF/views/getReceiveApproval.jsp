@@ -93,7 +93,7 @@ let title = "";
 			<%
 					}else { 
 			%>
-					<td>💌</td>
+					<td></td>
 			<%
 					}
 			%>
@@ -106,6 +106,8 @@ let title = "";
 						onclick="openModal()">결재자조회</button></td>
 					<td><button type="button" class="btn btn-info btn-sm" name="btn_app"
 						onclick="openPop()">결재문서조회</button></td>
+					<!-- <td><a href='javascript:void(0)' onclick='openModal()' class='btn btn-info btn-sm'>결재자조회</a></td>
+					<td><a href='javascript:void(0)' onclick='openPop()' class='btn btn-info btn-sm'>결재문서조회</a></td> -->
 				</tr>
 			<% 
 				}///end of for
@@ -220,7 +222,7 @@ let title = "";
 	    if (appPlan == "휴가계획서") {
 	    	//alert("휴가계획서");
 	    	window.open("/approval/vacationPlan.src1?aprv_no="+aprv_no+"&appPlan="+appPlan, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
-	    }else if (appPlan == "프로젝트 계약확정서"){
+	    }else{
 	    	//alert("프로젝트 계약확정서");
 	    	window.open("/approval/projectPlan.src1?aprv_no="+aprv_no+"&appPlan="+appPlan, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );   	
 	    	
