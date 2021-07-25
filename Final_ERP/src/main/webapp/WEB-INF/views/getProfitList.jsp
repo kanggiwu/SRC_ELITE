@@ -5,11 +5,16 @@
 StringBuilder path = new StringBuilder(request.getContextPath());
 path.append("/");
 List<Map<String, Object>> profitList = null;
+List<Map<String, Object>> projectList = null;
 profitList = (List<Map<String, Object>>) request.getAttribute("profitList");
+projectList = (List<Map<String, Object>>) request.getAttribute("projectList");
 int size = 0;
-String project_deadline = null;
+int project_size = 0;
 if (profitList != null) {
 	size = profitList.size();
+}
+if (projectList != null) {
+	project_size = projectList.size();
 }
 
 out.print("size:" + size);
@@ -32,6 +37,7 @@ out.print("size:" + size);
 	crossorigin="anonymous"></script>
 <link href="../common/main.css" rel="stylesheet" />
 <link href="../common/css/custom.css" rel="stylesheet" />
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--관리자 로그에 필요한 코드 끝   =================================================================================-->
 
 <!--페이징 처리   =================================================================================-->
@@ -109,13 +115,17 @@ out.print("size:" + size);
 		var project_name = $(e).closest('td').prevAll("#project_name").attr('value')
 		$('#ins_project_name').val(project_name);
 	}
-	// 수익 입력
+	// 수익 추가
 	 function insertProfit() {
 			Swal.fire({
-				  title: '입력 되었습니다!',
+				  title: '추가 되었습니다!',
 				  confirmButtonColor: '#17a2b8'})
 				setTimeout(() => $('#profit_insert').submit() , 1500);
 	   }
+	//수익 검색
+	function profitSearchAction(){
+		$('#profit_search').submit()
+	}
 </script>
 
 <title>Account</title>
@@ -138,14 +148,14 @@ out.print("size:" + size);
 -->
 
 						<!-- -----------------------------------검색부분---------------------------------- -->
-						<form id="myform" class="form-horizontal" role="form">
+						<form id="profit_search" method="post" action="getProfitList.src1">
 							<div
 								style="text-align: left; padding: 5px; display: inline-block; width: 60%;">
 								<span class="input-group"> <input type="date"
-									class="form-control" id="date_period_first">&nbsp; ~
-									&nbsp; <input type="date" class="form-control"
-									id="date_period_last">&nbsp; <a
-									href="javascript:empSearchAction()"
+									class="form-control" id="date_period_first" name="PROFIT_START">&nbsp;
+									~ &nbsp; <input type="date" class="form-control"
+									id="date_period_last" name="PROFIT_END">&nbsp; <a
+									href="javascript:profitSearchAction()"
 									class="btn btn-default float-left" role="button"><i
 										class="fas fa-search"></i></a>
 								</span>
@@ -153,6 +163,8 @@ out.print("size:" + size);
 							</div>
 							<div
 								style="text-align: right; padding: 5px; display: inline-block; width: 39%">
+								<button type="button" class="btn btn-info" data-toggle="modal"
+									data-target="#mod_insProfit">수익 추가</button>
 							</div>
 						</form>
 						<!-- -----------------------------------검색부분 끝----------------------------------- -->
@@ -165,12 +177,10 @@ out.print("size:" + size);
 								</form>
 								<thead>
 									<tr class="thead-dark" style="text-align: center;">
-										<th style="width: 20%">프로젝트명</th>
-										<th style="width: 16%">시작일</th>
-										<th style="width: 16%">종료일</th>
-										<th style="width: 13%">매출금</th>
-										<th style="width: 13%">종류</th>
-										<th style="width: 13%">입력</th>
+										<th style="width: 30%">프로젝트명</th>
+										<th style="width: 20%">입금일</th>
+										<th style="width: 20%">수익금</th>
+										<th style="width: 30%">내용</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -180,7 +190,7 @@ out.print("size:" + size);
 									if (size == 0) {
 									%>
 									<tr>
-										<td colspan="6">조회결과가 없습니다.</td>
+										<td colspan="4">조회결과가 없습니다.</td>
 									</tr>
 									<%
 									} else {//조회 결과가 있을 때
@@ -189,26 +199,25 @@ out.print("size:" + size);
 										if (i == size)
 											break;
 										/* 										project_deadline = rmap.get("PROJECT_DEADLINE").toString();
-																		if("null".equals(project_deadline))
-																		{
-																			project_deadline = "미완";
-																		}else{
-																			project_deadline = "완";
-																		} */
+																if("null".equals(project_deadline))
+																{
+																	project_deadline = "미완";
+																}else{
+																	project_deadline = "완";
+																} */
 									%>
 									<!-- 
 			===============DB에서 데이터 가져와서 뿌려주기======================
 			 -->
 									<tr>
-										<td id="project_name" value="<%=rmap.get("PROJECT_NAME")%>"><%=rmap.get("PROJECT_NAME")%></td>
-										<td><%=rmap.get("PROJECT_STARTLINE")%></td>
-										<td><%=rmap.get("PROJECT_DEADLINE")%></td>
+										<td id="profit_no" value="<%=rmap.get("PROFIT_NO")%>"><%=rmap.get("PROJECT_NAME")%></td>
+										<td><%=rmap.get("PROFIT_DATE")%></td>
 										<%-- 										<td><%=project_deadline%></td> --%>
-										<td><%=rmap.get("PROJECT_PROFIT")%></td>
-										<td><%=rmap.get("PROJECT_TYPE")%></td>
-										<td style="text-align: center;">
+										<td><%=rmap.get("PROFIT_PRICE")%></td>
+										<td><%=rmap.get("PROFIT_DETAIL")%></td>
+										<%-- 										<td style="text-align: center;">
 										<%
-										if("미완".equals(rmap.get("PROJECT_DEADLINE").toString())){
+										if("미완".equals(rmap.get("PROFIT_DATE").toString())){
 										%>
 										<button type="button"
 												class="btn btn-warning" data-toggle="modal"
@@ -218,7 +227,7 @@ out.print("size:" + size);
 										<%	
 										}// end of if
 										%>
-											</td>
+											</td> --%>
 									</tr>
 									<%
 									} ///end of for
@@ -229,7 +238,7 @@ out.print("size:" + size);
 							<hr />
 						</div>
 						<!---------------- 수익수정 Modal 시작 --------------------------------------->
-						<div class="modal fade" id="mod_updEmp" tabindex="-1"
+						<div class="modal fade" id="mod_insProfit" tabindex="-1"
 							role="dialog" aria-labelledby="myModalLabel">
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
@@ -237,29 +246,60 @@ out.print("size:" + size);
 										<h4 class="modal-title" id="myModalLabel">매출금 입력</h4>
 									</div>
 									<div class="modal-body">
-										<form id="profit_insert" method="post"	action="insertProfit.src1">
+										<form id="profit_insert" method="post"
+											action="insertProfit.src1">
 											<div class="form-group">
 												<div class="input-group-addon" id="basic-addon1">프로젝트
 													명</div>
 												<br>
 												<div class="input-group">
-													<input type="text" name="project_name" id="ins_project_name"
-														class="form-control" value=""
-														aria-describedby="basic-addon1" readonly>
+													<select class="form-control" name="project_no" value="">
+													<%
+													if (project_size == 0) {
+													%>
+														<option disabled selected>프로젝트가 없습니다</option>
+													<%
+													} else {//조회 결과가 있을 때
+													for (int i = 0; i < project_size; i++) {
+														Map<String, Object> pmap = projectList.get(i);
+														if (i == size)
+															break;
+														%>
+														<option value="<%=pmap.get("PROJECT_NO") %>"><%=pmap.get("PROJECT_NAME") %></option>
+														<%
+													} ///end of for
+													} ///end of if
+													%>
+													</select>
 												</div>
 											</div>
 											<br>
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
 													style="display: inline-block; width: 25%">매출금</span> <input
-													type="text" name="project_profit" class="form-control"
+													type="text" name="profit_price" class="form-control"
+													aria-describedby="basic-addon1">
+											</div>
+											<br>
+											<div class="input-group">
+												<span class="input-group-addon" id="basic-addon1"
+													style="display: inline-block; width: 25%">입금일</span> <input
+													type="date" name="profit_date" class="form-control"
+													aria-describedby="basic-addon1">
+											</div>
+											<br>
+											<div class="input-group">
+												<span class="input-group-addon" id="basic-addon1"
+													style="display: inline-block; width: 25%">내용</span> <input
+													type="text" name="profit_detail" class="form-control"
 													aria-describedby="basic-addon1">
 											</div>
 											<br>
 										</form>
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-warning" onclick="insertProfit()">입력</button>
+										<button type="button" class="btn btn-info"
+											onclick="insertProfit()">추가</button>
 										<button type="button" class="btn btn-danger"
 											data-dismiss="modal">닫기</button>
 									</div>
@@ -272,7 +312,7 @@ out.print("size:" + size);
 					<!--
 ****************************************** 컨텐츠 들어갈내용 끝 *************************************************   
 -->
-					</div>
+				</div>
 			</main>
 		</div>
 	</div>

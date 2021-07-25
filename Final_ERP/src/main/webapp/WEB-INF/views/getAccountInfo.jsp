@@ -4,19 +4,21 @@
 <%
 StringBuilder path = new StringBuilder(request.getContextPath());
 path.append("/");
-List<Map<String, Object>> AccountList = null;
-AccountList = (List<Map<String, Object>>) request.getAttribute("AccountList");
-Map<String, Object> Amap = new HashMap<>();
-//Amap = AccountList.get(1);
 int size = 0;
+List<Map<String, Object>> AccountList = null;
+AccountList = (List<Map<String, Object>>) request.getAttribute("accountList");
+Map<String, Object> Amap = null;
+if (AccountList != null) {
+	Amap = AccountList.get(0);
+}
 String emp_no = "";
 String emp_name = "";
 String dept_name = "";
 String rank_name = "";
 String emp_account = "";
 String emp_hiredate = "";
+String sal_date = "";
 int sal_no = 0;
-int sal_date = 0;
 int sal_base = 0;
 int sal_incentive = 0;
 int sal_position = 0;
@@ -35,6 +37,13 @@ int sal_deduction_etc = 0;
 int sal_deductions = 0;
 int sal_total = 0;
 if (Amap != null) {
+	emp_no = Amap.get("EMP_NO").toString();
+	emp_name = Amap.get("EMP_NAME").toString();
+	dept_name = Amap.get("DEPT_NAME").toString();
+	rank_name = Amap.get("RANK_NAME").toString();
+	emp_account = Amap.get("EMP_ACCOUNT").toString();
+	emp_hiredate = Amap.get("EMP_HIREDATE").toString();
+	sal_date = Amap.get("SAL_DATE").toString();
 	if(Amap.get("SAL_NO") != null) sal_no = Integer.parseInt(Amap.get("SAL_NO").toString());
 	if(Amap.get("SAL_BASE") != null) sal_base = Integer.parseInt(Amap.get("SAL_BASE").toString());
 	if(Amap.get("SAL_INCENTIVE") != null) sal_incentive = Integer.parseInt(Amap.get("SAL_INCENTIVE").toString());
@@ -172,6 +181,10 @@ function updateSal_base() {
 												style="display: inline-block; width: 50%">
 												<h5>정산 항목</h5>
 											</span>
+											<span class="input-group-addon" id="basic-addon1"
+												style="display: inline-block; width: 50%; text-align: right;" >
+												마지막 정산 날짜 : <%=sal_date%>
+											</span>
 										</div>
 									</div>
 									<div class="col-lg-6">
@@ -202,8 +215,8 @@ function updateSal_base() {
 													style="display: inline-block; width: 25%">직책수당</span> <select
 															class="form-control" name="rank_no" value="<%=sal_position%>">
 															<option value=1>비적용</option>
-															<option value=2>부서장</option>
-															<option value=2>팀장</option>
+															<option value=2>부서장 : 200000</option>
+															<option value=2>팀장 : 100000</option>
 														</select>
 											</div>
 											<br>
@@ -216,20 +229,18 @@ function updateSal_base() {
 											<br>
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
-													style="display: inline-block; width: 25%">식비</span> <select
-															class="form-control" name="rank_no" value="<%=sal_meal%>">
-															<option value=1 selected>비적용</option>
-															<option value=2>적용</option>
-														</select>
+													style="display: inline-block; width: 25%">식비</span> 
+													<input
+													type="text" class="form-control" value="<%=sal_meal%>"
+													aria-describedby="basic-addon1">
 											</div>
 											<br>
 											<div class="input-group">
 												<span class="input-group-addon" id="basic-addon1"
-													style="display: inline-block; width: 25%">통신비</span> <select
-															class="form-control" name="rank_no" value="<%=sal_commu%>">
-															<option value=1 selected>비적용</option>
-															<option value=2>적용</option>
-														</select>
+													style="display: inline-block; width: 25%">통신비</span> 
+													<input
+													type="text" class="form-control" value="<%=sal_commu%>"
+													aria-describedby="basic-addon1">
 											</div>
 											<br>
 											<div class="input-group">
@@ -329,7 +340,7 @@ function updateSal_base() {
 								<br><input
 								type="text" class="form-control"
 								value="<%=sal_base%>" readonly><i class="fas fa-arrow-right" style="width: 10%"></i><input
-								type="text" class="form-control" 
+								type="text" class="form-control" name="sal_base" 
 								value="">
 								</div>
 						</div>
@@ -341,7 +352,7 @@ function updateSal_base() {
 								<br><input
 								type="text" class="form-control" 
 								value="<%=emp_account%>" readonly><i class="fas fa-arrow-right" style="width: 10%"></i><input
-								type="text" class="form-control" 
+								type="text" class="form-control" name="emp_account" 
 								value="">
 								</div>
 						</div>

@@ -20,6 +20,7 @@ let modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
 let newEvent = function (start, end, eventType) {
     $("#contextMenu").hide(); //메뉴 숨김
 
+	let user_name = document.getElementById("edit-username");
   
     modalTitle.html('일정 추가');
     editType.val(eventType).prop('selected', true);

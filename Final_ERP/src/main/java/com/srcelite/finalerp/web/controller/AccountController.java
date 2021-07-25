@@ -29,10 +29,13 @@ public class AccountController extends MultiActionController {
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
 		List<Map<String, Object>> accountList = null;
-//		accountList = accountLogic.getAccount(target);
+		logger.info("emp_no : "+target.get("emp_no"));
+		if(target.get("emp_no") != null) {
+			accountList = accountLogic.getAccount(target);
+		}
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("getAccountInfo");
-//		mav.addObject("accountList", accountList);
+		mav.addObject("accountList", accountList);
 		return mav;
 	}
 	
@@ -76,10 +79,10 @@ public class AccountController extends MultiActionController {
 		hmb.bind(pmap);
 		logger.info("pmap: "+pmap);
 		int result = 0;
-//		result = accountLogic.updateAccount(pmap);
+		result = accountLogic.updateAccount(pmap);
 		logger.info("ctrl result : " + result);
 		if(result == 1) {
-			response.sendRedirect("");
+			response.sendRedirect("getAccountEmpList");
 		}
 		else {
 			response.sendRedirect("");
@@ -109,10 +112,13 @@ public class AccountController extends MultiActionController {
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
 		List<Map<String, Object>> profitList = null;
+		List<Map<String, Object>> projectList = null;
 		profitList = accountLogic.getProfitList(target);
+		projectList = accountLogic.getProjectList(target);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("getProfitList");
 		mav.addObject("profitList", profitList);
+		mav.addObject("projectList", projectList);
 		return mav;
 	}
 	// 수익 관리 수정
@@ -133,7 +139,7 @@ public class AccountController extends MultiActionController {
 		}
 	}
 	
-	// 수익 관리 입력
+	// 수익 관리 추가
 	public void insertProfit(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("insertProfit호출 성공");
 		HashMapBinder hmb = new HashMapBinder(request);
@@ -221,15 +227,15 @@ public class AccountController extends MultiActionController {
 		return mav;
 	}
 	//월말결산
-	public ModelAndView getMonthlyAccount(HttpServletRequest request, HttpServletResponse response) {
-		logger.info("getMonthlyAccount 호출");
+	public ModelAndView getMonthStatement(HttpServletRequest request, HttpServletResponse response) {
+		logger.info("getMonthStatement 호출");
 		HashMapBinder hmb = new  HashMapBinder(request);
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
 		List<Map<String, Object>> monthStatement = null;
-		monthStatement = accountLogic.getMonthAccount(target);
+		monthStatement = accountLogic.getMonthStatement(target);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("getMonthlyAccount");
+		mav.setViewName("getMonthStatement");
 		mav.addObject("monthStatement", monthStatement);
 		return mav;
 	}

@@ -101,13 +101,11 @@ schedule_type: -1,
     return filtering(event);
   },
 
-  /* ****************
-   *  일정 받아옴 
-   * ************** */
+  /***************** 일정데이터 받아오기***************/
   events: function (start, end, timezone, callback) {
   	  $.ajax({
-      type: "get",
-      url: "../schedule/getCalendarSchedule.src1",
+      type: "post",
+      url: "../schedule/getJsonSchedule.src1",
       data: {
         // 화면이 바뀌면 Date 객체인 start, end 가 들어옴
         startDate : moment(start).format('YYYY-MM-DD'),
@@ -118,8 +116,9 @@ schedule_type: -1,
       	let  result = data;
       	let jsonDoc = JSON.parse(result);
         let fixedDate = jsonDoc.map(function (array) {
+             // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
 			if (array.allDay && array.start!== array.end) {
-            array.end = moment(array.end).add(1, 'days'); // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
+            array.end = moment(array.end).add(1, 'days'); 
           	
           }
           return array;

@@ -23,11 +23,10 @@ public class ScheduleDao {
 
 
 
-	public List<Map<String, Object>> getScheduleList(Map<String, Object> pMap) {
-		logger.info("다오 getScheduleList 호출 성공");
+	public List<Map<String, Object>> getJsonScheduleList(Map<String, Object> pMap) {
+		logger.info("[DAO] getScheduleList 호출 성공");
 		List<Map<String, Object>> getScheduleList = null;
 		getScheduleList = sqlSessionTemplate.selectList("getScheduleList",pMap);
-		
 		
 		return getScheduleList;
 	}

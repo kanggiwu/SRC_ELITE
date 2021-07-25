@@ -60,6 +60,12 @@ public class AccountLogic {
 		profitList = accountDao.getProfitList(pmap);
 		return profitList;
 	}
+	// 수익 관리 조회
+	public List<Map<String,Object>> getProjectList(Map<String,Object> pmap) {
+		List<Map<String, Object>> projectList = null;
+		projectList = accountDao.getProjectList(pmap);
+		return projectList;
+	}
 
 	// 수익 관리 수정
 	public int updateProfit(Map<String,Object> pmap) {
@@ -105,9 +111,9 @@ public class AccountLogic {
 		return expenseList;
 	}
 	// 월말 결산
-	public List<Map<String,Object>> getMonthAccount(Map<String,Object> pmap) {
+	public List<Map<String,Object>> getMonthStatement(Map<String,Object> pmap) {
 		List<Map<String, Object>> monthStatement = null;
-		monthStatement = accountDao.getMonthlyAccount(pmap);
+		//monthStatement = accountDao.getMonthStatement(pmap);
 		return monthStatement;
 	}
 
