@@ -27,8 +27,8 @@
 	<selectKey keyProperty="emp_no" resultType="int" order="BEFORE">
 		SELECT seq_emp.NEXTVAL FROM DUAL
         </selectKey>
-		INSERT INTO emp (emp_no, emp_name, emp_pw, emp_status, dept_no, rank_no, team_no, emp_hiredate, emp_email, emp_tel, emp_account, emp_picture_path)
-            VALUES(#{emp_no}, #{emp_name}, substr(#{emp_tel},-4), #{emp_status}, #{dept_no}, #{rank_no}, #{team_no}, #{emp_hiredate}, #{emp_email}, #{emp_tel}, #{emp_account}, #{emp_picture_path})
+		INSERT INTO emp (emp_no, emp_name, emp_pw, emp_status, dept_no, rank_no, team_no, emp_hiredate, emp_email, emp_tel, emp_account, emp_picture_path, emp_job)
+            VALUES(#{emp_no}, #{emp_name}, substr(#{emp_tel},-4), #{emp_status}, #{dept_no}, #{rank_no}, #{team_no}, #{emp_hiredate}, #{emp_email}, #{emp_tel}, #{emp_account}, #{emp_picture_path}, #{emp_job})
 	</insert>
 
 	<!-- 자격증 소유자 등록 -->

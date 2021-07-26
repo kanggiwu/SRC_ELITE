@@ -13,16 +13,35 @@ public class AccountLogic {
 	public void setAccountDao(AccountDao accountDao) {
 		this.accountDao = accountDao;
 	}
+   // 급여 정산 조회
+   public List<Map<String,Object>> getAccount(Map<String,Object> pmap) {
+      List<Map<String, Object>> accountList = null;
+      accountList = accountDao.getAccount(pmap);
+      return accountList;
+   }
+   // 급여 정산 사원 조회
+   public List<Map<String,Object>> getAccountEmpList(Map<String,Object> pmap) {
+      List<Map<String, Object>> empList = null;
+      empList = accountDao.getAccountEmpList(pmap);
+      return empList;
+   }
+   
+   // 급여 정산 사원 검색
+   public List<Map<String,Object>> getAccountEmpSearch(Map<String,Object> pmap) {
+      List<Map<String, Object>> empList = null;
+      empList = accountDao.getAccountEmpSearch(pmap);
+      return empList;
+   }
 	
 	// 급여 정보 변경
-	public int updateSalary(Map<String,Object> pmap){
+	public int updateAccount(Map<String,Object> pmap){
 		int result = 0;
 		result = accountDao.updateAccount(pmap);
 		return result;
 	}
 	
 	// 급여 정보 추가
-	public int insertSalary(Map<String,Object> pmap){
+	public int insertAccount(Map<String,Object> pmap){
 		int result = 0;
 		result = accountDao.insertAccount(pmap);
 		return result;

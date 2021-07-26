@@ -204,7 +204,7 @@
     	if (appPlan2 == "휴가계획서") {
     		//window.open(url1, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );  
 	    	window.open("/approval/sendVacationPlan.src1?aprv_no="+aprv_no+"&appPlan="+appPlan, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );
-    	}else if (appPlan2 == "프로젝트 계약확정서"){
+    	}else {
     		//alert("여기여기 프로젝트 계약확정서");
     		//window.open(url2, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );   		
 	    	window.open("/approval/sendProjectPlan.src1?aprv_no="+aprv_no+"&appPlan="+appPlan, "new", "toolbar=no, menubar=no, scrollbars=no, resizable=no, width=1000, height=700, left=0, top=0" );  	

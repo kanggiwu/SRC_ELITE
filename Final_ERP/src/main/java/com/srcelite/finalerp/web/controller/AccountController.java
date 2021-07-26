@@ -46,7 +46,7 @@ public class AccountController extends MultiActionController {
 		Map<String, Object> target = new HashMap<>();
 		hmb.bind(target);
 		List<Map<String, Object>> empList = null;
-		//empList = accountLogic.getAccountEmpList(target);
+		empList = accountLogic.getAccountEmpList(target);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("getAccountEmpList");
 		mav.addObject("empList", empList);
@@ -64,7 +64,7 @@ public class AccountController extends MultiActionController {
 		logger.info("emp_name value: "+pmap.get("emp_name"));
 		logger.info("dept_name value: "+pmap.get("dept_name"));
 		logger.info("rank_name value: "+pmap.get("rank_name"));
-		//empList = accountLogic.getAccountEmpSearch(pmap);
+		empList = accountLogic.getAccountEmpSearch(pmap);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("getAccountEmpList");
 		mav.addObject("empList", empList);
@@ -85,7 +85,7 @@ public class AccountController extends MultiActionController {
 			response.sendRedirect("getAccountEmpList");
 		}
 		else {
-			response.sendRedirect("");
+			response.sendRedirect("../index.jsp");
 		}
 	}
 	
@@ -101,7 +101,7 @@ public class AccountController extends MultiActionController {
 			response.sendRedirect("");
 		}
 		else {
-			response.sendRedirect("");
+			response.sendRedirect("../index.jsp");
 		}
 	}
 	
@@ -135,7 +135,7 @@ public class AccountController extends MultiActionController {
 			response.sendRedirect("");
 		}
 		else {
-			response.sendRedirect("");
+			response.sendRedirect("../index.jsp");
 		}
 	}
 	
@@ -151,12 +151,9 @@ public class AccountController extends MultiActionController {
 			response.sendRedirect("getProfitList.src1");
 		}
 		else {
-			response.sendRedirect("");
+			response.sendRedirect("../index.jsp");
 		}
 	}
-	
-
-
 	// 지출 관리 조회
 	public ModelAndView getExpenseList(HttpServletRequest request, HttpServletResponse response) {
 		logger.info("getExpenseList 호출");
@@ -170,7 +167,6 @@ public class AccountController extends MultiActionController {
 			expense_date = target.get("expense_date_year").toString()+"-"+target.get("expense_date_month").toString();
 			target.put("EXPENSE_DATE", expense_date);
 			logger.info(expense_date);
-			
 		}
 		expenseList = accountLogic.getExpenseList(target);
 		ModelAndView mav = new ModelAndView();
@@ -192,7 +188,7 @@ public class AccountController extends MultiActionController {
 			response.sendRedirect("getExpenseList.src1");
 		}
 		else {
-			response.sendRedirect("");
+			response.sendRedirect("../index.jsp");
 		}
 	}
 	
@@ -208,11 +204,9 @@ public class AccountController extends MultiActionController {
 			response.sendRedirect("getExpenseList.src1");
 		}
 		else {
-			response.sendRedirect("");
+			response.sendRedirect("../index.jsp");
 		}
 	}
-	
-
 	// 손익 조회
 	public ModelAndView getBalanceList(HttpServletRequest request, HttpServletResponse response) {
 		logger.info("getBalanceList 호출");

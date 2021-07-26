@@ -459,7 +459,7 @@ let myMap = new Map();
 												%>
 													<tr id='licence_<%=licence_no%>'>
 														<td value="<%=licence_no%>"><%=licence_no%>
-														<input name = 'licence_no' value='<%=licence_no%>' hidden>"</td>
+														<input name = 'licence_no' value='<%=licence_no%>' hidden></td>
 														<td value="<%=licence_name%>"><%=licence_name%></td>
 														<td value="<%=licence_incentive%>"><%=licence_incentive%></td>
 													</tr>
